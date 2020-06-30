@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Recursion schemes from the ground up</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    </head>
+    <body>
+        <textarea id="source">
+class: center, middle
+
+# Recursion schemes from the ground up
+
+Nicolas Rinaudo • [@NicolasRinaudo] • [Besedo]
+
+---
+
+class: center, middle
+
+# Recursive Data Structures
+
+---
+
+## `List`
+
+```tut:silent
+sealed trait List
+
+case class Cons(
+  head: Int,
+  tail: List
+) extends List
+
+case object Nil extends List
+```
+
+```tut:silent
+val ints: List = Cons(1, Cons(2, Cons(3, Nil)))
+```
+
+---
+
+class: center, middle
+
+# Structural Recursion
+
+---
+
+## Length
+
+```tut:silent
+def length(values: List): Int = values match {
+  case Nil           => 0
+  case Cons(_, tail) => 1 + length(tail)
+}
+```
+
+```tut:book
+length(ints)
+```
+
+---
+
+## Product
+
+```tut:silent
+def product(values: List): Int = values match {
+  case Nil              => 1
+  case Cons(head, tail) => head * product(tail)
+}
+```
+
+```tut:book
+product(ints)
+```
+
+---
+
+## String representation
+
+```tut:silent
+def mkString(values: List): String = values match {
+  case Nil              => "nil"
+  case Cons(head, tail) => head + " :: " + mkString(tail)
+}
+```
+
+```tut:book
+mkString(ints)
+```
+
+---
+
+## Key takeaways
+
+Working with recursive data structures involves a lot of the same pattern:
+* get a value of the base case
+* find a way to combine a smaller result and the current value.
+
+---
+
+class: center, middle
+
+# Folds
+
+---
+
+## Generalising `mkString`
+
+```tut:silent
+def mkString(
+  values: List
+): String =
+  values match {
+    case Nil              => "nil"
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+  }
+```
+
+---
+
+## Generalising `mkString`
+
+```tut:silent
+def recurse(
+  values: List
+): String =
+  values match {
+    case Nil              => "nil"
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+  }
+```
+
+Rename to `recurse` because we're doing something generic.
+
+---
+
+## Generalising `mkString`
+
+```tut:silent
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => head + " :: " + recurse(base, tail)
+  }
+```
+
+Abstract over the base case.
+
+---
+
+## Generalising `mkString`
+
+```tut:silent
+def recurse(
+  base  : String,
+  step  : (Int, String) => String,
+  values: List
+): String =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+  }
+```
+
+Abstract over the step-case.
+
+---
+
+## Generalising `mkString`
+
+```tut:silent
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+  }
+```
+
+Make things parametric, because we can work with more than just ints as output.
+
+---
+
+## Generalising `mkString`
+
+```tut:silent
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+
+  def loop(curr: List): A = curr match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, loop(tail))
+  }
+
+  loop(values)
+}
+```
+
+Too many parameters, make more readable.
+
+
+---
+
+## Generalising `mkString`
+
+```tut:silent
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
+)(
+  values: List
+): A = {
+
+  def loop(curr: List): A = curr match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, loop(tail))
+  }
+
+  loop(values)
+}
+```
+
+Curry, because we'll be wanting to express `length` etc as partial application.
+
+---
+
+## Generalising `mkString`
+
+```tut:silent
+def fold[A](
+  base  : A,
+  step  : (Int, A) => A
+)(
+  values: List
+): A = {
+
+  def loop(curr: List): A = curr match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, loop(tail))
+  }
+
+  loop(values)
+}
+```
+
+Rename to fold because that's what it's called.
+
+---
+
+## Length as a `fold`
+
+```tut:silent
+val length: List => Int = fold(
+  base = 0,
+  step = (_: Int, tailLength: Int) => 1 + tailLength
+)
+```
+
+```tut:book
+length(ints)
+```
+
+---
+
+## Product as a `fold`
+
+```tut:silent
+val product: List => Int = fold(
+  base = 1,
+  step = (head: Int, tailProduct: Int) => head * tailProduct
+)
+```
+
+```tut:book
+product(ints)
+```
+
+---
+
+## String representation as a `fold`
+
+```tut:silent
+val mkString: List => String = fold(
+  base = "nil",
+  step = (head: Int, tailStr: String) => head + " :: " + tailStr
+)
+```
+
+```tut:book
+mkString(ints)
+```
+
+---
+
+## Key takeaways
+
+* structural recursion on lists is... simply a fold
+
+---
+
+class: center, middle
+
+# Generalised Folds
+
+---
+
+## Generalising folds
+
+```tut:silent
+def fold[A](
+  base  : A,
+  step  : (Int, A) => A
+)(
+  values: List
+): A = {
+
+  def loop(curr: List): A = curr match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, loop(tail))
+  }
+
+  loop(values)
+}
+```
+
+---
+
+## Generalising folds
+
+```tut:silent
+def fold[A](
+  base   : A,
+  step   : (Int, A) => A,
+  project: List => Option[(Int, List)]
+)(
+  values : List
+): A = {
+
+  def loop(curr: List): A = project(curr) match {
+    case None               => base
+    case Some((head, tail)) => step(head, loop(tail))
+  }
+
+  loop(values)
+}
+```
+
+We want to forget about list. First, let's forget about its structure
+
+---
+
+## List projection
+
+```tut:silent
+val projectList: List => Option[(Int, List)] = _ match {
+  case Nil              => None
+  case Cons(head, tail) => Some((head, tail))
+}
+```
+
+---
+
+## Generalising folds
+
+```tut:silent
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+)(
+  values : List
+): A = {
+
+  def loop(curr: List): A = project(curr) match {
+    case None               => op(None)
+    case Some((head, tail)) => op(Some((head, loop(tail))))
+  }
+
+  loop(values)
+}
+```
+
+`base` and `step` are basically going from "nothing" to an A, or from "a head and a tail" to an A. That's an Option => A.
+
+---
+
+## Intermediate representation
+
+```tut:silent
+type ListF[A] = Option[(Int, A)]
+```
+
+Let's name that weird type:
+
+---
+
+## Intermediate representation
+
+```tut:silent
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+)(
+  values : List
+): A = {
+
+  def loop(curr: List): A = project(curr) match {
+    case None               => op(None)
+    case Some((head, tail)) => op(Some((head, loop(tail))))
+  }
+
+  loop(values)
+}
+```
+
+---
+
+## Intermediate representation
+
+```tut:silent
+val projectList: List => ListF[List] = _ match {
+  case Nil              => None
+  case Cons(head, tail) => Some((head, tail))
+}
+```
+
+
+---
+
+## Generalising folds
+
+```tut:silent
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+)(
+  values : List
+): A = {
+
+  def loop(curr: List): A = op(project(curr) match {
+    case None               => None
+    case Some((head, tail)) => Some((head, loop(tail)))
+  })
+
+  loop(values)
+}
+```
+
+`op` being applied in both branches of the pattern match means we can extract it and apply it to the result
+
+---
+
+## Generalising folds
+
+```tut:silent
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+)(
+  values : List
+): A = {
+
+  def recurse(curr: ListF[List]): ListF[A] = curr match {
+    case None               => None
+    case Some((head, tail)) => Some((head, loop(tail)))
+  }
+
+  def loop(curr: List): A = op(recurse(project(curr)))
+
+  loop(values)
+}
+```
+
+Let's extract that pattern match so we can work with it.
+It's the part where we recurse.
+
+---
+
+## Generalising folds
+
+```tut:silent
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+)(
+  values : List
+): A = {
+
+  def recurse(curr: ListF[List], f: List => A): ListF[A] = curr match {
+    case None               => None
+    case Some((head, tail)) => Some((head, f(tail)))
+  }
+
+  def loop(curr: List): A = op(recurse(project(curr), loop))
+
+  loop(values)
+}
+```
+
+Let's make it even more familiar...
+
+---
+
+## Functor
+
+```tut:silent
+trait Functor[F[_]] {
+  def map[A, B](f: A => B)(fa: F[A]): F[B]
+}
+```
+
+---
+
+## Functor
+
+```tut:silent
+implicit val listFFunctor: Functor[ListF] = new Functor[ListF] {
+  override def map[A, B](f: A => B)(fa: ListF[A]) = fa match {
+    case None               => None
+    case Some((head, tail)) => Some((head, f(tail)))
+  }
+}
+```
+
+---
+
+## Functor
+
+```tut:silent
+implicit class FunctorOps[F[_], A](value: F[A]) {
+  def fmap[B](f: A => B)(implicit func: Functor[F]): F[B] =
+    func.map(f)(value)
+}
+```
+
+---
+
+## Using functors
+
+```tut:silent
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+)(
+  values : List
+): A = {
+
+  def recurse(option: ListF[List]) = option.fmap(loop)
+
+  def loop(curr: List): A = op(recurse(project(curr)))
+
+  loop(values)
+}
+```
+
+Using `Functor`...
+
+---
+
+## Using functors
+
+```tut:silent
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+)(
+  values : List
+): A = {
+
+  def loop(curr: List): A = op(project(curr).fmap(loop))
+
+  loop(values)
+}
+```
+
+No need for `recurse` anymore...
+
+
+---
+
+## Abstracting over `ListF`
+
+```tut:silent
+def fold[F[_]: Functor, A](
+  op     : F[A] => A,
+  project: List => F[List]
+)(
+  values : List
+): A = {
+
+  def loop(curr: List): A = op(project(curr).fmap(loop))
+
+  loop(values)
+}
+```
+
+At this point, we don't need to know about `ListF` - just that it has a functor:
+
+---
+
+## Abstracting over `ListInt`
+
+```tut:silent
+def fold[F[_]: Functor, A, B](
+  op     : F[A] => A,
+  project: B => F[B]
+)(
+  values : B
+): A = {
+
+  def loop(curr: B): A = op(project(curr).fmap(loop))
+
+  loop(values)
+}
+```
+
+We don't need to know about `List` either:
+
+---
+
+## Proper names
+
+```tut:silent
+def cata[F[_]: Functor, A, B](
+  op     : F[A] => A,
+  project: B => F[B]
+)(
+  values : B
+): A = {
+
+  def loop(curr: B): A = op(project(curr).fmap(loop))
+
+  loop(values)
+}
+```
+
+This is called `cata`
+
+---
+
+## Proper names
+
+```tut:silent
+def cata[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+)(
+  values : B
+): A = {
+
+  def loop(curr: B): A = algebra(project(curr).fmap(loop))
+
+  loop(values)
+}
+```
+
+And that's called an F-Algebra.
+
+F is pattern functor.
+
+---
+
+## Length in terms of `cata`
+
+```tut:silent
+val lengthAlgebra: ListF[Int] => Int = _ match {
+  case None               => 0
+  case Some((_, tail)) => 1 + tail
+}
+
+val length: List => Int = cata(lengthAlgebra, projectList)
+```
+
+```tut:book
+length(ints)
+```
+
+---
+
+## Product in terms of `cata`
+
+```tut:silent
+val productAlgebra: ListF[Int] => Int = _ match {
+  case None               => 1
+  case Some((head, tail)) => head * tail
+}
+
+val product: List => Int = cata(productAlgebra, projectList)
+```
+
+```tut:book
+product(ints)
+```
+
+---
+
+## String representation in terms of `cata`
+
+```tut:silent
+val mkStringAlgebra: ListF[String] => String = _ match {
+  case None               => "nil"
+  case Some((head, tail)) => head + " :: " + tail
+}
+
+val mkString: List => String = cata(mkStringAlgebra, projectList)
+```
+
+```tut:book
+mkString(ints)
+```
+
+---
+
+class: center, middle
+
+# Generative Recursion
+
+---
+
+## Creating lists
+
+```tut:silent
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```tut:book
+mkString(
+  range(3)
+)
+```
+---
+
+## Zipping lists
+
+```tut:silent
+def zipWith(
+  f: (Int, Int) => Int,
+  a: List,
+  b: List
+): List =
+  (a, b) match {
+
+    case ((Cons(ha, ta), Cons(hb, tb))) =>
+      Cons(f(ha, hb), zipWith(f, ta, tb))
+
+    case _ => Nil
+  }
+```
+
+```tut:book
+mkString(
+  zipWith(_ + _, range(3), range(3))
+)
+```
+
+---
+
+class: center, middle
+
+# Unfolds
+
+---
+
+## Generalising `range`
+
+```tut:silent
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+---
+
+## Generalising `range`
+
+```tut:silent
+def recurse(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, recurse(from - 1))
+  else         Nil
+}
+```
+
+---
+
+## Generalising `range`
+
+```tut:silent
+def recurse(
+  from     : Int,
+  predicate: Int => Boolean
+): List = {
+  if(predicate(from)) Cons(from, recurse(from - 1, predicate))
+  else                Nil
+}
+```
+
+---
+
+## Generalising `range`
+
+```tut:silent
+def recurse(
+  from     : Int,
+  update   : Int => (Int, Int),
+  predicate: Int => Boolean
+): List = {
+  if(predicate(from))  {
+    val (state, next) = update(from)
+    Cons(state, recurse(next, update, predicate))
+  }
+  else Nil
+}
+```
+
+---
+
+## Generalising `range`
+
+```tut:silent
+def recurse[A](
+  from     : A,
+  update   : A => (Int, A),
+  predicate: A => Boolean
+): List = {
+  if(predicate(from)) {
+    val (state, next) = update(from)
+    Cons(state, recurse(next, update, predicate))
+  }
+  else Nil
+}
+```
+
+---
+
+## Generalising `range`
+
+```tut:silent
+def recurse[A](
+  update   : A => (Int, A),
+  predicate: A => Boolean
+)(
+  from    : A
+): List = {
+  if(predicate(from)) {
+    val (state, next) = update(from)
+    Cons(state, recurse(update, predicate)(next))
+  }
+  else Nil
+}
+```
+
+---
+
+## Generalising `range`
+
+```tut:silent
+def recurse[A](
+  update   : A => (Int, A),
+  predicate: A => Boolean
+)(
+  from    : A
+): List = {
+
+  def loop(curr: A): List =
+    if(predicate(curr)) {
+      val (state, next) = update(curr)
+      Cons(state, loop(next))
+    }
+    else Nil
+
+  loop(from)
+}
+```
+
+---
+
+## Generalising `range`
+
+```tut:silent
+def unfold[A](
+  update   : A => (Int, A),
+  predicate: A => Boolean
+)(
+  from    : A
+): List = {
+
+  def loop(curr: A): List =
+    if(predicate(curr)) {
+      val (state, next) = update(curr)
+      Cons(state, loop(next))
+    }
+    else Nil
+
+  loop(from)
+}
+```
+
+
+---
+
+## Range in terms of `unfold`
+
+```tut:silent
+val range: Int => List =
+  unfold(
+    update    = (a: Int) => (a, a - 1),
+    predicate = (a: Int) => a > 0
+  )
+```
+
+```tut:book
+mkString(range(3))
+```
+
+---
+
+## Zip in terms of `unfold`
+
+```tut:silent
+def zipWith(a: List, b: List)
+           (f: (Int, Int) => Int): List =
+  unfold[(List, List)](
+    update = {
+      case (Cons(ha, ta), Cons(hb, tb)) => (f(ha, hb), ((ta, tb)))
+    },
+    predicate = {
+      case (Cons(_, _), Cons(_, _)) => true
+      case _                        => false
+    }
+  )((a, b))
+```
+
+
+```tut:book
+mkString(zipWith(ints, ints)(_ + _))
+```
+
+
+---
+class: center, middle
+
+# Generalised unfolds
+
+---
+
+```tut:silent
+def unfold[A](
+  update   : A => (Int, A),
+  predicate: A => Boolean
+)(
+  start    : A
+): List = {
+
+  def loop(curr: A): List =
+    if(predicate(curr)) {
+      val (state, next) = update(curr)
+      Cons(state, loop(next))
+    }
+    else Nil
+
+  loop(start)
+}
+```
+
+---
+
+```tut:silent
+def unfold[A](
+  update: A => Option[(Int, A)]
+)(
+  start : A
+): List = {
+
+  def loop(curr: A): List = update(curr) match {
+    case Some((head, state)) => Cons(head, loop(state))
+    case None                => Nil
+  }
+
+  loop(start)
+}
+```
+
+Intuitively, we want to go to `ListF` again. `update` + `predicate` really look like one.
+
+---
+
+```tut:silent
+def unfold[A](
+  update: A => Option[(Int, A)],
+  embed : Option[(Int, List)] => List
+)(
+  start : A
+): List = {
+
+  def loop(curr: A): List = embed(update(curr) match {
+    case Some((head, state)) => Some((head, loop(state)))
+    case None                => None
+  })
+
+  loop(start)
+}
+```
+
+We want to forget about the structure of list...
+
+---
+
+```tut:silent
+val embedList: Option[(Int, List)] => List = _ match {
+  case Some((head, tail)) => Cons(head, tail)
+  case None               => Nil
+}
+```
+
+---
+
+```tut:silent
+def unfold[A](
+  update: A => ListF[A],
+  embed : ListF[List] => List
+)(
+  start : A
+): List = {
+
+  def loop(curr: A): List = embed(update(curr) match {
+    case Some((head, state)) => Some((head, loop(state)))
+    case None                => None
+  })
+
+  loop(start)
+}
+```
+
+We have a name for that type...
+
+---
+
+```tut:silent
+val embedList: ListF[List] => List = _ match {
+  case Some((head, tail)) => Cons(head, tail)
+  case None               => Nil
+}
+```
+
+
+
+---
+
+```tut:silent
+def unfold[A](
+  update: A => ListF[A],
+  embed : ListF[List] => List
+)(
+  start : A
+): List = {
+
+  def loop(curr: A): List = embed(update(curr).fmap(loop))
+
+  loop(start)
+}
+```
+
+That looks a lot like our functor instance...
+
+---
+
+```tut:silent
+def unfold[F[_]: Functor, A](
+  update: A => F[A],
+  embed : F[List] => List
+)(
+  start: A
+): List = {
+
+  def loop(curr: A): List = embed(update(curr).fmap(loop))
+
+  loop(start)
+}
+```
+
+We don't need to know about `ListF`...
+
+---
+
+```tut:silent
+def unfold[F[_]: Functor, A, B](
+  update: A => F[A],
+  embed : F[B] => B
+)(
+  start : A
+): B = {
+
+  def loop(curr: A): B = embed(update(curr).fmap(loop))
+
+  loop(start)
+}
+```
+
+Or `List`...
+
+---
+
+```tut:silent
+def ana[F[_]: Functor, A, B](
+  update: A => F[A],
+  embed : F[B] => B
+)(
+  start : A
+): B = {
+
+  def loop(curr: A): B = embed(update(curr).fmap(loop))
+
+  loop(start)
+}
+```
+
+This is named ana
+
+---
+
+```tut:silent
+def ana[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+  embed    : F[B] => B
+)(
+  start: A
+): B = {
+
+  def loop(curr: A): B = embed(coAlgebra(curr).fmap(loop))
+
+  loop(start)
+}
+```
+
+And this is named co-algebra
+
+---
+
+## Range in terms of ana
+
+```tut:silent
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      None
+}
+
+val range: Int => List = ana(rangeCoAlgebra, embedList)
+```
+
+```tut:book
+mkString(range(3))
+```
+
+---
+
+## Zip in terms of ana
+
+```tut:silent
+def zipWithCoAlgebra(f: (Int, Int) => Int): ((List, List)) => ListF[(List, List)] = {
+  case (Cons(ha, ta), Cons(hb, tb)) => Some((f(ha, hb), (ta, tb)))
+  case _                            => None
+}
+
+def zithWith(f: (Int, Int) => Int, a: List, b: List): List = {
+  val zip: ((List, List)) => List = ana(zipWithCoAlgebra(f), embedList)
+
+  zip((a, b))
+}
+```
+
+```tut:book
+mkString(
+  zipWith(range(3), range(3))(_ + _)
+)
+```
+
+---
+
+class: center, middle
+
+# Trees
+
+---
+
+## Tree
+
+```tut:silent
+sealed trait Tree
+
+case class Node(left: Tree, value: Int, right: Tree) extends Tree
+case object Leaf extends Tree
+```
+
+```tut:book
+val intTree = Node(
+  Node(
+    Node(Leaf, 1, Leaf),
+    2,
+    Node(Leaf, 3, Leaf)
+  ),
+  4,
+  Leaf
+)
+```
+
+---
+
+## Pattern functor
+
+```tut:silent
+sealed trait TreeF[+A]
+
+case class NodeF[A](left: A, value: Int, right: A) extends TreeF[A]
+case object LeafF extends TreeF[Nothing]
+```
+
+---
+
+## Projection
+
+```tut:silent
+def projectTree: Tree => TreeF[Tree] = _ match {
+  case Leaf          => LeafF
+  case Node(l, v ,r) => NodeF(l, v, r)
+}
+```
+
+---
+
+## Embedding
+
+```tut:silent
+def embedTree: TreeF[Tree] => Tree = _ match {
+  case LeafF          => Leaf
+  case NodeF(l, v, r) => Node(l, v, r)
+}
+
+```
+
+---
+
+## Functor instance
+
+```tut:silent
+implicit val treeFFunctor: Functor[TreeF] = new Functor[TreeF] {
+  override def map[A, B](f: A => B)(tree: TreeF[A]) = tree match {
+    case LeafF          => LeafF
+    case NodeF(l, v, r) => NodeF(f(l), v, f(r))
+  }
+}
+```
+
+---
+
+## Depth
+
+```tut:silent
+val depthAlgebra: TreeF[Int] => Int = _ match {
+  case LeafF                           => 0
+  case NodeF(leftDepth, _, rightDepth) => math.max(
+    leftDepth + 1,
+    rightDepth + 1
+  )
+}
+
+val depth: Tree => Int = cata(depthAlgebra, projectTree)
+```
+
+```tut:book
+depth(intTree)
+```
+
+---
+
+class: center, middle
+
+# Reducing the boilerplate
+
+---
+
+We have to define:
+* our type
+* its pattern functor
+* a projection
+* an embedding
+* a functor instance
+
+What if we could simplify that?
+
+---
+
+If we could express `List` in terms of `ListF`...
+
+```scala
+type Foo = ListF[???]
+```
+
+The only thing that can go in `???` is `ListF`, but then, we're faced with the same problem again...
+
+---
+
+What if we could express Foo in terms of itself?
+
+
+```tut:book:fail
+type Foo = ListF[Foo]
+```
+
+---
+
+We can't have recursive type aliases, but we *can* have recursive types:
+
+```tut:silent
+case class Foo(value: ListF[Foo])
+```
+
+---
+
+This works for `ListF`, but we can make it parametetric:
+
+```tut:silent
+case class Foo[F[_]](value: F[Foo[F]])
+```
+
+---
+
+It's got an actual name:
+
+```tut:silent
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+
+---
+
+What's `List` then?
+
+```tut:silent
+type FixedList = Fix[ListF]
+```
+
+---
+
+What's the project for `FixedList`?
+
+```tut:silent
+def projectFixedList(list: FixedList): ListF[FixedList] = list.value
+```
+
+---
+
+```tut:silent
+def projectFixedList(fix: Fix[ListF]): ListF[Fix[ListF]] = fix.value
+```
+
+
+---
+
+```tut:silent
+def projectFixedList[F[_]](fix: Fix[F]): F[Fix[F]] = fix.value
+```
+
+---
+
+```tut:silent
+def projectFix[F[_]](fix: Fix[F]): F[Fix[F]] = fix.value
+```
+
+---
+
+We can rewrite `cata` specialised for `Fix` with no notion of projection:
+
+```tut:silent
+def cata[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+)(
+  values : B
+): A = {
+
+  def loop(curr: B): A = algebra(project(curr).fmap(loop))
+
+  loop(values)
+}
+```
+
+---
+
+```tut:silent
+def cataFix[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+)(
+  values : B
+): A = {
+
+  def loop(curr: B): A = algebra(project(curr).fmap(loop))
+
+  loop(values)
+}
+```
+
+---
+
+```tut:silent
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A,
+  project: Fix[F] => F[Fix[F]]
+)(
+  values : Fix[F]
+): A = {
+
+  def loop(curr: Fix[F]): A = algebra(project(curr).fmap(loop))
+
+  loop(values)
+}
+```
+
+A: Int
+B: FixedList (Fix[ListF])
+
+---
+
+```tut:silent
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A,
+)(
+  values : Fix[F]
+): A = {
+
+  def loop(curr: Fix[F]): A = algebra(curr.value.fmap(loop))
+
+  loop(values)
+}
+```
+
+---
+
+We can do the same thing for `ana` - embedding:
+
+```tut:silent
+def embedFix[F[_]](value: F[Fix[F]]): Fix[F] = Fix(value)
+```
+
+---
+
+```tut:silent
+def ana[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+  embed    : F[B] => B
+)(
+  start: A
+): B = {
+
+  def loop(curr: A): B = embed(coAlgebra(curr).fmap(loop))
+
+  loop(start)
+}
+```
+
+---
+
+```tut:silent
+def anaFix[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+  embed    : F[B] => B
+)(
+  start: A
+): B = {
+
+  def loop(curr: A): B = embed(coAlgebra(curr).fmap(loop))
+
+  loop(start)
+}
+```
+
+---
+
+```tut:silent
+def anaFix[F[_]: Functor, A](
+  coAlgebra: A => F[A],
+  embed    : F[Fix[F]] => Fix[F]
+)(
+  start: A
+): Fix[F] = {
+
+  def loop(curr: A): Fix[F] = embed(coAlgebra(curr).fmap(loop))
+
+  loop(start)
+}
+```
+
+A: Int
+B: FixedList => Fix[ListF]
+
+
+---
+
+Embed is known
+
+```tut:silent
+def anaFix[F[_]: Functor, A](
+  coAlgebra: A => F[A]
+)(
+  start: A
+): Fix[F] = {
+
+  def loop(curr: A): Fix[F] = Fix((coAlgebra(curr).fmap(loop)))
+
+  loop(start)
+}
+```
+
+---
+
+## Range in terms of anaFix
+
+```tut:silent
+val rangeFix: Int => FixedList =
+  anaFix(rangeCoAlgebra)
+```
+
+```tut:book
+rangeFix(3)
+```
+
+---
+
+## mkString in terms of cataFix
+
+```tut:silent
+val mkStringFix: FixedList => String = cataFix(mkStringAlgebra)
+```
+
+```tut:book
+mkStringFix(rangeFix(3))
+```
+
+---
+
+class: center, middle
+
+# Generalised generalised folds!
+
+---
+
+```tut:silent
+val factorial: Int => Int =
+  range andThen product
+```
+
+```tut:book
+factorial(3)
+```
+
+---
+
+```tut:silent
+val factorial: Int => Int =
+  cata(productAlgebra, rangeCoAlgebra)
+```
+
+```tut:book
+factorial(3)
+```
+
+---
+
+class: center, middle
+
+# Questions?
+
+Nicolas Rinaudo • [@NicolasRinaudo] • [Besedo]
+
+[@NicolasRinaudo]:https://twitter.com/NicolasRinaudo
+[Besedo]:https://twitter.com/besedo_official
+
+    </textarea>
+    <script src="js/remark.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+        var slideshow = remark.create({
+          highlightStyle: 'github',
+          highlightSpans: true,
+          highlightLines: true
+      });
+    </script>
+  </body>
+</html>
