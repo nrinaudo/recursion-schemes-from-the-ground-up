@@ -1,0 +1,16 @@
+digraph {
+    bgcolor=transparent
+    splines=false
+    rankdir=LR
+
+    // Default theme: disabled
+    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
+    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
+
+    ListFList[label="F[B]"]
+    ListFA[label="F[A]"]
+
+    B         -> ListFList [label=project]
+    ListFList -> ListFA[label="map(_, loop)"]
+    ListFA    -> A [label=algebra color="#2980B9" fontcolor="#000000"]
+}

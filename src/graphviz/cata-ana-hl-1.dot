@@ -1,0 +1,39 @@
+digraph {
+    bgcolor=transparent
+    splines=false
+    rankdir=LR
+    rank=same
+
+    // Default theme: disabled
+    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
+    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
+
+    subgraph B_graph {
+        anaA[label=A]
+        cataB[label=B color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+    }
+
+    subgraph FB_graph {
+        anaFA[label="F[A]"]
+        cataFB[label="F[B]" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+    }
+
+    subgraph FA_graph {
+        anaFB[label="F[B]"]
+        cataFA[label="F[A]" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+    }
+
+    subgraph A_graph {
+        anaB[label=B]
+        cataA[label=A color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+    }
+
+    cataB  -> cataFB[label=project color="#2980B9" fontcolor="#000000"]
+    cataFB -> cataFA[label="map(_, loop)" color="#2980B9" fontcolor="#000000"]
+    cataFA -> cataA[label=algebra color="#2980B9" fontcolor="#000000"]
+
+    anaA  -> anaFA[label=coAlgebra]
+    anaFA -> anaFB[label="map(_, loop)"]
+    anaFB -> anaB[label=embed]
+
+}

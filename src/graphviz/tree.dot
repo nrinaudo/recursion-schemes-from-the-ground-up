@@ -1,0 +1,29 @@
+digraph {
+    bgcolor=transparent
+    splines=false
+
+    // Default theme: enabled
+    node[shape="circle" style="filled" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
+    edge [color="#2980B9" fontcolor="#000000" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
+
+    n1[label=4]
+    n2[label=2]
+    n3[label=1]
+    n4[label=3]
+
+    l1[shape=circle label="∅" fillcolor="#ffffff"]
+    l2[shape=circle label="∅" fillcolor="#ffffff"]
+    l3[shape=circle label="∅" fillcolor="#ffffff"]
+    l4[shape=circle label="∅" fillcolor="#ffffff"]
+    l5[shape=circle label="∅" fillcolor="#ffffff"]
+
+
+    n1 -> n2[label=left]
+    n1 -> l1[label=right]
+    n2 -> n3[label=left]
+    n2 -> n4[label=right]
+    n3 -> l2[label=left]
+    n3 -> l3[label=right]
+    n4 -> l4[label=left]
+    n4 -> l5[label=right]
+}

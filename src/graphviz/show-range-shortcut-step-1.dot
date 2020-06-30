@@ -1,0 +1,22 @@
+digraph {
+    bgcolor=transparent
+    splines=false
+    rankdir=LR
+    rank=same
+
+    // Default theme: disabled
+    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
+    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
+
+    anaFA[label="ListF[Int]" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+    cataFA[label="ListF[String]"]
+
+    anaA[label=Int color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+    cataA[label=String]
+
+
+    anaA  -> anaFA[label=rangeCoAlgebra]
+    anaFA -> cataFA[label="map(_, loop)"]
+    cataFA -> cataA[label=mkStringAlgebra]
+
+}

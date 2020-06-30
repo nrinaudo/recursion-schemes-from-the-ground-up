@@ -1,0 +1,18 @@
+digraph {
+    bgcolor=transparent
+    splines=false
+    rankdir=LR
+
+    // Default theme: disabled
+    node[shape="circle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
+    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
+
+    s3[label=3]
+    s2[label=2]
+    s1[label=1]
+    nil[label=0 shape=Mcircle color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+
+    s3 -> s2[label=tail]
+    s2 -> s1[label=tail]
+    s1 -> nil[label=tail]
+}
