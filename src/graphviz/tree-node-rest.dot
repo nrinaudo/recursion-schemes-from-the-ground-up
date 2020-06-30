@@ -1,0 +1,29 @@
+digraph {
+    bgcolor=transparent
+    splines=false
+
+    // Default theme: disabled
+    node[shape="circle" style="filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
+    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
+
+    n1[label=4]
+    n2[label=2 color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+    n3[label=1 color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+    n4[label=3 color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+
+    l1[shape=circle label="∅" fillcolor="#ffffff"]
+    l2[shape=circle label="∅" fillcolor="#ffffff" color="#2980B9" fontcolor="#000000"]
+    l3[shape=circle label="∅" fillcolor="#ffffff" color="#2980B9" fontcolor="#000000"]
+    l4[shape=circle label="∅" fillcolor="#ffffff" color="#2980B9" fontcolor="#000000"]
+    l5[shape=circle label="∅" fillcolor="#ffffff" color="#2980B9" fontcolor="#000000"]
+
+
+    n1 -> n2[label=left]
+    n1 -> l1[label=right]
+    n2 -> n3[label=left color="#2980B9" fontcolor="#000000"]
+    n2 -> n4[label=right color="#2980B9" fontcolor="#000000"]
+    n3 -> l2[label=left color="#2980B9" fontcolor="#000000"]
+    n3 -> l3[label=right color="#2980B9" fontcolor="#000000"]
+    n4 -> l4[label=left color="#2980B9" fontcolor="#000000"]
+    n4 -> l5[label=right color="#2980B9" fontcolor="#000000"]
+}

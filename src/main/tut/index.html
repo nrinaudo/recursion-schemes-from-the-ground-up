@@ -1,0 +1,7155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Recursion schemes from the ground up</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    </head>
+    <body>
+        <textarea id="source">
+class: center, middle
+
+# Recursion schemes from the ground up
+
+Nicolas Rinaudo • [@NicolasRinaudo] • [Besedo]
+
+---
+
+class: center, middle
+
+# Recursive Data Types
+
+---
+
+## Linked list
+
+.center[![Linked List](img/list.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked List - Cons](img/list-1.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked List - Nil](img/list-nil.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked List - Cons](img/list-1.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked List - head](img/list-1-head.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked List - tail](img/list-1-tail.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked list - rest](img/list-1-rest.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked List - Nil](img/list-nil.svg)]
+
+---
+
+## Linked list
+
+```tut:silent
+sealed trait List
+
+case class Cons(
+  head: Int,
+  tail: List
+) extends List
+
+case object Nil extends List
+```
+
+---
+
+## Linked list
+
+```scala
+*sealed trait List
+
+case class Cons(
+  head: Int,
+  tail: List
+) extends List
+
+case object Nil extends List
+```
+
+---
+
+## Linked list
+
+```scala
+sealed trait List
+
+*case class Cons(
+* head: Int,
+* tail: List
+*) extends List
+
+case object Nil extends List
+```
+
+---
+
+## Linked list
+
+```scala
+sealed trait List
+
+case class Cons(
+  head: Int,
+  tail: List
+) extends List
+
+*case object Nil extends List
+```
+
+---
+
+## Linked list
+
+```scala
+sealed trait List
+
+*case class Cons(
+* head: Int,
+* tail: List
+*) extends List
+
+case object Nil extends List
+```
+
+---
+
+## Linked list
+
+```scala
+sealed trait List
+
+case class Cons(
+  `head: Int`,
+  tail: List
+) extends List
+
+case object Nil extends List
+```
+
+---
+
+## Linked list
+
+```scala
+sealed trait List
+
+case class Cons(
+  head: Int,
+  `tail: List`
+) extends List
+
+case object Nil extends List
+```
+
+---
+
+## Linked list
+
+```tut:silent
+val ints: List =
+  Cons(3, Cons(2, Cons(1, Nil)))
+```
+
+---
+
+## Linked list
+
+```scala
+val ints: List =
+  Cons(`3`, Cons(`2`, Cons(`1`, Nil)))
+```
+
+---
+
+class: center, middle
+
+# Structural Recursion
+
+---
+
+## Product
+
+```tut:silent
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head * product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = ???
+```
+
+.center[![List product](img/list.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  `values: List`
+): Int =
+  values match {
+    case Cons(head, tail) => head * product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = ???
+```
+
+.center[![List product](img/list.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): `Int` =
+  values match {
+    case Cons(head, tail) => head * product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = ???
+```
+
+.center[![List product](img/list.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case `Cons(head, tail)` => head * product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = ???
+```
+
+.center[![List product: 1](img/list-product-1-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => `head` * product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = `3` * ???
+```
+
+.center[![List product: 1](img/list-product-1-head-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head `*` product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = 3 `*` ???
+```
+
+.center[![List product: 1](img/list-product-1-tail-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head * `product(tail)`
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = 3 * `???`
+```
+
+.center[![List product](img/list-product-1.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case `Cons(head, tail)` => head * product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = 3 * ???
+```
+
+.center[![List product](img/list-product-2-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => `head` * product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = 3 * `2` * ???
+```
+
+.center[![List product](img/list-product-2-head-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head `*` product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = 3 * 2 `*` ???
+```
+
+.center[![List product](img/list-product-2-tail-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head * `product(tail)`
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = 3 * 2 * `???`
+```
+
+.center[![List product](img/list-product-2.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case `Cons(head, tail)` => head * product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = 3 * 2 * ???
+```
+
+.center[![List product](img/list-product-3-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => `head` * product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = 3 * 2 * `1` * ???
+```
+
+.center[![List product](img/list-product-3-head-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head `*` product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = 3 * 2 * 1 `*` ???
+```
+
+.center[![List product](img/list-product-3-tail-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head * `product(tail)`
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = 3 * 2 * 1 * `???`
+```
+
+.center[![List product](img/list-product-3.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head * product(tail)
+    case `Nil`              => 1
+  }
+```
+
+```scala
+product(ints) = 3 * 2 * 1 * ???
+```
+
+.center[![List product](img/list-product-3.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head * product(tail)
+    case Nil              => `1`
+  }
+```
+
+```scala
+product(ints) = 3 * 2 * 1 * `1`
+```
+
+.center[![List product](img/list-product-3.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head * product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints) = `3 * 2 * 1 * 1`
+```
+
+.center[![List product](img/list-product-3.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head * product(tail)
+    case Nil              => 1
+  }
+```
+
+```tut:book
+product(ints)
+```
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    `case Cons(head, tail)` => head * product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints)
+```
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => `head * product(tail)`
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints)
+```
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head * product(tail)
+    `case Nil`              => 1
+  }
+```
+
+```scala
+product(ints)
+```
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => head * product(tail)
+    case Nil              => `1`
+  }
+```
+
+```scala
+product(ints)
+```
+
+---
+
+## String representation
+
+```tut:silent
+def mkString(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+    case Nil              => "nil"
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  `values: List`
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+    case Nil              => "nil"
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): `String` =
+  values match {
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+    case Nil              => "nil"
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    `case Cons(head, tail)` => head + " :: " + mkString(tail)
+    case Nil              => "nil"
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => `head` + " :: " + mkString(tail)
+    case Nil              => "nil"
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + `" :: "` + mkString(tail)
+    case Nil              => "nil"
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + `mkString(tail)`
+    case Nil              => "nil"
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+    `case Nil`              => "nil"
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+    case Nil              => `"nil"`
+  }
+```
+
+---
+
+## String representation
+
+```tut:silent
+def mkString(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+    case Nil              => "nil"
+  }
+```
+
+```tut:book
+mkString(ints)
+```
+
+---
+
+## Key takeaways
+
+Structural recursion works by:
+--
+
+* providing a solution to the smallest problem(s).
+--
+
+* for larger problems: relying on the solution to smaller problems.
+--
+
+* if this makes you think of proof by induction, well done.
+
+---
+
+class: center, middle
+
+# Generalised structural recursion
+
+---
+
+## Generalising `mkString`
+
+```tut:silent
+def mkString(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+    case Nil              => "nil"
+  }
+```
+
+---
+
+## Generalising `mkString`
+
+.diff-rm[
+```scala
+*def `mkString`(
+  values: List
+): String =
+  values match {
+*   case Cons(head, tail) => head + " :: " + `mkString`(tail)
+    case Nil              => "nil"
+  }
+```
+]
+
+---
+
+## Generalising `mkString`
+
+.diff-add[
+```scala
+*def `recurse`(
+  values: List
+): String =
+  values match {
+*   case Cons(head, tail) => head + " :: " + `recurse`(tail)
+    case Nil              => "nil"
+  }
+```
+]
+
+---
+
+## Generalising `mkString`
+
+```tut:silent
+def recurse(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+    case Nil              => "nil"
+  }
+```
+
+```tut:book
+recurse(ints)
+```
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - step 1](img/fold-init.svg)]
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-1.svg)]
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-2.svg)]
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-3.svg)]
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-4.svg)]
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-5.svg)]
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-6.svg)]
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-7.svg)]
+
+---
+
+## Generalising the base case
+
+.center[![fold - base case](img/fold-base.svg)]
+
+---
+
+## Generalising the base case
+
+```scala
+def recurse(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+    case Nil              => `"nil"`
+  }
+```
+
+---
+
+## Generalising the base case
+
+```scala
+def recurse(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+    case Nil              => "nil"
+  }
+```
+
+```scala
+&#x200B;`val base = "nil"`
+```
+
+---
+
+## Generalising the base case
+
+.diff-rm[
+```scala
+def recurse(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+*   case Nil              => `"nil"`
+  }
+```
+]
+
+```tut:silent
+val base = "nil"
+```
+
+---
+
+## Generalising the base case
+
+.diff-add[
+```scala
+def recurse(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+*   case Nil              => `base`
+  }
+```
+]
+
+```tut:silent
+val base = "nil"
+```
+
+---
+
+## Generalising the base case
+
+.diff-add[
+```scala
+def recurse(
+* `base  : String`,
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+    case Nil              => base
+  }
+```
+]
+
+---
+
+## Generalising the base case
+
+.diff-add[
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+*   case Cons(head, tail) => head + " :: " + recurse(`base`, tail)
+    case Nil              => base
+  }
+```
+]
+
+---
+
+## Generalising the base case
+
+```tut:silent
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + recurse(base, tail)
+    case Nil              => base
+  }
+```
+
+```tut:book
+recurse(base, ints)
+```
+
+---
+
+## Generalising the base case
+
+.center[![fold - base case](img/fold-base.svg)]
+
+---
+
+## Generalising the base case
+
+.center[![fold - base case](img/fold-base-after-hl-1.svg)]
+
+---
+
+## Generalising the base case
+
+.center[![fold - base case](img/fold-base-after.svg)]
+
+---
+
+## Generalising the step
+
+.center[![fold - step case](img/fold-step.svg)]
+
+---
+
+## Generalising the step
+
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => `head + " :: " + recurse(base, tail)`
+    case Nil              => base
+  }
+```
+
+---
+
+## Generalising the step
+
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => `head` + " :: " + recurse(base, tail)
+    case Nil              => base
+  }
+```
+
+---
+
+## Generalising the step
+
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + `recurse(base, tail)`
+    case Nil              => base
+  }
+```
+
+---
+
+## Generalising the step
+
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + recurse(base, tail)
+    case Nil              => base
+  }
+```
+
+```scala
+*def step(head: Int, tailResult: String) =
+* head + " :: " + tailResult
+```
+
+---
+
+## Generalising the step
+
+.diff-rm[
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+*   case Cons(head, tail) => `head + " :: " + recurse(base, tail)`
+    case Nil              => base
+  }
+```
+]
+
+```tut:silent
+def step(head: Int, tailResult: String) =
+  head + " :: " + tailResult
+```
+
+---
+
+## Generalising the step
+
+.diff-add[
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+*   case Cons(head, tail) => `step(head, recurse(base, tail))`
+    case Nil              => base
+  }
+```
+]
+
+```tut:silent
+def step(head: Int, tailResult: String) =
+  head + " :: " + tailResult
+```
+
+---
+
+## Generalising the step
+
+.diff-add[
+```scala
+def recurse(
+  base  : String,
+* `step  : (Int, String) => String,`
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, tail))
+    case Nil              => base
+  }
+```
+]
+
+---
+
+## Generalising the step
+
+.diff-add[
+```scala
+def recurse(
+  base  : String,
+  step  : (Int, String) => String,
+  values: List
+): String =
+  values match {
+*   case Cons(head, tail) => step(head, recurse(base, `step,` tail))
+    case Nil              => base
+  }
+```
+]
+
+---
+
+## Generalising the step
+
+```tut:silent
+def recurse(
+  base  : String,
+  step  : (Int, String) => String,
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Nil              => base
+  }
+```
+
+```tut:book
+recurse(base, step, ints)
+```
+
+---
+
+## Generalising the step
+
+.center[![fold - step case](img/fold-step.svg)]
+
+---
+
+## Generalising the step
+
+.center[![fold - step case](img/fold-step-after-hl-1.svg)]
+
+---
+
+## Generalising the step
+
+.center[![fold - step case](img/fold-step-after.svg)]
+
+---
+
+## Generalising the return type
+
+.center[![fold - return type](img/fold-return.svg)]
+
+---
+
+## Generalising the return type
+
+```scala
+def recurse(
+  base  : `String`,
+  step  : (Int, `String`) => `String`,
+  values: List
+): `String` =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Nil              => base
+  }
+```
+
+---
+
+## Generalising the return type
+
+.diff-add[
+```scala
+*def recurse[`A`](
+  base  : String,
+  step  : (Int, String) => String,
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Nil              => base
+  }
+```
+]
+
+
+---
+
+## Generalising the return type
+
+.diff-rm[
+```scala
+def recurse[A](
+* base  : `String`,
+* step  : (Int, `String`) => `String`,
+  values: List
+*): `String` =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Nil              => base
+  }
+```
+]
+
+---
+
+## Generalising the return type
+
+.diff-add[
+```scala
+def recurse[A](
+* base  : `A`,
+* step  : (Int, `A`) => `A`,
+  values: List
+*): `A` =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Nil              => base
+  }
+```
+]
+
+---
+
+## Generalising the return type
+
+```tut:silent
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Nil              => base
+  }
+```
+
+```tut:book
+recurse(base, step, ints)
+```
+
+---
+
+## Generalising the return type
+
+.center[![fold - return type](img/fold-return.svg)]
+
+---
+
+## Generalising the return type
+
+.center[![fold - return type](img/fold-return-after-hl-1.svg)]
+
+---
+
+## Generalising the return type
+
+.center[![fold - return type](img/fold-return-after.svg)]
+
+---
+
+## Simplifying the step
+
+```tut:silent
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Nil              => base
+  }
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A =
+  values match {
+    case Cons(head, tail) => step(head, `recurse(base, step, tail)`)
+    case Nil              => base
+  }
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  `base`  : A,
+  step  : (Int, A) => A,
+  values: List
+): A =
+  values match {
+    case Cons(head, tail) => step(head, recurse(`base`, step, tail))
+    case Nil              => base
+  }
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  `step`  : (Int, A) => A,
+  values: List
+): A =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, `step`, tail))
+    case Nil              => base
+  }
+```
+
+---
+
+## Simplifying the step
+
+.diff-rm[
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A =
+* `values match {`
+* `  case Cons(head, tail) => step(head, recurse(base, step, tail))`
+* `  case Nil              => base`
+* `}`
+```
+]
+
+---
+
+## Simplifying the step
+
+.diff-add[
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+
+* `def loop(state: List): A =`
+* `  state match {`
+* `    case Cons(head, tail) => step(head, loop(tail))`
+* `    case Nil              => base`
+* `  }`
+*
+* loop(values)
+}
+```
+]
+
+---
+
+## Simplifying the step
+
+.diff-add[
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+
+* def loop(state: List): A =
+*   state match {
+*     case Cons(head, tail) => step(head, loop(tail))
+*     case Nil              => base
+*   }
+*
+* `loop(values)`
+}
+```
+]
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  `step`  : (Int, A) => A,
+  values: List
+): A = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => `step`(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop(values)
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  `base`  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => `base`
+    }
+
+  loop(values)
+}
+```
+
+
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, `loop(tail)`)
+      case Nil              => base
+    }
+
+  loop(values)
+}
+```
+
+---
+
+## Simplifying the step
+
+```tut:silent
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop(values)
+}
+```
+
+```tut:book
+recurse(base, step, ints)
+```
+
+---
+
+## Simplifying the step
+
+.center[![fold - recurse to loop](img/fold-return-after.svg)]
+
+---
+
+## Simplifying the step
+
+.center[![fold - recurse to loop](img/fold-loop-before.svg)]
+
+---
+
+## Simplifying the step
+
+.center[![fold - recurse to loop](img/fold-loop-hl-1.svg)]
+
+---
+
+## Simplifying the step
+
+.center[![fold - recurse to loop](img/fold-loop.svg)]
+
+---
+
+## Dropping parameters
+
+.diff-rm[
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+* `values: List`
+): A = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+* `loop(values)`
+}
+```
+]
+
+---
+
+## Dropping parameters
+
+.diff-add[
+```scala
+def recurse[A](
+  base: A,
+  step: (Int, A) => A
+): A = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+* `loop`
+}
+```
+]
+
+---
+
+## Dropping parameters
+
+.diff-rm[
+```scala
+def recurse[A](
+  base: A,
+  step: (Int, A) => A
+*): `A` = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Dropping parameters
+
+.diff-add[
+```scala
+def recurse[A](
+  base: A,
+  step: (Int, A) => A
+*): `List => A` = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Dropping parameters
+
+```tut:silent
+def recurse[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop
+}
+```
+
+```tut:book
+recurse(base, step)(ints)
+```
+
+---
+
+## Dropping parameters
+
+```tut:silent
+def mkString(ints: List): String =
+  recurse(base, step)(ints)
+```
+
+---
+
+## Dropping parameters
+
+.diff-rm[
+```scala
+*def mkString(`ints: List`): String =
+* recurse(base, step)`(ints)`
+```
+]
+
+---
+
+## Dropping parameters
+
+.diff-rm[
+```scala
+*def mkString: `String` =
+  recurse(base, step)
+```
+]
+
+---
+
+## Dropping parameters
+
+.diff-add[
+```scala
+*def mkString: `List => String` =
+  recurse(base, step)
+```
+]
+
+---
+
+## Dropping parameters
+
+.diff-rm[
+```scala
+*&#x200B;`def mkString`: List => String =
+  recurse(base, step)
+```
+]
+
+---
+
+## Dropping parameters
+
+.diff-add[
+```scala
+*&#x200B;`val mkString`: List => String =
+  recurse(base, step)
+```
+]
+
+---
+
+## Dropping parameters
+
+```tut:silent
+val mkString: List => String =
+  recurse(base, step)
+```
+
+```tut:book
+mkString(ints)
+```
+
+---
+
+## Naming things
+
+.diff-rm[
+```scala
+*def `recurse`[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+.diff-add[
+```scala
+*def `fold`[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+```tut:silent
+def fold[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop
+}
+```
+
+```tut:book
+fold(base, step)(ints)
+```
+
+---
+
+## `product` as a fold
+
+```tut:silent
+val product: List => Int =
+  fold[Int](
+    base = 1,
+    step = (head, tailProduct) => head * tailProduct
+  )
+```
+
+---
+
+## `product` as a fold
+
+```scala
+val product: List => Int =
+  `fold`[Int](
+    base = 1,
+    step = (head, tailProduct) => head * tailProduct
+  )
+```
+
+---
+
+## `product` as a fold
+
+```scala
+val product: List => Int =
+  fold[Int](
+    `base = 1`,
+    step = (head, tailProduct) => head * tailProduct
+  )
+```
+
+---
+
+## `product` as a fold
+
+```scala
+val product: List => Int =
+  fold[Int](
+    base = 1,
+    `step = (head, tailProduct) => head * tailProduct`
+  )
+```
+
+---
+
+## `product` as a fold
+
+```tut:silent
+val product: List => Int =
+  fold[Int](
+    base = 1,
+    step = (head, tailProduct) => head * tailProduct
+  )
+```
+
+```tut:book
+product(ints)
+```
+
+---
+
+## `mkString` as a fold
+
+```tut:silent
+val mkString: List => String =
+  fold[String](
+    base = "nil",
+    step = (head, tailString) => head + " :: " + tailString
+  )
+```
+
+---
+
+## `mkString` as a fold
+
+```scala
+val mkString: List => String =
+  `fold`[String](
+    base = "nil",
+    step = (head, tailString) => head + " :: " + tailString
+  )
+```
+
+---
+
+## `mkString` as a fold
+
+```scala
+val mkString: List => String =
+  fold[String](
+    `base = "nil"`,
+    step = (head, tailString) => head + " :: " + tailString
+  )
+```
+
+---
+
+## `mkString` as a fold
+
+```scala
+val mkString: List => String =
+  fold[String](
+    base = "nil",
+    `step = (head, tailString) => head + " :: " + tailString`
+  )
+```
+
+---
+
+## `mkString` as a fold
+
+```tut:silent
+val mkString: List => String =
+  fold[String](
+    base = "nil",
+    step = (head, tailString) => head + " :: " + tailString
+  )
+```
+
+```tut:book
+mkString(ints)
+```
+
+---
+
+## Key takeaways
+
+Structural recursion is generalised by:
+--
+
+* parameterising the base case.
+--
+
+* parameterising the step case.
+--
+
+* ... knowing the structure of your type.
+
+---
+
+class: center, middle
+
+# Generalised folds
+
+---
+
+## Generalised folds
+
+```tut:silent
+def fold[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalised folds
+
+.center[![Cata step 1](img/cata-1.svg)]
+
+---
+
+## Abstracting over structure
+
+.center[![Cata step 1](img/cata-1-hl-1.svg)]
+
+---
+
+## Abstracting over structure
+
+```scala
+def fold[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+    state match {
+      case `Cons(head, tail)` => step(head, loop(tail))
+      case `Nil`              => base
+    }
+
+  loop
+}
+```
+
+---
+
+## List projection
+
+```tut:silent
+val project: List => Option[(Int, List)] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+
+---
+
+## List projection
+
+```scala
+val `project`: List => Option[(Int, List)] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+
+---
+
+## List projection
+
+```scala
+val project: `List => Option[(Int, List)]` =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+
+---
+
+## List projection
+
+```scala
+val project: List => Option[(Int, List)] =
+  _ match {
+    case `Cons(head, tail)` => Some((head, tail))
+    case Nil              => None
+  }
+```
+
+---
+
+## List projection
+
+```scala
+val project: List => Option[(Int, List)] =
+  _ match {
+    case Cons(head, tail) => `Some((head, tail))`
+    case Nil              => None
+  }
+```
+
+---
+
+## List projection
+
+```scala
+val project: List => Option[(Int, List)] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case `Nil`              => None
+  }
+```
+
+---
+
+## List projection
+
+```scala
+val project: List => Option[(Int, List)] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => `None`
+  }
+```
+
+---
+
+## Abstracting over structure
+
+.diff-rm[
+```scala
+def fold[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+*   `state` match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+.diff-add[
+```scala
+def fold[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+*   `project(state)` match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+.diff-rm[
+```scala
+def fold[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+*     case `Cons(head, tail)` => step(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+.diff-add[
+```scala
+def fold[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+*     case `Some((head, tail))` => step(head, loop(tail))
+      case Nil                => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+.diff-rm[
+```scala
+def fold[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+      case Some((head, tail)) => step(head, loop(tail))
+*     case `Nil`                => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+.diff-rm[
+```scala
+def fold[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+      case Some((head, tail)) => step(head, loop(tail))
+*     case `None`               => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+```scala
+def fold[A](
+  base: A,
+  step: (Int, A) => A
+): List => A = {
+
+  def loop(state: List): A =
+    `project`(state) match {
+      case Some((head, tail)) => step(head, loop(tail))
+      case None               => base
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+.diff-add[
+```scala
+def fold[A](
+  base   : A,
+  step   : (Int, A) => A,
+* `project: List => Option[(Int, List)]`
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+      case Some((head, tail)) => step(head, loop(tail))
+      case None               => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+```tut:silent
+def fold[A](
+  base   : A,
+  step   : (Int, A) => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+      case Some((head, tail)) => step(head, loop(tail))
+      case None               => base
+    }
+
+  loop
+}
+```
+
+```tut:book
+fold(base, step, project)(ints)
+```
+
+---
+
+## Abstracting over structure
+
+.center[![Cata step 1](img/cata-1-hl-1.svg)]
+
+---
+
+## Abstracting over structure
+
+.center[![Cata step 2](img/cata-2-hl-1.svg)]
+
+---
+
+## Abstracting over structure
+
+.center[![Cata step 2](img/cata-2.svg)]
+
+---
+
+## Abstracting over structure
+
+.center[![Cata step 2](img/cata-2-hl-2.svg)]
+
+---
+
+## Abstracting over structure
+
+```scala
+def fold[A](
+* base   : A,
+* step   : (Int, A) => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+      case Some((head, tail)) => step(head, loop(tail))
+      case None               => base
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```tut:silent
+val op: Option[(Int, String)] => String =
+  _ match {
+    case Some((head, tailResult)) => step(head, tailResult)
+    case None                     => base
+  }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+val `op`: Option[(Int, String)] => String =
+  _ match {
+    case Some((head, tailResult)) => step(head, tailResult)
+    case None                     => base
+  }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+val op: `Option[(Int, String)] => String` =
+  _ match {
+    case Some((head, tailResult)) => step(head, tailResult)
+    case None                     => base
+  }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+    case `Some((head, tailResult))` => step(head, tailResult)
+    case None                     => base
+  }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+.diff-rm[
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+*   case Some((head, tailResult)) => `step(head, tailResult)`
+    case None                     => base
+  }
+```
+]
+
+---
+
+## Simplifying `base` and `step`
+
+.diff-add[
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+*   case Some((head, tailResult)) => `head + " :: " + tailResult`
+    case None                     => base
+  }
+```
+]
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+    case Some((head, tailResult)) => head + " :: " + tailResult
+    case `None`                     => base
+  }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+.diff-rm[
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+    case Some((head, tailResult)) => head + " :: " + tailResult
+*   case None                     => `base`
+  }
+```
+]
+
+---
+
+## Simplifying `base` and `step`
+
+.diff-add[
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+    case Some((head, tailResult)) => head + " :: " + tailResult
+*   case None                     => `"nil"`
+  }
+```
+]
+
+---
+
+## Simplifying `base` and `step`
+
+```tut:silent
+val op: Option[(Int, String)] => String =
+  _ match {
+    case Some((head, tailResult)) => head + " :: " + tailResult
+    case None                     => "nil"
+  }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+.diff-rm[
+```scala
+def fold[A](
+* `base   : A,`
+* `step   : (Int, A) => A,`
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+      case Some((head, tail)) => step(head, loop(tail))
+      case None               => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Simplifying `base` and `step`
+
+.diff-add[
+```scala
+def fold[A](
+* `op     : Option[(Int, A)] => A,`
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+      case Some((head, tail)) => step(head, loop(tail))
+      case None               => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Simplifying `base` and `step`
+
+.diff-rm[
+```scala
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+*     case Some((head, tail)) => `step(head, loop(tail))`
+      case None               => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Simplifying `base` and `step`
+
+.diff-add[
+```scala
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+*     case Some((head, tail)) => `op(Some((head, loop(tail))))`
+      case None               => base
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Simplifying `base` and `step`
+
+.diff-rm[
+```scala
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+      case Some((head, tail)) => op(Some((head, loop(tail))))
+*     case None               => `base`
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Simplifying `base` and `step`
+
+.diff-add[
+```scala
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+      case Some((head, tail)) => op(Some((head, loop(tail))))
+*     case None               => `op(None)`
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Simplifying `base` and `step`
+
+```tut:silent
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+      case Some((head, tail)) => op(Some((head, loop(tail))))
+      case None               => op(None)
+    }
+
+  loop
+}
+```
+
+```tut:book
+fold(op, project)(ints)
+```
+
+---
+
+## Simplifying `base` and `step`
+
+.center[![Cata step 2](img/cata-2-hl-2.svg)]
+
+---
+
+## Simplifying `base` and `step`
+
+.center[![Cata step 3](img/cata-3-hl-1.svg)]
+
+---
+
+## Moving `op`
+
+.diff-rm[
+```scala
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(state: List): A =
+    project(state) match {
+*     case Some((head, tail)) => `op`(Some((head, loop(tail))))
+*     case None               => `op`(None)
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Moving `op`
+
+.diff-add[
+```scala
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(state: List): A =
+*   `op`(project(state) match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case None               => None
+    })
+
+  loop
+}
+```
+]
+
+---
+
+## Moving `op`
+
+```tut:silent
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(state: List): A =
+    op(project(state) match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case None               => None
+    })
+
+  loop
+}
+```
+
+```tut:book
+fold(op, project)(ints)
+```
+
+---
+
+## Moving `op`
+
+.center[![Cata step 3](img/cata-3-hl-1.svg)]
+
+---
+
+## Moving `op`
+
+.center[![Cata step 4](img/cata-4-hl-1.svg)]
+
+---
+
+## Moving `op`
+
+.center[![Cata step 4](img/cata-4.svg)]
+
+---
+
+## Intermediate representation
+
+.center[![Cata step 4](img/cata-4-hl-2.svg)]
+
+---
+
+## Intermediate representation
+
+```tut:silent
+type ListF[A] = Option[(Int, A)]
+```
+
+---
+
+## Intermediate representation
+
+```scala
+type `ListF[A]` = Option[(Int, A)]
+```
+
+---
+
+## Intermediate representation
+
+```scala
+type ListF[A] = `Option[(Int, A)]`
+```
+
+---
+
+## Intermediate representation
+
+.diff-rm[
+```scala
+def fold[A](
+* op     : `Option[(Int, A)]` => A,
+* project: List => `Option[(Int, List)]`
+): List => A = {
+
+  def loop(state: List): A =
+    op(project(state) match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case None               => None
+    })
+
+  loop
+}
+```
+]
+
+---
+
+## Intermediate representation
+
+.diff-add[
+```scala
+def fold[A](
+* op     : `ListF[A]` => A,
+* project: List => `ListF[List]`
+): List => A = {
+
+  def loop(state: List): A =
+    op(project(state) match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case None               => None
+    })
+
+  loop
+}
+```
+]
+
+---
+
+## Intermediate representation
+
+```tut:silent
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(project(state) match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case None               => None
+    })
+
+  loop
+}
+```
+
+```tut:book
+fold(op, project)(ints)
+```
+
+---
+
+## Intermediate representation
+
+.center[![Cata step 4](img/cata-4-hl-2.svg)]
+
+---
+
+## Intermediate representation
+
+.center[![Cata step 5](img/cata-5-hl-1.svg)]
+
+---
+
+## Intermediate representation
+
+.center[![Cata step 5](img/cata-5.svg)]
+
+---
+
+## Intermediate representation
+
+```scala
+type ListF[A] = Option[(Int, A)]
+```
+
+--
+
+```tut:silent
+val project: List => ListF[List] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+
+---
+
+## Intermediate representation
+
+```scala
+type ListF[`A`] = Option[(Int, A)]
+```
+
+```scala
+val project: List => ListF[`List`] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+
+---
+
+## Intermediate representation
+
+```scala
+type ListF[A] = Option[(Int, A)]
+```
+
+```tut:silent
+val op: ListF[String] => String =
+  _ match {
+    case Some((head, tailResult)) => head + " :: " + tailResult
+    case None                     => "nil"
+  }
+```
+
+---
+
+## Intermediate representation
+
+```scala
+type ListF[`A`] = Option[(Int, A)]
+```
+
+```scala
+val op: ListF[`String`] => String =
+  _ match {
+    case Some((head, tailResult)) => head + " :: " + tailResult
+    case None                     => "nil"
+  }
+```
+
+---
+
+## Intermediate representation
+
+.center[![Cata step 5](img/cata-5.svg)]
+
+---
+
+## Generalising recursion
+
+.center[![Cata step 5](img/cata-5-hl-2.svg)]
+
+---
+
+## Generalising recursion
+
+.center[![Cata step 5](img/cata-5-hl-3.svg)]
+
+---
+
+## Generalising recursion
+
+.center[![Cata step 5](img/cata-5-hl-4.svg)]
+
+---
+
+## Generalising recursion
+
+.center[![Cata step 5](img/cata-5-hl-5.svg)]
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(project(state) match {
+*     case Some((head, tail)) => Some((head, loop(tail)))
+*     case None               => None
+    })
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(project(state) match {
+      case `Some((head, tail))` => Some((head, loop(tail)))
+      case None               => None
+    })
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(project(state) match {
+      case Some((head, tail)) => `Some((head, loop(tail)))`
+      case None               => None
+    })
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(project(state) match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case `None`               => None
+    })
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(project(state) match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case None               => `None`
+    })
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+.diff-rm[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+* `  op(project(state) match {`
+* `    case Some((head, tail)) => Some((head, loop(tail)))`
+* `    case None               => None`
+* `  })`
+
+  loop
+}
+```
+]
+
+---
+
+## Generalising recursion
+
+.diff-add[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+*   op(recurse(project(state)))
+
+* `def recurse(state: ListF[List]): ListF[A] =`
+*   `state match {`
+*   `  case Some((head, tail)) => Some((head, loop(tail)))`
+*   `  case None               => None`
+*   `}`
+
+  loop
+}
+```
+]
+
+---
+
+## Generalising recursion
+
+.diff-add[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+*   `op(recurse(project(state)))`
+
+* def recurse(state: ListF[List]): ListF[A] =
+*   state match {
+*     case Some((head, tail)) => Some((head, loop(tail)))
+*     case None               => None
+*   }
+
+  loop
+}
+```
+]
+
+---
+
+## Generalising recursion
+
+```tut:silent
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state)))
+
+  def recurse(state: ListF[List]): ListF[A] =
+    state match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state)))
+
+  def recurse(state: `ListF[List]`): ListF[A] =
+    state match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state)))
+
+  def recurse(state: ListF[List]): `ListF[A]` =
+    state match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state)))
+
+  def recurse(state: ListF[List]): ListF[A] =
+    state match {
+      case Some((head, tail)) => Some((head, `loop(tail)`))
+      case None               => None
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: `List`): A =
+    op(recurse(project(state)))
+
+  def recurse(state: ListF[List]): ListF[A] =
+    state match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): `A` =
+    op(recurse(project(state)))
+
+  def recurse(state: ListF[List]): ListF[A] =
+    state match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+.diff-add[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state)))
+
+* def recurse(state: ListF[List], `f: List => A`): ListF[A] =
+    state match {
+      case Some((head, tail)) => Some((head, loop(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Generalising recursion
+
+.diff-rm[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state)))
+
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+    state match {
+*     case Some((head, tail)) => Some((head, `loop`(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Generalising recursion
+
+.diff-add[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state)))
+
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+    state match {
+*     case Some((head, tail)) => Some((head, `f`(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Generalising recursion
+
+.diff-add[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+*   op(recurse(project(state), `loop`))
+
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+    state match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Generalising recursion
+
+```tut:silent
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state), loop))
+
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+    state match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state), loop))
+
+  def recurse(state: `ListF[List]`, f: List => A): ListF[A] =
+    state match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state), loop))
+
+  def recurse(state: ListF[List], f: `List => A`): ListF[A] =
+    state match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state), loop))
+
+  def recurse(state: ListF[List], f: List => A): `ListF[A]` =
+    state match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+
+---
+
+## Functor
+
+```tut:silent
+trait Functor[F[_]] {
+  def map[A, B](fa: F[A], f: A => B): F[B]
+}
+```
+
+---
+
+## Functor
+
+```scala
+trait `Functor`[F[_]] {
+  def map[A, B](fa: F[A], f: A => B): F[B]
+}
+```
+
+---
+
+## Functor
+
+```scala
+trait Functor[`F[_]`] {
+  def map[A, B](fa: F[A], f: A => B): F[B]
+}
+```
+
+---
+
+## Functor
+
+```scala
+trait Functor[F[_]] {
+  def `map`[A, B](fa: F[A], f: A => B): F[B]
+}
+```
+
+---
+
+## Functor
+
+```scala
+trait Functor[F[_]] {
+  def map[A, B](`fa: F[A]`, f: A => B): F[B]
+}
+```
+
+---
+
+## Functor
+
+```scala
+trait Functor[F[_]] {
+  def map[A, B](fa: F[A], `f: A => B`): F[B]
+}
+```
+
+---
+
+## Functor
+
+```scala
+trait Functor[F[_]] {
+  def map[A, B](fa: F[A], f: A => B): `F[B]`
+}
+```
+
+---
+
+## Functor
+
+```tut:silent
+implicit val listFFunctor = new Functor[ListF] {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => None
+    }
+}
+```
+
+---
+
+## Functor
+
+```scala
+implicit val listFFunctor = new `Functor[ListF]` {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => None
+    }
+}
+```
+
+---
+
+## Functor
+
+```scala
+&#x200B;`implicit` val listFFunctor = new Functor[ListF] {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => None
+    }
+}
+```
+
+---
+
+## Functor
+
+```scala
+implicit val listFFunctor = new Functor[ListF] {
+  override def map[A, B](list: ListF[A], f: A => B) =
+*   list match {
+*     case Some((head, tail)) => Some((head, f(tail)))
+*     case None               => None
+*   }
+}
+```
+
+---
+
+## Functor
+
+```scala
+implicit val listFFunctor = new Functor[ListF] {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case `Some((head, tail))` => Some((head, f(tail)))
+      case None               => None
+    }
+}
+```
+
+---
+
+## Functor
+
+```scala
+implicit val listFFunctor = new Functor[ListF] {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case Some((head, tail)) => Some((head, `f(tail)`))
+      case None               => None
+    }
+}
+```
+
+---
+
+## Functor
+
+```scala
+implicit val listFFunctor = new Functor[ListF] {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case `None`               => None
+    }
+}
+```
+
+---
+
+## Functor
+
+```scala
+implicit val listFFunctor = new Functor[ListF] {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => `None`
+    }
+}
+```
+
+---
+
+## Functor
+
+```tut:silent
+def map[F[_], A, B](
+  fa     : F[A],
+  f      : A => B
+)(implicit
+  functor: Functor[F]
+): F[B] =
+  functor.map(fa, f)
+```
+
+---
+
+## Functor
+
+```scala
+def `map`[F[_], A, B](
+  fa     : F[A],
+  f      : A => B
+)(implicit
+  functor: Functor[F]
+): F[B] =
+  functor.map(fa, f)
+```
+
+---
+
+## Functor
+
+```scala
+def map[F[_], A, B](
+  `fa     : F[A]`,
+  f      : A => B
+)(implicit
+  functor: Functor[F]
+): F[B] =
+  functor.map(fa, f)
+```
+
+---
+
+## Functor
+
+```scala
+def map[F[_], A, B](
+  fa     : F[A],
+  `f      : A => B`
+)(implicit
+  functor: Functor[F]
+): F[B] =
+  functor.map(fa, f)
+```
+
+---
+
+## Functor
+
+```scala
+def map[F[_], A, B](
+  fa     : F[A],
+  f      : A => B
+)(implicit
+  `functor: Functor[F]`
+): F[B] =
+  functor.map(fa, f)
+```
+
+---
+
+## Functor
+
+```scala
+def map[F[_], A, B](
+  fa     : F[A],
+  f      : A => B
+)(`implicit`
+  functor: Functor[F]
+): F[B] =
+  functor.map(fa, f)
+```
+
+---
+
+## Functor
+
+```scala
+def map[F[_], A, B](
+  fa     : F[A],
+  f      : A => B
+)(implicit
+  functor: Functor[F]
+): F[B] =
+  `functor.map(fa, f)`
+```
+
+---
+
+## Using Functor
+
+.diff-rm[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state), loop))
+
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+* `  state match {`
+* `    case Some((head, tail)) => Some((head, f(tail)))`
+* `    case None               => None`
+* `  }`
+
+  loop
+}
+```
+]
+
+---
+
+## Using Functor
+
+.diff-add[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state), loop))
+
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+*   `map(state, f)`
+
+  loop
+}
+```
+]
+
+---
+
+## Using Functor
+
+.diff-rm[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+*   op(`recurse`(project(state), loop))
+
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+    map(state, f)
+
+  loop
+}
+```
+]
+
+---
+
+## Using Functor
+
+.diff-add[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+*   op(`map`(project(state), loop))
+
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+    map(state, f)
+
+  loop
+}
+```
+]
+
+---
+
+## Using Functor
+
+.diff-rm[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(map(project(state), loop))
+
+* `def recurse(state: ListF[List], f: List => A): ListF[A] =`
+* `  map(state, f)`
+
+  loop
+}
+```
+]
+
+---
+
+## Using Functor
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```tut:silent
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+
+```tut:book
+fold(op, project)(ints)
+```
+
+---
+
+## Using Functor
+
+.center[![Cata step 5](img/cata-5-hl-2.svg)]
+
+---
+
+## Using Functor
+
+.center[![Cata step 6](img/cata-6-hl-1.svg)]
+
+---
+
+## Using Functor
+
+.center[![Cata step 6](img/cata-6.svg)]
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Cata step 6](img/cata-6-hl-2.svg)]
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def fold[A](
+  op     : `ListF`[A] => A,
+  project: List => `ListF`[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(`map`(project(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `ListF`
+
+.diff-add[
+```scala
+*def fold[`F[_]: Functor`, A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over `ListF`
+
+.diff-rm[
+```scala
+def fold[F[_]: Functor, A](
+* op     : `ListF`[A] => A,
+* project: List => `ListF`[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over `ListF`
+
+.diff-add[
+```scala
+def fold[F[_]: Functor, A](
+* op     : `F`[A] => A,
+* project: List => `F`[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over `ListF`
+
+```tut:silent
+def fold[F[_]: Functor, A](
+  op     : F[A] => A,
+  project: List => F[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+
+```tut:book
+fold(op, project).apply(ints)
+```
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Cata step 6](img/cata-6-hl-2.svg)]
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Cata step 7](img/cata-7-hl-1.svg)]
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Cata step 7](img/cata-7.svg)]
+
+---
+
+## Abstracting over `List`
+
+.center[![Cata step 7](img/cata-7-hl-2.svg)]
+
+---
+
+## Abstracting over `List`
+
+```scala
+def fold[F[_]: Functor, A](
+  op     : F[A] => A,
+  project: `List` => F[`List`]
+): `List` => A = {
+
+  def loop(state: `List`): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `List`
+
+.diff-add[
+```scala
+*def fold[F[_]: Functor, A, `B`](
+  op     : F[A] => A,
+  project: List => F[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over `List`
+
+.diff-rm[
+```scala
+def fold[F[_]: Functor, A, B](
+  op     : F[A] => A,
+* project: `List` => F[`List`]
+): `List` => A = {
+
+* def loop(stage: `List`): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over `List`
+
+.diff-add[
+```scala
+def fold[F[_]: Functor, A, B](
+  op     : F[A] => A,
+* project: `B` => F[`B`]
+): `B` => A = {
+
+* def loop(state: `B`): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over `List`
+
+```tut:silent
+def fold[F[_]: Functor, A, B](
+  op     : F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+
+```tut:book
+fold(op, project).apply(ints)
+```
+
+---
+
+## Abstracting over `List`
+
+.center[![Cata step 7](img/cata-7-hl-2.svg)]
+
+---
+
+## Abstracting over `List`
+
+.center[![Cata step 8](img/cata-8-hl-1.svg)]
+
+---
+
+## Abstracting over `List`
+
+.center[![Cata step 8](img/cata-8.svg)]
+
+---
+
+## Naming things
+
+.diff-rm[
+```scala
+*def `fold`[F[_]: Functor, A, B](
+  op     : F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+.diff-add[
+```scala
+*def `cata`[F[_]: Functor, A, B](
+  op     : F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+    op(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+.diff-rm[
+```scala
+def cata[F[_]: Functor, A, B](
+* `op`     : F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+*   `op`(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+.diff-add[
+```scala
+def cata[F[_]: Functor, A, B](
+* `algebra`: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+*   `algebra`(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+```scala
+def cata[`F[_]: Functor`, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+    algebra(map(project(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Naming things
+
+```tut:silent
+def cata[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+    algebra(map(project(state), loop))
+
+  loop
+}
+```
+
+```tut:book
+cata(op, project).apply(ints)
+```
+
+---
+
+## Naming things
+
+.center[![Cata step 8](img/cata-8.svg)]
+
+---
+
+## Naming things
+
+.center[![Cata step 9](img/cata-9-hl-1.svg)]
+
+---
+
+## Naming things
+
+.center[![Cata step 9](img/cata-9-hl-2.svg)]
+
+---
+
+## Naming things
+
+.center[![Cata step 9](img/cata-9.svg)]
+
+---
+
+## `product` as a cata
+
+```tut:silent
+val productAlgebra: ListF[Int] => Int =
+  _ match {
+    case Some((head, tailProduct)) => head * tailProduct
+    case None                      => 1
+  }
+
+val product: List => Int =
+  cata(productAlgebra, project)
+```
+
+---
+
+## `product` as a cata
+
+```scala
+val `productAlgebra`: ListF[Int] => Int =
+  _ match {
+    case Some((head, tailProduct)) => head * tailProduct
+    case None                      => 1
+  }
+
+val product: List => Int =
+  cata(productAlgebra, project)
+```
+
+---
+
+## `product` as a cata
+
+```scala
+val productAlgebra: `ListF[Int] => Int` =
+  _ match {
+    case Some((head, tailProduct)) => head * tailProduct
+    case None                      => 1
+  }
+
+val product: List => Int =
+  cata(productAlgebra, project)
+```
+
+---
+
+## `product` as a cata
+
+```scala
+val productAlgebra: ListF[Int] => Int =
+  _ match {
+    case `Some((head, tailProduct))` => head * tailProduct
+    case None                      => 1
+  }
+
+val product: List => Int =
+  cata(productAlgebra, project)
+```
+
+---
+
+## `product` as a cata
+
+```scala
+val productAlgebra: ListF[Int] => Int =
+  _ match {
+    case Some((head, tailProduct)) => `head * tailProduct`
+    case None                      => 1
+  }
+
+val product: List => Int =
+  cata(productAlgebra, project)
+```
+
+---
+
+## `product` as a cata
+
+```scala
+val productAlgebra: ListF[Int] => Int =
+  _ match {
+    case Some((head, tailProduct)) => head * tailProduct
+    case `None`                      => 1
+  }
+
+val product: List => Int =
+  cata(productAlgebra, project)
+```
+
+---
+
+## `product` as a cata
+
+```scala
+val productAlgebra: ListF[Int] => Int =
+  _ match {
+    case Some((head, tailProduct)) => head * tailProduct
+    case None                      => `1`
+  }
+
+val product: List => Int =
+  cata(productAlgebra, project)
+```
+
+---
+
+## `product` as a cata
+
+```scala
+val productAlgebra: ListF[Int] => Int =
+  _ match {
+    case Some((head, tailProduct)) => head * tailProduct
+    case None                      => 1
+  }
+
+val product: List => Int =
+  `cata(productAlgebra, project)`
+```
+
+---
+
+## `product` as a cata
+
+```tut:silent
+val productAlgebra: ListF[Int] => Int =
+  _ match {
+    case Some((head, tailProduct)) => head * tailProduct
+    case None                      => 1
+  }
+
+val product: List => Int =
+  cata(productAlgebra, project)
+```
+
+```tut:book
+product(ints)
+```
+
+---
+
+## `mkString` as a cata
+
+```tut:silent
+val mkStringAlgebra: ListF[String] => String =
+  _ match {
+    case Some((head, tailString)) => head + " :: " + tailString
+    case None                     => "nil"
+  }
+
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
+```
+
+---
+
+## `mkString` as a cata
+
+```scala
+val `mkStringAlgebra`: ListF[String] => String =
+  _ match {
+    case Some((head, tailString)) => head + " :: " + tailString
+    case None                     => "nil"
+  }
+
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
+```
+
+---
+
+## `mkString` as a cata
+
+```scala
+val mkStringAlgebra: `ListF[String] => String` =
+  _ match {
+    case Some((head, tailString)) => head + " :: " + tailString
+    case None                     => "nil"
+  }
+
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
+```
+
+---
+
+## `mkString` as a cata
+
+```scala
+val mkStringAlgebra: ListF[String] => String =
+  _ match {
+    case `Some((head, tailString))` => head + " :: " + tailString
+    case None                     => "nil"
+  }
+
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
+```
+
+---
+
+## `mkString` as a cata
+
+```scala
+val mkStringAlgebra: ListF[String] => String =
+  _ match {
+    case Some((head, tailString)) => `head + " :: " + tailString`
+    case None                     => "nil"
+  }
+
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
+```
+
+---
+
+## `mkString` as a cata
+
+```scala
+val mkStringAlgebra: ListF[String] => String =
+  _ match {
+    case Some((head, tailString)) => head + " :: " + tailString
+    case `None`                     => "nil"
+  }
+
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
+```
+
+---
+
+## `mkString` as a cata
+
+```scala
+val mkStringAlgebra: ListF[String] => String =
+  _ match {
+    case Some((head, tailString)) => head + " :: " + tailString
+    case None                     => `"nil"`
+  }
+
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
+```
+
+---
+
+## `mkString` as a cata
+
+```scala
+val mkStringAlgebra: ListF[String] => String =
+  _ match {
+    case Some((head, tailString)) => head + " :: " + tailString
+    case None                     => "nil"
+  }
+
+val mkString: List => String =
+  `cata(mkStringAlgebra, project)`
+```
+
+---
+
+## `mkString` as a cata
+
+```tut:silent
+val mkStringAlgebra: ListF[String] => String =
+  _ match {
+    case Some((head, tailString)) => head + " :: " + tailString
+    case None                     => "nil"
+  }
+
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
+```
+
+```tut:book
+mkString(ints)
+```
+
+---
+
+## Key takeaways
+
+Catamorphisms are:
+--
+
+* structural recursion for types that can be projected into pattern functors.
+--
+
+* fare less complicated than their names make them out to be.
+--
+
+* a simple refactoring away from the familiar `fold`.
+
+---
+
+class: center, middle
+
+# Can this be applied to other types?
+
+---
+
+## Binary Tree
+
+.center[![Tree](img/tree.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Node](img/tree-node.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Leaf](img/tree-leaf.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Node](img/tree-node.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Node](img/tree-node-hl-1.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Node](img/tree-node-hl-2.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Node](img/tree-node-rest.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Node](img/tree-node-hl-3.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Leaf](img/tree-leaf.svg)]
+
+---
+
+## Binary Tree
+
+```tut:silent
+sealed trait Tree
+
+case class Node(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+*sealed trait Tree
+
+case class Node(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+sealed trait Tree
+
+*case class Node(
+* left : Tree,
+* value: Int,
+* right: Tree
+*) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+sealed trait Tree
+
+case class Node(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends Tree
+
+*case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+sealed trait Tree
+
+*case class Node(
+* left : Tree,
+* value: Int,
+* right: Tree
+*) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+sealed trait Tree
+
+case class Node(
+  left : Tree,
+  `value: Int`,
+  right: Tree
+) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+sealed trait Tree
+
+case class Node(
+  `left : Tree`,
+  value: Int,
+  right: Tree
+) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+sealed trait Tree
+
+case class Node(
+  left : Tree,
+  value: Int,
+  `right: Tree`
+) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```tut:book
+val intTree =
+  Node(
+    Node(
+      Node(Leaf, 1, Leaf),
+      2,
+      Node(Leaf, 3, Leaf)
+    ),
+    4,
+    Leaf
+  )
+```
+
+---
+
+## Binary Tree
+
+```scala
+val intTree =
+  Node(
+    Node(
+      Node(Leaf, `1`, Leaf),
+      `2`,
+      Node(Leaf, `3`, Leaf)
+    ),
+    `4`,
+    Leaf
+  )
+```
+
+---
+
+## Tree Height
+
+.center[![Tree Height](img/tree.svg)]
+
+---
+
+## Tree Height
+
+.center[![Tree Height](img/tree-height.svg)]
+
+---
+
+## Tree Height
+
+.center[![Tree catamorphism](img/cata-tree.svg)]
+
+---
+
+## Tree Height
+
+.center[![Tree catamorphism](img/cata-tree-1.svg)]
+
+---
+
+## Tree Height
+
+.center[![Tree catamorphism](img/cata-tree-2.svg)]
+
+---
+
+## Tree Height
+
+.center[![Tree catamorphism](img/cata-tree-3.svg)]
+
+---
+
+## Tree Height
+
+.center[![Tree catamorphism](img/cata-tree-4.svg)]
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait Tree
+
+case class Node(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Pattern functor
+
+.diff-rm[
+```scala
+*sealed trait `Tree`
+
+case class Node(
+  left : Tree,
+  value: Int,
+  right: Tree
+*) extends `Tree`
+
+*case object Leaf extends `Tree`
+```
+]
+
+---
+
+## Pattern functor
+
+.diff-add[
+```scala
+*sealed trait `TreeF`
+
+case class Node(
+  left : Tree,
+  value: Int,
+  right: Tree
+*) extends `TreeF`
+
+*case object Leaf extends `TreeF`
+```
+]
+
+---
+
+## Pattern functor
+
+.diff-rm[
+```scala
+sealed trait TreeF
+
+*case class `Node`(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF
+
+case object Leaf extends TreeF
+```
+]
+
+---
+
+## Pattern functor
+
+.diff-add[
+```scala
+sealed trait TreeF
+
+*case class `NodeF`(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF
+
+case object Leaf extends TreeF
+```
+]
+
+---
+
+## Pattern functor
+
+.diff-rm[
+```scala
+sealed trait TreeF
+
+case class NodeF(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF
+
+*case object `Leaf` extends TreeF
+```
+]
+
+---
+
+## Pattern functor
+
+.diff-add[
+```scala
+sealed trait TreeF
+
+case class NodeF(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF
+
+*case object `LeafF` extends TreeF
+```
+]
+
+---
+
+## Pattern functor
+
+```tut:silent
+sealed trait TreeF
+
+case class NodeF(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF
+
+case object LeafF extends TreeF
+```
+
+---
+
+## Pattern functor
+
+.diff-add[
+```scala
+*sealed trait TreeF`[A]`
+
+case class NodeF(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF
+
+case object LeafF extends TreeF
+```
+]
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF[A]
+
+*case class NodeF(
+* left : Tree,
+* value: Int,
+* right: Tree
+*) extends TreeF
+
+case object LeafF extends TreeF
+```
+
+---
+
+## Pattern functor
+
+.diff-add[
+```scala
+sealed trait TreeF[A]
+
+*case class NodeF`[A]`(
+  left : Tree,
+  value: Int,
+  right: Tree
+*) extends TreeF`[A]`
+
+case object LeafF extends TreeF
+```
+]
+
+---
+
+## Pattern functor
+
+.diff-rm[
+```scala
+sealed trait TreeF[A]
+
+case class NodeF[A](
+* left : `Tree`,
+  value: Int,
+* right: `Tree`
+) extends TreeF[A]
+
+case object LeafF extends TreeF
+```
+]
+
+---
+
+## Pattern functor
+
+.diff-add[
+```scala
+sealed trait TreeF[A]
+
+case class NodeF[A](
+* left : `A`,
+  value: Int,
+* right: `A`
+) extends TreeF[A]
+
+case object LeafF extends TreeF
+```
+]
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF[A]
+
+case class NodeF[A](
+  left : A,
+  value: Int,
+  right: A
+) extends TreeF[A]
+
+*case object LeafF extends TreeF
+```
+
+---
+
+## Pattern functor
+
+.diff-add[
+```scala
+sealed trait TreeF[A]
+
+case class NodeF[A](
+  left : A,
+  value: Int,
+  right: A
+) extends TreeF[A]
+
+*case object LeafF extends TreeF`[???]`
+```
+]
+
+---
+
+## Pattern functor
+
+.diff-add[
+```scala
+sealed trait TreeF[A]
+
+case class NodeF[A](
+  left : A,
+  value: Int,
+  right: A
+) extends TreeF[A]
+
+*case object LeafF extends TreeF`[Nothing]`
+```
+]
+
+---
+
+## Pattern functor
+
+.diff-rm[
+```scala
+*sealed trait TreeF[`A`]
+
+case class NodeF[A](
+  left : A,
+  value: Int,
+  right: A
+) extends TreeF[A]
+
+case object LeafF extends TreeF[Nothing]
+```
+]
+
+---
+
+## Pattern functor
+
+.diff-add[
+```scala
+*sealed trait TreeF[`+A`]
+
+case class NodeF[A](
+  left : A,
+  value: Int,
+  right: A
+) extends TreeF[A]
+
+case object LeafF extends TreeF[Nothing]
+```
+]
+
+---
+
+## Pattern functor
+
+```tut:silent
+sealed trait TreeF[+A]
+
+case class NodeF[A](
+  left : A,
+  value: Int,
+  right: A
+) extends TreeF[A]
+
+case object LeafF extends TreeF[Nothing]
+```
+
+---
+
+## Pattern functor
+
+.center[![Tree catamorphism](img/cata-tree-6.svg)]
+
+---
+
+## Pattern functor
+
+.center[![Tree catamorphism](img/cata-tree-7.svg)]
+
+---
+
+## Pattern functor
+
+.center[![Tree catamorphism](img/cata-tree-10.svg)]
+
+---
+
+## Pattern functor
+
+.center[![Tree catamorphism](img/cata-tree-11.svg)]
+
+---
+
+## Projection
+
+```tut:silent
+def projectTree: Tree => TreeF[Tree] =
+  _ match {
+    case Node(l, v, r) => NodeF(l, v, r)
+    case Leaf          => LeafF
+  }
+```
+
+---
+
+## Projection
+
+```scala
+def `projectTree`: Tree => TreeF[Tree] =
+  _ match {
+    case Node(l, v, r) => NodeF(l, v, r)
+    case Leaf          => LeafF
+  }
+```
+
+---
+
+## Projection
+
+```scala
+def projectTree: `Tree => TreeF[Tree]` =
+  _ match {
+    case Node(l, v, r) => NodeF(l, v, r)
+    case Leaf          => LeafF
+  }
+```
+
+---
+
+## Projection
+
+```scala
+def projectTree: Tree => TreeF[Tree] =
+  _ match {
+    case `Node(l, v, r)` => NodeF(l, v, r)
+    case Leaf          => LeafF
+  }
+```
+
+---
+
+## Projection
+
+```scala
+def projectTree: Tree => TreeF[Tree] =
+  _ match {
+    case Node(l, v, r) => `NodeF(l, v, r)`
+    case Leaf          => LeafF
+  }
+```
+
+---
+
+## Projection
+
+```scala
+def projectTree: Tree => TreeF[Tree] =
+  _ match {
+    case Node(l, v, r) => NodeF(l, v, r)
+    case `Leaf`          => LeafF
+  }
+```
+
+---
+
+## Projection
+
+```scala
+def projectTree: Tree => TreeF[Tree] =
+  _ match {
+    case Node(l, v, r) => NodeF(l, v, r)
+    case Leaf          => `LeafF`
+  }
+```
+
+---
+
+## Projection
+
+.center[![Tree catamorphism](img/cata-tree-11.svg)]
+
+---
+
+## Projection
+
+.center[![Tree catamorphism](img/cata-tree-12.svg)]
+
+---
+
+## Projection
+
+.center[![Tree catamorphism](img/cata-tree-13.svg)]
+
+---
+
+## Projection
+
+.center[![Tree catamorphism](img/cata-tree-14.svg)]
+
+---
+
+## Functor instance
+
+```tut:silent
+implicit val treeFFunctor = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+    tree match {
+      case NodeF(left, i, right) => NodeF(f(left), i, f(right))
+      case LeafF                 => LeafF
+    }
+}
+```
+
+---
+
+## Functor instance
+
+```scala
+implicit val treeFFunctor = new `Functor[TreeF]` {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+    tree match {
+      case NodeF(left, i, right) => NodeF(f(left), i, f(right))
+      case LeafF                 => LeafF
+    }
+}
+```
+
+---
+
+## Functor instance
+
+```scala
+implicit val treeFFunctor = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+*   tree match {
+*     case NodeF(left, i, right) => NodeF(f(left), i, f(right))
+*     case LeafF                 => LeafF
+*   }
+}
+```
+
+---
+
+## Functor instance
+
+```scala
+implicit val treeFFunctor = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+    tree match {
+      case `NodeF(left, i, right)` => NodeF(f(left), i, f(right))
+      case LeafF                 => LeafF
+    }
+}
+```
+
+---
+
+## Functor instance
+
+```scala
+implicit val treeFFunctor = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+    tree match {
+      case NodeF(left, i, right) => NodeF(`f(left)`, i, `f(right)`)
+      case LeafF                 => LeafF
+    }
+}
+```
+
+---
+
+## Functor instance
+
+```scala
+implicit val treeFFunctor = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+    tree match {
+      case NodeF(left, i, right) => NodeF(f(left), i, f(right))
+      case `LeafF`                 => LeafF
+    }
+}
+```
+
+---
+
+## Functor instance
+
+```scala
+implicit val treeFFunctor = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+    tree match {
+      case NodeF(left, i, right) => NodeF(f(left), i, f(right))
+      case LeafF                 => `LeafF`
+    }
+}
+```
+
+---
+
+## Functor instance
+
+.center[![Tree catamorphism](img/cata-tree-13.svg)]
+
+---
+
+## Functor instance
+
+.center[![Tree catamorphism](img/cata-tree-15.svg)]
+
+---
+
+## F-Algebra
+
+```tut:silent
+val heightAlgebra: TreeF[Int] => Int =
+  _ match {
+    case NodeF(left, _, right) => 1 + math.max(left, right)
+    case LeafF                 => 0
+  }
+```
+
+---
+
+## F-Algebra
+
+```scala
+val `heightAlgebra`: TreeF[Int] => Int =
+  _ match {
+    case NodeF(left, _, right) => 1 + math.max(left, right)
+    case LeafF                 => 0
+  }
+```
+
+---
+
+## F-Algebra
+
+```scala
+val heightAlgebra: `TreeF[Int] => Int` =
+  _ match {
+    case NodeF(left, _, right) => 1 + math.max(left, right)
+    case LeafF                 => 0
+  }
+```
+
+---
+
+## F-Algebra
+
+```scala
+val heightAlgebra: TreeF[Int] => Int =
+  _ match {
+    case `NodeF(left, _, right)` => 1 + math.max(left, right)
+    case LeafF                 => 0
+  }
+```
+
+---
+
+## F-Algebra
+
+```scala
+val heightAlgebra: TreeF[Int] => Int =
+  _ match {
+    case NodeF(left, _, right) => `1 + math.max(left, right)`
+    case LeafF                 => 0
+  }
+```
+
+---
+
+## F-Algebra
+
+```scala
+val heightAlgebra: TreeF[Int] => Int =
+  _ match {
+    case NodeF(left, _, right) => 1 + math.max(left, right)
+    case `LeafF`                 => 0
+  }
+```
+
+---
+
+## F-Algebra
+
+```scala
+val heightAlgebra: TreeF[Int] => Int =
+  _ match {
+    case NodeF(left, _, right) => 1 + math.max(left, right)
+    case LeafF                 => `0`
+  }
+```
+
+---
+
+## F-Algebra
+
+.center[![Tree catamorphism](img/cata-tree-15.svg)]
+
+---
+
+## F-Algebra
+
+.center[![Tree catamorphism](img/cata-tree-16.svg)]
+
+---
+
+## F-Algebra
+
+.center[![Tree catamorphism](img/cata-tree-17.svg)]
+
+---
+
+## F-Algebra
+
+.center[![Tree catamorphism](img/cata-tree-18.svg)]
+
+---
+
+## F-Algebra
+
+.center[![Tree catamorphism](img/cata-tree-19.svg)]
+
+---
+
+## F-Algebra
+
+.center[![Tree catamorphism](img/cata-tree-20.svg)]
+
+---
+
+## Tree height
+
+```tut:silent
+val height: Tree => Int =
+  cata(heightAlgebra, projectTree)
+```
+
+---
+
+## Tree height
+
+```scala
+val height: Tree => Int =
+  `cata(heightAlgebra, projectTree)`
+```
+
+---
+
+## Tree height
+
+```tut:silent
+val height: Tree => Int =
+  cata(heightAlgebra, projectTree)
+```
+
+```tut:book
+height(intTree)
+```
+
+---
+
+## Tree height
+
+.center[![Tree Height](img/tree-height.svg)]
+
+---
+
+## Key takeaways
+
+* `cata` works just fine with `Tree`.
+--
+
+* it involves a lot of busywork though...
+
+---
+
+class: center, middle
+
+# Reducing the boilerplate
+
+---
+
+## `List` in terms of `ListF`
+
+```scala
+type List2 = ListF[???]
+```
+
+---
+
+## `List` in terms of `ListF`
+
+```scala
+type `List2` = ListF[???]
+```
+
+---
+
+## `List` in terms of `ListF`
+
+```scala
+type List2 = `ListF[???]`
+```
+
+---
+
+## `List` in terms of `ListF`
+
+.diff-rm[
+```scala
+*type List2 = ListF[`???`]
+```
+]
+
+---
+
+## `List` in terms of `ListF`
+
+.diff-add[
+```scala
+*type List2 = ListF[`List2`]
+```
+]
+
+---
+
+## `List` in terms of `ListF`
+
+```tut:book:fail
+type List2 = ListF[List2]
+```
+
+---
+
+## `List` in terms of `ListF`
+
+```tut:silent
+case class List2(value: ListF[List2])
+```
+
+---
+
+## `List` in terms of `ListF`
+
+```scala
+case class List2(`value: ListF[List2]`)
+```
+
+---
+
+## Building a `List2`
+
+.center[![List2 init](img/list2-init.svg)]
+
+```scala
+val ints2: List2 =
+  ???: List2
+```
+
+
+
+---
+
+## Building a `List2`
+
+.center[![List2 init](img/list2-init.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+* `???: List2`
+```
+]
+
+
+---
+
+## Building a `List2`
+
+.center[![List2](img/list2-3-wrapper.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+* `List2(???: ListF[List2])`
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2](img/list2-3-value.svg)]
+
+
+.diff-rm[
+```scala
+val ints2: List2 =
+* List2(`???: ListF[List2]`)
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2](img/list2-3.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+* List2(`Some((3`,
+*   ???: List2
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2](img/list2-2-init.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+* List2(Some((3,
+*   `???: List2`
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-2-init.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+*   `???: List2`
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-2-wrapper.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+*   `List2(???: ListF[List2])`
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-2-value.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+*   List2(`???: ListF[List2]`)
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-2.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+*   List2(`Some((2,`
+*     ???: List2
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-1-init.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+*   List2(Some((2,
+*     `???: List2`
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-1-init.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+*     `???: List2`
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-1-wrapper.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+*     `List2(???: ListF[List2])`
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-1-value.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+*     List2(`???: ListF[List2]`)
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-1.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+*     List2(`Some((1,`
+*       ???: List2
+      )))
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-nil-init.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+*     List2(Some((1,
+*       `???: List2`
+      )))
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-nil-init.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+      List2(Some((1,
+*       `???: List2`
+      )))
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-nil-wrapper.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+      List2(Some((1,
+*       `List2(???: ListF[List2])`
+      )))
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-nil-value.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+      List2(Some((1,
+*       List2(`???: ListF[List2]`)
+      )))
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 full](img/list2.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+      List2(Some((1,
+*       List2(`None`)
+      )))
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 full](img/list2.svg)]
+
+```tut:silent
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+      List2(Some((1,
+        List2(None)
+      )))
+    )))
+  )))
+```
+
+---
+
+## Building a `List2`
+
+.center[![List2 full](img/list2-no-wrapper.svg)]
+
+```scala
+val ints2: List2 =
+  List2(`Some((3`,
+    List2(`Some((2`,
+      List2(`Some((1`,
+        List2(`None`)
+      )))
+    )))
+  )))
+```
+
+---
+
+## Building a `List2`
+
+.center[![List2 full](img/list2-only-wrapper.svg)]
+
+```scala
+val ints2: List2 =
+  `List2(`Some((3,
+    `List2(`Some((2,
+      `List2(`Some((1,
+        `List2(`None)
+      )))
+    )))
+  )))
+```
+
+---
+
+## Generalising `List2`
+
+```tut:silent
+case class List2(value: ListF[List2])
+```
+
+---
+
+## Generalising `List2`
+
+```scala
+case class List2(value: `ListF`[List2])
+```
+
+---
+
+## Generalising `List2`
+
+.diff-add[
+```scala
+*case class List2[`F[_]`](value: ListF[List2])
+```
+]
+
+---
+
+## Generalising `List2`
+
+.diff-rm[
+```scala
+*case class List2[F[_]](value: `ListF`[List2])
+```
+]
+
+---
+
+## Generalising `List2`
+
+.diff-add[
+```scala
+*case class List2[F[_]](value: `F`[List2])
+```
+]
+
+---
+
+## Generalising `List2`
+
+.diff-rm[
+```scala
+*case class List2[F[_]](value: F[`List2`])
+```
+]
+
+---
+
+## Generalising `List2`
+
+.diff-add[
+```scala
+*case class List2[F[_]](value: F[`List2[F]`])
+```
+]
+
+---
+
+## Generalising `List2`
+
+```tut:silent
+case class List2[F[_]](value: F[List2[F]])
+```
+
+---
+
+## Naming things
+
+.diff-rm[
+```scala
+*case class `List2`[F[_]](value: F[`List2`[F]])
+```
+]
+
+---
+
+## Naming things
+
+.diff-add[
+```scala
+*case class `Fix`[F[_]](value: F[`Fix`[F]])
+```
+]
+
+---
+
+## Naming things
+
+```tut:silent
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+---
+
+## `List` in terms of `Fix`
+
+```tut:silent
+type FixedList = Fix[ListF]
+```
+
+---
+
+## `List` in terms of `Fix`
+
+```scala
+type `FixedList` = Fix[ListF]
+```
+
+---
+
+## `List` in terms of `Fix`
+
+```scala
+type FixedList = `Fix[ListF]`
+```
+
+---
+
+## `List` in terms of `Fix`
+
+```tut:silent
+val fixedInts: FixedList =
+  Fix[ListF](Some((3,
+    Fix[ListF](Some((2,
+      Fix[ListF](Some((1,
+        Fix[ListF](None)
+      )))
+    )))
+  )))
+```
+
+---
+
+## `List` in terms of `Fix`
+
+```scala
+val fixedInts: FixedList =
+  Fix[ListF](Some((`3`,
+    Fix[ListF](Some((`2`,
+      Fix[ListF](Some((`1`,
+        Fix[ListF](None)
+      )))
+    )))
+  )))
+```
+
+---
+
+## `List` in terms of `Fix`
+
+```scala
+val fixedInts: FixedList =
+  `Fix[ListF](Some((`3`,`
+    `Fix[ListF](Some((`2`,`
+      `Fix[ListF](Some((`1`,`
+        `Fix[ListF](None)`
+      `)))`
+    `)))`
+  `)))`
+```
+
+---
+
+## `Tree` in terms of `TreeF`
+
+```tut:silent
+type FixedTree = Fix[TreeF]
+```
+
+---
+
+## `Tree` in terms of `TreeF`
+
+```scala
+type `FixedTree` = Fix[TreeF]
+```
+
+---
+
+## `Tree` in terms of `TreeF`
+
+```scala
+type FixedTree = `Fix[TreeF]`
+```
+
+---
+
+## `Tree` in terms of `TreeF`
+
+```tut:silent
+val fixedIntTree: FixedTree =
+  Fix[TreeF](NodeF(
+    Fix[TreeF](NodeF(
+      Fix[TreeF](NodeF(Fix[TreeF](LeafF), 1, Fix[TreeF](LeafF))),
+      2,
+      Fix[TreeF](NodeF(Fix[TreeF](LeafF), 3, Fix[TreeF](LeafF)))
+    )),
+    4,
+    Fix[TreeF](LeafF)
+  ))
+```
+
+---
+
+## `Tree` in terms of `TreeF`
+
+```scala
+val fixedIntTree: FixedTree =
+  Fix[TreeF](NodeF(
+    Fix[TreeF](NodeF(
+      Fix[TreeF](NodeF(Fix[TreeF](LeafF), `1`, Fix[TreeF](LeafF))),
+      `2`,
+      Fix[TreeF](NodeF(Fix[TreeF](LeafF), `3`, Fix[TreeF](LeafF)))
+    )),
+    `4`,
+    Fix[TreeF](LeafF)
+  ))
+```
+
+---
+
+## `cata` with `Fix`
+
+```tut:silent
+def cata[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+    algebra(map(project(state), loop))
+
+  loop
+}
+```
+
+---
+
+## `cata` with `Fix`
+
+.diff-rm[
+```scala
+*def `cata`[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+    algebra(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## `cata` with `Fix`
+
+.diff-add[
+```scala
+*def `cataFix`[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+    algebra(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## `cata` with `Fix`
+
+```tut:silent
+def cataFix[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+    algebra(map(project(state), loop))
+
+  loop
+}
+```
+
+---
+
+## `cata` with `Fix`
+
+.center[![Linked List](img/catafix-init.svg)]
+
+---
+
+## `cata` with `Fix`
+
+.center[![Linked List](img/catafix-init-hl-1.svg)]
+
+---
+
+.diff-rm[
+## `cata` with `Fix`
+
+```scala
+*def cataFix[F[_]: Functor, A, `B`](
+  algebra: F[A] => A,
+* project: `B` => F[`B`]
+*): `B` => A = {
+
+* def loop(state: `B`): A =
+    algebra(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## `cata` with `Fix`
+
+.diff-add[
+```scala
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A,
+* project: `Fix[F]` => F[`Fix[F]`]
+*): `Fix[F]` => A = {
+
+* def loop(state: `Fix[F]`): A =
+    algebra(map(project(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## `cata` with `Fix`
+
+```tut:silent
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A,
+  project: Fix[F] => F[Fix[F]]
+): Fix[F] => A = {
+
+  def loop(state: Fix[F]): A =
+    algebra(map(project(state), loop))
+
+  loop
+}
+```
+
+---
+
+## `cata` with `Fix`
+
+.center[![Linked List](img/catafix-init-hl-1.svg)]
+
+---
+
+## `cata` with `Fix`
+
+.center[![Linked List](img/catafix-no-b-hl-1.svg)]
+
+---
+
+## `cata` with `Fix`
+
+.center[![Linked List](img/catafix-no-b.svg)]
+
+---
+
+## `cata` with `Fix`
+
+.center[![Linked List](img/catafix-no-b-hl-2.svg)]
+
+---
+
+## Projecting `Fix`
+
+```tut:silent
+val project: List => ListF[List] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+
+---
+
+## Projecting `Fix`
+
+.diff-rm[
+```scala
+*val `project`: List => ListF[List] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-add[
+```scala
+*val `projectFix`: List => ListF[List] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+]
+
+---
+
+## Projecting `Fix`
+
+```tut:silent
+val projectFix: List => ListF[List] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+
+---
+
+## Projecting `Fix`
+
+.diff-rm[
+```scala
+*val projectFix: `List` => ListF[`List`] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-add[
+```scala
+*val projectFix: `FixedList` => ListF[`FixedList`] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-rm[
+```scala
+*val projectFix: `FixedList` => ListF[`FixedList`] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-add[
+```scala
+*val projectFix: `Fix[ListF]` => ListF[`Fix[ListF]`] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-rm[
+```scala
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+  _ match {
+*   case `Cons(head, tail)` => Some((head, tail))
+    case Nil              => None
+  }
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-add[
+```scala
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+  _ match {
+*   case `Fix(Some((head, tail)))` => Some((head, tail))
+    case Nil                     => None
+  }
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-rm[
+```scala
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+  _ match {
+    case Fix(Some((head, tail))) => Some((head, tail))
+*   case `Nil`                     => None
+  }
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-add[
+```scala
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+  _ match {
+    case Fix(Some((head, tail))) => Some((head, tail))
+*   case `Fix(None)`               => None
+  }
+```
+]
+
+---
+
+## Projecting `Fix`
+
+```tut:silent
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+  _ match {
+    case Fix(Some((head, tail))) => Some((head, tail))
+    case Fix(None)               => None
+  }
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+  _ match {
+    case Fix(`Some((head, tail))`) => `Some((head, tail))`
+    case Fix(None)               => None
+  }
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+  _ match {
+    case Fix(Some((head, tail))) => Some((head, tail))
+    case Fix(`None`)               => `None`
+  }
+```
+
+---
+
+## Projecting `Fix`
+
+.diff-rm[
+```scala
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+* `_ match {`
+* `  case Fix(Some((head, tail))) => Some((head, tail))`
+* `  case Fix(None)               => None`
+* `}`
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-add[
+```scala
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+* `_.value`
+```
+]
+
+---
+
+## Projecting `Fix`
+
+```tut:silent
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: Fix[`ListF`] => `ListF`[Fix[`ListF`]] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+.diff-rm[
+```scala
+*&#x200B;`val projectFix`: Fix[ListF] => ListF[Fix[ListF]] =
+  _.value
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-add[
+```scala
+*&#x200B;`def projectFix`: Fix[ListF] => ListF[Fix[ListF]] =
+  _.value
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-add[
+```scala
+*&#x200B;def projectFix[`F[_]`]: Fix[ListF] => ListF[Fix[ListF]] =
+  _.value
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-rm[
+```scala
+*def projectFix[F[_]]: Fix[`ListF`] => `ListF`[Fix[`ListF`]] =
+  _.value
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-add[
+```scala
+*def projectFix[F[_]]: Fix[`F`] => `F`[Fix[`F`]] =
+  _.value
+```
+]
+
+---
+
+## Projecting `Fix`
+
+```tut:silent
+def projectFix[F[_]]: Fix[F] => F[Fix[F]] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+def projectFix[F[_]]: Fix[F] => F[Fix[F]] =
+  `_.value`
+```
+
+---
+
+## Projecting `Fix`
+
+```tut:silent
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A,
+  project: Fix[F] => F[Fix[F]]
+): Fix[F] => A = {
+
+  def loop(state: Fix[F]): A =
+    algebra(map(project(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Projecting `Fix`
+
+.diff-rm[
+```scala
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A,
+  project: Fix[F] => F[Fix[F]]
+): Fix[F] => A = {
+
+  def loop(state: Fix[F]): A =
+*   algebra(map(`project(state)`, loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-add[
+```scala
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A,
+  project: Fix[F] => F[Fix[F]]
+): Fix[F] => A = {
+
+  def loop(state: Fix[F]): A =
+*   algebra(map(`state.value`, loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-rm[
+```scala
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A,
+* `project: Fix[F] => F[Fix[F]]`
+): Fix[F] => A = {
+
+  def loop(state: Fix[F]): A =
+    algebra(map(state.value, loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Projecting `Fix`
+
+```tut:silent
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A
+): Fix[F] => A = {
+
+  def loop(state: Fix[F]): A =
+    algebra(map(state.value, loop))
+
+  loop
+}
+```
+
+---
+
+## Projecting `Fix`
+
+.center[![Linked List](img/catafix-no-b-hl-2.svg)]
+
+---
+
+## Projecting `Fix`
+
+.center[![Linked List](img/catafix-project-hl-1.svg)]
+
+---
+
+## Projecting `Fix`
+
+.center[![Linked List](img/catafix-project.svg)]
+
+---
+
+## Projecting `Fix`
+
+.center[![Linked List](img/catafix-project-hl-2.svg)]
+
+---
+
+## Projecting `Fix`
+
+.center[![Linked List](img/catafix-project-hl-3.svg)]
+
+---
+
+## `product` in terms of `cataFix`
+
+```tut:silent
+val productFix: FixedList => Int =
+  cataFix(productAlgebra)
+```
+
+---
+
+## `product` in terms of `cataFix`
+
+```scala
+val productFix: `FixedList => Int` =
+  cataFix(productAlgebra)
+```
+
+---
+
+## `product` in terms of `cataFix`
+
+```scala
+val productFix: FixedList => Int =
+  `cataFix(productAlgebra)`
+```
+
+---
+
+## `product` in terms of `cataFix`
+
+```tut:silent
+val productFix: FixedList => Int =
+  cataFix(productAlgebra)
+```
+
+```tut:book
+productFix(fixedInts)
+```
+
+---
+
+## `mkString` in terms of `cataFix`
+
+```tut:silent
+val mkStringFix: FixedList => String =
+  cataFix(mkStringAlgebra)
+```
+
+---
+
+## `mkString` in terms of `cataFix`
+
+```scala
+val mkStringFix: `FixedList => String` =
+  cataFix(mkStringAlgebra)
+```
+
+---
+
+## `mkString` in terms of `cataFix`
+
+```scala
+val mkStringFix: FixedList => String =
+  `cataFix(mkStringAlgebra)`
+```
+
+---
+
+## `mkString` in terms of `cataFix`
+
+```tut:silent
+val mkStringFix: FixedList => String =
+  cataFix(mkStringAlgebra)
+```
+
+```tut:book
+mkStringFix(fixedInts)
+```
+
+---
+
+## `height` in terms of `cataFix`
+
+```tut:silent
+val heightFix: FixedTree => Int =
+  cataFix(heightAlgebra)
+```
+
+---
+
+## `height` in terms of `cataFix`
+
+```scala
+val heightFix: `FixedTree => Int` =
+  cataFix(heightAlgebra)
+```
+
+---
+
+## `height` in terms of `cataFix`
+
+```scala
+val heightFix: FixedTree => Int =
+  `cataFix(heightAlgebra)`
+```
+
+---
+
+## `height` in terms of `cataFix`
+
+```tut:silent
+val heightFix: FixedTree => Int =
+  cataFix(heightAlgebra)
+```
+
+```tut:book
+heightFix(fixedIntTree)
+```
+
+---
+
+## Cost of `Fix`
+
+```tut:silent
+def headOpt(list: FixedList): Option[Int] = list match {
+  case Fix(Some((head, _))) => Some(head)
+  case Fix(None)            => None
+}
+```
+
+---
+
+## Cost of `Fix`
+
+```tut:silent
+def headOpt(list:      List): Option[Int] = list match {
+  case Cons(     head, _)   => Some(head)
+  case Nil                  => None
+}
+```
+
+---
+
+## Cost of `Fix`
+
+```tut:silent
+val list: FixedList =
+  Fix[ListF](Some((3,
+    Fix[ListF](Some((2,
+      Fix[ListF](Some((1,
+        Fix[ListF](None)
+      )))
+    )))
+  )))
+```
+
+---
+
+## Cost of `Fix`
+
+```tut:silent
+val list:      List =
+  Cons(            3,
+    Cons(            2,
+      Cons(            1,
+        Nil
+      )
+    )
+  )
+```
+
+---
+
+## Key takeaways
+
+Using `Fix` makes:
+
+--
+
+* the hard case easier.
+--
+
+* the easy case harder.
+--
+
+* little sense.
+
+---
+
+class: center, middle
+
+# In closing
+
+---
+
+## If you only remember 1 slide...
+
+--
+
+* Recursion schemes are just common recursive patterns generalised _ad absurdum_.
+--
+
+* They could certainly do with a general UX overhaul.
+--
+
+* They involve a lot of useful concepts that you'll encounter all over the place.
+
+---
+
+class: center, middle
+
+# Questions?
+
+Nicolas Rinaudo • [@NicolasRinaudo] • [Besedo]
+
+[@NicolasRinaudo]:https://twitter.com/NicolasRinaudo
+[Besedo]:https://twitter.com/besedo_official
+    </textarea>
+    <script src="js/remark.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+        var slideshow = remark.create({
+          highlightStyle: 'github',
+          highlightSpans: true,
+          highlightLines: true
+      });
+    </script>
+  </body>
+</html>
