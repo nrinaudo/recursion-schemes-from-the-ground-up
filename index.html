@@ -210,6 +210,26 @@ def product(
 ): Int =
   values match {
     case Nil              => 1
+    case Cons(head, tail) => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = ???
+```
+
+.center[![List product: 1](img/list-product-1-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
     case `Cons(head, tail)` => head * product(tail)
   }
 ```
