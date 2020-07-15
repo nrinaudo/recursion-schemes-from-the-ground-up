@@ -206,9 +206,49 @@ product(ints) = ???
 
 ```scala
 def product(
-  values: List
+  `values: List`
 ): Int =
   values match {
+    case Nil              => 1
+    case Cons(head, tail) => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = ???
+```
+
+.center[![List product](img/list.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): `Int` =
+  values match {
+    case Nil              => 1
+    case Cons(head, tail) => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = ???
+```
+
+.center[![List product](img/list.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  `values match` {
     case Nil              => 1
     case Cons(head, tail) => head * product(tail)
   }
@@ -308,6 +348,26 @@ product(ints) = 1 * `???`
 def product(
   values: List
 ): Int =
+  `values match` {
+    case Nil              => 1
+    case Cons(head, tail) => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = 1 * ???
+```
+
+.center[![List product](img/list-product-2-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
   values match {
     case Nil              => 1
     case `Cons(head, tail)` => head * product(tail)
@@ -379,6 +439,26 @@ product(ints) = 1 * 2 * `???`
 ```
 
 .center[![List product](img/list-product-2.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  `values match` {
+    case Nil              => 1
+    case Cons(head, tail) => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = 1 * 2 * ???
+```
+
+.center[![List product](img/list-product-3-hl.svg)]
 
 ---
 
@@ -468,6 +548,27 @@ product(ints) = 1 * 2 * 3 * `???`
 def product(
   values: List
 ): Int =
+  `values match` {
+    case Nil              => 1
+    case Cons(head, tail) => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = 1 * 2 * 3 * ???
+```
+
+.center[![List product](img/list-product-3.svg)]
+
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
   values match {
     case `Nil`              => 1
     case Cons(head, tail) => head * product(tail)
@@ -509,7 +610,27 @@ def product(
   values: List
 ): Int =
   values match {
-    case Nil              => `1`
+    case Nil              => 1
+    case Cons(head, tail) => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = `1 * 2 * 3 * 1`
+```
+
+.center[![List product](img/list-product-3.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
     case Cons(head, tail) => head * product(tail)
   }
 ```
@@ -723,7 +844,7 @@ For cons lists, this can be generalised as `fold`.
 
 class: center, middle
 
-# Generalised structural recursion
+# Generalised folds
 
 ---
 
