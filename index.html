@@ -34,6 +34,141 @@ case class Cons(
 case object Nil extends List
 ```
 
+.center[![Cons List](img/list.svg)]
+
+---
+
+## `List`
+
+```scala
+*sealed trait List
+
+case class Cons(
+  head: Int,
+  tail: List
+) extends List
+
+case object Nil extends List
+```
+
+.center[![Cons List](img/list.svg)]
+
+---
+
+## `List`
+
+```scala
+sealed trait List
+
+*case class Cons(
+* head: Int,
+* tail: List
+*) extends List
+
+case object Nil extends List
+```
+
+.center[![Cons](img/list-1.svg)]
+
+---
+
+## `List`
+
+```scala
+sealed trait List
+
+case class Cons(
+  head: Int,
+  tail: List
+) extends List
+
+*case object Nil extends List
+```
+
+.center[![Nil](img/list-nil.svg)]
+
+---
+
+## `List`
+
+```scala
+sealed trait List
+
+*case class Cons(
+* head: Int,
+* tail: List
+*) extends List
+
+case object Nil extends List
+```
+
+.center[![Cons](img/list-1.svg)]
+
+---
+
+## `List`
+
+```scala
+sealed trait List
+
+case class Cons(
+  `head: Int`,
+  tail: List
+) extends List
+
+case object Nil extends List
+```
+
+.center[![Cons](img/list-1-head.svg)]
+
+---
+
+## `List`
+
+```scala
+sealed trait List
+
+case class Cons(
+  head: Int,
+  `tail: List`
+) extends List
+
+case object Nil extends List
+```
+
+.center[![Cons](img/list-1-tail.svg)]
+
+---
+
+## `List`
+
+```scala
+sealed trait List
+
+case class Cons(
+  head: Int,
+  `tail: List`
+) extends List
+
+case object Nil extends List
+```
+
+.center[![Nil](img/list-nil.svg)]
+
+---
+
+## `List`
+
+```scala
+sealed trait List
+
+case class Cons(
+  head: Int,
+  tail: List
+) extends List
+
+case object Nil extends List
+```
 
 ```scala
 val ints: List = Cons(1, Cons(2, Cons(3, Nil)))
@@ -55,6 +190,306 @@ def product(
 ): Int =
   values match {
     case Nil              => 1
+    case Cons(head, tail) => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = ???
+```
+
+.center[![List product](img/list.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    case `Cons(head, tail)` => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = ???
+```
+
+.center[![List product: 1](img/list-product-1-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    case Cons(head, tail) => `head` * product(tail)
+  }
+```
+
+```scala
+product(ints) = `1` * ???
+```
+
+.center[![List product: 1](img/list-product-1-head-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    case Cons(head, tail) => head `*` product(tail)
+  }
+```
+
+```scala
+product(ints) = 1 `*` ???
+```
+
+.center[![List product: 1](img/list-product-1-tail-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    case Cons(head, tail) => head * `product(tail)`
+  }
+```
+
+```scala
+product(ints) = 1 * `???`
+```
+
+.center[![List product](img/list-product-1.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    case `Cons(head, tail)` => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = 1 * ???
+```
+
+.center[![List product](img/list-product-2-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    case Cons(head, tail) => `head` * product(tail)
+  }
+```
+
+```scala
+product(ints) = 1 * `2` * ???
+```
+
+.center[![List product](img/list-product-2-head-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    case Cons(head, tail) => head `*` product(tail)
+  }
+```
+
+```scala
+product(ints) = 1 * 2 `*` ???
+```
+
+.center[![List product](img/list-product-2-tail-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    case Cons(head, tail) => head * `product(tail)`
+  }
+```
+
+```scala
+product(ints) = 1 * 2 * `???`
+```
+
+.center[![List product](img/list-product-2.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    case `Cons(head, tail)` => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = 1 * 2 * ???
+```
+
+.center[![List product](img/list-product-3-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    case Cons(head, tail) => `head` * product(tail)
+  }
+```
+
+```scala
+product(ints) = 1 * 2 * `3` * ???
+```
+
+.center[![List product](img/list-product-3-head-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    case Cons(head, tail) => head `*` product(tail)
+  }
+```
+
+```scala
+product(ints) = 1 * 2 * 3 `*` ???
+```
+
+.center[![List product](img/list-product-3-tail-hl.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    case Cons(head, tail) => head * `product(tail)`
+  }
+```
+
+```scala
+product(ints) = 1 * 2 * 3 * `???`
+```
+
+.center[![List product](img/list-product-3.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case `Nil`              => 1
+    case Cons(head, tail) => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = 1 * 2 * 3 * ???
+```
+
+.center[![List product](img/list-product-3.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => `1`
+    case Cons(head, tail) => head * product(tail)
+  }
+```
+
+```scala
+product(ints) = 1 * 2 * 3 * `1`
+```
+
+.center[![List product](img/list-product-3.svg)]
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => `1`
     case Cons(head, tail) => head * product(tail)
   }
 ```
@@ -111,8 +546,6 @@ def recurse(
   }
 ```
 
-Rename to `recurse` because we're doing something generic.
-
 ---
 
 ## Generalising structural recursion
@@ -127,8 +560,6 @@ def recurse(
     case Cons(head, tail) => head + " :: " + recurse(base, tail)
   }
 ```
-
-Abstract over the base case.
 
 ---
 
@@ -146,8 +577,6 @@ def recurse(
   }
 ```
 
-Abstract over the step-case.
-
 ---
 
 ## Generalising structural recursion
@@ -163,8 +592,6 @@ def recurse[A](
     case Cons(head, tail) => step(head, recurse(base, step, tail))
   }
 ```
-
-Make things parametric, because we can work with more than just ints as output.
 
 ---
 
@@ -185,8 +612,6 @@ def recurse[A](
   loop(values)
 }
 ```
-
-Too many parameters, make more readable.
 
 ---
 
@@ -208,8 +633,6 @@ def recurse[A](
   loop(values)
 }
 ```
-
-Curry, because we'll be wanting to express `length` etc as partial application.
 
 ---
 
@@ -231,8 +654,6 @@ def fold[A](
   loop(values)
 }
 ```
-
-Rename to fold because that's what it's called.
 
 ---
 
@@ -360,8 +781,6 @@ def fold[A](
 }
 ```
 
-We want to forget about list. First, let's forget about its structure
-
 ---
 
 ## Generalising folds
@@ -404,8 +823,6 @@ def fold[A](
   loop
 }
 ```
-
-`base` and `step` are basically going from "nothing" to an A, or from "a head and a tail" to an A. That's an Option => A.
 
 ---
 
@@ -465,8 +882,6 @@ def fold[A](
 }
 ```
 
-`op` being applied in both branches of the pattern match means we can extract it and apply it to the result
-
 ---
 
 ## Generalising folds
@@ -477,7 +892,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A = op(recurse(project(curr)))
+  def loop(curr: List): A =
+    op(recurse(project(curr)))
 
   def recurse(curr: ListF[List]): ListF[A] =
     curr match {
@@ -489,9 +905,6 @@ def fold[A](
 }
 ```
 
-Let's extract that pattern match so we can work with it.
-It's the part where we recurse.
-
 ---
 
 ## Generalising folds
@@ -502,7 +915,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A = op(recurse(project(curr), loop))
+  def loop(curr: List): A =
+    op(recurse(project(curr), loop))
 
   def recurse(curr: ListF[List], f: List => A): ListF[A] =
     curr match {
@@ -514,15 +928,13 @@ def fold[A](
 }
 ```
 
-Let's make it even more familiar...
-
 ---
 
 ## Functor
 
 ```scala
 trait Functor[F[_]] {
-  def map[A, B](f: A => B)(fa: F[A]): F[B]
+  def map[A, B](fa: F[A], f: A => B): F[B]
 }
 ```
 
@@ -531,10 +943,13 @@ trait Functor[F[_]] {
 ## Functor
 
 ```scala
-implicit class FunctorOps[F[_], A](value: F[A]) {
-  def fmap[B](f: A => B)(implicit func: Functor[F]): F[B] =
-    func.map(f)(value)
-}
+def fmap[F[_], A, B](
+  fa  : F[A],
+  f   :  A => B
+)(implicit
+  func: Functor[F]
+): F[B] =
+  func.map(fa, f)
 ```
 
 ---
@@ -543,7 +958,7 @@ implicit class FunctorOps[F[_], A](value: F[A]) {
 
 ```scala
 implicit val listFFunctor: Functor[ListF] = new Functor[ListF] {
-  override def map[A, B](f: A => B)(fa: ListF[A]) = fa match {
+  override def map[A, B](fa: ListF[A], f: A => B) = fa match {
     case None               => None
     case Some((head, tail)) => Some((head, f(tail)))
   }
@@ -560,17 +975,15 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A = op(recurse(project(curr)))
+  def loop(curr: List): A =
+    op(recurse(project(curr), loop))
 
-  def recurse(option: ListF[List]) = option.fmap(loop)
+  def recurse(curr: ListF[List], f: List => A): ListF[A] =
+    fmap(curr, f)
 
   loop
 }
 ```
-
-Using `Functor`...
-
----
 
 ## Using functors
 
@@ -580,13 +993,12 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A = op(project(curr).fmap(loop))
+  def loop(curr: List): A =
+    op(fmap(project(curr), loop))
 
   loop
 }
 ```
-
-No need for `recurse` anymore...
 
 ---
 
@@ -598,13 +1010,12 @@ def fold[F[_]: Functor, A](
   project: List => F[List]
 ): List => A = {
 
-  def loop(curr: List): A = op(project(curr).fmap(loop))
+  def loop(curr: List): A =
+    op(fmap(project(curr), loop))
 
   loop
 }
 ```
-
-At this point, we don't need to know about `ListF` - just that it has a functor:
 
 ---
 
@@ -616,13 +1027,12 @@ def fold[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A = op(project(curr).fmap(loop))
+  def loop(curr: B): A =
+    op(fmap(project(curr), loop))
 
   loop
 }
 ```
-
-We don't need to know about `List` either:
 
 ---
 
@@ -634,13 +1044,12 @@ def cata[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A = op(project(curr).fmap(loop))
+  def loop(curr: B): A =
+    op(fmap(project(curr), loop))
 
   loop
 }
 ```
-
-This is called `cata`
 
 ---
 
@@ -652,15 +1061,12 @@ def cata[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A = algebra(project(curr).fmap(loop))
+  def loop(curr: B): A =
+    algebra(fmap(project(curr), loop))
 
   loop
 }
 ```
-
-And that's called an F-Algebra.
-
-F is pattern functor.
 
 ---
 
@@ -886,7 +1292,7 @@ mkString(range(3))
 
 ---
 
-# Generalising `unfold`
+## Generalising `unfold`
 
 ```scala
 def unfold[A](
@@ -909,7 +1315,7 @@ def unfold[A](
 
 ---
 
-# Generalising `unfold`
+## Generalising `unfold`
 
 ```scala
 def unfold[A](
@@ -928,10 +1334,9 @@ def unfold[A](
 }
 ```
 
-
 ---
 
-# Generalising `unfold`
+## Generalising `unfold`
 
 ```scala
 def unfold[A](
@@ -947,11 +1352,9 @@ def unfold[A](
 }
 ```
 
-Intuitively, we want to go to `ListF` again. `update` + `predicate` really look like one.
-
 ---
 
-# Generalising `unfold`
+## Generalising `unfold`
 
 ```scala
 def unfold[A](
@@ -968,11 +1371,9 @@ def unfold[A](
 }
 ```
 
-We want to forget about the structure of list...
-
 ---
 
-# Generalising `unfold`
+## Generalising `unfold`
 
 ```scala
 val embedList: Option[(Int, List)] => List =
@@ -984,7 +1385,7 @@ val embedList: Option[(Int, List)] => List =
 
 ---
 
-# Generalising `unfold`
+## Generalising `unfold`
 
 ```scala
 def unfold[A](
@@ -1001,11 +1402,9 @@ def unfold[A](
 }
 ```
 
-We have a name for that type...
-
 ---
 
-# Generalising `unfold`
+## Generalising `unfold`
 
 ```scala
 val embedList: ListF[List] => List =
@@ -1017,7 +1416,7 @@ val embedList: ListF[List] => List =
 
 ---
 
-# Generalising `unfold`
+## Generalising `unfold`
 
 ```scala
 def unfold[A](
@@ -1025,17 +1424,16 @@ def unfold[A](
   embed : ListF[List] => List
 ): A => List = {
 
-  def loop(curr: A): List = embed(update(curr).fmap(loop))
+  def loop(curr: A): List =
+    embed(fmap(update(curr), loop))
 
   loop
 }
 ```
 
-That looks a lot like our functor instance...
-
 ---
 
-# Generalising `unfold`
+## Generalising `unfold`
 
 ```scala
 def unfold[F[_]: Functor, A](
@@ -1043,17 +1441,16 @@ def unfold[F[_]: Functor, A](
   embed : F[List] => List
 ): A => List = {
 
-  def loop(curr: A): List = embed(update(curr).fmap(loop))
+  def loop(curr: A): List =
+    embed(fmap(update(curr), loop))
 
   loop
 }
 ```
 
-We don't need to know about `ListF`...
-
 ---
 
-# Generalising `unfold`
+## Generalising `unfold`
 
 ```scala
 def unfold[F[_]: Functor, A, B](
@@ -1061,17 +1458,16 @@ def unfold[F[_]: Functor, A, B](
   embed : F[B] => B
 ): A => B = {
 
-  def loop(curr: A): B = embed(update(curr).fmap(loop))
+  def loop(curr: A): B =
+    embed(fmap(update(curr), loop))
 
   loop
 }
 ```
 
-Or `List`...
-
 ---
 
-# Anamorphism
+## Anamorphism
 
 ```scala
 def ana[F[_]: Functor, A, B](
@@ -1079,17 +1475,16 @@ def ana[F[_]: Functor, A, B](
   embed : F[B] => B
 ): A => B = {
 
-  def loop(curr: A): B = embed(update(curr).fmap(loop))
+  def loop(curr: A): B =
+    embed(fmap(update(curr), loop))
 
   loop
 }
 ```
 
-This is named ana
-
 ---
 
-# Anamorphism
+## Anamorphism
 
 ```scala
 def ana[F[_]: Functor, A, B](
@@ -1097,13 +1492,12 @@ def ana[F[_]: Functor, A, B](
   embed    : F[B] => B
 ): A => B = {
 
-  def loop(curr: A): B = embed(coAlgebra(curr).fmap(loop))
+  def loop(curr: A): B =
+    embed(fmap(coAlgebra(curr), loop))
 
   loop
 }
 ```
-
-And this is named co-algebra
 
 ---
 
@@ -1137,7 +1531,7 @@ class: center, middle
 sealed trait Tree
 
 case class Node(
-  left: Tree,
+  left : Tree,
   value: Int,
   right: Tree
 ) extends Tree
@@ -1166,7 +1560,7 @@ val intTree = Node(
 sealed trait TreeF[+A]
 
 case class NodeF[A](
-  left: A,
+  left : A,
   value: Int,
   right: A
 ) extends TreeF[A]
@@ -1205,7 +1599,7 @@ def embedTree: TreeF[Tree] => Tree =
 
 ```scala
 implicit val treeFFunctor: Functor[TreeF] = new Functor[TreeF] {
-  override def map[A, B](f: A => B)(tree: TreeF[A]) = tree match {
+  override def map[A, B](tree: TreeF[A], f: A => B) = tree match {
     case LeafF          => LeafF
     case NodeF(l, v, r) => NodeF(f(l), v, f(r))
   }
@@ -1271,7 +1665,6 @@ type Foo = ListF[ListF[???]]
 type Foo = ListF[Foo]
 ```
 
-
 ---
 
 ## `List` in terms of `ListF`
@@ -1311,7 +1704,6 @@ case class Fix[F[_]](value: F[Fix[F]])
 
 ## `List` in terms of `Fix`
 
-
 ```scala
 type FixedList = Fix[ListF]
 ```
@@ -1322,7 +1714,7 @@ type FixedList = Fix[ListF]
 
 ```scala
 def projectFixedList(list: FixedList): ListF[FixedList] =
-   ???
+  ???
 ```
 
 ---
@@ -1371,7 +1763,8 @@ def cata[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A = algebra(project(curr).fmap(loop))
+  def loop(curr: B): A =
+    algebra(fmap(project(curr), loop))
 
   loop
 }
@@ -1387,7 +1780,8 @@ def cataFix[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A = algebra(project(curr).fmap(loop))
+  def loop(curr: B): A =
+    algebra(fmap(project(curr), loop))
 
   loop
 }
@@ -1403,14 +1797,12 @@ def cataFix[F[_]: Functor, A](
   project: Fix[F] => F[Fix[F]]
 ): Fix[F] => A = {
 
-  def loop(curr: Fix[F]): A = algebra(project(curr).fmap(loop))
+  def loop(curr: Fix[F]): A =
+    algebra(fmap(project(curr), loop))
 
   loop
 }
 ```
-
-A: Int
-B: FixedList (Fix[ListF])
 
 ---
 
@@ -1421,7 +1813,8 @@ def cataFix[F[_]: Functor, A](
   algebra: F[A] => A,
 ): Fix[F] => A = {
 
-  def loop(curr: Fix[F]): A = algebra(curr.value.fmap(loop))
+  def loop(curr: Fix[F]): A =
+    algebra(fmap(curr.value, loop))
 
   loop
 }
@@ -1430,7 +1823,6 @@ def cataFix[F[_]: Functor, A](
 ---
 
 ## Embedding `Fix`
-
 
 ```scala
 def embedFix[F[_]](value: F[Fix[F]]): Fix[F] =
@@ -1447,7 +1839,8 @@ def ana[F[_]: Functor, A, B](
   embed    : F[B] => B
 ): A => B = {
 
-  def loop(curr: A): B = embed(coAlgebra(curr).fmap(loop))
+  def loop(curr: A): B =
+    embed(fmap(coAlgebra(curr), loop))
 
   loop
 }
@@ -1463,7 +1856,8 @@ def anaFix[F[_]: Functor, A, B](
   embed    : F[B] => B
 ): A => B = {
 
-  def loop(curr: A): B = embed(coAlgebra(curr).fmap(loop))
+  def loop(curr: A): B =
+    embed(fmap(coAlgebra(curr), loop))
 
   loop
 }
@@ -1479,14 +1873,12 @@ def anaFix[F[_]: Functor, A](
   embed    : F[Fix[F]] => Fix[F]
 ): A => Fix[F] = {
 
-  def loop(curr: A): Fix[F] = embed(coAlgebra(curr).fmap(loop))
+  def loop(curr: A): Fix[F] =
+    embed(fmap(coAlgebra(curr), loop))
 
   loop
 }
 ```
-
-A: Int
-B: FixedList => Fix[ListF]
 
 ---
 
@@ -1497,7 +1889,8 @@ def anaFix[F[_]: Functor, A](
   coAlgebra: A => F[A]
 ): A => Fix[F] = {
 
-  def loop(curr: A): Fix[F] = Fix((coAlgebra(curr).fmap(loop)))
+  def loop(curr: A): Fix[F] =
+    Fix((fmap(coAlgebra(curr), loop)))
 
   loop
 }
@@ -1548,7 +1941,6 @@ def headOpt(list: FixedList): Option[Int] = list match {
 
 * `Fix` makes the hard case easier.
 * `Fix` makes the easy case harder.
-
 
 ---
 
