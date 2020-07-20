@@ -560,7 +560,6 @@ product(ints) = 1 * 2 * 3 * ???
 
 .center[![List product](img/list-product-3.svg)]
 
-
 ---
 
 ## Product
@@ -642,6 +641,200 @@ product(ints)
 
 ---
 
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => 1
+    `case Cons(head, tail)` => head * product(tail)
+  }
+```
+
+```scala
+product(ints)
+```
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    `case Nil`              => 1
+    case Cons(head, tail) => head * product(tail)
+  }
+```
+
+```scala
+product(ints)
+```
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Nil              => `1`
+    case Cons(head, tail) => head * product(tail)
+  }
+```
+
+```scala
+product(ints)
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Nil              => "nil"
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  `values: List`
+): String =
+  values match {
+    case Nil              => "nil"
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): `String` =
+  values match {
+    case Nil              => "nil"
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Nil              => "nil"
+    `case Cons(head, tail)` => head + " :: " + mkString(tail)
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Nil              => "nil"
+    case Cons(head, tail) => `head + " :: " + mkString(tail)`
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Nil              => "nil"
+    case Cons(head, tail) => `head` + " :: " + mkString(tail)
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Nil              => "nil"
+    case Cons(head, tail) => head + `" :: "` + mkString(tail)
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Nil              => "nil"
+    case Cons(head, tail) => head + " :: " + `mkString(tail)`
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    `case Nil`              => "nil"
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Nil              => `"nil"`
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+  }
+```
+
+---
+
 ## String representation
 
 ```scala
@@ -661,7 +854,22 @@ mkString(ints)
 
 ---
 
-## Generalising structural recursion
+## Key takeaways
+
+Structural recursion works by:
+* pattern matching on the "problem" value
+* having a concrete implementation for the base case.
+* for all other cases, assuming we have a solution for a smaller problem and complete it.
+
+---
+
+class: center, middle
+
+# Generalised structural recursion
+
+---
+
+## Generalising `mkString`
 
 ```scala
 def mkString(
@@ -675,7 +883,35 @@ def mkString(
 
 ---
 
-## Generalising structural recursion
+## Generalising `mkString`
+
+```scala
+def `mkString`(
+  values: List
+): String =
+  values match {
+    case Nil              => "nil"
+    case Cons(head, tail) => head + " :: " + `mkString`(tail)
+  }
+```
+
+---
+
+## Generalising `mkString`
+
+```scala
+def `recurse`(
+  values: List
+): String =
+  values match {
+    case Nil              => "nil"
+    case Cons(head, tail) => head + " :: " + `recurse`(tail)
+  }
+```
+
+---
+
+## Generalising `mkString`
 
 ```scala
 def recurse(
@@ -687,9 +923,112 @@ def recurse(
   }
 ```
 
+```scala
+recurse(ints)
+// res2: String = 1 :: 2 :: 3 :: nil
+```
+
 ---
 
-## Generalising structural recursion
+## Generalising the base case
+
+```scala
+def recurse(
+  values: List
+): String =
+  values match {
+    case Nil              => `"nil"`
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+  }
+```
+
+---
+
+## Generalising the base case
+
+```scala
+def recurse(
+  values: List
+): String =
+  values match {
+    case Nil              => "nil"
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+  }
+```
+
+```scala
+&#x200B;`val base: String = "nil"`
+```
+
+---
+
+## Generalising the base case
+
+```scala
+def recurse(
+  values: List
+): String =
+  values match {
+    case Nil              => `"nil"`
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+  }
+```
+
+```scala
+val base: String = "nil"
+```
+
+---
+
+## Generalising the base case
+
+```scala
+def recurse(
+  values: List
+): String =
+  values match {
+    case Nil              => `base`
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+  }
+```
+
+```scala
+val base: String = "nil"
+```
+
+---
+
+## Generalising the base case
+
+```scala
+def recurse(
+  `base  : String`,
+  values: List
+): String =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+  }
+```
+
+---
+
+## Generalising the base case
+
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => head + " :: " + recurse(`base`, tail)
+  }
+```
+
+---
+
+## Generalising the base case
 
 ```scala
 def recurse(
@@ -702,9 +1041,151 @@ def recurse(
   }
 ```
 
+```scala
+recurse(base, ints)
+// res3: String = 1 :: 2 :: 3 :: nil
+```
+
 ---
 
-## Generalising structural recursion
+## Generalising the step
+
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => `head + " :: " + recurse(base, tail)`
+  }
+```
+
+---
+
+## Generalising the step
+
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => `head` + " :: " + recurse(base, tail)
+  }
+```
+
+---
+
+## Generalising the step
+
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => head + " :: " + `recurse(base, tail)`
+  }
+```
+
+---
+
+## Generalising the step
+
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => head + " :: " + recurse(base, tail)
+  }
+```
+
+```scala
+*def step(head: Int, tail: String): String =
+* head + " :: " + tail
+```
+
+---
+
+## Generalising the step
+
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => `head + " :: " + recurse(base, tail)`
+  }
+```
+
+```scala
+def step(head: Int, tail: String): String =
+  head + " :: " + tail
+```
+
+---
+
+## Generalising the step
+
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => `step(head, recurse(base, tail))`
+  }
+```
+
+```scala
+def step(head: Int, tail: String): String =
+  head + " :: " + tail
+```
+
+---
+
+## Generalising the step
+
+```scala
+def recurse(
+  base  : String,
+  `step  : (Int, String) => String,`
+  values: List
+): String =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, recurse(base, tail))
+  }
+```
+
+---
+
+## Generalising the step
+
+```scala
+def recurse(
+  base  : String,
+  step  : (Int, String) => String,
+  values: List
+): String =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, recurse(base, `step`, tail))
+  }
+```
+
+---
+
+## Generalising the step
 
 ```scala
 def recurse(
@@ -718,9 +1199,46 @@ def recurse(
   }
 ```
 
+```scala
+recurse(base, step, ints)
+// res4: String = 1 :: 2 :: 3 :: nil
+```
+
 ---
 
-## Generalising structural recursion
+## Generalising the return type
+
+```scala
+def recurse(
+  base  : `String`,
+  step  : (Int, `String`) => `String`,
+  values: List
+): `String` =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+  }
+```
+
+---
+
+## Generalising the return type
+
+```scala
+def recurse[`A`](
+  base  : `A`,
+  step  : (Int, `A`) => `A`,
+  values: List
+): `A` =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+  }
+```
+
+---
+
+## Generalising the return type
 
 ```scala
 def recurse[A](
@@ -734,9 +1252,78 @@ def recurse[A](
   }
 ```
 
+```scala
+recurse(base, step, ints)
+// res5: String = 1 :: 2 :: 3 :: nil
+```
+
 ---
 
-## Generalising structural recursion
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, `recurse(base, step, tail)`)
+  }
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  `base`  : A,
+  step  : (Int, A) => A,
+  values: List
+): A =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, recurse(`base`, step, tail))
+  }
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  `step`  : (Int, A) => A,
+  values: List
+): A =
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, recurse(base, `step`, tail))
+  }
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A =
+* values match {
+*   case Nil              => base
+*   case Cons(head, tail) => step(head, recurse(base, step, tail))
+* }
+```
+
+---
+
+## Simplifying the step
 
 ```scala
 def recurse[A](
@@ -744,11 +1331,77 @@ def recurse[A](
   step  : (Int, A) => A,
   values: List
 ): A = {
+* def loop(curr: List): A =
+*   curr match {
+*     case Nil              => base
+*     case Cons(head, tail) => step(head, loop(base, step, tail))
+*   }
 
-  def loop(curr: List): A = curr match {
+  values match {
     case Nil              => base
-    case Cons(head, tail) => step(head, loop(tail))
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
   }
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(base, step, tail))
+    }
+
+* values match {
+*   case Nil              => base
+*   case Cons(head, tail) => step(head, recurse(base, step, tail))
+* }
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(base, step, tail))
+    }
+
+  `loop(values)`
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(`base, step`, tail))
+    }
 
   loop(values)
 }
@@ -756,44 +1409,330 @@ def recurse[A](
 
 ---
 
-## Generalising structural recursion
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop(values)
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop(values)
+}
+```
+
+```scala
+recurse(base, step, ints)
+// res6: String = 1 :: 2 :: 3 :: nil
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  `values: List`
+): A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop(`values`)
+}
+```
+
+---
+
+## Dropping parameters
 
 ```scala
 def recurse[A](
   base  : A,
   step  : (Int, A) => A
-)(
-  values: List
 ): A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
 
-  def loop(curr: List): A = curr match {
-    case Nil              => base
-    case Cons(head, tail) => step(head, loop(tail))
-  }
-
-  loop(values)
+  loop
 }
 ```
 
 ---
 
-## Fold
+## Dropping parameters
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
+): `A` = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
+): `List => A` = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+```scala
+recurse(base, step)(ints)
+// res7: String = 1 :: 2 :: 3 :: nil
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+```scala
+val mkString: List => String =
+  recurse(base, step)
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+```scala
+val `mkString`: List => String =
+  recurse(base, step)
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+```scala
+val mkString: `List => String` =
+  recurse(base, step)
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+```scala
+val mkString: List => String =
+  `recurse(base, step)`
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+```scala
+mkString(ints)
+// res8: String = 1 :: 2 :: 3 :: nil
+```
+
+---
+
+## Naming things
+
+```scala
+def `recurse`[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Naming things
+
+```scala
+def `fold`[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Naming things
 
 ```scala
 def fold[A](
   base  : A,
   step  : (Int, A) => A
-)(
-  values: List
-): A = {
+): List => A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
 
-  def loop(curr: List): A = curr match {
-    case Nil              => base
-    case Cons(head, tail) => step(head, loop(tail))
-  }
-
-  loop(values)
+  loop
 }
+```
+
+```scala
+fold(base, step)(ints)
+// res9: String = 1 :: 2 :: 3 :: nil
 ```
 
 ---
@@ -810,7 +1749,7 @@ val product: List => Int =
 
 ```scala
 product(ints)
-// res2: Int = 6
+// res10: Int = 6
 ```
 
 ---
@@ -827,18 +1766,14 @@ val mkString: List => String =
 
 ```scala
 mkString(ints)
-// res3: String = 1 :: 2 :: 3 :: nil
+// res11: String = 1 :: 2 :: 3 :: nil
 ```
 
 ---
 
 ## Key takeaways
 
-Structural recursion is:
-* providing an implementation for the smallest possible case (`base`).
-* providing an implementation for larger cases that rely on smaller cases (`step`).
-
-For cons lists, this can be generalised as `fold`.
+TODO
 
 ---
 
@@ -1126,6 +2061,8 @@ def fold[A](
 }
 ```
 
+---
+
 ## Using functors
 
 ```scala
@@ -1225,7 +2162,7 @@ val product: List => Int = cata(productAlgebra, projectList)
 
 ```scala
 product(ints)
-// res4: Int = 6
+// res12: Int = 6
 ```
 
 ---
@@ -1244,8 +2181,364 @@ val mkString: List => String = cata(mkStringAlgebra, projectList)
 
 ```scala
 mkString(ints)
-// res5: String = 1 :: 2 :: 3 :: nil
+// res13: String = 1 :: 2 :: 3 :: nil
 ```
+
+---
+
+class: center, middle
+
+# What about non-`List`?
+
+---
+
+## Tree
+
+```scala
+sealed trait Tree
+
+case class Node(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends Tree
+
+case object Leaf extends Tree
+```
+
+```scala
+val intTree = Node(
+  Node(
+    Node(Leaf, 1, Leaf),
+    2,
+    Node(Leaf, 3, Leaf)
+  ),
+  4,
+  Leaf
+)
+// intTree: Node = Node(Node(Node(Leaf,1,Leaf),2,Node(Leaf,3,Leaf)),4,Leaf)
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF[+A]
+
+case class NodeF[A](
+  left : A,
+  value: Int,
+  right: A
+) extends TreeF[A]
+
+case object LeafF extends TreeF[Nothing]
+```
+
+---
+
+## Projection
+
+```scala
+def projectTree: Tree => TreeF[Tree] =
+  _ match {
+    case Leaf          => LeafF
+    case Node(l, v ,r) => NodeF(l, v, r)
+  }
+```
+
+---
+
+## Functor instance
+
+```scala
+implicit val treeFFunctor: Functor[TreeF] = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) = tree match {
+    case LeafF          => LeafF
+    case NodeF(l, v, r) => NodeF(f(l), v, f(r))
+  }
+}
+```
+
+---
+
+## Tree depth
+
+```scala
+val depthAlgebra: TreeF[Int] => Int =
+  _ match {
+    case LeafF                           => 0
+    case NodeF(leftDepth, _, rightDepth) => math.max(
+      leftDepth + 1,
+      rightDepth + 1
+    )
+  }
+
+val depth: Tree => Int = cata(depthAlgebra, projectTree)
+```
+
+```scala
+depth(intTree)
+// res14: Int = 3
+```
+
+---
+
+## Key takeaways
+
+* `cata` works just fine with `Tree`.
+* it involves a lot of busywork though...
+
+---
+
+class: center, middle
+
+# Reducing the boilerplate
+
+---
+
+## `List` in terms of `ListF`
+
+```scala
+type Foo = ListF[???]
+```
+
+---
+
+## `List` in terms of `ListF`
+
+```scala
+type Foo = ListF[ListF[???]]
+```
+
+---
+
+## `List` in terms of `ListF`
+
+```scala
+type Foo = ListF[Foo]
+```
+
+---
+
+## `List` in terms of `ListF`
+
+```scala
+type Foo = ListF[Foo]
+//        type Foo = ListF[Foo]
+//                         ^
+// On line 2: error: illegal cyclic reference involving type Foo
+```
+
+---
+
+## `List` in terms of `ListF`
+
+```scala
+case class Foo(value: ListF[Foo])
+```
+
+---
+
+## `List` in terms of `ListF`
+
+```scala
+case class Foo[F[_]](value: F[Foo[F]])
+```
+
+---
+
+## `Fix`
+
+```scala
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+---
+
+## `List` in terms of `Fix`
+
+```scala
+type FixedList = Fix[ListF]
+```
+
+---
+
+## `List` in terms of `Fix`
+
+```scala
+def fixedCons(head: Int, tail: FixedList): FixedList =
+  Fix[ListF](Some((head, tail)))
+
+def fixedNil: FixedList = Fix[ListF](None)
+
+val fixedInts = fixedCons(1, fixedCons(2, fixedCons(3, fixedNil)))
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+def projectFixedList(list: FixedList): ListF[FixedList] =
+  ???
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+def projectFixedList(fix: Fix[ListF]): ListF[Fix[ListF]] =
+  ???
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+def projectFixedList(fix: Fix[ListF]): ListF[Fix[ListF]] =
+  fix.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+def projectFixedList[F[_]](fix: Fix[F]): F[Fix[F]] =
+  fix.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+def projectFix[F[_]](fix: Fix[F]): F[Fix[F]] =
+  fix.value
+```
+
+---
+
+## Specialised `cata` for `Fix`
+
+```scala
+def cata[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(curr: B): A =
+    algebra(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## Specialised `cata` for `Fix`
+
+```scala
+def cataFix[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(curr: B): A =
+    algebra(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## Specialised `cata` for `Fix`
+
+```scala
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A,
+  project: Fix[F] => F[Fix[F]]
+): Fix[F] => A = {
+
+  def loop(curr: Fix[F]): A =
+    algebra(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## Specialised `cata` for `Fix`
+
+```scala
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A,
+): Fix[F] => A = {
+
+  def loop(curr: Fix[F]): A =
+    algebra(fmap(curr.value, loop))
+
+  loop
+}
+```
+
+---
+
+## mkString in terms of `cataFix`
+
+```scala
+val mkStringFix: FixedList => String =
+  cataFix(mkStringAlgebra)
+```
+
+```scala
+mkStringFix(fixedInts)
+// res15: String = 1 :: 2 :: 3 :: nil
+```
+
+---
+
+## Cost of `Fix`
+
+```scala
+fixedInts
+// res16: FixedList = Fix(Some((1,Fix(Some((2,Fix(Some((3,Fix(None))))))))))
+```
+
+
+---
+
+## Cost of `Fix`
+
+```scala
+def headOpt(list: FixedList): Option[Int] = list match {
+  case Fix(Some((head, _))) => Some(head)
+  case Fix(None)            => None
+}
+```
+
+---
+
+## Cost of `Fix`
+
+```scala
+def headOpt(list:      List): Option[Int] = list match {
+  case Cons(     head, _)   => Some(head)
+  case Nil                  => None
+}
+```
+
+---
+
+## Key takeaways
+
+* `Fix` makes the hard case easier.
+* `Fix` makes the easy case harder.
 
 ---
 
@@ -1270,8 +2563,14 @@ def range(
 mkString(
   range(3)
 )
-// res6: String = 3 :: 2 :: 1 :: nil
+// res17: String = 3 :: 2 :: 1 :: nil
 ```
+
+---
+
+class: center, middle
+
+# Generalised generative recursion
 
 ---
 
@@ -1428,8 +2727,14 @@ val range: Int => List =
 
 ```scala
 mkString(range(3))
-// res7: String = 3 :: 2 :: 1 :: nil
+// res18: String = 3 :: 2 :: 1 :: nil
 ```
+
+---
+
+class: center, middle
+
+# Generalised unfold
 
 ---
 
@@ -1655,311 +2960,14 @@ val range: Int => List = ana(rangeCoAlgebra, embedList)
 
 ```scala
 mkString(range(3))
-// res8: String = 3 :: 2 :: 1 :: nil
+// res19: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
 
 class: center, middle
 
-# What about non-`List`?
-
----
-
-## Tree
-
-```scala
-sealed trait Tree
-
-case class Node(
-  left : Tree,
-  value: Int,
-  right: Tree
-) extends Tree
-
-case object Leaf extends Tree
-```
-
-```scala
-val intTree = Node(
-  Node(
-    Node(Leaf, 1, Leaf),
-    2,
-    Node(Leaf, 3, Leaf)
-  ),
-  4,
-  Leaf
-)
-// intTree: Node = Node(Node(Node(Leaf,1,Leaf),2,Node(Leaf,3,Leaf)),4,Leaf)
-```
-
----
-
-## Pattern functor
-
-```scala
-sealed trait TreeF[+A]
-
-case class NodeF[A](
-  left : A,
-  value: Int,
-  right: A
-) extends TreeF[A]
-
-case object LeafF extends TreeF[Nothing]
-```
-
----
-
-## Projection
-
-```scala
-def projectTree: Tree => TreeF[Tree] =
-  _ match {
-    case Leaf          => LeafF
-    case Node(l, v ,r) => NodeF(l, v, r)
-  }
-```
-
----
-
-## Embedding
-
-```scala
-def embedTree: TreeF[Tree] => Tree =
-  _ match {
-    case LeafF          => Leaf
-    case NodeF(l, v, r) => Node(l, v, r)
-  }
-
-```
-
----
-
-## Functor instance
-
-```scala
-implicit val treeFFunctor: Functor[TreeF] = new Functor[TreeF] {
-  override def map[A, B](tree: TreeF[A], f: A => B) = tree match {
-    case LeafF          => LeafF
-    case NodeF(l, v, r) => NodeF(f(l), v, f(r))
-  }
-}
-```
-
----
-
-## Tree depth
-
-```scala
-val depthAlgebra: TreeF[Int] => Int =
-  _ match {
-    case LeafF                           => 0
-    case NodeF(leftDepth, _, rightDepth) => math.max(
-      leftDepth + 1,
-      rightDepth + 1
-    )
-  }
-
-val depth: Tree => Int = cata(depthAlgebra, projectTree)
-```
-
-```scala
-depth(intTree)
-// res9: Int = 3
-```
-
----
-
-## Key takeaways
-
-* `cata` works just fine with `Tree`.
-* it involves a lot of busywork though...
-
----
-
-class: center, middle
-
-# Reducing the boilerplate
-
----
-
-## `List` in terms of `ListF`
-
-```scala
-type Foo = ListF[???]
-```
-
----
-
-## `List` in terms of `ListF`
-
-```scala
-type Foo = ListF[ListF[???]]
-```
-
----
-
-## `List` in terms of `ListF`
-
-```scala
-type Foo = ListF[Foo]
-```
-
----
-
-## `List` in terms of `ListF`
-
-```scala
-type Foo = ListF[Foo]
-//        type Foo = ListF[Foo]
-//                         ^
-// On line 2: error: illegal cyclic reference involving type Foo
-```
-
----
-
-## `List` in terms of `ListF`
-
-```scala
-case class Foo(value: ListF[Foo])
-```
-
----
-
-## `List` in terms of `ListF`
-
-```scala
-case class Foo[F[_]](value: F[Foo[F]])
-```
-
----
-
-## `Fix`
-
-```scala
-case class Fix[F[_]](value: F[Fix[F]])
-```
-
----
-
-## `List` in terms of `Fix`
-
-```scala
-type FixedList = Fix[ListF]
-```
-
----
-
-## Projecting `Fix`
-
-```scala
-def projectFixedList(list: FixedList): ListF[FixedList] =
-  ???
-```
-
----
-
-## Projecting `Fix`
-
-```scala
-def projectFixedList(fix: Fix[ListF]): ListF[Fix[ListF]] =
-  ???
-```
-
----
-
-## Projecting `Fix`
-
-```scala
-def projectFixedList(fix: Fix[ListF]): ListF[Fix[ListF]] =
-  fix.value
-```
-
----
-
-## Projecting `Fix`
-
-```scala
-def projectFixedList[F[_]](fix: Fix[F]): F[Fix[F]] =
-  fix.value
-```
-
----
-
-## Projecting `Fix`
-
-```scala
-def projectFix[F[_]](fix: Fix[F]): F[Fix[F]] =
-  fix.value
-```
-
----
-
-## Specialised `cata` for `Fix`
-
-```scala
-def cata[F[_]: Functor, A, B](
-  algebra: F[A] => A,
-  project: B => F[B]
-): B => A = {
-
-  def loop(curr: B): A =
-    algebra(fmap(project(curr), loop))
-
-  loop
-}
-```
-
----
-
-## Specialised `cata` for `Fix`
-
-```scala
-def cataFix[F[_]: Functor, A, B](
-  algebra: F[A] => A,
-  project: B => F[B]
-): B => A = {
-
-  def loop(curr: B): A =
-    algebra(fmap(project(curr), loop))
-
-  loop
-}
-```
-
----
-
-## Specialised `cata` for `Fix`
-
-```scala
-def cataFix[F[_]: Functor, A](
-  algebra: F[A] => A,
-  project: Fix[F] => F[Fix[F]]
-): Fix[F] => A = {
-
-  def loop(curr: Fix[F]): A =
-    algebra(fmap(project(curr), loop))
-
-  loop
-}
-```
-
----
-
-## Specialised `cata` for `Fix`
-
-```scala
-def cataFix[F[_]: Functor, A](
-  algebra: F[A] => A,
-): Fix[F] => A = {
-
-  def loop(curr: Fix[F]): A =
-    algebra(fmap(curr.value, loop))
-
-  loop
-}
-```
+# Reducing the boilerplate, again
 
 ---
 
@@ -2048,40 +3056,8 @@ val rangeFix: Int => FixedList =
 
 ```scala
 rangeFix(3)
-// res10: FixedList = Fix(Some((3,Fix(Some((2,Fix(Some((1,Fix(None))))))))))
+// res20: FixedList = Fix(Some((3,Fix(Some((2,Fix(Some((1,Fix(None))))))))))
 ```
-
----
-
-## mkString in terms of `cataFix`
-
-```scala
-val mkStringFix: FixedList => String =
-  cataFix(mkStringAlgebra)
-```
-
-```scala
-mkStringFix(rangeFix(3))
-// res11: String = 3 :: 2 :: 1 :: nil
-```
-
----
-
-## Cost of `Fix`
-
-```scala
-def headOpt(list: FixedList): Option[Int] = list match {
-  case Fix(Some((head, _))) => Some(head)
-  case Fix(None)            => None
-}
-```
-
----
-
-## Key takeaways
-
-* `Fix` makes the hard case easier.
-* `Fix` makes the easy case harder.
 
 ---
 
@@ -2098,7 +3074,7 @@ val factorial: Int => Int =
 
 ```scala
 factorial(3)
-// res12: Int = 6
+// res21: Int = 6
 ```
 
 ---
@@ -2110,7 +3086,7 @@ val factorial: Int => Int =
 
 ```scala
 factorial(3)
-// res13: Int = 6
+// res22: Int = 6
 ```
 
 ---
