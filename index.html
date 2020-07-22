@@ -1783,28 +1783,7 @@ class: center, middle
 
 ---
 
-## Generalising folds
-
-```scala
-def fold[A](
-  base  : A,
-  step  : (Int, A) => A
-)(
-  values: List
-): A = {
-
-  def loop(curr: List): A = curr match {
-    case Nil              => base
-    case Cons(head, tail) => step(head, loop(tail))
-  }
-
-  loop(values)
-}
-```
-
----
-
-## Generalising folds
+## Abstracting over structure
 
 ```scala
 def fold[A](
@@ -1812,10 +1791,31 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(curr: List): A = curr match {
-    case Nil              => base
-    case Cons(head, tail) => step(head, loop(tail))
-  }
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def fold[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+
+  def loop(curr: List): A =
+    curr match {
+      case `Nil`              => base
+      case `Cons(head, tail)` => step(head, loop(tail))
+    }
 
   loop
 }
@@ -1832,26 +1832,28 @@ TODO: diagram explaining ListF + code for `projectList`.
 ## List projection
 
 ```scala
-val projectList: List => Option[(Int, List)] =
+val project: List => Option[(Int, List)] =
   _ match {
     case Nil              => None
     case Cons(head, tail) => Some((head, tail))
   }
 ```
+
 ---
 
-## Generalising folds
+## Abstracting over structure
 
 ```scala
 def fold[A](
-  base   : A,
-  step   : (Int, A) => A
+  base  : A,
+  step  : (Int, A) => A
 ): List => A = {
 
-  def loop(curr: List): A = projectList(curr) match {
-    case None               => base
-    case Some((head, tail)) => step(head, loop(tail))
-  }
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
 
   loop
 }
@@ -1859,7 +1861,168 @@ def fold[A](
 
 ---
 
-## Generalising folds
+## Abstracting over structure
+
+```scala
+def fold[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+
+  def loop(curr: List): A =
+    `curr` match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def fold[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+
+  def loop(curr: List): A =
+    `project(curr)` match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def fold[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case `Nil`              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def fold[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case `None`             => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def fold[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None             => base
+      case `Cons(head, tail)` => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def fold[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => base
+      case `Some((head, tail))` => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def fold[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+
+  def loop(curr: List): A =
+    `project`(curr) match {
+      case None               => base
+      case Some((head, tail)) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def fold[A](
+  base   : A,
+  step   : (Int, A) => A,
+  `project: List => Option[(Int, List)]`
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => base
+      case Some((head, tail)) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
 
 ```scala
 def fold[A](
@@ -1868,10 +2031,49 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A = project(curr) match {
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => base
+      case Some((head, tail)) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+```scala
+fold(base, step, project)(ints)
+// res12: String = 1 :: 2 :: 3 :: nil
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+def op(value: Option[(Int, String)]): String =
+  value match {
+    case Some((head, tail)) => step(head, tail)
     case None               => base
-    case Some((head, tail)) => step(head, loop(tail))
   }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+def fold[A](
+* base   : A,
+* step   : (Int, A) => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => base
+      case Some((head, tail)) => step(head, loop(tail))
+    }
 
   loop
 }
@@ -1879,11 +2081,27 @@ def fold[A](
 
 ---
 
-TODO : write a function that aggregates `base` and `step` to make them into a `ListF[A] => A`.
+## Simplifying `base` and `step`
+
+```scala
+def fold[A](
+* op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => base
+      case Some((head, tail)) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
 
 ---
 
-## Generalising folds
+## Simplifying `base` and `step`
 
 ```scala
 def fold[A](
@@ -1891,13 +2109,99 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A = project(curr) match {
-    case None               => op(None)
-    case Some((head, tail)) => op(Some((head, loop(tail))))
-  }
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => `base`
+      case Some((head, tail)) => step(head, loop(tail))
+    }
 
   loop
 }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => `op(None)`
+      case Some((head, tail)) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => op(None)
+      case Some((head, tail)) => `step(head, loop(tail))`
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => op(None)
+      case Some((head, tail)) => `op(Some((head, loop(tail))))`
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => op(None)
+      case Some((head, tail)) => op(Some((head, loop(tail))))
+    }
+
+  loop
+}
+```
+
+```scala
+fold(op, project)(ints)
+// res13: String = 1 :: 2 :: 3 :: nil
 ```
 
 ---
@@ -1913,7 +2217,7 @@ type ListF[A] = Option[(Int, A)]
 ## Intermediate representation
 
 ```scala
-val projectList: List => ListF[List] =
+val project: List => ListF[List] =
   _ match {
     case Nil              => None
     case Cons(head, tail) => Some((head, tail))
@@ -1925,15 +2229,28 @@ val projectList: List => ListF[List] =
 ## Intermediate representation
 
 ```scala
+def op(value: ListF[String]): String =
+  value match {
+    case Some((head, tail)) => step(head, tail)
+    case None               => base
+  }
+```
+
+---
+
+## Intermediate representation
+
+```scala
 def fold[A](
-  op     : ListF[A] => A,
-  project: List => ListF[List]
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A = project(curr) match {
-    case None               => op(None)
-    case Some((head, tail)) => op(Some((head, loop(tail))))
-  }
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => op(None)
+      case Some((head, tail)) => op(Some((head, loop(tail))))
+    }
 
   loop
 }
@@ -1941,18 +2258,59 @@ def fold[A](
 
 ---
 
-## Generalising folds
+## Intermediate representation
+
+```scala
+def fold[A](
+  op     : `Option[(Int, A)]` => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => op(None)
+      case Some((head, tail)) => op(Some((head, loop(tail))))
+    }
+
+  loop
+}
+```
+
+---
+
+## Intermediate representation
+
+```scala
+def fold[A](
+  op     : `ListF[A]` => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => op(None)
+      case Some((head, tail)) => op(Some((head, loop(tail))))
+    }
+
+  loop
+}
+```
+
+---
+
+## Intermediate representation
 
 ```scala
 def fold[A](
   op     : ListF[A] => A,
-  project: List => ListF[List]
+  project: List => `Option[(Int, List)]`
 ): List => A = {
 
-  def loop(curr: List): A = op(project(curr) match {
-    case None               => None
-    case Some((head, tail)) => Some((head, loop(tail)))
-  })
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => op(None)
+      case Some((head, tail)) => op(Some((head, loop(tail))))
+    }
 
   loop
 }
@@ -1960,7 +2318,28 @@ def fold[A](
 
 ---
 
-## Generalising folds
+## Intermediate representation
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => `ListF[List]`
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => op(None)
+      case Some((head, tail)) => op(Some((head, loop(tail))))
+    }
+
+  loop
+}
+```
+
+
+---
+
+## Intermediate representation
 
 ```scala
 def fold[A](
@@ -1969,7 +2348,231 @@ def fold[A](
 ): List => A = {
 
   def loop(curr: List): A =
-    op(recurse(project(curr)))
+    project(curr) match {
+      case None               => op(None)
+      case Some((head, tail)) => op(Some((head, loop(tail))))
+    }
+
+  loop
+}
+```
+
+```scala
+fold(op, project)(ints)
+// res14: String = 1 :: 2 :: 3 :: nil
+```
+
+---
+
+## Moving `op`
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => `op`(None)
+      case Some((head, tail)) => `op`(Some((head, loop(tail))))
+    }
+
+  loop
+}
+```
+
+
+---
+
+## Moving `op`
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    `op`(project(curr) match {
+      case None               => None
+      case Some((head, tail)) => Some((head, loop(tail)))
+    })
+
+  loop
+}
+```
+
+---
+
+## Moving `op`
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(project(curr) match {
+      case None               => None
+      case Some((head, tail)) => Some((head, loop(tail)))
+    })
+
+  loop
+}
+```
+
+```scala
+fold(op, project)(ints)
+// res15: String = 1 :: 2 :: 3 :: nil
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(project(curr) match {
+*     case None               => None
+*     case Some((head, tail)) => Some((head, loop(tail)))
+     })
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(project(curr) match {
+      case `None`               => None
+      case Some((head, tail)) => Some((head, loop(tail)))
+     })
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(project(curr) match {
+      case None               => `None`
+      case Some((head, tail)) => Some((head, loop(tail)))
+     })
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(project(curr) match {
+      case None               => None
+      case `Some((head, tail))` => Some((head, loop(tail)))
+     })
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(project(curr) match {
+      case None               => None
+      case Some((head, tail)) => `Some((head, loop(tail)))`
+     })
+
+  loop
+}
+```
+
+
+
+---
+
+## Generalising recursion
+
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(project(curr) match {
+      case None               => None
+      case Some((head, tail)) => Some((head, loop(tail)))
+    })
+
+* def recurse(curr: ListF[List]): ListF[A] =
+*   curr match {
+*     case None               => None
+*     case Some((head, tail)) => Some((head, loop(tail)))
+*   }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+*   op(project(curr) match {
+*     case None               => None
+*     case Some((head, tail)) => Some((head, loop(tail)))
+*   })
 
   def recurse(curr: ListF[List]): ListF[A] =
     curr match {
@@ -1983,7 +2586,145 @@ def fold[A](
 
 ---
 
-## Generalising folds
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(`recurse`(project(curr)))
+
+  def recurse(curr: ListF[List]): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, loop(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr)))
+
+* def recurse(curr: ListF[List]): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, loop(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr)))
+
+  def recurse(curr: ListF[List], `f: List => A`): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, loop(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr)))
+
+  def recurse(curr: ListF[List], f: List => A): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, `loop`(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr)))
+
+  def recurse(curr: ListF[List], f: List => A): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, `f`(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr), `loop`))
+
+  def recurse(curr: ListF[List], f: List => A): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, f(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
 
 ```scala
 def fold[A](
@@ -1995,6 +2736,75 @@ def fold[A](
     op(recurse(project(curr), loop))
 
   def recurse(curr: ListF[List], f: List => A): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, f(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr), loop))
+
+  def recurse(curr: `ListF[List]`, f: List => A): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, f(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr), loop))
+
+  def recurse(curr: ListF[List], f: `List => A`): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, f(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr), loop))
+
+  def recurse(curr: ListF[List], f: List => A): `ListF[A]` =
     curr match {
       case None               => None
       case Some((head, tail)) => Some((head, f(tail)))
@@ -2043,7 +2853,7 @@ implicit val listFFunctor: Functor[ListF] = new Functor[ListF] {
 
 ---
 
-## Using functors
+## Using Functor
 
 ```scala
 def fold[A](
@@ -2055,6 +2865,72 @@ def fold[A](
     op(recurse(project(curr), loop))
 
   def recurse(curr: ListF[List], f: List => A): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, f(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr), loop))
+
+  def recurse(curr: ListF[List], f: List => A): ListF[A] =
+*   curr match {
+*     case None               => None
+*     case Some((head, tail)) => Some((head, f(tail)))
+*   }
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr), loop))
+
+  def recurse(curr: ListF[List], f: List => A): ListF[A] =
+    `fmap(curr, f)`
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(`recurse`(project(curr), loop))
+
+  def recurse(curr: ListF[List], f: List => A): ListF[A] =
     fmap(curr, f)
 
   loop
@@ -2063,12 +2939,159 @@ def fold[A](
 
 ---
 
-## Using functors
+## Using Functor
 
 ```scala
 def fold[A](
   op     : ListF[A] => A,
   project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(`fmap`(project(curr), loop))
+
+  def recurse(curr: ListF[List], f: List => A): ListF[A] =
+    fmap(curr, f)
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(fmap(project(curr), loop))
+
+* def recurse(curr: ListF[List], f: List => A): ListF[A] =
+*   fmap(curr, f)
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+```scala
+fold(op, project)(ints)
+// res16: String = 1 :: 2 :: 3 :: nil
+```
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def fold[A](
+  op     : `ListF`[A] => A,
+  project: List => `ListF`[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(`fmap`(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def fold[`F[_]: Functor`, A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def fold[F[_]: Functor, A](
+  op     : `ListF`[A] => A,
+  project: List => `ListF`[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def fold[F[_]: Functor, A](
+  op     : `F`[A] => A,
+  project: List => `F`[List]
 ): List => A = {
 
   def loop(curr: List): A =
@@ -2095,9 +3118,82 @@ def fold[F[_]: Functor, A](
 }
 ```
 
+```scala
+fold(op, project).apply(ints)
+// res17: String = 1 :: 2 :: 3 :: nil
+```
+
 ---
 
-## Abstracting over `ListInt`
+## Abstracting over `List`
+
+```scala
+def fold[F[_]: Functor, A](
+  op     : F[A] => A,
+  project: `List` => F[`List`]
+): `List` => A = {
+
+  def loop(curr: `List`): A =
+    op(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `List`
+
+```scala
+def fold[F[_]: Functor, A, `B`](
+  op     : F[A] => A,
+  project: List => F[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `List`
+
+```scala
+def fold[F[_]: Functor, A, B](
+  op     : F[A] => A,
+  project: `List` => F[`List`]
+): `List` => A = {
+
+  def loop(curr: `List`): A =
+    op(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `List`
+
+```scala
+def fold[F[_]: Functor, A, B](
+  op     : F[A] => A,
+  project: `B` => F[`B`]
+): `B` => A = {
+
+  def loop(curr: `B`): A =
+    op(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `List`
 
 ```scala
 def fold[F[_]: Functor, A, B](
@@ -2110,6 +3206,11 @@ def fold[F[_]: Functor, A, B](
 
   loop
 }
+```
+
+```scala
+fold(op, project).apply(ints)
+// res18: String = 1 :: 2 :: 3 :: nil
 ```
 
 ---
@@ -2157,12 +3258,12 @@ val productAlgebra: ListF[Int] => Int =
     case Some((head, tail)) => head * tail
   }
 
-val product: List => Int = cata(productAlgebra, projectList)
+val product: List => Int = cata(productAlgebra, project)
 ```
 
 ```scala
 product(ints)
-// res12: Int = 6
+// res19: Int = 6
 ```
 
 ---
@@ -2176,12 +3277,12 @@ val mkStringAlgebra: ListF[String] => String =
     case Some((head, tail)) => head + " :: " + tail
   }
 
-val mkString: List => String = cata(mkStringAlgebra, projectList)
+val mkString: List => String = cata(mkStringAlgebra, project)
 ```
 
 ```scala
 mkString(ints)
-// res13: String = 1 :: 2 :: 3 :: nil
+// res20: String = 1 :: 2 :: 3 :: nil
 ```
 
 ---
@@ -2279,7 +3380,7 @@ val depth: Tree => Int = cata(depthAlgebra, projectTree)
 
 ```scala
 depth(intTree)
-// res14: Int = 3
+// res21: Int = 3
 ```
 
 ---
@@ -2367,57 +3468,14 @@ type FixedList = Fix[ListF]
 ## `List` in terms of `Fix`
 
 ```scala
-def fixedCons(head: Int, tail: FixedList): FixedList =
-  Fix[ListF](Some((head, tail)))
-
-def fixedNil: FixedList = Fix[ListF](None)
-
-val fixedInts = fixedCons(1, fixedCons(2, fixedCons(3, fixedNil)))
-```
-
----
-
-## Projecting `Fix`
-
-```scala
-def projectFixedList(list: FixedList): ListF[FixedList] =
-  ???
-```
-
----
-
-## Projecting `Fix`
-
-```scala
-def projectFixedList(fix: Fix[ListF]): ListF[Fix[ListF]] =
-  ???
-```
-
----
-
-## Projecting `Fix`
-
-```scala
-def projectFixedList(fix: Fix[ListF]): ListF[Fix[ListF]] =
-  fix.value
-```
-
----
-
-## Projecting `Fix`
-
-```scala
-def projectFixedList[F[_]](fix: Fix[F]): F[Fix[F]] =
-  fix.value
-```
-
----
-
-## Projecting `Fix`
-
-```scala
-def projectFix[F[_]](fix: Fix[F]): F[Fix[F]] =
-  fix.value
+val fixedInts: FixedList =
+  Fix[ListF](Some((1,
+    Fix[ListF](Some((2,
+      Fix[ListF](Some((3,
+        Fix[ListF](None)
+      )))
+    )))
+  )))
 ```
 
 ---
@@ -2489,7 +3547,7 @@ def cataFix[F[_]: Functor, A](
 
 ---
 
-## mkString in terms of `cataFix`
+## `mkString` in terms of `cataFix`
 
 ```scala
 val mkStringFix: FixedList => String =
@@ -2498,18 +3556,22 @@ val mkStringFix: FixedList => String =
 
 ```scala
 mkStringFix(fixedInts)
-// res15: String = 1 :: 2 :: 3 :: nil
+// res22: String = 1 :: 2 :: 3 :: nil
 ```
 
 ---
 
-## Cost of `Fix`
+## `product` in terms of `cataFix`
 
 ```scala
-fixedInts
-// res16: FixedList = Fix(Some((1,Fix(Some((2,Fix(Some((3,Fix(None))))))))))
+val productFix: FixedList => Int =
+  cataFix(productAlgebra)
 ```
 
+```scala
+productFix(fixedInts)
+// res23: Int = 6
+```
 
 ---
 
@@ -2535,10 +3597,41 @@ def headOpt(list:      List): Option[Int] = list match {
 
 ---
 
+## Cost of `Fix`
+
+```scala
+val list: FixedList =
+  Fix[ListF](Some((1,
+    Fix[ListF](Some((2,
+      Fix[ListF](Some((3,
+        Fix[ListF](None)
+      )))
+    )))
+  )))
+```
+
+---
+
+## Cost of `Fix`
+
+```scala
+val list:      List =
+  Cons(            1,
+    Cons(            2,
+      Cons(            3,
+        Nil
+      )
+    )
+  )
+```
+
+---
+
 ## Key takeaways
 
 * `Fix` makes the hard case easier.
 * `Fix` makes the easy case harder.
+* `Fix` makes... little sense.
 
 ---
 
@@ -2563,7 +3656,7 @@ def range(
 mkString(
   range(3)
 )
-// res17: String = 3 :: 2 :: 1 :: nil
+// res24: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -2727,7 +3820,7 @@ val range: Int => List =
 
 ```scala
 mkString(range(3))
-// res18: String = 3 :: 2 :: 1 :: nil
+// res25: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -2960,7 +4053,7 @@ val range: Int => List = ana(rangeCoAlgebra, embedList)
 
 ```scala
 mkString(range(3))
-// res19: String = 3 :: 2 :: 1 :: nil
+// res26: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -3056,7 +4149,7 @@ val rangeFix: Int => FixedList =
 
 ```scala
 rangeFix(3)
-// res20: FixedList = Fix(Some((3,Fix(Some((2,Fix(Some((1,Fix(None))))))))))
+// res27: FixedList = Fix(Some((3,Fix(Some((2,Fix(Some((1,Fix(None))))))))))
 ```
 
 ---
@@ -3074,7 +4167,7 @@ val factorial: Int => Int =
 
 ```scala
 factorial(3)
-// res21: Int = 6
+// res28: Int = 6
 ```
 
 ---
@@ -3086,7 +4179,7 @@ val factorial: Int => Int =
 
 ```scala
 factorial(3)
-// res22: Int = 6
+// res29: Int = 6
 ```
 
 ---
