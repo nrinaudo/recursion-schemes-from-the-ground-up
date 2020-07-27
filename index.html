@@ -1352,7 +1352,8 @@ def recurse[A](
 * def loop(curr: List): A =
 *   curr match {
 *     case Nil              => base
-*     case Cons(head, tail) => step(head, recurse(base, step, tail))
+*     case Cons(head, tail) =>
+*       step(head, recurse(base, step, tail))
 *   }
 
   values match {
@@ -1375,7 +1376,8 @@ def recurse[A](
   def loop(curr: List): A =
     curr match {
       case Nil              => base
-      case Cons(head, tail) => step(head, `recurse(base, step, tail)`)
+      case Cons(head, tail) =>
+        step(head, `recurse(base, step, tail)`)
     }
 
   values match {
@@ -1398,7 +1400,31 @@ def recurse[A](
   def loop(curr: List): A =
     curr match {
       case Nil              => base
-      case Cons(head, tail) => step(head, `loop(tail)`)
+      case Cons(head, tail) =>
+        step(head, `loop(tail)`)
+    }
+
+  values match {
+    case Nil              => base
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+  }
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
     }
 
   values match {
@@ -1523,6 +1549,44 @@ def recurse[A](
 def recurse[A](
   base  : A,
   step  : (Int, A) => A
+): A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  `loop`
+}
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
+): A = {
+* def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
 ): `A` = {
   def loop(curr: List): A =
     curr match {
@@ -1581,7 +1645,6 @@ recurse(base, step)(ints)
 
 ## Dropping parameters
 
-
 ```scala
 val mkString: List => String =
   recurse(base, step)
@@ -1617,6 +1680,25 @@ val mkString: List => String =
 ```scala
 mkString(ints)
 // res8: String = 1 :: 2 :: 3 :: nil
+```
+
+---
+
+## Naming things
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+  def loop(curr: List): A =
+    curr match {
+      case Nil              => base
+      case Cons(head, tail) => step(head, loop(tail))
+    }
+
+  loop
+}
 ```
 
 ---
@@ -1687,9 +1769,62 @@ fold(base, step)(ints)
 
 ```scala
 val product: List => Int =
-  fold(
+  fold[Int](
     base = 1,
-    step = (head: Int, tailProduct: Int) => head * tailProduct
+    step = (head, tail) => head * tail
+
+  )
+```
+
+---
+
+## `product` as a fold
+
+```scala
+val product: List => Int =
+  `fold`[Int](
+    base = 1,
+    step = (head, tail) => head * tail
+
+  )
+```
+
+---
+
+## `product` as a fold
+
+```scala
+val product: List => Int =
+  fold[Int](
+    `base = 1`,
+    step = (head, tail) => head * tail
+
+  )
+```
+
+---
+
+## `product` as a fold
+
+```scala
+val product: List => Int =
+  fold[Int](
+    base = 1,
+    `step = (head, tail) => head * tail`
+
+  )
+```
+
+---
+
+## `product` as a fold
+
+```scala
+val product: List => Int =
+  fold[Int](
+    base = 1,
+    step = (head, tail) => head * tail
+
   )
 ```
 
@@ -1704,9 +1839,57 @@ product(ints)
 
 ```scala
 val mkString: List => String =
-  fold(
+  fold[String](
     base = "nil",
-    step = (head: Int, tailStr: String) => head + " :: " + tailStr
+    step = (head, tail) => head + " :: " + tail
+  )
+```
+
+---
+
+## `mkString` as a fold
+
+```scala
+val mkString: List => String =
+  `fold`[String](
+    base = "nil",
+    step = (head, tail) => head + " :: " + tail
+  )
+```
+
+---
+
+## `mkString` as a fold
+
+```scala
+val mkString: List => String =
+  fold[String](
+    `base = "nil"`,
+    step = (head, tail) => head + " :: " + tail
+  )
+```
+
+---
+
+## `mkString` as a fold
+
+```scala
+val mkString: List => String =
+  fold[String](
+    base = "nil",
+    `step = (head, tail) => head + " :: " + tail`
+  )
+```
+
+---
+
+## `mkString` as a fold
+
+```scala
+val mkString: List => String =
+  fold[String](
+    base = "nil",
+    step = (head, tail) => head + " :: " + tail
   )
 ```
 
@@ -2073,7 +2256,6 @@ def op(value: Option[(Int, String)]): String =
   }
 ```
 
-
 ---
 
 ## Simplifying `base` and `step`
@@ -2109,9 +2291,6 @@ def op(value: Option[(Int, String)]): String =
     case None               => `base`
   }
 ```
-
-
-
 
 ---
 
@@ -2419,7 +2598,6 @@ def fold[A](
   loop
 }
 ```
-
 
 ---
 
@@ -3884,7 +4062,6 @@ val project: List => ListF[List] =
     case Cons(head, tail) => Some((head, tail))
   }
 ```
-
 
 ---
 
