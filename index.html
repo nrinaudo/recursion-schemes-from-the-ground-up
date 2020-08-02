@@ -17,7 +17,7 @@ Nicolas Rinaudo • [@NicolasRinaudo] • [Besedo]
 
 class: center, middle
 
-# Recursive Data Structures
+# Recursive Data Types
 
 ---
 
@@ -172,6 +172,25 @@ case object Nil extends List
 
 ```scala
 val ints: List = Cons(1, Cons(2, Cons(3, Nil)))
+```
+
+---
+
+## `List`
+
+```scala
+sealed trait List
+
+case class Cons(
+  head: Int,
+  tail: List
+) extends List
+
+case object Nil extends List
+```
+
+```scala
+val `ints`: List = Cons(`1`, Cons(`2`, Cons(`3`, Nil)))
 ```
 
 ---
@@ -777,20 +796,6 @@ def mkString(
 ): String =
   values match {
     case Nil              => "nil"
-    case Cons(head, tail) => `head + " :: " + mkString(tail)`
-  }
-```
-
----
-
-## String representation
-
-```scala
-def mkString(
-  values: List
-): String =
-  values match {
-    case Nil              => "nil"
     case Cons(head, tail) => `head` + " :: " + mkString(tail)
   }
 ```
@@ -948,6 +953,12 @@ recurse(ints)
 
 ---
 
+## Generalising `mkString`
+
+.center[![fold - step 1](img/fold-1.svg)]
+
+---
+
 ## Generalising the base case
 
 ```scala
@@ -1063,6 +1074,12 @@ def recurse(
 recurse(base, ints)
 // res3: String = 1 :: 2 :: 3 :: nil
 ```
+
+---
+
+## Generalising the base case
+
+.center[![fold - step 2](img/fold-2.svg)]
 
 ---
 
@@ -1224,6 +1241,12 @@ recurse(base, step, ints)
 
 ---
 
+## Generalising the step
+
+.center[![fold - step 3](img/fold-3.svg)]
+
+---
+
 ## Generalising the return type
 
 ```scala
@@ -1274,6 +1297,12 @@ def recurse[A](
 recurse(base, step, ints)
 // res5: String = 1 :: 2 :: 3 :: nil
 ```
+
+---
+
+## Generalising the return type
+
+.center[![fold - step 4](img/fold-4.svg)]
 
 ---
 
@@ -1932,6 +1961,12 @@ def fold[A](
 
 ---
 
+## Generalised folds
+
+.center[![Cata step 1](img/cata-1.svg)]
+
+---
+
 ## Abstracting over structure
 
 ```scala
@@ -1949,12 +1984,6 @@ def fold[A](
   loop
 }
 ```
-
----
-
-## Generalising folds
-
-TODO: diagram explaining ListF + code for `projectList`.
 
 ---
 
@@ -2179,6 +2208,12 @@ fold(base, step, project)(ints)
 
 ## Abstracting over structure
 
+.center[![Cata step 2](img/cata-2.svg)]
+
+---
+
+## Abstracting over structure
+
 ```scala
 def fold[A](
 * base   : A,
@@ -2201,10 +2236,10 @@ def fold[A](
 ## Simplifying `base` and `step`
 
 ```scala
-def op(value: Option[(Int, String)]): String =
-  value match {
+val op: Option[(Int, String)] => String =
+  _ match {
+    case None               => base
     case Some((head, tail)) => step(head, tail)
-    case None               => base
   }
 ```
 
@@ -2213,10 +2248,10 @@ def op(value: Option[(Int, String)]): String =
 ## Simplifying `base` and `step`
 
 ```scala
-def op(`value: Option[(Int, String)]`): String =
-  value match {
+val op: `Option[(Int, String)]` => String =
+  _ match {
+    case None               => base
     case Some((head, tail)) => step(head, tail)
-    case None               => base
   }
 ```
 
@@ -2225,10 +2260,10 @@ def op(`value: Option[(Int, String)]`): String =
 ## Simplifying `base` and `step`
 
 ```scala
-def op(value: Option[(Int, String)]): `String` =
-  value match {
+val op: Option[(Int, String)] => `String` =
+  _ match {
+    case None               => base
     case Some((head, tail)) => step(head, tail)
-    case None               => base
   }
 ```
 
@@ -2237,10 +2272,10 @@ def op(value: Option[(Int, String)]): `String` =
 ## Simplifying `base` and `step`
 
 ```scala
-def op(value: Option[(Int, String)]): String =
-  `value match` {
+val op: Option[(Int, String)] => String =
+  `_ match` {
+    case None               => base
     case Some((head, tail)) => step(head, tail)
-    case None               => base
   }
 ```
 
@@ -2249,34 +2284,10 @@ def op(value: Option[(Int, String)]): String =
 ## Simplifying `base` and `step`
 
 ```scala
-def op(value: Option[(Int, String)]): String =
-  value match {
-    case `Some((head, tail))` => step(head, tail)
-    case None               => base
-  }
-```
-
----
-
-## Simplifying `base` and `step`
-
-```scala
-def op(value: Option[(Int, String)]): String =
-  value match {
-    case Some((head, tail)) => `step(head, tail)`
-    case None               => base
-  }
-```
-
----
-
-## Simplifying `base` and `step`
-
-```scala
-def op(value: Option[(Int, String)]): String =
-  value match {
-    case Some((head, tail)) => step(head, tail)
+val op: Option[(Int, String)] => String =
+  _ match {
     case `None`               => base
+    case Some((head, tail)) => step(head, tail)
   }
 ```
 
@@ -2285,10 +2296,70 @@ def op(value: Option[(Int, String)]): String =
 ## Simplifying `base` and `step`
 
 ```scala
-def op(value: Option[(Int, String)]): String =
-  value match {
-    case Some((head, tail)) => step(head, tail)
+val op: Option[(Int, String)] => String =
+  _ match {
     case None               => `base`
+    case Some((head, tail)) => step(head, tail)
+  }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+    case None               => `"nil"`
+    case Some((head, tail)) => step(head, tail)
+  }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+    case None               => "nil"
+    case `Some((head, tail))` => step(head, tail)
+  }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+    case None               => "nil"
+    case Some((head, tail)) => `step(head, tail)`
+  }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+    case None               => "nil"
+    case Some((head, tail)) => `head + " :: " + tail`
+  }
+```
+
+---
+
+## Simplifying `base` and `step`
+
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+    case None               => "nil"
+    case Some((head, tail)) => head + " :: " + tail
   }
 ```
 
@@ -2440,6 +2511,21 @@ fold(op, project)(ints)
 
 ---
 
+## Simplifying `base` and `step`
+
+.center[![Cata step 3](img/cata-3.svg)]
+
+
+---
+
+## TODO
+
+Graph that maps from `Nil -> None` and `Cons(head, tail) -> Some((head, tail))`
+
+Graph that maps from `Some((head, tail)) -> head + " :: " + tail` and `Nil -> "nil"`
+
+---
+
 ## Intermediate representation
 
 ```scala
@@ -2465,6 +2551,43 @@ def fold[A](
 ```scala
 type ListF[A] = Option[(Int, A)]
 ```
+
+---
+
+## Intermediate representation
+
+```scala
+type `ListF[A]` = Option[(Int, A)]
+```
+
+---
+
+## Intermediate representation
+
+```scala
+type ListF[A] = `Option[(Int, A)]`
+```
+
+---
+
+## Intermediate representation
+
+```scala
+def fold[A](
+  op     : Option[(Int, A)] => A,
+  project: List => Option[(Int, List)]
+): List => A = {
+
+  def loop(curr: List): A =
+    project(curr) match {
+      case None               => op(None)
+      case Some((head, tail)) => op(Some((head, loop(tail))))
+    }
+
+  loop
+}
+```
+
 
 ---
 
@@ -2535,6 +2658,12 @@ fold(op, project)(ints)
 
 ## Intermediate representation
 
+.center[![Cata step 4](img/cata-4.svg)]
+
+---
+
+## Intermediate representation
+
 ```scala
 val project: List => ListF[List] =
   _ match {
@@ -2548,10 +2677,35 @@ val project: List => ListF[List] =
 ## Intermediate representation
 
 ```scala
-val project: List => ListF[`List`] =
+val project: List => ListF[List] =
+  _ match {
+    case `Nil`              => `None`
+    case Cons(head, tail) => Some((head, tail))
+  }
+```
+
+---
+
+## Intermediate representation
+
+```scala
+val project: List => ListF[List] =
   _ match {
     case Nil              => None
-    case Cons(head, tail) => Some((head, `tail`))
+    case `Cons(head, tail)` => `Some((head, tail))`
+  }
+```
+
+
+---
+
+## Intermediate representation
+
+```scala
+val op: ListF[String] => String =
+  _ match {
+    case None               => "nil"
+    case Some((head, tail)) => head + " :: " + tail
   }
 ```
 
@@ -2560,10 +2714,10 @@ val project: List => ListF[`List`] =
 ## Intermediate representation
 
 ```scala
-def op(value: ListF[String]): String =
-  value match {
-    case Some((head, tail)) => step(head, tail)
-    case None               => base
+val op: ListF[String] => String =
+  _ match {
+    case `None`               => `"nil"`
+    case Some((head, tail)) => head + " :: " + tail
   }
 ```
 
@@ -2572,10 +2726,10 @@ def op(value: ListF[String]): String =
 ## Intermediate representation
 
 ```scala
-def op(value: ListF[`String`]): String =
-  value match {
-    case Some((head, tail)) => step(head, `tail`)
-    case None               => base
+val op: ListF[String] => String =
+  _ match {
+    case None               => "nil"
+    case `Some((head, tail))` => `head + " :: " + tail`
   }
 ```
 
@@ -2666,6 +2820,12 @@ fold(op, project)(ints)
 
 ---
 
+## Moving `op`
+
+.center[![Cata step 5](img/cata-5.svg)]
+
+---
+
 ## Generalising recursion
 
 ```scala
@@ -2678,7 +2838,7 @@ def fold[A](
     op(project(curr) match {
 *     case None               => None
 *     case Some((head, tail)) => Some((head, loop(tail)))
-     })
+    })
 
   loop
 }
@@ -2698,7 +2858,7 @@ def fold[A](
     op(project(curr) match {
       case `None`               => None
       case Some((head, tail)) => Some((head, loop(tail)))
-     })
+    })
 
   loop
 }
@@ -2718,7 +2878,7 @@ def fold[A](
     op(project(curr) match {
       case None               => `None`
       case Some((head, tail)) => Some((head, loop(tail)))
-     })
+    })
 
   loop
 }
@@ -2738,7 +2898,7 @@ def fold[A](
     op(project(curr) match {
       case None               => None
       case `Some((head, tail))` => Some((head, loop(tail)))
-     })
+    })
 
   loop
 }
@@ -2758,7 +2918,7 @@ def fold[A](
     op(project(curr) match {
       case None               => None
       case Some((head, tail)) => `Some((head, loop(tail)))`
-     })
+    })
 
   loop
 }
@@ -2852,7 +3012,122 @@ def fold[A](
   def loop(curr: List): A =
     op(recurse(project(curr)))
 
-* def recurse(curr: ListF[List]): ListF[A] =
+  def recurse(curr: ListF[List]): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, loop(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr)))
+
+  def recurse(curr: `ListF[List]`): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, loop(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr)))
+
+  def recurse(curr: ListF[List]): `ListF[A]` =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, loop(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+    op(recurse(project(curr)))
+
+  def recurse(curr: ListF[List]): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, `loop(tail)`))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: `List`): A =
+    op(recurse(project(curr)))
+
+  def recurse(curr: ListF[List]): ListF[A] =
+    curr match {
+      case None               => None
+      case Some((head, tail)) => Some((head, loop(tail)))
+    }
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): `A` =
+    op(recurse(project(curr)))
+
+  def recurse(curr: ListF[List]): ListF[A] =
     curr match {
       case None               => None
       case Some((head, tail)) => Some((head, loop(tail)))
@@ -3048,6 +3323,10 @@ def fold[A](
 
 ---
 
+TODO : couple of slides to explain `Functor`
+
+---
+
 ## Functor
 
 ```scala
@@ -3065,9 +3344,9 @@ def fmap[F[_], A, B](
   fa  : F[A],
   f   :  A => B
 )(implicit
-  func: Functor[F]
+  functor: Functor[F]
 ): F[B] =
-  func.map(fa, f)
+  functor.map(fa, f)
 ```
 
 ---
@@ -3075,11 +3354,15 @@ def fmap[F[_], A, B](
 ## Functor
 
 ```scala
-implicit val listFFunctor: Functor[ListF] = new Functor[ListF] {
-  override def map[A, B](fa: ListF[A], f: A => B) = fa match {
-    case None               => None
-    case Some((head, tail)) => Some((head, f(tail)))
-  }
+implicit val listFFunctor = new Functor[ListF] {
+  override def map[A, B](
+    fa: ListF[A],
+    f: A => B
+  ) =
+    fa match {
+      case None               => None
+      case Some((head, tail)) => Some((head, f(tail)))
+    }
 }
 ```
 
@@ -3250,6 +3533,12 @@ fold(op, project)(ints)
 
 ---
 
+## Intermediate representation
+
+.center[![Cata step 6](img/cata-6.svg)]
+
+---
+
 ## Abstracting over `ListF`
 
 ```scala
@@ -3357,6 +3646,13 @@ fold(op, project).apply(ints)
 
 ---
 
+## Abstracting over `ListF`
+
+.center[![Cata step 7](img/cata-7.svg)]
+
+
+---
+
 ## Abstracting over `List`
 
 ```scala
@@ -3444,6 +3740,13 @@ def fold[F[_]: Functor, A, B](
 fold(op, project).apply(ints)
 // res18: String = 1 :: 2 :: 3 :: nil
 ```
+
+---
+
+## Abstracting over `List`
+
+.center[![Cata step 8](img/cata-8.svg)]
+
 
 ---
 
@@ -3551,6 +3854,13 @@ def cata[F[_]: Functor, A, B](
 cata(op, project).apply(ints)
 // res19: String = 1 :: 2 :: 3 :: nil
 ```
+
+---
+
+## Naming things
+
+.center[![Cata step 9](img/cata-9.svg)]
+
 
 ---
 
@@ -4283,6 +4593,10 @@ def cataFix[F[_]: Functor, A](
   loop
 }
 ```
+
+---
+
+TODO : add the mkString examples on each tut:silent
 
 ---
 

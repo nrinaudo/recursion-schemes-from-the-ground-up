@@ -176,3 +176,7 @@ th .remark-inline-code {
     right   : 100px;
     top     : 100px;
 }
+
+img {
+    max-width: 100%;
+}
