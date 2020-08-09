@@ -23,35 +23,35 @@
 <!-- ListFList&#45;&gt;ListFA -->
 <g id="edge2" class="edge">
 <title>ListFList&#45;&gt;ListFA</title>
-<path fill="none" stroke="#2980b9" d="M201.0928,-18C232.2271,-18 276.4624,-18 308.9027,-18"/>
-<polygon fill="#2980b9" stroke="#2980b9" points="308.9893,-21.5001 318.9893,-18 308.9893,-14.5001 308.9893,-21.5001"/>
-<text text-anchor="middle" x="260" y="-21.2" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#000000">fmap(_, recurse)</text>
+<path fill="none" stroke="#dddddd" d="M201.0928,-18C232.2271,-18 276.4624,-18 308.9027,-18"/>
+<polygon fill="#dddddd" stroke="#dddddd" points="308.9893,-21.5001 318.9893,-18 308.9893,-14.5001 308.9893,-21.5001"/>
+<text text-anchor="middle" x="260" y="-21.2" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#dddddd">fmap(_, recurse)</text>
 </g>
 <!-- A -->
 <g id="node4" class="node">
 <title>A</title>
-<path fill="#b2ebf2" stroke="#2980b9" d="M475,-36C475,-36 445,-36 445,-36 439,-36 433,-30 433,-24 433,-24 433,-12 433,-12 433,-6 439,0 445,0 445,0 475,0 475,0 481,0 487,-6 487,-12 487,-12 487,-24 487,-24 487,-30 481,-36 475,-36"/>
-<text text-anchor="middle" x="460" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">A</text>
+<path fill="#b2ebf2" stroke="#dddddd" d="M475,-36C475,-36 445,-36 445,-36 439,-36 433,-30 433,-24 433,-24 433,-12 433,-12 433,-6 439,0 445,0 445,0 475,0 475,0 481,0 487,-6 487,-12 487,-12 487,-24 487,-24 487,-30 481,-36 475,-36"/>
+<text text-anchor="middle" x="460" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">A</text>
 </g>
 <!-- ListFA&#45;&gt;A -->
 <g id="edge3" class="edge">
 <title>ListFA&#45;&gt;A</title>
-<path fill="none" stroke="#2980b9" d="M384.0536,-18C396.2451,-18 410.1869,-18 422.7695,-18"/>
-<polygon fill="#2980b9" stroke="#2980b9" points="422.951,-21.5001 432.951,-18 422.9509,-14.5001 422.951,-21.5001"/>
-<text text-anchor="middle" x="408.5" y="-21.2" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#000000">op</text>
+<path fill="none" stroke="#dddddd" d="M384.0536,-18C396.2451,-18 410.1869,-18 422.7695,-18"/>
+<polygon fill="#dddddd" stroke="#dddddd" points="422.951,-21.5001 432.951,-18 422.9509,-14.5001 422.951,-21.5001"/>
+<text text-anchor="middle" x="408.5" y="-21.2" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#dddddd">op</text>
 </g>
 <!-- List -->
 <g id="node3" class="node">
 <title>List</title>
-<path fill="#b2ebf2" stroke="#2980b9" d="M42,-36C42,-36 12,-36 12,-36 6,-36 0,-30 0,-24 0,-24 0,-12 0,-12 0,-6 6,0 12,0 12,0 42,0 42,0 48,0 54,-6 54,-12 54,-12 54,-24 54,-24 54,-30 48,-36 42,-36"/>
-<text text-anchor="middle" x="27" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">List</text>
+<path fill="#b2ebf2" stroke="#dddddd" d="M42,-36C42,-36 12,-36 12,-36 6,-36 0,-30 0,-24 0,-24 0,-12 0,-12 0,-6 6,0 12,0 12,0 42,0 42,0 48,0 54,-6 54,-12 54,-12 54,-24 54,-24 54,-30 48,-36 42,-36"/>
+<text text-anchor="middle" x="27" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">List</text>
 </g>
 <!-- List&#45;&gt;ListFList -->
 <g id="edge1" class="edge">
 <title>List&#45;&gt;ListFList</title>
-<path fill="none" stroke="#2980b9" d="M54.2947,-18C71.8656,-18 95.1835,-18 115.7596,-18"/>
-<polygon fill="#2980b9" stroke="#2980b9" points="115.9129,-21.5001 125.9129,-18 115.9129,-14.5001 115.9129,-21.5001"/>
-<text text-anchor="middle" x="90" y="-21.2" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#000000">project</text>
+<path fill="none" stroke="#dddddd" d="M54.2947,-18C71.8656,-18 95.1835,-18 115.7596,-18"/>
+<polygon fill="#dddddd" stroke="#dddddd" points="115.9129,-21.5001 125.9129,-18 115.9129,-14.5001 115.9129,-21.5001"/>
+<text text-anchor="middle" x="90" y="-21.2" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#dddddd">project</text>
 </g>
 </g>
 </svg>
