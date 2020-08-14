@@ -21,7 +21,55 @@ class: center, middle
 
 ---
 
-## `List`
+## Linked list
+
+.center[![Linked List](img/list.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked List - Cons](img/list-1.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked List - Nil](img/list-nil.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked List - Cons](img/list-1.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked List - head](img/list-1-head.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked List - tail](img/list-1-tail.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked list - rest](img/list-1-rest.svg)]
+
+---
+
+## Linked list
+
+.center[![Linked List - Nil](img/list-nil.svg)]
+
+---
+
+## Linked list
 
 ```scala
 sealed trait List
@@ -34,11 +82,9 @@ case class Cons(
 case object Nil extends List
 ```
 
-.center[![Cons List](img/list.svg)]
-
 ---
 
-## `List`
+## Linked list
 
 ```scala
 *sealed trait List
@@ -51,11 +97,9 @@ case class Cons(
 case object Nil extends List
 ```
 
-.center[![Cons List](img/list.svg)]
-
 ---
 
-## `List`
+## Linked list
 
 ```scala
 sealed trait List
@@ -68,11 +112,9 @@ sealed trait List
 case object Nil extends List
 ```
 
-.center[![Cons](img/list-1.svg)]
-
 ---
 
-## `List`
+## Linked list
 
 ```scala
 sealed trait List
@@ -85,11 +127,9 @@ case class Cons(
 *case object Nil extends List
 ```
 
-.center[![Nil](img/list-nil.svg)]
-
 ---
 
-## `List`
+## Linked list
 
 ```scala
 sealed trait List
@@ -102,11 +142,9 @@ sealed trait List
 case object Nil extends List
 ```
 
-.center[![Cons](img/list-1.svg)]
-
 ---
 
-## `List`
+## Linked list
 
 ```scala
 sealed trait List
@@ -119,11 +157,9 @@ case class Cons(
 case object Nil extends List
 ```
 
-.center[![Cons](img/list-1-head.svg)]
-
 ---
 
-## `List`
+## Linked list
 
 ```scala
 sealed trait List
@@ -136,28 +172,9 @@ case class Cons(
 case object Nil extends List
 ```
 
-.center[![Cons](img/list-1-tail.svg)]
-
 ---
 
-## `List`
-
-```scala
-sealed trait List
-
-case class Cons(
-  head: Int,
-  `tail: List`
-) extends List
-
-case object Nil extends List
-```
-
-.center[![Nil](img/list-nil.svg)]
-
----
-
-## `List`
+## Linked list
 
 ```scala
 sealed trait List
@@ -169,6 +186,10 @@ case class Cons(
 
 case object Nil extends List
 ```
+
+---
+
+## Linked list
 
 ```scala
 val ints: List = Cons(1, Cons(2, Cons(3, Nil)))
@@ -176,21 +197,10 @@ val ints: List = Cons(1, Cons(2, Cons(3, Nil)))
 
 ---
 
-## `List`
+## Linked list
 
 ```scala
-sealed trait List
-
-case class Cons(
-  head: Int,
-  tail: List
-) extends List
-
-case object Nil extends List
-```
-
-```scala
-val `ints`: List = Cons(`1`, Cons(`2`, Cons(`3`, Nil)))
+val ints: List = Cons(`1`, Cons(`2`, Cons(`3`, Nil)))
 ```
 
 ---
@@ -258,26 +268,6 @@ product(ints) = ???
 ```
 
 .center[![List product](img/list.svg)]
-
----
-
-## Product
-
-```scala
-def product(
-  values: List
-): Int =
-  `values match` {
-    case Cons(head, tail) => head * product(tail)
-    case Nil              => 1
-  }
-```
-
-```scala
-product(ints) = ???
-```
-
-.center[![List product: 1](img/list-product-1-hl.svg)]
 
 ---
 
@@ -367,26 +357,6 @@ product(ints) = 1 * `???`
 def product(
   values: List
 ): Int =
-  `values match` {
-    case Cons(head, tail) => head * product(tail)
-    case Nil              => 1
-  }
-```
-
-```scala
-product(ints) = 1 * ???
-```
-
-.center[![List product](img/list-product-2-hl.svg)]
-
----
-
-## Product
-
-```scala
-def product(
-  values: List
-): Int =
   values match {
     case `Cons(head, tail)` => head * product(tail)
     case Nil              => 1
@@ -467,26 +437,6 @@ product(ints) = 1 * 2 * `???`
 def product(
   values: List
 ): Int =
-  `values match` {
-    case Cons(head, tail) => head * product(tail)
-    case Nil              => 1
-  }
-```
-
-```scala
-product(ints) = 1 * 2 * ???
-```
-
-.center[![List product](img/list-product-3-hl.svg)]
-
----
-
-## Product
-
-```scala
-def product(
-  values: List
-): Int =
   values match {
     case `Cons(head, tail)` => head * product(tail)
     case Nil              => 1
@@ -555,26 +505,6 @@ def product(
 
 ```scala
 product(ints) = 1 * 2 * 3 * `???`
-```
-
-.center[![List product](img/list-product-3.svg)]
-
----
-
-## Product
-
-```scala
-def product(
-  values: List
-): Int =
-  `values match` {
-    case Cons(head, tail) => head * product(tail)
-    case Nil              => 1
-  }
-```
-
-```scala
-product(ints) = 1 * 2 * 3 * ???
 ```
 
 .center[![List product](img/list-product-3.svg)]
@@ -780,20 +710,6 @@ def mkString(
 def mkString(
   values: List
 ): String =
-  `values match` {
-    case Cons(head, tail) => head + " :: " + mkString(tail)
-    case Nil              => "nil"
-  }
-```
-
----
-
-## String representation
-
-```scala
-def mkString(
-  values: List
-): String =
   values match {
     `case Cons(head, tail)` => head + " :: " + mkString(tail)
     case Nil              => "nil"
@@ -894,9 +810,15 @@ mkString(ints)
 ## Key takeaways
 
 Structural recursion works by:
-* pattern matching on the "problem" value
-* having a concrete implementation for the base case.
-* for all other cases, assuming we have a solution for a smaller problem and complete it.
+--
+
+* providing a solution to the smallest problem.
+--
+
+* for larger problems: relying on the solution to smaller problems.
+--
+
+* if this makes you think of proof by induction, well done.
 
 ---
 
@@ -969,13 +891,58 @@ recurse(ints)
 
 ## Generalising `mkString`
 
-.center[![fold - step 1](img/fold-1.svg)]
+.center[![fold - step 1](img/fold-init.svg)]
 
 ---
 
 ## Generalising `mkString`
 
-.center[![fold - step 1](img/fold-1-hl-1.svg)]
+.center[![fold - overview](img/fold-init-hl-1.svg)]
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-2.svg)]
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-3.svg)]
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-4.svg)]
+
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-5.svg)]
+
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-6.svg)]
+
+
+---
+
+## Generalising `mkString`
+
+.center[![fold - overview](img/fold-init-hl-7.svg)]
+
+---
+
+## Generalising the base case
+
+.center[![fold - base case](img/fold-base.svg)]
 
 ---
 
@@ -1099,19 +1066,26 @@ recurse(base, ints)
 
 ## Generalising the base case
 
-.center[![fold - step 2](img/fold-2.svg)]
+.center[![fold - base case](img/fold-base.svg)]
 
 ---
 
 ## Generalising the base case
 
-.center[![fold - step 2](img/fold-2-hl-1.svg)]
+.center[![fold - base case](img/fold-base-after-hl-1.svg)]
+
 
 ---
 
 ## Generalising the base case
 
-.center[![fold - step 2](img/fold-2-hl-2.svg)]
+.center[![fold - base case](img/fold-base-after.svg)]
+
+---
+
+## Generalising the step
+
+.center[![fold - step case](img/fold-step.svg)]
 
 ---
 
@@ -1275,19 +1249,26 @@ recurse(base, step, ints)
 
 ## Generalising the step
 
-.center[![fold - step 3](img/fold-3.svg)]
+.center[![fold - step case](img/fold-step.svg)]
 
 ---
 
 ## Generalising the step
 
-.center[![fold - step 3](img/fold-3-hl-1.svg)]
+.center[![fold - step case](img/fold-step-after-hl-1.svg)]
 
 ---
 
 ## Generalising the step
 
-.center[![fold - step 3](img/fold-3-hl-2.svg)]
+.center[![fold - step case](img/fold-step-after.svg)]
+
+
+---
+
+## Generalising the return type
+
+.center[![fold - return type](img/fold-return.svg)]
 
 ---
 
@@ -1346,7 +1327,36 @@ recurse(base, step, ints)
 
 ## Generalising the return type
 
-.center[![fold - step 4](img/fold-4.svg)]
+.center[![fold - return type](img/fold-return.svg)]
+
+---
+
+## Generalising the return type
+
+.center[![fold - return type](img/fold-return-after-hl-1.svg)]
+
+---
+
+## Generalising the return type
+
+.center[![fold - return type](img/fold-return-after.svg)]
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Nil              => base
+  }
+```
+
 
 ---
 
@@ -1670,6 +1680,31 @@ def recurse[A](
 recurse(base, step, ints)
 // res6: String = 1 :: 2 :: 3 :: nil
 ```
+
+---
+
+## Simplifying the step
+
+.center[![fold - recurse to loop](img/fold-return-after.svg)]
+
+---
+
+## Simplifying the step
+
+.center[![fold - recurse to loop](img/fold-loop-before.svg)]
+
+---
+
+## Simplifying the step
+
+.center[![fold - recurse to loop](img/fold-loop-hl-1.svg)]
+
+
+---
+
+## Simplifying the step
+
+.center[![fold - recurse to loop](img/fold-loop.svg)]
 
 ---
 
@@ -2066,7 +2101,16 @@ mkString(ints)
 
 ## Key takeaways
 
-TODO
+Structural recursion generalises by:
+--
+
+* parameterising the base case.
+--
+
+* parameterising the step case.
+--
+
+* ... knowing the structure of your type.
 
 ---
 
@@ -2102,15 +2146,9 @@ def fold[A](
 
 ---
 
-## Generalised folds
+## Abstracting over structure
 
 .center[![Cata step 1](img/cata-1-hl-1.svg)]
-
----
-
-## Generalised folds
-
-.center[![Cata step 1](img/cata-1-hl-2.svg)]
 
 ---
 
@@ -2427,13 +2465,19 @@ fold(base, step, project)(ints)
 
 ## Abstracting over structure
 
-.center[![Cata step 2](img/cata-2.svg)]
+.center[![Cata step 1](img/cata-1-hl-1.svg)]
 
 ---
 
 ## Abstracting over structure
 
 .center[![Cata step 2](img/cata-2-hl-1.svg)]
+
+---
+
+## Abstracting over structure
+
+.center[![Cata step 2](img/cata-2.svg)]
 
 ---
 
@@ -2730,9 +2774,9 @@ fold(op, project)(ints)
 
 ---
 
-## Simplifying `base` and `step`
+## Abstracting over structure
 
-.center[![Cata step 3](img/cata-3.svg)]
+.center[![Cata step 2](img/cata-2-hl-2.svg)]
 
 ---
 
@@ -2809,13 +2853,20 @@ fold(op, project)(ints)
 
 ## Simplifying `base` and `step`
 
-.center[![Cata step 4](img/cata-4.svg)]
+.center[![Cata step 3](img/cata-3-hl-1.svg)]
+
 
 ---
 
 ## Simplifying `base` and `step`
 
 .center[![Cata step 4](img/cata-4-hl-1.svg)]
+
+---
+
+## Simplifying `base` and `step`
+
+.center[![Cata step 4](img/cata-4.svg)]
 
 ---
 
@@ -2936,6 +2987,18 @@ fold(op, project)(ints)
 
 ## Intermediate representation
 
+.center[![Cata step 4](img/cata-4-hl-2.svg)]
+
+---
+
+## Intermediate representation
+
+.center[![Cata step 5](img/cata-5-hl-1.svg)]
+
+---
+
+## Intermediate representation
+
 .center[![Cata step 5](img/cata-5.svg)]
 
 ---
@@ -3014,12 +3077,6 @@ val op: ListF[`String`] => String =
 
 ## Moving `op`
 
-.center[![Cata step 5](img/cata-5-hl-1.svg)]
-
----
-
-## Moving `op`
-
 .center[![Cata step 5](img/cata-5-hl-2.svg)]
 
 ---
@@ -3033,6 +3090,12 @@ val op: ListF[`String`] => String =
 ## Moving `op`
 
 .center[![Cata step 5](img/cata-5-hl-4.svg)]
+
+---
+
+## Moving `op`
+
+.center[![Cata step 5](img/cata-5-hl-5.svg)]
 
 ---
 
@@ -3129,6 +3192,26 @@ def fold[A](
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => `None`
     })
+
+  loop
+}
+```
+
+---
+
+## Generalising recursion
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(curr: List): A =
+*   op(project(curr) match {
+*     case Some((head, tail)) => Some((head, loop(tail)))
+*     case None               => None
+*   })
 
   loop
 }
@@ -3546,12 +3629,69 @@ trait Functor[F[_]] {
 ## Functor
 
 ```scala
+trait `Functor`[F[_]] {
+  def map[A, B](fa: F[A], f: A => B): F[B]
+}
+```
+
+---
+
+## Functor
+
+```scala
+trait Functor[`F[_]`] {
+  def map[A, B](fa: F[A], f: A => B): F[B]
+}
+```
+
+---
+
+## Functor
+
+```scala
+trait Functor[F[_]] {
+  def `map`[A, B](fa: F[A], f: A => B): F[B]
+}
+```
+
+---
+
+## Functor
+
+```scala
+trait Functor[F[_]] {
+  def map[A, B](`fa: F[A]`, f: A => B): F[B]
+}
+```
+
+---
+
+## Functor
+
+```scala
+trait Functor[F[_]] {
+  def map[A, B](fa: F[A], `f: A => B`): F[B]
+}
+```
+
+---
+
+## Functor
+
+```scala
+trait Functor[F[_]] {
+  def map[A, B](fa: F[A], f: A => B): `F[B]`
+}
+```
+
+---
+
+## Functor
+
+```scala
 implicit val listFFunctor = new Functor[ListF] {
-  override def map[A, B](
-    fa: ListF[A],
-    f: A => B
-  ) =
-    fa match {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
@@ -3563,13 +3703,167 @@ implicit val listFFunctor = new Functor[ListF] {
 ## Functor
 
 ```scala
+implicit val listFFunctor = new `Functor[ListF]` {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => None
+    }
+}
+```
+
+---
+
+## Functor
+
+```scala
+implicit val listFFunctor = new Functor[ListF] {
+  override def map[A, B](list: ListF[A], f: A => B) =
+*   list match {
+*     case Some((head, tail)) => Some((head, f(tail)))
+*     case None               => None
+*   }
+}
+```
+
+---
+
+## Functor
+
+```scala
+implicit val listFFunctor = new Functor[ListF] {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case `Some((head, tail))` => Some((head, f(tail)))
+      case None               => None
+    }
+}
+```
+
+---
+
+## Functor
+
+```scala
+implicit val listFFunctor = new Functor[ListF] {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case Some((head, tail)) => Some((head, `f(tail)`))
+      case None               => None
+    }
+}
+```
+
+---
+
+## Functor
+
+```scala
+implicit val listFFunctor = new Functor[ListF] {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case `None`               => None
+    }
+}
+```
+
+---
+
+## Functor
+
+```scala
+implicit val listFFunctor = new Functor[ListF] {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => `None`
+    }
+}
+```
+
+---
+
+## Functor
+
+```scala
 def fmap[F[_], A, B](
-  fa  : F[A],
-  f   :  A => B
+  fa     : F[A],
+  f      : A => B
 )(implicit
   functor: Functor[F]
 ): F[B] =
   functor.map(fa, f)
+```
+
+---
+
+## Functor
+
+```scala
+def `fmap`[F[_], A, B](
+  fa     : F[A],
+  f      : A => B
+)(implicit
+  functor: Functor[F]
+): F[B] =
+  functor.map(fa, f)
+```
+
+---
+
+## Functor
+
+```scala
+def fmap[F[_], A, B](
+  `fa     : F[A]`,
+  f      : A => B
+)(implicit
+  functor: Functor[F]
+): F[B] =
+  functor.map(fa, f)
+```
+
+---
+
+## Functor
+
+```scala
+def fmap[F[_], A, B](
+  fa     : F[A],
+  `f      : A => B`
+)(implicit
+  functor: Functor[F]
+): F[B] =
+  functor.map(fa, f)
+```
+
+---
+
+## Functor
+
+```scala
+def fmap[F[_], A, B](
+  fa     : F[A],
+  f      : A => B
+)(implicit
+  `functor: Functor[F]`
+): F[B] =
+  functor.map(fa, f)
+```
+
+---
+
+## Functor
+
+```scala
+def fmap[F[_], A, B](
+  fa     : F[A],
+  f      : A => B
+)(implicit
+  functor: Functor[F]
+): F[B] =
+  `functor.map(fa, f)`
 ```
 
 ---
@@ -3739,15 +4033,27 @@ fold(op, project)(ints)
 
 ---
 
-## Intermediate representation
+## Using Functor
+
+.center[![Cata step 5](img/cata-5-hl-2.svg)]
+
+---
+
+## Using Functor
+
+.center[![Cata step 6](img/cata-6-hl-1.svg)]
+
+---
+
+## Using Functor
 
 .center[![Cata step 6](img/cata-6.svg)]
 
 ---
 
-## Intermediate representation
+## Abstracting over `ListF`
 
-.center[![Cata step 6](img/cata-6-hl-1.svg)]
+.center[![Cata step 6](img/cata-6-hl-2.svg)]
 
 ---
 
@@ -3860,13 +4166,25 @@ fold(op, project).apply(ints)
 
 ## Abstracting over `ListF`
 
-.center[![Cata step 7](img/cata-7.svg)]
+.center[![Cata step 6](img/cata-6-hl-2.svg)]
 
 ---
 
 ## Abstracting over `ListF`
 
 .center[![Cata step 7](img/cata-7-hl-1.svg)]
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Cata step 7](img/cata-7.svg)]
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Cata step 7](img/cata-7-hl-2.svg)]
 
 ---
 
@@ -3957,6 +4275,18 @@ def fold[F[_]: Functor, A, B](
 fold(op, project).apply(ints)
 // res18: String = 1 :: 2 :: 3 :: nil
 ```
+
+---
+
+## Abstracting over `List`
+
+.center[![Cata step 7](img/cata-7-hl-2.svg)]
+
+---
+
+## Abstracting over `List`
+
+.center[![Cata step 8](img/cata-8-hl-1.svg)]
 
 ---
 
@@ -4075,6 +4405,24 @@ cata(op, project).apply(ints)
 
 ## Naming things
 
+.center[![Cata step 8](img/cata-8.svg)]
+
+---
+
+## Naming things
+
+.center[![Cata step 9](img/cata-9-hl-1.svg)]
+
+---
+
+## Naming things
+
+.center[![Cata step 9](img/cata-9-hl-2.svg)]
+
+---
+
+## Naming things
+
 .center[![Cata step 9](img/cata-9.svg)]
 
 ---
@@ -4088,7 +4436,8 @@ val productAlgebra: ListF[Int] => Int =
     case None               => 1
   }
 
-val product: List => Int = cata(productAlgebra, project)
+val product: List => Int =
+  cata(productAlgebra, project)
 ```
 
 ---
@@ -4096,13 +4445,29 @@ val product: List => Int = cata(productAlgebra, project)
 ## `product` as a cata
 
 ```scala
-val `productAlgebra: ListF[Int] => Int` =
+val `productAlgebra`: ListF[Int] => Int =
   _ match {
     case Some((head, tail)) => head * tail
     case None               => 1
   }
 
-val product: List => Int = cata(productAlgebra, project)
+val product: List => Int =
+  cata(productAlgebra, project)
+```
+
+---
+
+## `product` as a cata
+
+```scala
+val productAlgebra: `ListF[Int] => Int` =
+  _ match {
+    case Some((head, tail)) => head * tail
+    case None               => 1
+  }
+
+val product: List => Int =
+  cata(productAlgebra, project)
 ```
 
 ---
@@ -4116,7 +4481,8 @@ val productAlgebra: ListF[Int] => Int =
     case None               => 1
   }
 
-val product: List => Int = cata(productAlgebra, project)
+val product: List => Int =
+  cata(productAlgebra, project)
 ```
 
 ---
@@ -4130,7 +4496,8 @@ val productAlgebra: ListF[Int] => Int =
     case None               => 1
   }
 
-val product: List => Int = cata(productAlgebra, project)
+val product: List => Int =
+  cata(productAlgebra, project)
 ```
 
 ---
@@ -4144,7 +4511,8 @@ val productAlgebra: ListF[Int] => Int =
     case `None`               => 1
   }
 
-val product: List => Int = cata(productAlgebra, project)
+val product: List => Int =
+  cata(productAlgebra, project)
 ```
 
 ---
@@ -4158,7 +4526,8 @@ val productAlgebra: ListF[Int] => Int =
     case None               => `1`
   }
 
-val product: List => Int = cata(productAlgebra, project)
+val product: List => Int =
+  cata(productAlgebra, project)
 ```
 
 ---
@@ -4172,7 +4541,8 @@ val productAlgebra: ListF[Int] => Int =
     case None               => 1
   }
 
-val product: List => Int = `cata(productAlgebra, project)`
+val product: List => Int =
+  `cata(productAlgebra, project)`
 ```
 
 ---
@@ -4186,7 +4556,8 @@ val productAlgebra: ListF[Int] => Int =
     case None               => 1
   }
 
-val product: List => Int = cata(productAlgebra, project)
+val product: List => Int =
+  cata(productAlgebra, project)
 ```
 
 ```scala
@@ -4205,7 +4576,8 @@ val mkStringAlgebra: ListF[String] => String =
     case None               => "nil"
   }
 
-val mkString: List => String = cata(mkStringAlgebra, project)
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
 ```
 
 ---
@@ -4213,13 +4585,30 @@ val mkString: List => String = cata(mkStringAlgebra, project)
 ## `mkString` as a cata
 
 ```scala
-val `mkStringAlgebra: ListF[String] => String` =
+val `mkStringAlgebra`: ListF[String] => String =
   _ match {
     case Some((head, tail)) => head + " :: " + tail
     case None               => "nil"
   }
 
-val mkString: List => String = cata(mkStringAlgebra, project)
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
+```
+
+
+---
+
+## `mkString` as a cata
+
+```scala
+val mkStringAlgebra: `ListF[String] => String` =
+  _ match {
+    case Some((head, tail)) => head + " :: " + tail
+    case None               => "nil"
+  }
+
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
 ```
 
 ---
@@ -4233,7 +4622,8 @@ val mkStringAlgebra: ListF[String] => String =
     case None               => "nil"
   }
 
-val mkString: List => String = cata(mkStringAlgebra, project)
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
 ```
 
 ---
@@ -4247,7 +4637,8 @@ val mkStringAlgebra: ListF[String] => String =
     case None               => "nil"
   }
 
-val mkString: List => String = cata(mkStringAlgebra, project)
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
 ```
 
 ---
@@ -4261,7 +4652,8 @@ val mkStringAlgebra: ListF[String] => String =
     case `None`               => "nil"
   }
 
-val mkString: List => String = cata(mkStringAlgebra, project)
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
 ```
 
 ---
@@ -4275,7 +4667,8 @@ val mkStringAlgebra: ListF[String] => String =
     case None               => `"nil"`
   }
 
-val mkString: List => String = cata(mkStringAlgebra, project)
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
 ```
 
 ---
@@ -4289,7 +4682,8 @@ val mkStringAlgebra: ListF[String] => String =
     case None               => "nil"
   }
 
-val mkString: List => String = `cata(mkStringAlgebra, project)`
+val mkString: List => String =
+  `cata(mkStringAlgebra, project)`
 ```
 
 ---
@@ -4303,7 +4697,8 @@ val mkStringAlgebra: ListF[String] => String =
     case None               => "nil"
   }
 
-val mkString: List => String = cata(mkStringAlgebra, project)
+val mkString: List => String =
+  cata(mkStringAlgebra, project)
 ```
 
 ```scala
@@ -4313,13 +4708,82 @@ mkString(ints)
 
 ---
 
-class: center, middle
+## Key takeaways
 
-# What about non-`List`?
+Catamorphisms are:
+--
+
+* structural recursion for types that can be projected into pattern functors.
+--
+
+* fare less complicated than their names make them out to be.
+--
+
+* a simple refactoring away from the familiar `fold`.
 
 ---
 
-## Tree
+class: center, middle
+
+# Can this be applied to other types?
+
+---
+
+## Binary Tree
+
+.center[![Tree](img/tree.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Node](img/tree-node.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Leaf](img/tree-leaf.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Node](img/tree-node.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Node](img/tree-node-hl-1.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Node](img/tree-node-hl-2.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Node](img/tree-node-rest.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Node](img/tree-node-hl-3.svg)]
+
+---
+
+## Binary Tree
+
+.center[![Tree Leaf](img/tree-leaf.svg)]
+
+---
+
+## Binary Tree
 
 ```scala
 sealed trait Tree
@@ -4333,18 +4797,483 @@ case class Node(
 case object Leaf extends Tree
 ```
 
+---
+
+## Binary Tree
+
 ```scala
-val intTree = Node(
+*sealed trait Tree
+
+case class Node(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+sealed trait Tree
+
+*case class Node(
+* left : Tree,
+* value: Int,
+* right: Tree
+*) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+sealed trait Tree
+
+case class Node(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends Tree
+
+*case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+sealed trait Tree
+
+*case class Node(
+* left : Tree,
+* value: Int,
+* right: Tree
+*) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+sealed trait Tree
+
+case class Node(
+  left : Tree,
+  `value: Int`,
+  right: Tree
+) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+sealed trait Tree
+
+case class Node(
+  `left : Tree`,
+  value: Int,
+  right: Tree
+) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+sealed trait Tree
+
+case class Node(
+  left : Tree,
+  value: Int,
+  `right: Tree`
+) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Binary Tree
+
+```scala
+val intTree =
   Node(
-    Node(Leaf, 1, Leaf),
-    2,
-    Node(Leaf, 3, Leaf)
-  ),
-  4,
-  Leaf
-)
+    Node(
+      Node(Leaf, 1, Leaf),
+      2,
+      Node(Leaf, 3, Leaf)
+    ),
+    4,
+    Leaf
+  )
 // intTree: Node = Node(Node(Node(Leaf,1,Leaf),2,Node(Leaf,3,Leaf)),4,Leaf)
 ```
+
+---
+
+## Binary Tree
+
+```scala
+val intTree =
+  Node(
+    Node(
+      Node(Leaf, `1`, Leaf),
+      `2`,
+      Node(Leaf, `3`, Leaf)
+    ),
+    `4`,
+    Leaf
+  )
+```
+
+---
+
+## Tree Height
+
+.center[![Tree Height](img/tree.svg)]
+
+---
+
+## Tree Height
+
+.center[![Tree Height](img/tree-height.svg)]
+
+---
+
+## Tree Height
+
+.center[![Tree catamorphism](img/cata-tree.svg)]
+
+---
+
+## Tree Height
+
+.center[![Tree catamorphism](img/cata-tree-1.svg)]
+
+---
+
+## Tree Height
+
+.center[![Tree catamorphism](img/cata-tree-2.svg)]
+
+---
+
+## Tree Height
+
+.center[![Tree catamorphism](img/cata-tree-3.svg)]
+
+---
+
+## Tree Height
+
+.center[![Tree catamorphism](img/cata-tree-4.svg)]
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait Tree
+
+case class Node(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends Tree
+
+case object Leaf extends Tree
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait `Tree`
+
+case class Node(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends `Tree`
+
+case object Leaf extends `Tree`
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait `TreeF`
+
+case class Node(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends `TreeF`
+
+case object Leaf extends `TreeF`
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF
+
+case class `Node`(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF
+
+case object Leaf extends TreeF
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF
+
+case class `NodeF`(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF
+
+case object Leaf extends TreeF
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF
+
+case class NodeF(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF
+
+case object `Leaf` extends TreeF
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF
+
+case class NodeF(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF
+
+case object `LeafF` extends TreeF
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF
+
+case class NodeF(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF
+
+case object LeafF extends TreeF
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF`[A]`
+
+case class NodeF(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF
+
+case object LeafF extends TreeF
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF[A]
+
+*case class NodeF(
+* left : Tree,
+* value: Int,
+* right: Tree
+*) extends TreeF
+
+case object LeafF extends TreeF
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF[A]
+
+case class NodeF`[A]`(
+  left : Tree,
+  value: Int,
+  right: Tree
+) extends TreeF`[A]`
+
+case object LeafF extends TreeF
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF[A]
+
+case class NodeF[A](
+  left : `Tree`,
+  value: Int,
+  right: `Tree`
+) extends TreeF[A]
+
+case object LeafF extends TreeF
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF[A]
+
+case class NodeF[A](
+  left : `A`,
+  value: Int,
+  right: `A`
+) extends TreeF[A]
+
+case object LeafF extends TreeF
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF[A]
+
+case class NodeF[A](
+  left : A,
+  value: Int,
+  right: A
+) extends TreeF[A]
+
+*case object LeafF extends TreeF
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF[A]
+
+case class NodeF[A](
+  left : A,
+  value: Int,
+  right: A
+) extends TreeF[A]
+
+case object LeafF extends TreeF`[???]`
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF[A]
+
+case class NodeF[A](
+  left : A,
+  value: Int,
+  right: A
+) extends TreeF[A]
+
+case object LeafF extends TreeF`[Nothing]`
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF[`A`]
+
+case class NodeF[A](
+  left : A,
+  value: Int,
+  right: A
+) extends TreeF[A]
+
+case object LeafF extends TreeF[Nothing]
+```
+
+---
+
+## Pattern functor
+
+```scala
+sealed trait TreeF[`+A`]
+
+case class NodeF[A](
+  left : A,
+  value: Int,
+  right: A
+) extends TreeF[A]
+
+case object LeafF extends TreeF[Nothing]
+```
+
 
 ---
 
@@ -4364,14 +5293,148 @@ case object LeafF extends TreeF[Nothing]
 
 ---
 
+## Pattern functor
+
+.center[![Tree catamorphism](img/cata-tree-6.svg)]
+
+---
+
+## Pattern functor
+
+.center[![Tree catamorphism](img/cata-tree-7.svg)]
+
+---
+
+## Pattern functor
+
+.center[![Tree catamorphism](img/cata-tree-8.svg)]
+
+---
+
+## Pattern functor
+
+.center[![Tree catamorphism](img/cata-tree-9.svg)]
+
+---
+
+## Pattern functor
+
+.center[![Tree catamorphism](img/cata-tree-10.svg)]
+
+---
+
+## Pattern functor
+
+.center[![Tree catamorphism](img/cata-tree-11.svg)]
+
+---
+
 ## Projection
 
 ```scala
 def projectTree: Tree => TreeF[Tree] =
   _ match {
-    case Leaf          => LeafF
     case Node(l, v ,r) => NodeF(l, v, r)
+    case Leaf          => LeafF
   }
+```
+
+---
+
+## Projection
+
+```scala
+def projectTree: `Tree => TreeF[Tree]` =
+  _ match {
+    case Node(l, v ,r) => NodeF(l, v, r)
+    case Leaf          => LeafF
+  }
+```
+
+---
+
+## Projection
+
+```scala
+def projectTree: Tree => TreeF[Tree] =
+  _ match {
+    case `Node(l, v ,r)` => NodeF(l, v, r)
+    case Leaf          => LeafF
+  }
+```
+
+---
+
+## Projection
+
+```scala
+def projectTree: Tree => TreeF[Tree] =
+  _ match {
+    case Node(l, v ,r) => `NodeF(l, v, r)`
+    case Leaf          => LeafF
+  }
+```
+
+---
+
+## Projection
+
+```scala
+def projectTree: Tree => TreeF[Tree] =
+  _ match {
+    case Node(l, v ,r) => NodeF(l, v, r)
+    case `Leaf`          => LeafF
+  }
+```
+
+---
+
+## Projection
+
+```scala
+def projectTree: Tree => TreeF[Tree] =
+  _ match {
+    case Node(l, v ,r) => NodeF(l, v, r)
+    case Leaf          => `LeafF`
+  }
+```
+
+---
+
+## Projection
+
+.center[![Tree catamorphism](img/cata-tree-11.svg)]
+
+---
+
+## Projection
+
+.center[![Tree catamorphism](img/cata-tree-12.svg)]
+
+---
+
+## Projection
+
+.center[![Tree catamorphism](img/cata-tree-13.svg)]
+
+---
+
+## Projection
+
+.center[![Tree catamorphism](img/cata-tree-14.svg)]
+
+---
+
+## Functor instance
+
+```scala
+implicit val treeFFunctor = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+    tree match {
+      case NodeF(left, i, right) => NodeF(f(left), i, f(right))
+      case LeafF                 => LeafF
+    }
+}
 ```
 
 ---
@@ -4379,35 +5442,254 @@ def projectTree: Tree => TreeF[Tree] =
 ## Functor instance
 
 ```scala
-implicit val treeFFunctor: Functor[TreeF] = new Functor[TreeF] {
-  override def map[A, B](tree: TreeF[A], f: A => B) = tree match {
-    case LeafF          => LeafF
-    case NodeF(l, v, r) => NodeF(f(l), v, f(r))
-  }
+implicit val treeFFunctor = new `Functor[TreeF]` {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+    tree match {
+      case NodeF(left, i, right) => NodeF(f(left), i, f(right))
+      case LeafF                 => LeafF
+    }
 }
 ```
 
 ---
 
-## Tree depth
+## Functor instance
 
 ```scala
-val depthAlgebra: TreeF[Int] => Int =
-  _ match {
-    case LeafF                 => 0
-    case NodeF(left, _, right) => math.max(
-      left + 1,
-      right + 1
-    )
-  }
+implicit val treeFFunctor = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+*   tree match {
+*     case NodeF(left, i, right) => NodeF(f(left), i, f(right))
+*     case LeafF                 => LeafF
+*   }
+}
+```
 
-val depth: Tree => Int = cata(depthAlgebra, projectTree)
+---
+
+## Functor instance
+
+```scala
+implicit val treeFFunctor = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+    tree match {
+      case `NodeF(left, i, right)` => NodeF(f(left), i, f(right))
+      case LeafF                 => LeafF
+    }
+}
+```
+
+---
+
+## Functor instance
+
+```scala
+implicit val treeFFunctor = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+    tree match {
+      case NodeF(left, i, right) => NodeF(`f(left)`, i, `f(right)`)
+      case LeafF                 => LeafF
+    }
+}
+```
+
+---
+
+## Functor instance
+
+```scala
+implicit val treeFFunctor = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+    tree match {
+      case NodeF(left, i, right) => NodeF(f(left), i, f(right))
+      case `LeafF`                 => LeafF
+    }
+}
+```
+
+---
+
+## Functor instance
+
+```scala
+implicit val treeFFunctor = new Functor[TreeF] {
+  override def map[A, B](tree: TreeF[A], f: A => B) =
+    tree match {
+      case NodeF(left, i, right) => NodeF(f(left), i, f(right))
+      case LeafF                 => `LeafF`
+    }
+}
+```
+
+---
+
+## Functor instance
+
+.center[![Tree catamorphism](img/cata-tree-13.svg)]
+
+---
+
+## Functor instance
+
+.center[![Tree catamorphism](img/cata-tree-15.svg)]
+
+---
+
+## F-Algebra
+
+```scala
+val heightAlgebra: TreeF[Int] => Int =
+  _ match {
+    case NodeF(left, _, right) => math.max(left + 1, right + 1)
+    case LeafF                 => 0
+  }
+```
+
+---
+
+## F-Algebra
+
+```scala
+val `heightAlgebra`: TreeF[Int] => Int =
+  _ match {
+    case NodeF(left, _, right) => math.max(left + 1, right + 1)
+    case LeafF                 => 0
+  }
+```
+
+---
+
+## F-Algebra
+
+```scala
+val heightAlgebra: `TreeF[Int] => Int` =
+  _ match {
+    case NodeF(left, _, right) => math.max(left + 1, right + 1)
+    case LeafF                 => 0
+  }
+```
+
+---
+
+## F-Algebra
+
+```scala
+val heightAlgebra: TreeF[Int] => Int =
+  _ match {
+    case `NodeF(left, _, right)` => math.max(left + 1, right + 1)
+    case LeafF                 => 0
+  }
+```
+
+---
+
+## F-Algebra
+
+```scala
+val heightAlgebra: TreeF[Int] => Int =
+  _ match {
+    case NodeF(left, _, right) => `math.max(left + 1, right + 1)`
+    case LeafF                 => 0
+  }
+```
+
+---
+
+## F-Algebra
+
+```scala
+val heightAlgebra: TreeF[Int] => Int =
+  _ match {
+    case NodeF(left, _, right) => math.max(left + 1, right + 1)
+    case `LeafF`                 => 0
+  }
+```
+
+---
+
+## F-Algebra
+
+```scala
+val heightAlgebra: TreeF[Int] => Int =
+  _ match {
+    case NodeF(left, _, right) => math.max(left + 1, right + 1)
+    case LeafF                 => `0`
+  }
+```
+
+---
+
+## F-Algebra
+
+.center[![Tree catamorphism](img/cata-tree-15.svg)]
+
+---
+
+## F-Algebra
+
+.center[![Tree catamorphism](img/cata-tree-16.svg)]
+
+---
+
+## F-Algebra
+
+.center[![Tree catamorphism](img/cata-tree-17.svg)]
+
+---
+
+## F-Algebra
+
+.center[![Tree catamorphism](img/cata-tree-18.svg)]
+
+---
+
+## F-Algebra
+
+.center[![Tree catamorphism](img/cata-tree-19.svg)]
+
+---
+
+## F-Algebra
+
+.center[![Tree catamorphism](img/cata-tree-20.svg)]
+
+---
+
+## Tree height
+
+```scala
+val height: Tree => Int =
+  cata(heightAlgebra, projectTree)
+```
+
+---
+
+## Tree height
+
+```scala
+val height: Tree => Int =
+  `cata(heightAlgebra, projectTree)`
+```
+
+---
+
+## Tree height
+
+```scala
+val height: Tree => Int =
+  cata(heightAlgebra, projectTree)
 ```
 
 ```scala
-depth(intTree)
+height(intTree)
 // res22: Int = 3
 ```
+
+---
+
+## Tree height
+
+.center[![Tree Height](img/tree-height.svg)]
 
 ---
 
