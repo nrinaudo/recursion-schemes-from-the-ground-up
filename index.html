@@ -5540,7 +5540,7 @@ implicit val treeFFunctor = new Functor[TreeF] {
 ```scala
 val heightAlgebra: TreeF[Int] => Int =
   _ match {
-    case NodeF(left, _, right) => math.max(left + 1, right + 1)
+    case NodeF(left, _, right) => 1 + math.max(left, right)
     case LeafF                 => 0
   }
 ```
@@ -5552,7 +5552,7 @@ val heightAlgebra: TreeF[Int] => Int =
 ```scala
 val `heightAlgebra`: TreeF[Int] => Int =
   _ match {
-    case NodeF(left, _, right) => math.max(left + 1, right + 1)
+    case NodeF(left, _, right) => 1 + math.max(left, right)
     case LeafF                 => 0
   }
 ```
@@ -5564,7 +5564,7 @@ val `heightAlgebra`: TreeF[Int] => Int =
 ```scala
 val heightAlgebra: `TreeF[Int] => Int` =
   _ match {
-    case NodeF(left, _, right) => math.max(left + 1, right + 1)
+    case NodeF(left, _, right) => 1 + math.max(left, right)
     case LeafF                 => 0
   }
 ```
@@ -5576,7 +5576,7 @@ val heightAlgebra: `TreeF[Int] => Int` =
 ```scala
 val heightAlgebra: TreeF[Int] => Int =
   _ match {
-    case `NodeF(left, _, right)` => math.max(left + 1, right + 1)
+    case `NodeF(left, _, right)` => 1 + math.max(left, right)
     case LeafF                 => 0
   }
 ```
@@ -5588,7 +5588,7 @@ val heightAlgebra: TreeF[Int] => Int =
 ```scala
 val heightAlgebra: TreeF[Int] => Int =
   _ match {
-    case NodeF(left, _, right) => `math.max(left + 1, right + 1)`
+    case NodeF(left, _, right) => `1 + math.max(left, right)`
     case LeafF                 => 0
   }
 ```
@@ -5600,7 +5600,7 @@ val heightAlgebra: TreeF[Int] => Int =
 ```scala
 val heightAlgebra: TreeF[Int] => Int =
   _ match {
-    case NodeF(left, _, right) => math.max(left + 1, right + 1)
+    case NodeF(left, _, right) => 1 + math.max(left, right)
     case `LeafF`                 => 0
   }
 ```
@@ -5612,7 +5612,7 @@ val heightAlgebra: TreeF[Int] => Int =
 ```scala
 val heightAlgebra: TreeF[Int] => Int =
   _ match {
-    case NodeF(left, _, right) => math.max(left + 1, right + 1)
+    case NodeF(left, _, right) => 1 + math.max(left, right)
     case LeafF                 => `0`
   }
 ```
@@ -5696,6 +5696,8 @@ height(intTree)
 ## Key takeaways
 
 * `cata` works just fine with `Tree`.
+--
+
 * it involves a lot of busywork though...
 
 ---
@@ -5709,7 +5711,7 @@ class: center, middle
 ## `List` in terms of `ListF`
 
 ```scala
-type NotList = ListF[???]
+type List2 = ListF[???]
 ```
 
 ---
@@ -5717,7 +5719,7 @@ type NotList = ListF[???]
 ## `List` in terms of `ListF`
 
 ```scala
-type NotList = ListF[`???`]
+type `List2` = ListF[???]
 ```
 
 ---
@@ -5725,7 +5727,16 @@ type NotList = ListF[`???`]
 ## `List` in terms of `ListF`
 
 ```scala
-type NotList = ListF[`ListF[???]`]
+type List2 = `ListF[???]`
+```
+
+
+---
+
+## `List` in terms of `ListF`
+
+```scala
+type List2 = ListF[`???`]
 ```
 
 ---
@@ -5733,7 +5744,7 @@ type NotList = ListF[`ListF[???]`]
 ## `List` in terms of `ListF`
 
 ```scala
-type NotList = ListF[`NotList`]
+type List2 = ListF[`List2`]
 ```
 
 ---
@@ -5741,10 +5752,10 @@ type NotList = ListF[`NotList`]
 ## `List` in terms of `ListF`
 
 ```scala
-type NotList = ListF[NotList]
-//        type NotList = ListF[NotList]
-//                             ^
-// On line 2: error: illegal cyclic reference involving type NotList
+type List2 = ListF[List2]
+//        type List2 = ListF[List2]
+//                           ^
+// On line 2: error: illegal cyclic reference involving type List2
 ```
 
 ---
@@ -5752,7 +5763,7 @@ type NotList = ListF[NotList]
 ## `List` in terms of `ListF`
 
 ```scala
-case class NotList(value: ListF[NotList])
+case class List2(value: ListF[List2])
 ```
 
 ---
@@ -5760,55 +5771,72 @@ case class NotList(value: ListF[NotList])
 ## `List` in terms of `ListF`
 
 ```scala
-case class NotList(value: `ListF`[NotList])
+case class List2(`value: ListF[List2]`)
 ```
 
 ---
 
-## `List` in terms of `ListF`
+## Generalising `List2`
 
 ```scala
-case class NotList[`F[_]`](value: ListF[NotList])
+case class List2(value: ListF[List2])
+```
+
+
+---
+
+## Generalising `List2`
+
+```scala
+case class List2(value: `ListF`[List2])
 ```
 
 ---
 
-## `List` in terms of `ListF`
+## Generalising `List2`
 
 ```scala
-case class NotList[F[_]](value: `ListF`[NotList])
+case class List2[`F[_]`](value: ListF[List2])
 ```
 
 ---
 
-## `List` in terms of `ListF`
+## Generalising `List2`
 
 ```scala
-case class NotList[F[_]](value: `F`[NotList])
+case class List2[F[_]](value: `ListF`[List2])
 ```
 
 ---
 
-## `List` in terms of `ListF`
+## Generalising `List2`
 
 ```scala
-case class NotList[F[_]](value: F[`NotList`])
+case class List2[F[_]](value: `F`[List2])
 ```
 
 ---
 
-## `List` in terms of `ListF`
+## Generalising `List2`
 
 ```scala
-case class NotList[F[_]](value: F[NotList[`F`]])
+case class List2[F[_]](value: F[`List2`])
 ```
 
 ---
 
-## `List` in terms of `ListF`
+## Generalising `List2`
 
 ```scala
-case class NotList[F[_]](value: F[NotList[F]])
+case class List2[F[_]](value: F[List2[`F`]])
+```
+
+---
+
+## Generalising `List2`
+
+```scala
+case class List2[F[_]](value: F[List2[F]])
 ```
 
 ---
@@ -5816,7 +5844,7 @@ case class NotList[F[_]](value: F[NotList[F]])
 ## Naming things
 
 ```scala
-case class `NotList`[F[_]](value: F[`NotList`[F]])
+case class `List2`[F[_]](value: F[`List2`[F]])
 ```
 
 ---
@@ -5848,6 +5876,23 @@ type FixedList = Fix[ListF]
 ## `List` in terms of `Fix`
 
 ```scala
+type `FixedList` = Fix[ListF]
+```
+
+
+---
+
+## `List` in terms of `Fix`
+
+```scala
+type FixedList = `Fix[ListF]`
+```
+
+---
+
+## `List` in terms of `Fix`
+
+```scala
 val fixedInts: FixedList =
   Fix[ListF](Some((1,
     Fix[ListF](Some((2,
@@ -5857,6 +5902,235 @@ val fixedInts: FixedList =
     )))
   )))
 ```
+
+---
+
+## `List` in terms of `Fix`
+
+```scala
+val fixedInts: FixedList =
+  Fix[ListF](Some((`1`,
+    Fix[ListF](Some((`2`,
+      Fix[ListF](Some((`3`,
+        Fix[ListF](None)
+      )))
+    )))
+  )))
+```
+
+---
+
+## `Tree` in terms of `TreeF`
+
+```scala
+type FixedTree = Fix[TreeF]
+```
+
+---
+
+## `Tree` in terms of `TreeF`
+
+```scala
+type `FixedTree` = Fix[TreeF]
+```
+
+---
+
+## `Tree` in terms of `TreeF`
+
+```scala
+type FixedTree = `Fix[TreeF]`
+```
+
+---
+
+## `Tree` in terms of `TreeF`
+
+```scala
+val fixedIntTree: FixedTree =
+  Fix[TreeF](NodeF(
+    Fix[TreeF](NodeF(
+      Fix[TreeF](NodeF(Fix[TreeF](LeafF), 1, Fix[TreeF](LeafF))),
+      2,
+      Fix[TreeF](NodeF(Fix[TreeF](LeafF), 3, Fix[TreeF](LeafF)))
+    )),
+    4,
+    Fix[TreeF](LeafF)
+  ))
+```
+
+---
+
+## `Tree` in terms of `TreeF`
+
+```scala
+val fixedIntTree: FixedTree =
+  Fix[TreeF](NodeF(
+    Fix[TreeF](NodeF(
+      Fix[TreeF](NodeF(Fix[TreeF](LeafF), `1`, Fix[TreeF](LeafF))),
+      `2`,
+      Fix[TreeF](NodeF(Fix[TreeF](LeafF), `3`, Fix[TreeF](LeafF)))
+    )),
+    `4`,
+    Fix[TreeF](LeafF)
+  ))
+```
+
+---
+
+## `cata` with `Fix`
+
+```scala
+def cata[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(curr: B): A =
+    algebra(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## `cata` with `Fix`
+
+```scala
+def `cata`[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(curr: B): A =
+    algebra(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## `cata` with `Fix`
+
+```scala
+def `cataFix`[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(curr: B): A =
+    algebra(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## `cata` with `Fix`
+
+```scala
+def cataFix[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(curr: B): A =
+    algebra(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## `cata` with `Fix`
+
+.center[![Linked List](img/catafix-init.svg)]
+
+---
+
+## `cata` with `Fix`
+
+.center[![Linked List](img/catafix-init-hl-1.svg)]
+
+---
+
+## `cata` with `Fix`
+
+```scala
+def cataFix[F[_]: Functor, A, `B`](
+  algebra: F[A] => A,
+  project: `B` => F[`B`]
+): `B` => A = {
+
+  def loop(curr: `B`): A =
+    algebra(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## `cata` with `Fix`
+
+```scala
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A,
+  project: `Fix[F]` => F[`Fix[F]`]
+): `Fix[F]` => A = {
+
+  def loop(curr: `Fix[F]`): A =
+    algebra(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## `cata` with `Fix`
+
+```scala
+def cataFix[F[_]: Functor, A](
+  algebra: F[A] => A,
+  project: Fix[F] => F[Fix[F]]
+): Fix[F] => A = {
+
+  def loop(curr: Fix[F]): A =
+    algebra(fmap(project(curr), loop))
+
+  loop
+}
+```
+
+---
+
+## `cata` with `Fix`
+
+.center[![Linked List](img/catafix-init-hl-1.svg)]
+
+
+---
+
+## `cata` with `Fix`
+
+.center[![Linked List](img/catafix-no-b-hl-1.svg)]
+
+---
+
+## `cata` with `Fix`
+
+.center[![Linked List](img/catafix-no-b.svg)]
+
+---
+
+## `cata` with `Fix`
+
+.center[![Linked List](img/catafix-no-b-hl-2.svg)]
 
 ---
 
@@ -5875,141 +6149,277 @@ val project: List => ListF[List] =
 ## Projecting `Fix`
 
 ```scala
-val projectFix: FixedList => ListF[FixedList] =
+val `project`: List => ListF[List] =
   _ match {
-    case Fix(value) => value
-    case Fix(value) => value
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
   }
 ```
 
 ---
 
-## TODO
-
-Show `project` in terms of `FixedList`
-
----
-
-## Specialised `cata` for `Fix`
+## Projecting `Fix`
 
 ```scala
-def cata[F[_]: Functor, A, B](
-  algebra: F[A] => A,
-  project: B => F[B]
-): B => A = {
-
-  def loop(curr: B): A =
-    algebra(fmap(project(curr), loop))
-
-  loop
-}
+val `projectFix`: List => ListF[List] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
 ```
 
 ---
 
-## Specialised `cata` for `Fix`
+## Projecting `Fix`
 
 ```scala
-def `cata`[F[_]: Functor, A, B](
-  algebra: F[A] => A,
-  project: B => F[B]
-): B => A = {
-
-  def loop(curr: B): A =
-    algebra(fmap(project(curr), loop))
-
-  loop
-}
+val projectFix: List => ListF[List] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
 ```
 
 ---
 
-## Specialised `cata` for `Fix`
+## Projecting `Fix`
 
 ```scala
-def `cataFix`[F[_]: Functor, A, B](
-  algebra: F[A] => A,
-  project: B => F[B]
-): B => A = {
-
-  def loop(curr: B): A =
-    algebra(fmap(project(curr), loop))
-
-  loop
-}
+val projectFix: `List` => ListF[`List`] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
 ```
 
 ---
 
-## Specialised `cata` for `Fix`
+## Projecting `Fix`
 
 ```scala
-def cataFix[F[_]: Functor, A, B](
-  algebra: F[A] => A,
-  project: B => F[B]
-): B => A = {
-
-  def loop(curr: B): A =
-    algebra(fmap(project(curr), loop))
-
-  loop
-}
+val projectFix: `FixedList` => ListF[`FixedList`] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
 ```
 
 ---
 
-## Specialised `cata` for `Fix`
+## Projecting `Fix`
 
 ```scala
-def cataFix[F[_]: Functor, A, `B`](
-  algebra: F[A] => A,
-  project: `B` => F[`B`]
-): `B` => A = {
-
-  def loop(curr: `B`): A =
-    algebra(fmap(project(curr), loop))
-
-  loop
-}
+val projectFix: FixedList => ListF[FixedList] =
+  _ match {
+    case `Cons(head, tail)` => Some((head, tail))
+    case Nil              => None
+  }
 ```
 
 ---
 
-## Specialised `cata` for `Fix`
+## Projecting `Fix`
 
 ```scala
-def cataFix[F[_]: Functor, A, B](
-  algebra: F[A] => A,
-  project: `Fix[F]` => F[`Fix[F]`]
-): `Fix[F]` => A = {
-
-  def loop(curr: `Fix[F]`): A =
-    algebra(fmap(project(curr), loop))
-
-  loop
-}
+val projectFix: FixedList => ListF[FixedList] =
+  _ match {
+    case `Fix(Some((head, tail)))` => Some((head, tail))
+    case Nil                     => None
+  }
 ```
 
 ---
 
-## Specialised `cata` for `Fix`
+## Projecting `Fix`
 
 ```scala
-def cataFix[F[_]: Functor, A, `B`](
-  algebra: F[A] => A,
-  project: Fix[F] => F[Fix[F]]
-): Fix[F] => A = {
-
-  def loop(curr: Fix[F]): A =
-    algebra(fmap(project(curr), loop))
-
-  loop
-}
+val projectFix: FixedList => ListF[FixedList] =
+  _ match {
+    case Fix(Some((head, tail))) => Some((head, tail))
+    case `Nil`                     => None
+  }
 ```
 
 ---
 
-## Specialised `cata` for `Fix`
+## Projecting `Fix`
+
+```scala
+val projectFix: FixedList => ListF[FixedList] =
+  _ match {
+    case Fix(Some((head, tail))) => Some((head, tail))
+    case `Fix(None)`               => None
+  }
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: FixedList => ListF[FixedList] =
+  _ match {
+    case Fix(Some((head, tail))) => Some((head, tail))
+    case Fix(None)               => None
+  }
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: FixedList => ListF[FixedList] =
+  _ match {
+    case Fix(`Some((head, tail))`) => `Some((head, tail))`
+    case Fix(None)               => None
+  }
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: FixedList => ListF[FixedList] =
+  _ match {
+    case Fix(Some((head, tail))) => Some((head, tail))
+    case Fix(`None`)               => `None`
+  }
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: FixedList => ListF[FixedList] =
+* _ match {
+*   case Fix(Some((head, tail))) => Some((head, tail))
+*   case Fix(None)               => None
+* }
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: FixedList => ListF[FixedList] =
+* _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: FixedList => ListF[FixedList] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: `FixedList` => ListF[`FixedList`] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: `Fix[ListF]` => ListF[`Fix[ListF]`] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+val projectFix: Fix[`ListF`] => `ListF`[Fix[`ListF`]] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+&#x200B;`val projectFix`: Fix[ListF] => ListF[Fix[ListF]] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+&#x200B;`def` projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+def projectFix[`F[_]`]: Fix[ListF] => ListF[Fix[ListF]] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+def projectFix[F[_]]: Fix[`ListF`] => `ListF`[Fix[`ListF`]] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+def projectFix[F[_]]: Fix[`F`] => `F`[Fix[`F`]] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+def projectFix[F[_]]: Fix[F] => F[Fix[F]] =
+  _.value
+```
+
+---
+
+## Projecting `Fix`
+
+```scala
+def projectFix[F[_]]: Fix[F] => F[Fix[F]] =
+  `_.value`
+```
+
+---
+
+## Projecting `Fix`
 
 ```scala
 def cataFix[F[_]: Functor, A](
@@ -6026,7 +6436,7 @@ def cataFix[F[_]: Functor, A](
 
 ---
 
-## Specialised `cata` for `Fix`
+## Projecting `Fix`
 
 ```scala
 def cataFix[F[_]: Functor, A](
@@ -6043,7 +6453,7 @@ def cataFix[F[_]: Functor, A](
 
 ---
 
-## Specialised `cata` for `Fix`
+## Projecting `Fix`
 
 ```scala
 def cataFix[F[_]: Functor, A](
@@ -6060,7 +6470,7 @@ def cataFix[F[_]: Functor, A](
 
 ---
 
-## Specialised `cata` for `Fix`
+## Projecting `Fix`
 
 ```scala
 def cataFix[F[_]: Functor, A](
@@ -6077,7 +6487,7 @@ def cataFix[F[_]: Functor, A](
 
 ---
 
-## Specialised `cata` for `Fix`
+## Projecting `Fix`
 
 ```scala
 def cataFix[F[_]: Functor, A](
@@ -6093,7 +6503,34 @@ def cataFix[F[_]: Functor, A](
 
 ---
 
-TODO : add the mkString examples on each tut:silent
+## Projecting `Fix`
+
+.center[![Linked List](img/catafix-no-b-hl-2.svg)]
+
+---
+
+## Projecting `Fix`
+
+.center[![Linked List](img/catafix-project-hl-1.svg)]
+
+---
+
+## Projecting `Fix`
+
+.center[![Linked List](img/catafix-project.svg)]
+
+---
+
+## Projecting `Fix`
+
+.center[![Linked List](img/catafix-project-hl-2.svg)]
+
+---
+
+## Projecting `Fix`
+
+.center[![Linked List](img/catafix-project-hl-3.svg)]
+
 
 ---
 
@@ -6104,7 +6541,24 @@ val productFix: FixedList => Int =
   cataFix(productAlgebra)
 ```
 
---
+---
+
+## `product` in terms of `cataFix`
+
+```scala
+val productFix: FixedList => Int =
+  `cataFix(productAlgebra)`
+```
+
+
+---
+
+## `product` in terms of `cataFix`
+
+```scala
+val productFix: FixedList => Int =
+  cataFix(productAlgebra)
+```
 
 ```scala
 productFix(fixedInts)
@@ -6120,11 +6574,60 @@ val mkStringFix: FixedList => String =
   cataFix(mkStringAlgebra)
 ```
 
---
+---
+
+## `mkString` in terms of `cataFix`
+
+```scala
+val mkStringFix: FixedList => String =
+  `cataFix(mkStringAlgebra)`
+```
+
+---
+
+## `mkString` in terms of `cataFix`
+
+```scala
+val mkStringFix: FixedList => String =
+  cataFix(mkStringAlgebra)
+```
 
 ```scala
 mkStringFix(fixedInts)
 // res24: String = 1 :: 2 :: 3 :: nil
+```
+
+---
+
+## `height` in terms of `cataFix`
+
+```scala
+val heightFix: FixedTree => Int =
+  cataFix(heightAlgebra)
+```
+
+---
+
+## `height` in terms of `cataFix`
+
+```scala
+val heightFix: FixedTree => Int =
+  `cataFix(heightAlgebra)`
+```
+
+---
+
+## `height` in terms of `cataFix`
+
+```scala
+val heightFix: FixedTree => Int =
+  cataFix(heightAlgebra)
+```
+
+
+```scala
+heightFix(fixedIntTree)
+// res25: Int = 3
 ```
 
 ---
@@ -6218,7 +6721,7 @@ def range(
 mkString(
   range(3)
 )
-// res25: String = 3 :: 2 :: 1 :: nil
+// res26: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -6382,7 +6885,7 @@ val range: Int => List =
 
 ```scala
 mkString(range(3))
-// res26: String = 3 :: 2 :: 1 :: nil
+// res27: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -6615,7 +7118,7 @@ val range: Int => List = ana(rangeCoAlgebra, embedList)
 
 ```scala
 mkString(range(3))
-// res27: String = 3 :: 2 :: 1 :: nil
+// res28: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -6711,7 +7214,7 @@ val rangeFix: Int => FixedList =
 
 ```scala
 rangeFix(3)
-// res28: FixedList = Fix(Some((3,Fix(Some((2,Fix(Some((1,Fix(None))))))))))
+// res29: FixedList = Fix(Some((3,Fix(Some((2,Fix(Some((1,Fix(None))))))))))
 ```
 
 ---
@@ -6729,7 +7232,7 @@ val factorial: Int => Int =
 
 ```scala
 factorial(3)
-// res29: Int = 6
+// res30: Int = 6
 ```
 
 ---
@@ -6741,7 +7244,7 @@ val factorial: Int => Int =
 
 ```scala
 factorial(3)
-// res30: Int = 6
+// res31: Int = 6
 ```
 
 ---
