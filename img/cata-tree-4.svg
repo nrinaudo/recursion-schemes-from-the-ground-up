@@ -17,8 +17,8 @@
 <!-- ListFA -->
 <g id="node2" class="node">
 <title>ListFA</title>
-<path fill="#b2ebf2" stroke="#dddddd" d="M330,-36C330,-36 300,-36 300,-36 294,-36 288,-30 288,-24 288,-24 288,-12 288,-12 288,-6 294,0 300,0 300,0 330,0 330,0 336,0 342,-6 342,-12 342,-12 342,-24 342,-24 342,-30 336,-36 330,-36"/>
-<text text-anchor="middle" x="315" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">F[A]</text>
+<path fill="#b2ebf2" stroke="#2980b9" d="M330,-36C330,-36 300,-36 300,-36 294,-36 288,-30 288,-24 288,-24 288,-12 288,-12 288,-6 294,0 300,0 300,0 330,0 330,0 336,0 342,-6 342,-12 342,-12 342,-24 342,-24 342,-30 336,-36 330,-36"/>
+<text text-anchor="middle" x="315" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">F[A]</text>
 </g>
 <!-- ListFList&#45;&gt;ListFA -->
 <g id="edge2" class="edge">

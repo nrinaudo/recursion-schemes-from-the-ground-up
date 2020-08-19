@@ -11,14 +11,14 @@
 <!-- ListFList -->
 <g id="node1" class="node">
 <title>ListFList</title>
-<path fill="#b2ebf2" stroke="#dddddd" d="M189,-36C189,-36 138,-36 138,-36 132,-36 126,-30 126,-24 126,-24 126,-12 126,-12 126,-6 132,0 138,0 138,0 189,0 189,0 195,0 201,-6 201,-12 201,-12 201,-24 201,-24 201,-30 195,-36 189,-36"/>
-<text text-anchor="middle" x="163.5" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">ListF[tail]</text>
+<path fill="#b2ebf2" stroke="#2980b9" d="M189,-36C189,-36 138,-36 138,-36 132,-36 126,-30 126,-24 126,-24 126,-12 126,-12 126,-6 132,0 138,0 138,0 189,0 189,0 195,0 201,-6 201,-12 201,-12 201,-24 201,-24 201,-30 195,-36 189,-36"/>
+<text text-anchor="middle" x="163.5" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">ListF[tail]</text>
 </g>
 <!-- ListFA -->
 <g id="node2" class="node">
 <title>ListFA</title>
-<path fill="#b2ebf2" stroke="#dddddd" d="M357,-36C357,-36 316,-36 316,-36 310,-36 304,-30 304,-24 304,-24 304,-12 304,-12 304,-6 310,0 316,0 316,0 357,0 357,0 363,0 369,-6 369,-12 369,-12 369,-24 369,-24 369,-30 363,-36 357,-36"/>
-<text text-anchor="middle" x="336.5" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">ListF[A]</text>
+<path fill="#b2ebf2" stroke="#2980b9" d="M357,-36C357,-36 316,-36 316,-36 310,-36 304,-30 304,-24 304,-24 304,-12 304,-12 304,-6 310,0 316,0 316,0 357,0 357,0 363,0 369,-6 369,-12 369,-12 369,-24 369,-24 369,-30 363,-36 357,-36"/>
+<text text-anchor="middle" x="336.5" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">ListF[A]</text>
 </g>
 <!-- ListFList&#45;&gt;ListFA -->
 <g id="edge2" class="edge">

@@ -40,8 +40,8 @@
 <!-- ListFA -->
 <g id="node4" class="node">
 <title>ListFA</title>
-<path fill="#b2ebf2" stroke="#dddddd" d="M582,-41.5C582,-41.5 541,-41.5 541,-41.5 535,-41.5 529,-35.5 529,-29.5 529,-29.5 529,-17.5 529,-17.5 529,-11.5 535,-5.5 541,-5.5 541,-5.5 582,-5.5 582,-5.5 588,-5.5 594,-11.5 594,-17.5 594,-17.5 594,-29.5 594,-29.5 594,-35.5 588,-41.5 582,-41.5"/>
-<text text-anchor="middle" x="561.5" y="-19.8" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">ListF[A]</text>
+<path fill="#b2ebf2" stroke="#2980b9" d="M582,-41.5C582,-41.5 541,-41.5 541,-41.5 535,-41.5 529,-35.5 529,-29.5 529,-29.5 529,-17.5 529,-17.5 529,-11.5 535,-5.5 541,-5.5 541,-5.5 582,-5.5 582,-5.5 588,-5.5 594,-11.5 594,-17.5 594,-17.5 594,-29.5 594,-29.5 594,-35.5 588,-41.5 582,-41.5"/>
+<text text-anchor="middle" x="561.5" y="-19.8" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">ListF[A]</text>
 </g>
 <!-- ListStruct2&#45;&gt;ListFA -->
 <g id="edge6" class="edge">
@@ -60,8 +60,8 @@
 <!-- ListFList -->
 <g id="node3" class="node">
 <title>ListFList</title>
-<path fill="#b2ebf2" stroke="#dddddd" d="M189,-41.5C189,-41.5 138,-41.5 138,-41.5 132,-41.5 126,-35.5 126,-29.5 126,-29.5 126,-17.5 126,-17.5 126,-11.5 132,-5.5 138,-5.5 138,-5.5 189,-5.5 189,-5.5 195,-5.5 201,-11.5 201,-17.5 201,-17.5 201,-29.5 201,-29.5 201,-35.5 195,-41.5 189,-41.5"/>
-<text text-anchor="middle" x="163.5" y="-19.8" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">ListF[tail]</text>
+<path fill="#b2ebf2" stroke="#2980b9" d="M189,-41.5C189,-41.5 138,-41.5 138,-41.5 132,-41.5 126,-35.5 126,-29.5 126,-29.5 126,-17.5 126,-17.5 126,-11.5 132,-5.5 138,-5.5 138,-5.5 189,-5.5 189,-5.5 195,-5.5 201,-11.5 201,-17.5 201,-17.5 201,-29.5 201,-29.5 201,-35.5 195,-41.5 189,-41.5"/>
+<text text-anchor="middle" x="163.5" y="-19.8" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">ListF[tail]</text>
 </g>
 <!-- ListFList&#45;&gt;ListStruct -->
 <g id="edge2" class="edge">

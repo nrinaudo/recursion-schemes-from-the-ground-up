@@ -11,10 +11,10 @@
 <!-- ListStruct -->
 <g id="node1" class="node">
 <title>ListStruct</title>
-<path fill="#b2ebf2" stroke="#dddddd" d="M279,-.5C279,-.5 329,-.5 329,-.5 335,-.5 341,-6.5 341,-12.5 341,-12.5 341,-34.5 341,-34.5 341,-40.5 335,-46.5 329,-46.5 329,-46.5 279,-46.5 279,-46.5 273,-46.5 267,-40.5 267,-34.5 267,-34.5 267,-12.5 267,-12.5 267,-6.5 273,-.5 279,-.5"/>
-<text text-anchor="middle" x="304" y="-31.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">head, tail</text>
-<polyline fill="none" stroke="#dddddd" points="267,-23.5 341,-23.5 "/>
-<text text-anchor="middle" x="304" y="-8.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">∅</text>
+<path fill="#b2ebf2" stroke="#2980b9" d="M279,-.5C279,-.5 329,-.5 329,-.5 335,-.5 341,-6.5 341,-12.5 341,-12.5 341,-34.5 341,-34.5 341,-40.5 335,-46.5 329,-46.5 329,-46.5 279,-46.5 279,-46.5 273,-46.5 267,-40.5 267,-34.5 267,-34.5 267,-12.5 267,-12.5 267,-6.5 273,-.5 279,-.5"/>
+<text text-anchor="middle" x="304" y="-31.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">head, tail</text>
+<polyline fill="none" stroke="#2980b9" points="267,-23.5 341,-23.5 "/>
+<text text-anchor="middle" x="304" y="-8.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">∅</text>
 </g>
 <!-- ListStruct2 -->
 <g id="node2" class="node">

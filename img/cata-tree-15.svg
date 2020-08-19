@@ -17,8 +17,8 @@
 <!-- ListFA -->
 <g id="node2" class="node">
 <title>ListFA</title>
-<path fill="#b2ebf2" stroke="#dddddd" d="M393,-36C393,-36 349,-36 349,-36 343,-36 337,-30 337,-24 337,-24 337,-12 337,-12 337,-6 343,0 349,0 349,0 393,0 393,0 399,0 405,-6 405,-12 405,-12 405,-24 405,-24 405,-30 399,-36 393,-36"/>
-<text text-anchor="middle" x="371" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">TreeF[A]</text>
+<path fill="#b2ebf2" stroke="#2980b9" d="M393,-36C393,-36 349,-36 349,-36 343,-36 337,-30 337,-24 337,-24 337,-12 337,-12 337,-6 343,0 349,0 349,0 393,0 393,0 399,0 405,-6 405,-12 405,-12 405,-24 405,-24 405,-30 399,-36 393,-36"/>
+<text text-anchor="middle" x="371" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">TreeF[A]</text>
 </g>
 <!-- ListFList&#45;&gt;ListFA -->
 <g id="edge2" class="edge">
@@ -30,8 +30,8 @@
 <!-- A -->
 <g id="node4" class="node">
 <title>A</title>
-<path fill="#b2ebf2" stroke="#dddddd" d="M520,-36C520,-36 490,-36 490,-36 484,-36 478,-30 478,-24 478,-24 478,-12 478,-12 478,-6 484,0 490,0 490,0 520,0 520,0 526,0 532,-6 532,-12 532,-12 532,-24 532,-24 532,-30 526,-36 520,-36"/>
-<text text-anchor="middle" x="505" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">A</text>
+<path fill="#b2ebf2" stroke="#2980b9" d="M520,-36C520,-36 490,-36 490,-36 484,-36 478,-30 478,-24 478,-24 478,-12 478,-12 478,-6 484,0 490,0 490,0 520,0 520,0 526,0 532,-6 532,-12 532,-12 532,-24 532,-24 532,-30 526,-36 520,-36"/>
+<text text-anchor="middle" x="505" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">A</text>
 </g>
 <!-- ListFA&#45;&gt;A -->
 <g id="edge3" class="edge">

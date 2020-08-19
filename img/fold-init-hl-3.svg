@@ -66,16 +66,16 @@
 <!-- List&#45;&gt;ListStruct -->
 <g id="edge1" class="edge">
 <title>List&#45;&gt;ListStruct:cons</title>
-<path fill="none" stroke="#dddddd" stroke-dasharray="5,2" d="M54.003,-27.1004C71.8144,-29.4753 94.1296,-32.4506 106.8563,-34.1475"/>
-<polygon fill="#dddddd" stroke="#dddddd" points="106.6251,-37.6476 117,-35.5 107.5503,-30.709 106.6251,-37.6476"/>
-<text text-anchor="middle" x="85.5" y="-35.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#dddddd">Cons</text>
+<path fill="none" stroke="#2980b9" stroke-dasharray="5,2" d="M54.003,-27.1004C71.8144,-29.4753 94.1296,-32.4506 106.8563,-34.1475"/>
+<polygon fill="#2980b9" stroke="#2980b9" points="106.6251,-37.6476 117,-35.5 107.5503,-30.709 106.6251,-37.6476"/>
+<text text-anchor="middle" x="85.5" y="-35.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#000000">Cons</text>
 </g>
 <!-- List&#45;&gt;ListStruct -->
 <g id="edge2" class="edge">
 <title>List&#45;&gt;ListStruct:nil</title>
-<path fill="none" stroke="#dddddd" stroke-dasharray="5,2" d="M54.003,-19.8996C71.8144,-17.5247 94.1296,-14.5494 106.8563,-12.8525"/>
-<polygon fill="#dddddd" stroke="#dddddd" points="107.5503,-16.291 117,-11.5 106.6251,-9.3524 107.5503,-16.291"/>
-<text text-anchor="middle" x="85.5" y="-16.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#dddddd">Nil</text>
+<path fill="none" stroke="#2980b9" stroke-dasharray="5,2" d="M54.003,-19.8996C71.8144,-17.5247 94.1296,-14.5494 106.8563,-12.8525"/>
+<polygon fill="#2980b9" stroke="#2980b9" points="107.5503,-16.291 117,-11.5 106.6251,-9.3524 107.5503,-16.291"/>
+<text text-anchor="middle" x="85.5" y="-16.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#000000">Nil</text>
 </g>
 </g>
 </svg>

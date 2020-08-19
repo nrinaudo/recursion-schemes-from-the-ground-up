@@ -177,14 +177,8 @@ case object Nil extends List
 ## Linked list
 
 ```scala
-sealed trait List
-
-case class Cons(
-  head: Int,
-  tail: List
-) extends List
-
-case object Nil extends List
+val ints: List =
+  Cons(1, Cons(2, Cons(3, Nil)))
 ```
 
 ---
@@ -192,15 +186,8 @@ case object Nil extends List
 ## Linked list
 
 ```scala
-val ints: List = Cons(1, Cons(2, Cons(3, Nil)))
-```
-
----
-
-## Linked list
-
-```scala
-val ints: List = Cons(`1`, Cons(`2`, Cons(`3`, Nil)))
+val ints: List =
+  Cons(`1`, Cons(`2`, Cons(`3`, Nil)))
 ```
 
 ---
@@ -812,7 +799,7 @@ mkString(ints)
 Structural recursion works by:
 --
 
-* providing a solution to the smallest problem.
+* providing a solution to the smallest problem(s).
 --
 
 * for larger problems: relying on the solution to smaller problems.
@@ -1432,8 +1419,9 @@ def recurse[A](
   step  : (Int, A) => A,
   values: List
 ): A = {
-* def loop(curr: List): A =
-*   curr match {
+
+* def loop(list: List): A =
+*   list match {
 *     case Cons(head, tail) =>
 *       step(head, recurse(base, step, tail))
 *     case Nil              => base
@@ -1456,8 +1444,9 @@ def recurse[A](
   step  : (Int, A) => A,
   values: List
 ): A = {
-  def loop(`curr: List`): A =
-    curr match {
+
+  def loop(`list: List`): A =
+    list match {
       case Cons(head, tail) =>
         step(head, recurse(base, step, tail))
       case Nil              => base
@@ -1480,8 +1469,9 @@ def recurse[A](
   step  : (Int, A) => A,
   values: List
 ): A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) =>
         step(head, recurse(base, step, tail))
       case Nil              => `base`
@@ -1504,8 +1494,9 @@ def recurse[A](
   `step`  : (Int, A) => A,
   values: List
 ): A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) =>
         `step`(head, recurse(base, step, tail))
       case Nil              => base
@@ -1528,8 +1519,9 @@ def recurse[A](
   step  : (Int, A) => A,
   values: List
 ): A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) =>
         step(head, `recurse(base, step, tail)`)
       case Nil              => base
@@ -1552,8 +1544,9 @@ def recurse[A](
   step  : (Int, A) => A,
   values: List
 ): A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) =>
         step(head, `loop(tail)`)
       case Nil              => base
@@ -1576,8 +1569,9 @@ def recurse[A](
   step  : (Int, A) => A,
   values: List
 ): A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) =>
         `step(head, loop(tail))`
       case Nil              => base
@@ -1600,8 +1594,9 @@ def recurse[A](
   step  : (Int, A) => A,
   values: List
 ): A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => `step(head, loop(tail))`
       case Nil              => base
     }
@@ -1623,8 +1618,9 @@ def recurse[A](
   step  : (Int, A) => A,
   values: List
 ): A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1646,8 +1642,9 @@ def recurse[A](
   step  : (Int, A) => A,
   values: List
 ): A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1666,8 +1663,9 @@ def recurse[A](
   step  : (Int, A) => A,
   values: List
 ): A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1716,8 +1714,9 @@ def recurse[A](
   step  : (Int, A) => A,
   `values: List`
 ): A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1735,8 +1734,9 @@ def recurse[A](
   base  : A,
   step  : (Int, A) => A
 ): A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1754,8 +1754,9 @@ def recurse[A](
   base  : A,
   step  : (Int, A) => A
 ): A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1773,8 +1774,9 @@ def recurse[A](
   base  : A,
   step  : (Int, A) => A
 ): A = {
-* def loop(curr: List): A =
-    curr match {
+
+* def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1792,8 +1794,9 @@ def recurse[A](
   base  : A,
   step  : (Int, A) => A
 ): `A` = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1811,8 +1814,9 @@ def recurse[A](
   base  : A,
   step  : (Int, A) => A
 ): `List => A` = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1830,8 +1834,9 @@ def recurse[A](
   base  : A,
   step  : (Int, A) => A
 ): List => A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1891,31 +1896,13 @@ mkString(ints)
 ## Naming things
 
 ```scala
-def recurse[A](
-  base  : A,
-  step  : (Int, A) => A
-): List => A = {
-  def loop(curr: List): A =
-    curr match {
-      case Cons(head, tail) => step(head, loop(tail))
-      case Nil              => base
-    }
-
-  loop
-}
-```
-
----
-
-## Naming things
-
-```scala
 def `recurse`[A](
   base  : A,
   step  : (Int, A) => A
 ): List => A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1933,8 +1920,9 @@ def `fold`[A](
   base  : A,
   step  : (Int, A) => A
 ): List => A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1952,8 +1940,9 @@ def fold[A](
   base  : A,
   step  : (Int, A) => A
 ): List => A = {
-  def loop(curr: List): A =
-    curr match {
+
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1975,7 +1964,7 @@ fold(base, step)(ints)
 val product: List => Int =
   fold[Int](
     base = 1,
-    step = (head, tail) => head * tail
+    step = (head, tailProduct) => head * tailProduct
   )
 ```
 
@@ -1987,7 +1976,7 @@ val product: List => Int =
 val product: List => Int =
   `fold`[Int](
     base = 1,
-    step = (head, tail) => head * tail
+    step = (head, tailProduct) => head * tailProduct
   )
 ```
 
@@ -1999,7 +1988,7 @@ val product: List => Int =
 val product: List => Int =
   fold[Int](
     `base = 1`,
-    step = (head, tail) => head * tail
+    step = (head, tailProduct) => head * tailProduct
   )
 ```
 
@@ -2011,7 +2000,7 @@ val product: List => Int =
 val product: List => Int =
   fold[Int](
     base = 1,
-    `step = (head, tail) => head * tail`
+    `step = (head, tailProduct) => head * tailProduct`
   )
 ```
 
@@ -2023,7 +2012,7 @@ val product: List => Int =
 val product: List => Int =
   fold[Int](
     base = 1,
-    step = (head, tail) => head * tail
+    step = (head, tailProduct) => head * tailProduct
   )
 ```
 
@@ -2040,7 +2029,7 @@ product(ints)
 val mkString: List => String =
   fold[String](
     base = "nil",
-    step = (head, tail) => head + " :: " + tail
+    step = (head, tailString) => head + " :: " + tailString
   )
 ```
 
@@ -2052,7 +2041,7 @@ val mkString: List => String =
 val mkString: List => String =
   `fold`[String](
     base = "nil",
-    step = (head, tail) => head + " :: " + tail
+    step = (head, tailString) => head + " :: " + tailString
   )
 ```
 
@@ -2064,7 +2053,7 @@ val mkString: List => String =
 val mkString: List => String =
   fold[String](
     `base = "nil"`,
-    step = (head, tail) => head + " :: " + tail
+    step = (head, tailString) => head + " :: " + tailString
   )
 ```
 
@@ -2076,7 +2065,7 @@ val mkString: List => String =
 val mkString: List => String =
   fold[String](
     base = "nil",
-    `step = (head, tail) => head + " :: " + tail`
+    `step = (head, tailString) => head + " :: " + tailString`
   )
 ```
 
@@ -2088,7 +2077,7 @@ val mkString: List => String =
 val mkString: List => String =
   fold[String](
     base = "nil",
-    step = (head, tail) => head + " :: " + tail
+    step = (head, tailString) => head + " :: " + tailString
   )
 ```
 
@@ -2101,7 +2090,7 @@ mkString(ints)
 
 ## Key takeaways
 
-Structural recursion generalises by:
+Structural recursion is generalised by:
 --
 
 * parameterising the base case.
@@ -2120,7 +2109,7 @@ class: center, middle
 
 ---
 
-## Abstracting over structure
+## Generalised folds
 
 ```scala
 def fold[A](
@@ -2128,8 +2117,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(curr: List): A =
-    curr match {
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -2160,8 +2149,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(curr: List): A =
-    curr match {
+  def loop(list: List): A =
+    list match {
       case `Cons(head, tail)` => step(head, loop(tail))
       case `Nil`              => base
     }
@@ -2264,8 +2253,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(curr: List): A =
-    curr match {
+  def loop(list: List): A =
+    list match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -2284,8 +2273,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(curr: List): A =
-    `curr` match {
+  def loop(list: List): A =
+    `list` match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -2304,8 +2293,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(curr: List): A =
-    `project(curr)` match {
+  def loop(list: List): A =
+    `project(list)` match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -2324,8 +2313,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case `Cons(head, tail)` => step(head, loop(tail))
       case Nil              => base
     }
@@ -2344,8 +2333,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case `Some((head, tail))` => step(head, loop(tail))
       case Nil                => base
     }
@@ -2364,8 +2353,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => step(head, loop(tail))
       case `Nil`                => base
     }
@@ -2384,8 +2373,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => step(head, loop(tail))
       case `None`               => base
     }
@@ -2404,8 +2393,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(curr: List): A =
-    `project`(curr) match {
+  def loop(list: List): A =
+    `project`(list) match {
       case Some((head, tail)) => step(head, loop(tail))
       case None               => base
     }
@@ -2425,8 +2414,8 @@ def fold[A](
   `project: List => Option[(Int, List)]`
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => step(head, loop(tail))
       case None               => base
     }
@@ -2446,8 +2435,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => step(head, loop(tail))
       case None               => base
     }
@@ -2496,8 +2485,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => step(head, loop(tail))
       case None               => base
     }
@@ -2637,8 +2626,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => step(head, loop(tail))
       case None               => base
     }
@@ -2657,8 +2646,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => step(head, loop(tail))
       case None               => base
     }
@@ -2677,8 +2666,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => `step(head, loop(tail))`
       case None               => base
     }
@@ -2697,8 +2686,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => `op(Some((head, loop(tail))))`
       case None               => base
     }
@@ -2717,8 +2706,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => op(Some((head, loop(tail))))
       case None               => `base`
     }
@@ -2737,8 +2726,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => op(Some((head, loop(tail))))
       case None               => `op(None)`
     }
@@ -2757,8 +2746,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => op(Some((head, loop(tail))))
       case None               => op(None)
     }
@@ -2774,7 +2763,7 @@ fold(op, project)(ints)
 
 ---
 
-## Abstracting over structure
+## Simplifying `base` and `step`
 
 .center[![Cata step 2](img/cata-2-hl-2.svg)]
 
@@ -2794,8 +2783,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    project(curr) match {
+  def loop(list: List): A =
+    project(list) match {
       case Some((head, tail)) => `op`(Some((head, loop(tail))))
       case None               => `op`(None)
     }
@@ -2814,8 +2803,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    `op`(project(curr) match {
+  def loop(list: List): A =
+    `op`(project(list) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     })
@@ -2834,8 +2823,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    `op`(project(curr) match {
+  def loop(list: List): A =
+    op(project(list) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     })
@@ -2851,26 +2840,26 @@ fold(op, project)(ints)
 
 ---
 
-## Simplifying `base` and `step`
+## Moving `op`
 
 .center[![Cata step 3](img/cata-3-hl-1.svg)]
 
 
 ---
 
-## Simplifying `base` and `step`
+## Moving `op`
 
 .center[![Cata step 4](img/cata-4-hl-1.svg)]
 
 ---
 
-## Simplifying `base` and `step`
+## Moving `op`
 
 .center[![Cata step 4](img/cata-4.svg)]
 
 ---
 
-## Simplifying `base` and `step`
+## Moving `op`
 
 .center[![Cata step 4](img/cata-4-hl-2.svg)]
 
@@ -2908,8 +2897,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(project(curr) match {
+  def loop(list: List): A =
+    op(project(list) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     })
@@ -2928,8 +2917,8 @@ def fold[A](
   project: List => `Option[(Int, List)]`
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(project(curr) match {
+  def loop(list: List): A =
+    op(project(list) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     })
@@ -2948,8 +2937,8 @@ def fold[A](
   project: List => `ListF[List]`
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(project(curr) match {
+  def loop(list: List): A =
+    op(project(list) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     })
@@ -2968,8 +2957,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(project(curr) match {
+  def loop(list: List): A =
+    op(project(list) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     })
@@ -3069,31 +3058,31 @@ val op: ListF[`String`] => String =
 
 ---
 
-## Moving `op`
+## Intermediate representation
 
 .center[![Cata step 5](img/cata-5.svg)]
 
 ---
 
-## Moving `op`
+## Generalising recursion
 
 .center[![Cata step 5](img/cata-5-hl-2.svg)]
 
 ---
 
-## Moving `op`
+## Generalising recursion
 
 .center[![Cata step 5](img/cata-5-hl-3.svg)]
 
 ---
 
-## Moving `op`
+## Generalising recursion
 
 .center[![Cata step 5](img/cata-5-hl-4.svg)]
 
 ---
 
-## Moving `op`
+## Generalising recursion
 
 .center[![Cata step 5](img/cata-5-hl-5.svg)]
 
@@ -3107,8 +3096,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(project(curr) match {
+  def loop(list: List): A =
+    op(project(list) match {
 *     case Some((head, tail)) => Some((head, loop(tail)))
 *     case None               => None
     })
@@ -3127,8 +3116,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(project(curr) match {
+  def loop(list: List): A =
+    op(project(list) match {
       case `Some((head, tail))` => Some((head, loop(tail)))
       case None               => None
     })
@@ -3147,8 +3136,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(project(curr) match {
+  def loop(list: List): A =
+    op(project(list) match {
       case Some((head, tail)) => `Some((head, loop(tail)))`
       case None               => None
     })
@@ -3167,8 +3156,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(project(curr) match {
+  def loop(list: List): A =
+    op(project(list) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case `None`               => None
     })
@@ -3187,8 +3176,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(project(curr) match {
+  def loop(list: List): A =
+    op(project(list) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => `None`
     })
@@ -3207,8 +3196,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-*   op(project(curr) match {
+  def loop(list: List): A =
+*   op(project(list) match {
 *     case Some((head, tail)) => Some((head, loop(tail)))
 *     case None               => None
 *   })
@@ -3227,14 +3216,14 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(project(curr) match {
+  def loop(list: List): A =
+    op(project(list) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     })
 
-* def recurse(curr: ListF[List]): ListF[A] =
-*   curr match {
+* def recurse(list: ListF[List]): ListF[A] =
+*   list match {
 *     case Some((head, tail)) => Some((head, loop(tail)))
 *     case None               => None
 *   }
@@ -3253,14 +3242,14 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-*   op(project(curr) match {
+  def loop(list: List): A =
+*   op(project(list) match {
 *     case Some((head, tail)) => Some((head, loop(tail)))
 *     case None               => None
 *   })
 
-  def recurse(curr: ListF[List]): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List]): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3279,11 +3268,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(`recurse`(project(curr)))
+  def loop(list: List): A =
+    op(`recurse`(project(list)))
 
-  def recurse(curr: ListF[List]): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List]): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3302,11 +3291,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr)))
+  def loop(list: List): A =
+    op(recurse(project(list)))
 
-  def recurse(curr: ListF[List]): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List]): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3325,11 +3314,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr)))
+  def loop(list: List): A =
+    op(recurse(project(list)))
 
-  def recurse(curr: `ListF[List]`): ListF[A] =
-    curr match {
+  def recurse(list: `ListF[List]`): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3348,11 +3337,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr)))
+  def loop(list: List): A =
+    op(recurse(project(list)))
 
-  def recurse(curr: ListF[List]): `ListF[A]` =
-    curr match {
+  def recurse(list: ListF[List]): `ListF[A]` =
+    list match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3371,11 +3360,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr)))
+  def loop(list: List): A =
+    op(recurse(project(list)))
 
-  def recurse(curr: ListF[List]): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List]): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, `loop(tail)`))
       case None               => None
     }
@@ -3394,11 +3383,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: `List`): A =
-    op(recurse(project(curr)))
+  def loop(list: `List`): A =
+    op(recurse(project(list)))
 
-  def recurse(curr: ListF[List]): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List]): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3417,11 +3406,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): `A` =
-    op(recurse(project(curr)))
+  def loop(list: List): `A` =
+    op(recurse(project(list)))
 
-  def recurse(curr: ListF[List]): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List]): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3440,11 +3429,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr)))
+  def loop(list: List): A =
+    op(recurse(project(list)))
 
-  def recurse(curr: ListF[List], `f: List => A`): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List], `f: List => A`): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3463,11 +3452,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr)))
+  def loop(list: List): A =
+    op(recurse(project(list)))
 
-  def recurse(curr: ListF[List], f: List => A): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List], f: List => A): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, `loop`(tail)))
       case None               => None
     }
@@ -3486,11 +3475,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr)))
+  def loop(list: List): A =
+    op(recurse(project(list)))
 
-  def recurse(curr: ListF[List], f: List => A): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List], f: List => A): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, `f`(tail)))
       case None               => None
     }
@@ -3509,11 +3498,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr), `loop`))
+  def loop(list: List): A =
+    op(recurse(project(list), `loop`))
 
-  def recurse(curr: ListF[List], f: List => A): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List], f: List => A): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
@@ -3532,11 +3521,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr), loop))
+  def loop(list: List): A =
+    op(recurse(project(list), loop))
 
-  def recurse(curr: ListF[List], f: List => A): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List], f: List => A): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
@@ -3555,11 +3544,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr), loop))
+  def loop(list: List): A =
+    op(recurse(project(list), loop))
 
-  def recurse(curr: `ListF[List]`, f: List => A): ListF[A] =
-    curr match {
+  def recurse(list: `ListF[List]`, f: List => A): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
@@ -3578,11 +3567,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr), loop))
+  def loop(list: List): A =
+    op(recurse(project(list), loop))
 
-  def recurse(curr: ListF[List], f: `List => A`): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List], f: `List => A`): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
@@ -3601,11 +3590,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr), loop))
+  def loop(list: List): A =
+    op(recurse(project(list), loop))
 
-  def recurse(curr: ListF[List], f: List => A): `ListF[A]` =
-    curr match {
+  def recurse(list: ListF[List], f: List => A): `ListF[A]` =
+    list match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
@@ -3704,6 +3693,20 @@ implicit val listFFunctor = new Functor[ListF] {
 
 ```scala
 implicit val listFFunctor = new `Functor[ListF]` {
+  override def map[A, B](list: ListF[A], f: A => B) =
+    list match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => None
+    }
+}
+```
+
+---
+
+## Functor
+
+```scala
+&#x200B;`implicit` val listFFunctor = new Functor[ListF] {
   override def map[A, B](list: ListF[A], f: A => B) =
     list match {
       case Some((head, tail)) => Some((head, f(tail)))
@@ -3860,6 +3863,20 @@ def fmap[F[_], A, B](
 def fmap[F[_], A, B](
   fa     : F[A],
   f      : A => B
+)(`implicit`
+  functor: Functor[F]
+): F[B] =
+  functor.map(fa, f)
+```
+
+---
+
+## Functor
+
+```scala
+def fmap[F[_], A, B](
+  fa     : F[A],
+  f      : A => B
 )(implicit
   functor: Functor[F]
 ): F[B] =
@@ -3876,11 +3893,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr), loop))
+  def loop(list: List): A =
+    op(recurse(project(list), loop))
 
-  def recurse(curr: ListF[List], f: List => A): ListF[A] =
-    curr match {
+  def recurse(list: ListF[List], f: List => A): ListF[A] =
+    list match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
@@ -3899,11 +3916,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr), loop))
+  def loop(list: List): A =
+    op(recurse(project(list), loop))
 
-  def recurse(curr: ListF[List], f: List => A): ListF[A] =
-*   curr match {
+  def recurse(list: ListF[List], f: List => A): ListF[A] =
+*   list match {
 *     case Some((head, tail)) => Some((head, f(tail)))
 *     case None               => None
 *   }
@@ -3922,31 +3939,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(recurse(project(curr), loop))
+  def loop(list: List): A =
+    op(recurse(project(list), loop))
 
-  def recurse(curr: ListF[List], f: List => A): ListF[A] =
-    `fmap(curr, f)`
-
-  loop
-}
-```
-
----
-
-## Using Functor
-
-```scala
-def fold[A](
-  op     : ListF[A] => A,
-  project: List => ListF[List]
-): List => A = {
-
-  def loop(curr: List): A =
-    op(`recurse`(project(curr), loop))
-
-  def recurse(curr: ListF[List], f: List => A): ListF[A] =
-    fmap(curr, f)
+  def recurse(list: ListF[List], f: List => A): ListF[A] =
+    `fmap(list, f)`
 
   loop
 }
@@ -3962,31 +3959,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(`fmap`(project(curr), loop))
+  def loop(list: List): A =
+    op(`recurse`(project(list), loop))
 
-  def recurse(curr: ListF[List], f: List => A): ListF[A] =
-    fmap(curr, f)
-
-  loop
-}
-```
-
----
-
-## Using Functor
-
-```scala
-def fold[A](
-  op     : ListF[A] => A,
-  project: List => ListF[List]
-): List => A = {
-
-  def loop(curr: List): A =
-    op(fmap(project(curr), loop))
-
-* def recurse(curr: ListF[List], f: List => A): ListF[A] =
-*   fmap(curr, f)
+  def recurse(list: ListF[List], f: List => A): ListF[A] =
+    fmap(list, f)
 
   loop
 }
@@ -4002,8 +3979,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(fmap(project(curr), loop))
+  def loop(list: List): A =
+    op(`fmap`(project(list), loop))
+
+  def recurse(list: ListF[List], f: List => A): ListF[A] =
+    fmap(list, f)
 
   loop
 }
@@ -4019,8 +3999,45 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(fmap(project(curr), loop))
+  def loop(list: List): A =
+    op(fmap(project(list), loop))
+
+* def recurse(list: ListF[List], f: List => A): ListF[A] =
+*   fmap(list, f)
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(list: List): A =
+    op(fmap(project(list), loop))
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(list: List): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4065,8 +4082,8 @@ def fold[A](
   project: List => `ListF`[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(fmap(project(curr), loop))
+  def loop(list: List): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4082,8 +4099,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(`fmap`(project(curr), loop))
+  def loop(list: List): A =
+    op(`fmap`(project(list), loop))
 
   loop
 }
@@ -4099,8 +4116,8 @@ def fold[`F[_]: Functor`, A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(fmap(project(curr), loop))
+  def loop(list: List): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4116,8 +4133,8 @@ def fold[F[_]: Functor, A](
   project: List => `ListF`[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(fmap(project(curr), loop))
+  def loop(list: List): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4133,8 +4150,8 @@ def fold[F[_]: Functor, A](
   project: List => `F`[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(fmap(project(curr), loop))
+  def loop(list: List): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4150,8 +4167,8 @@ def fold[F[_]: Functor, A](
   project: List => F[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(fmap(project(curr), loop))
+  def loop(list: List): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4196,8 +4213,8 @@ def fold[F[_]: Functor, A](
   project: `List` => F[`List`]
 ): `List` => A = {
 
-  def loop(curr: `List`): A =
-    op(fmap(project(curr), loop))
+  def loop(list: `List`): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4213,8 +4230,8 @@ def fold[F[_]: Functor, A, `B`](
   project: List => F[List]
 ): List => A = {
 
-  def loop(curr: List): A =
-    op(fmap(project(curr), loop))
+  def loop(list: List): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4230,8 +4247,8 @@ def fold[F[_]: Functor, A, B](
   project: `List` => F[`List`]
 ): `List` => A = {
 
-  def loop(curr: `List`): A =
-    op(fmap(project(curr), loop))
+  def loop(curr: `list`): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4247,8 +4264,8 @@ def fold[F[_]: Functor, A, B](
   project: `B` => F[`B`]
 ): `B` => A = {
 
-  def loop(curr: `B`): A =
-    op(fmap(project(curr), loop))
+  def loop(list: `B`): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4264,8 +4281,8 @@ def fold[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A =
-    op(fmap(project(curr), loop))
+  def loop(list: B): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4304,8 +4321,8 @@ def `fold`[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A =
-    op(fmap(project(curr), loop))
+  def loop(list: B): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4321,8 +4338,8 @@ def `cata`[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A =
-    op(fmap(project(curr), loop))
+  def loop(list: B): A =
+    op(fmap(project(list), loop))
 
   loop
 }
@@ -4338,8 +4355,8 @@ def cata[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A =
-    `op`(fmap(project(curr), loop))
+  def loop(list: B): A =
+    `op`(fmap(project(list), loop))
 
   loop
 }
@@ -4355,8 +4372,8 @@ def cata[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A =
-    `algebra`(fmap(project(curr), loop))
+  def loop(list: B): A =
+    `algebra`(fmap(project(list), loop))
 
   loop
 }
@@ -4372,8 +4389,8 @@ def cata[`F[_]: Functor`, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A =
-    algebra(fmap(project(curr), loop))
+  def loop(list: B): A =
+    algebra(fmap(project(list), loop))
 
   loop
 }
@@ -4389,8 +4406,8 @@ def cata[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A =
-    algebra(fmap(project(curr), loop))
+  def loop(list: B): A =
+    algebra(fmap(project(list), loop))
 
   loop
 }
@@ -4432,8 +4449,8 @@ cata(op, project).apply(ints)
 ```scala
 val productAlgebra: ListF[Int] => Int =
   _ match {
-    case Some((head, tail)) => head * tail
-    case None               => 1
+    case Some((head, tailProduct)) => head * tailProduct
+    case None                      => 1
   }
 
 val product: List => Int =
@@ -4447,8 +4464,8 @@ val product: List => Int =
 ```scala
 val `productAlgebra`: ListF[Int] => Int =
   _ match {
-    case Some((head, tail)) => head * tail
-    case None               => 1
+    case Some((head, tailProduct)) => head * tailProduct
+    case None                      => 1
   }
 
 val product: List => Int =
@@ -4462,8 +4479,8 @@ val product: List => Int =
 ```scala
 val productAlgebra: `ListF[Int] => Int` =
   _ match {
-    case Some((head, tail)) => head * tail
-    case None               => 1
+    case Some((head, tailProduct)) => head * tailProduct
+    case None                      => 1
   }
 
 val product: List => Int =
@@ -4477,8 +4494,8 @@ val product: List => Int =
 ```scala
 val productAlgebra: ListF[Int] => Int =
   _ match {
-    case `Some((head, tail))` => head * tail
-    case None               => 1
+    case `Some((head, tailProduct))` => head * tailProduct
+    case None                      => 1
   }
 
 val product: List => Int =
@@ -4492,8 +4509,8 @@ val product: List => Int =
 ```scala
 val productAlgebra: ListF[Int] => Int =
   _ match {
-    case Some((head, tail)) => `head * tail`
-    case None               => 1
+    case Some((head, tailProduct)) => `head * tailProduct`
+    case None                      => 1
   }
 
 val product: List => Int =
@@ -4507,8 +4524,8 @@ val product: List => Int =
 ```scala
 val productAlgebra: ListF[Int] => Int =
   _ match {
-    case Some((head, tail)) => head * tail
-    case `None`               => 1
+    case Some((head, tailProduct)) => head * tailProduct
+    case `None`                      => 1
   }
 
 val product: List => Int =
@@ -4522,8 +4539,8 @@ val product: List => Int =
 ```scala
 val productAlgebra: ListF[Int] => Int =
   _ match {
-    case Some((head, tail)) => head * tail
-    case None               => `1`
+    case Some((head, tailProduct)) => head * tailProduct
+    case None                      => `1`
   }
 
 val product: List => Int =
@@ -4537,8 +4554,8 @@ val product: List => Int =
 ```scala
 val productAlgebra: ListF[Int] => Int =
   _ match {
-    case Some((head, tail)) => head * tail
-    case None               => 1
+    case Some((head, tailProduct)) => head * tailProduct
+    case None                      => 1
   }
 
 val product: List => Int =
@@ -4552,8 +4569,8 @@ val product: List => Int =
 ```scala
 val productAlgebra: ListF[Int] => Int =
   _ match {
-    case Some((head, tail)) => head * tail
-    case None               => 1
+    case Some((head, tailProduct)) => head * tailProduct
+    case None                      => 1
   }
 
 val product: List => Int =
@@ -4572,8 +4589,8 @@ product(ints)
 ```scala
 val mkStringAlgebra: ListF[String] => String =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-    case None               => "nil"
+    case Some((head, tailString)) => head + " :: " + tailString
+    case None                     => "nil"
   }
 
 val mkString: List => String =
@@ -4587,8 +4604,8 @@ val mkString: List => String =
 ```scala
 val `mkStringAlgebra`: ListF[String] => String =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-    case None               => "nil"
+    case Some((head, tailString)) => head + " :: " + tailString
+    case None                     => "nil"
   }
 
 val mkString: List => String =
@@ -4603,8 +4620,8 @@ val mkString: List => String =
 ```scala
 val mkStringAlgebra: `ListF[String] => String` =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-    case None               => "nil"
+    case Some((head, tailString)) => head + " :: " + tailString
+    case None                     => "nil"
   }
 
 val mkString: List => String =
@@ -4618,8 +4635,8 @@ val mkString: List => String =
 ```scala
 val mkStringAlgebra: ListF[String] => String =
   _ match {
-    case `Some((head, tail))` => head + " :: " + tail
-    case None               => "nil"
+    case `Some((head, tailString))` => head + " :: " + tailString
+    case None                     => "nil"
   }
 
 val mkString: List => String =
@@ -4633,8 +4650,8 @@ val mkString: List => String =
 ```scala
 val mkStringAlgebra: ListF[String] => String =
   _ match {
-    case Some((head, tail)) => `head + " :: " + tail`
-    case None               => "nil"
+    case Some((head, tailString)) => `head + " :: " + tailString`
+    case None                     => "nil"
   }
 
 val mkString: List => String =
@@ -4648,8 +4665,8 @@ val mkString: List => String =
 ```scala
 val mkStringAlgebra: ListF[String] => String =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-    case `None`               => "nil"
+    case Some((head, tailString)) => head + " :: " + tailString
+    case `None`                     => "nil"
   }
 
 val mkString: List => String =
@@ -4663,8 +4680,8 @@ val mkString: List => String =
 ```scala
 val mkStringAlgebra: ListF[String] => String =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-    case None               => `"nil"`
+    case Some((head, tailString)) => head + " :: " + tailString
+    case None                     => `"nil"`
   }
 
 val mkString: List => String =
@@ -4678,8 +4695,8 @@ val mkString: List => String =
 ```scala
 val mkStringAlgebra: ListF[String] => String =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-    case None               => "nil"
+    case Some((head, tailString)) => head + " :: " + tailString
+    case None                     => "nil"
   }
 
 val mkString: List => String =
@@ -4693,8 +4710,8 @@ val mkString: List => String =
 ```scala
 val mkStringAlgebra: ListF[String] => String =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-    case None               => "nil"
+    case Some((head, tailString)) => head + " :: " + tailString
+    case None                     => "nil"
   }
 
 val mkString: List => String =
@@ -5307,18 +5324,6 @@ case object LeafF extends TreeF[Nothing]
 
 ## Pattern functor
 
-.center[![Tree catamorphism](img/cata-tree-8.svg)]
-
----
-
-## Pattern functor
-
-.center[![Tree catamorphism](img/cata-tree-9.svg)]
-
----
-
-## Pattern functor
-
 .center[![Tree catamorphism](img/cata-tree-10.svg)]
 
 ---
@@ -5338,6 +5343,19 @@ def projectTree: Tree => TreeF[Tree] =
     case Leaf          => LeafF
   }
 ```
+
+---
+
+## Projection
+
+```scala
+def `projectTree`: Tree => TreeF[Tree] =
+  _ match {
+    case Node(l, v ,r) => NodeF(l, v, r)
+    case Leaf          => LeafF
+  }
+```
+
 
 ---
 
@@ -5920,6 +5938,21 @@ val fixedInts: FixedList =
 
 ---
 
+## `List` in terms of `Fix`
+
+```scala
+val fixedInts: FixedList =
+  `Fix[ListF](Some((`1`,`
+    `Fix[ListF](Some((`2`,`
+      `Fix[ListF](Some((`3`,`
+        `Fix[ListF](None)`
+      `)))`
+    `)))`
+  `)))`
+```
+
+---
+
 ## `Tree` in terms of `TreeF`
 
 ```scala
@@ -5986,8 +6019,8 @@ def cata[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A =
-    algebra(fmap(project(curr), loop))
+  def loop(list: B): A =
+    algebra(fmap(project(list), loop))
 
   loop
 }
@@ -6003,8 +6036,8 @@ def `cata`[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A =
-    algebra(fmap(project(curr), loop))
+  def loop(list: B): A =
+    algebra(fmap(project(list), loop))
 
   loop
 }
@@ -6020,8 +6053,8 @@ def `cataFix`[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A =
-    algebra(fmap(project(curr), loop))
+  def loop(list: B): A =
+    algebra(fmap(project(list), loop))
 
   loop
 }
@@ -6037,8 +6070,8 @@ def cataFix[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(curr: B): A =
-    algebra(fmap(project(curr), loop))
+  def loop(list: B): A =
+    algebra(fmap(project(list), loop))
 
   loop
 }
@@ -6066,8 +6099,8 @@ def cataFix[F[_]: Functor, A, `B`](
   project: `B` => F[`B`]
 ): `B` => A = {
 
-  def loop(curr: `B`): A =
-    algebra(fmap(project(curr), loop))
+  def loop(list: `B`): A =
+    algebra(fmap(project(list), loop))
 
   loop
 }
@@ -6083,8 +6116,8 @@ def cataFix[F[_]: Functor, A](
   project: `Fix[F]` => F[`Fix[F]`]
 ): `Fix[F]` => A = {
 
-  def loop(curr: `Fix[F]`): A =
-    algebra(fmap(project(curr), loop))
+  def loop(list: `Fix[F]`): A =
+    algebra(fmap(project(list), loop))
 
   loop
 }
@@ -6100,8 +6133,8 @@ def cataFix[F[_]: Functor, A](
   project: Fix[F] => F[Fix[F]]
 ): Fix[F] => A = {
 
-  def loop(curr: Fix[F]): A =
-    algebra(fmap(project(curr), loop))
+  def loop(list: Fix[F]): A =
+    algebra(fmap(project(list), loop))
 
   loop
 }
@@ -6427,8 +6460,8 @@ def cataFix[F[_]: Functor, A](
   project: Fix[F] => F[Fix[F]]
 ): Fix[F] => A = {
 
-  def loop(curr: Fix[F]): A =
-    algebra(fmap(project(curr), loop))
+  def loop(list: Fix[F]): A =
+    algebra(fmap(project(list), loop))
 
   loop
 }
@@ -6444,8 +6477,8 @@ def cataFix[F[_]: Functor, A](
   project: Fix[F] => F[Fix[F]]
 ): Fix[F] => A = {
 
-  def loop(curr: Fix[F]): A =
-    algebra(fmap(`project(curr)`, loop))
+  def loop(list: Fix[F]): A =
+    algebra(fmap(`project(list)`, loop))
 
   loop
 }
@@ -6461,8 +6494,8 @@ def cataFix[F[_]: Functor, A](
   project: Fix[F] => F[Fix[F]]
 ): Fix[F] => A = {
 
-  def loop(curr: Fix[F]): A =
-    algebra(fmap(`curr.value`, loop))
+  def loop(list: Fix[F]): A =
+    algebra(fmap(`list.value`, loop))
 
   loop
 }
@@ -6478,8 +6511,8 @@ def cataFix[F[_]: Functor, A](
   `project: Fix[F] => F[Fix[F]]`
 ): Fix[F] => A = {
 
-  def loop(curr: Fix[F]): A =
-    algebra(fmap(curr.value, loop))
+  def loop(list: Fix[F]): A =
+    algebra(fmap(list.value, loop))
 
   loop
 }
@@ -6494,8 +6527,8 @@ def cataFix[F[_]: Functor, A](
   algebra: F[A] => A
 ): Fix[F] => A = {
 
-  def loop(curr: Fix[F]): A =
-    algebra(fmap(curr.value, loop))
+  def loop(list: Fix[F]): A =
+    algebra(fmap(list.value, loop))
 
   loop
 }
@@ -6614,7 +6647,7 @@ val heightFix: FixedTree => Int =
 val heightFix: FixedTree => Int =
   `cataFix(heightAlgebra)`
 ```
-
+3
 ---
 
 ## `height` in terms of `cataFix`
@@ -6706,7 +6739,7 @@ class: center, middle
 
 ---
 
-## Creating lists
+## Creating ranges
 
 ```scala
 def range(
@@ -6718,10 +6751,27 @@ def range(
 ```
 
 ```scala
-mkString(
-  range(3)
-)
+mkString(range(3))
 // res26: String = 3 :: 2 :: 1 :: nil
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else Nil
+}
+```
+
+```scala
+mkString(charCodes("foobar"))
+// res27: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -6732,94 +6782,482 @@ class: center, middle
 
 ---
 
-## Generalising `range`
+## Generalising `charCodes`
 
 ```scala
-def range(
-  from: Int
+def charCodes(
+  from: String
 ): List = {
-  if(from > 0) Cons(from, range(from - 1))
-  else         Nil
-}
-```
-
----
-
-## Generalising `range`
-
-```scala
-def recurse(
-  from: Int
-): List = {
-  if(from > 0) Cons(from, recurse(from - 1))
-  else         Nil
-}
-```
-
----
-
-## Generalising `range`
-
-```scala
-def recurse(
-  from     : Int,
-  predicate: Int => Boolean
-): List = {
-  if(predicate(from)) Cons(from, recurse(from - 1, predicate))
-  else                Nil
-}
-```
-
----
-
-## Generalising `range`
-
-```scala
-def recurse(
-  from     : Int,
-  update   : Int => (Int, Int),
-  predicate: Int => Boolean
-): List = {
-  if(predicate(from))  {
-    val (state, next) = update(from)
-    Cons(state, recurse(next, update, predicate))
-  }
+  if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(from.tail))
   else Nil
 }
 ```
 
 ---
 
-## Generalising `range`
+## Generalising `charCodes`
 
 ```scala
-def recurse[A](
-  from     : A,
-  update   : A => (Int, A),
-  predicate: A => Boolean
+def `charCodes`(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, `charCodes`(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Generalising `charCodes`
+
+```scala
+def `recurse`(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, `recurse`(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Generalising `charCodes`
+
+```scala
+def recurse(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+
+```scala
+mkString(recurse("foobar"))
+// res28: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-1.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-2.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-3.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-4.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-5.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-6.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-7.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-8.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-9.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init.svg)]
+
+---
+
+## Generalising the predicate
+
+.center[![Linked List](img/unfold-predicate-before.svg)]
+
+---
+
+## Generalising the predicate
+
+```scala
+def recurse(
+  from: String
+): List = {
+  if(`from.nonEmpty`)
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Generalising the predicate
+
+```scala
+def recurse(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+
+```scala
+*def predicate(from: String): Boolean =
+* from.nonEmpty
+```
+
+---
+
+## Generalising the predicate
+
+```scala
+def recurse(
+  from: String
+): List = {
+  if(`from.nonEmpty`)
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+
+```scala
+def predicate(from: String): Boolean =
+  from.nonEmpty
+```
+
+---
+
+## Generalising the predicate
+
+```scala
+def recurse(
+  from: String
+): List = {
+  if(`predicate(from)`)
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+
+```scala
+def predicate(from: String): Boolean =
+  from.nonEmpty
+```
+
+---
+
+## Generalising the predicate
+
+```scala
+def recurse(
+  `predicate: String => Boolean`,
+  from     : String
+): List = {
+  if(predicate(from))
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Generalising the predicate
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from))
+    Cons(from.head.toInt, recurse(`predicate`, from.tail))
+  else Nil
+}
+```
+
+---
+
+## Generalising the predicate
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from))
+    Cons(from.head.toInt, recurse(predicate, from.tail))
+  else Nil
+}
+```
+
+```scala
+mkString(recurse(predicate, "foobar"))
+// res29: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Generalising the predicate
+
+.center[![Linked List](img/unfold-predicate-before.svg)]
+
+---
+
+## Generalising the predicate
+
+.center[![Linked List](img/unfold-predicate-before-2.svg)]
+
+---
+
+## Generalising the predicate
+
+.center[![Linked List](img/unfold-predicate.svg)]
+
+---
+
+## Generalising the update
+
+.center[![Linked List](img/unfold-update-before.svg)]
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from))
+    Cons(`from.head.toInt`, recurse(predicate, `from.tail`))
+  else Nil
+}
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from))
+    Cons(from.head.toInt, recurse(predicate, from.tail))
+  else Nil
+}
+```
+
+```scala
+*def update(from: String): (Int, String) =
+* (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from))
+    `Cons(from.head.toInt, recurse(predicate, from.tail))`
+  else Nil
+}
+```
+
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
 ): List = {
   if(predicate(from)) {
-    val (state, next) = update(from)
-    Cons(state, recurse(next, update, predicate))
+*   val (head, nextState) = update(from)
+*   Cons(head, recurse(predicate, nextState))
   }
   else Nil
 }
 ```
 
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
 ---
 
-## Generalising `range`
+## Generalising the update
 
 ```scala
-def recurse[A](
-  update   : A => (Int, A),
-  predicate: A => Boolean
-)(
-  from    : A
+def recurse(
+  predicate: String => Boolean,
+  from     : String
 ): List = {
   if(predicate(from)) {
-    val (state, next) = update(from)
-    Cons(state, recurse(update, predicate)(next))
+    val (head, nextState) = `update(from)`
+    Cons(head, recurse(predicate, nextState))
+  }
+  else Nil
+}
+```
+
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val `(head, nextState)` = update(from)
+    Cons(head, recurse(predicate, nextState))
+  }
+  else Nil
+}
+```
+
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(`head`, recurse(predicate, nextState))
+  }
+  else Nil
+}
+```
+
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, `nextState`))
+  }
+  else Nil
+}
+```
+
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = `update`(from)
+    Cons(head, recurse(predicate, nextState))
+  }
+  else Nil
+}
+```
+
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  `update   : String => (Int, String)`,
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, nextState))
   }
   else Nil
 }
@@ -6827,20 +7265,289 @@ def recurse[A](
 
 ---
 
-## Generalising `range`
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  update   : String => (Int, String),
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, `update`, nextState))
+  }
+  else Nil
+}
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  update   : String => (Int, String),
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, update, nextState))
+  }
+  else Nil
+}
+```
+
+```scala
+mkString(recurse(predicate, update, "foobar"))
+// res30: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Generalising the update
+
+.center[![Linked List](img/unfold-update-before.svg)]
+
+---
+
+## Generalising the update
+
+.center[![Linked List](img/unfold-update-before-2.svg)]
+
+---
+
+## Generalising the update
+
+.center[![Linked List](img/unfold-update.svg)]
+
+---
+
+## Generalising the input
+
+.center[![Linked List](img/unfold-input-before.svg)]
+
+---
+
+## Generalising the input type
+
+```scala
+def recurse(
+  predicate: `String` => Boolean,
+  update   : `String` => (Int, `String`),
+  from     : `String`
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, update, nextState))
+  }
+  else Nil
+}
+```
+
+---
+
+## Generalising the input type
+
+```scala
+def recurse[`A`](
+  predicate: `A` => Boolean,
+  update   : `A` => (Int, `A`),
+  from     : `A`
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, update, nextState))
+  }
+  else Nil
+}
+```
+
+---
+
+## Generalising the input type
 
 ```scala
 def recurse[A](
+  predicate: A => Boolean,
   update   : A => (Int, A),
-  predicate: A => Boolean
-)(
-  from    : A
+  from     : A
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, update, nextState))
+  }
+  else Nil
+}
+```
+
+```scala
+mkString(recurse(predicate, update, "foobar"))
+// res31: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Generalising the input
+
+.center[![Linked List](img/unfold-input-before.svg)]
+
+---
+
+## Generalising the input
+
+.center[![Linked List](img/unfold-input-before-2.svg)]
+
+---
+
+## Generalising the input
+
+.center[![Linked List](img/unfold-input.svg)]
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  `predicate`: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(`predicate`, update, nextState))
+  }
+  else Nil
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  `update`   : A => (Int, A),
+  from     : A
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, `update`, nextState))
+  }
+  else Nil
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+* if(predicate(from)) {
+*   val (head, nextState) = update(from)
+*   Cons(head, recurse(predicate, update, nextState))
+* }
+* else Nil
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
 ): List = {
 
-  def loop(curr: A): List =
-    if(predicate(curr)) {
-      val (state, next) = update(curr)
-      Cons(state, loop(next))
+* def loop(state: A): List =
+*   if(predicate(state)) {
+*     val (head, nextState) = update(state)
+*     Cons(head, recurse(predicate, update, nextState))
+*   }
+*   else Nil
+
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(`predicate`, update, nextState))
+  }
+  else Nil
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, recurse(predicate, update, nextState))
+    }
+    else Nil
+
+* if(predicate(from)) {
+*   val (head, nextState) = update(from)
+*   Cons(head, recurse(predicate, update, nextState))
+* }
+* else Nil
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, recurse(predicate, update, nextState))
+    }
+    else Nil
+
+* loop(from)
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, `recurse(predicate, update, nextState)`)
     }
     else Nil
 
@@ -6850,25 +7557,292 @@ def recurse[A](
 
 ---
 
-## Generalising `range`
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, `loop(nextState)`)
+    }
+    else Nil
+
+  loop(from)
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop(from)
+}
+```
+
+---
+
+## Simplifying the step
+
+.center[![Linked List](img/unfold-loop-before.svg)]
+
+---
+
+## Simplifying the step
+
+.center[![Linked List](img/unfold-loop-before-hl-1.svg)]
+
+---
+
+## Simplifying the step
+
+.center[![Linked List](img/unfold-loop-before-2.svg)]
+
+
+---
+
+## Simplifying the step
+
+.center[![Linked List](img/unfold-loop.svg)]
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  `from     : A`
+): List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop(`from`)
+}
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): List = {
+
+  def loop(state: `A`): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): List = {
+
+  def loop(state: A): `List` =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): `List` = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): `A => List` = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): A => List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+```scala
+mkString(recurse(predicate, update)("foobar"))
+// res32: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Naming things
+
+```scala
+def `recurse`[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): A => List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+---
+
+## Naming things
+
+```scala
+def `unfold`[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): A => List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+---
+
+## Naming things
 
 ```scala
 def unfold[A](
-  update   : A => (Int, A),
-  predicate: A => Boolean
-)(
-  from    : A
-): List = {
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): A => List = {
 
-  def loop(curr: A): List =
-    if(predicate(curr)) {
-      val (state, next) = update(curr)
-      Cons(state, loop(next))
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
     }
     else Nil
 
-  loop(from)
+  loop
 }
+```
+
+```scala
+mkString(unfold(predicate, update)("foobar"))
+// res33: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -6877,60 +7851,167 @@ def unfold[A](
 
 ```scala
 val range: Int => List =
-  unfold(
-    update    = (a: Int) => (a, a - 1),
-    predicate = (a: Int) => a > 0
+  unfold[Int](
+    predicate = a => a > 0,
+    update    = a => (a, a - 1)
+  )
+```
+
+---
+
+## `range` as an unfold
+
+```scala
+val range: Int => List =
+  `unfold`[Int](
+    predicate = a => a > 0,
+    update    = a => (a, a - 1)
+  )
+```
+
+---
+
+## `range` as an unfold
+
+```scala
+val range: Int => List =
+  unfold[Int](
+    `predicate = a => a > 0`,
+    update    = a => (a, a - 1)
+  )
+```
+
+---
+
+## `range` as an unfold
+
+```scala
+val range: Int => List =
+  unfold[Int](
+    predicate = a => a > 0,
+    `update    = a => (a, a - 1)`
+  )
+```
+
+
+---
+
+## `range` as an unfold
+
+```scala
+val range: Int => List =
+  unfold[Int](
+    predicate = a => a > 0,
+    update    = a => (a, a - 1)
   )
 ```
 
 ```scala
 mkString(range(3))
-// res27: String = 3 :: 2 :: 1 :: nil
+// res34: String = 3 :: 2 :: 1 :: nil
 ```
+
+---
+
+## `charCodes` as an unfold
+
+```scala
+val charCodes: String => List =
+  unfold[String](
+    predicate = s => s.nonEmpty,
+    update    = s => (s.head.toInt, s.tail)
+  )
+```
+
+
+---
+
+## `charCodes` as an unfold
+
+```scala
+val charCodes: String => List =
+  `unfold`[String](
+    predicate = s => s.nonEmpty,
+    update    = s => (s.head.toInt, s.tail)
+  )
+```
+
+---
+
+## `charCodes` as an unfold
+
+```scala
+val charCodes: String => List =
+  unfold[String](
+    `predicate = s => s.nonEmpty`,
+    update    = s => (s.head.toInt, s.tail)
+  )
+```
+
+---
+
+## `charCodes` as an unfold
+
+```scala
+val charCodes: String => List =
+  unfold[String](
+    predicate = s => s.nonEmpty,
+    `update    = s => (s.head.toInt, s.tail)`
+  )
+```
+
+---
+
+## `charCodes` as an unfold
+
+```scala
+val charCodes: String => List =
+  unfold[String](
+    predicate = s => s.nonEmpty,
+    update    = s => (s.head.toInt, s.tail)
+  )
+```
+
+```scala
+mkString(charCodes("foobar"))
+// res35: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Key takeaways
+
+Generative recursion is generalised by:
+--
+
+* parameterising the predicate.
+--
+
+* parameterising the state update.
+--
+
+* ... knowing the structure of your type.
 
 ---
 
 class: center, middle
 
-# Generalised unfold
+# Generalised unfolds
 
 ---
 
-## Generalising `unfold`
+## Generalised unfolds
 
 ```scala
 def unfold[A](
-  update   : A => (Int, A),
-  predicate: A => Boolean
-)(
-  start    : A
-): List = {
-
-  def loop(curr: A): List =
-    if(predicate(curr)) {
-      val (state, next) = update(curr)
-      Cons(state, loop(next))
-    }
-    else Nil
-
-  loop(start)
-}
-```
-
----
-
-## Generalising `unfold`
-
-```scala
-def unfold[A](
-  update   : A => (Int, A),
-  predicate: A => Boolean
+  predicate: A => Boolean,
+  update   : A => (Int, A)
 ): A => List = {
 
-  def loop(curr: A): List =
-    if(predicate(curr)) {
-      val (state, next) = update(curr)
-      Cons(state, loop(next))
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
     }
     else Nil
 
@@ -6940,36 +8021,197 @@ def unfold[A](
 
 ---
 
-## Generalising `unfold`
+## Generalised unfolds
+
+.center[![Linked List](img/ana-init.svg)]
+
+---
+
+## Simplifying `predicate` and `update`
+
+.center[![Linked List](img/ana-op-before.svg)]
+
+---
+
+## Simplifying `predicate` and `update`
 
 ```scala
 def unfold[A](
-  update: A => Option[(Int, A)]
+  `predicate: A => Boolean`,
+  `update   : A => (Int, A)`
 ): A => List = {
 
-  def loop(curr: A): List = update(curr) match {
-    case Some((head, state)) => Cons(head, loop(state))
-    case None                => Nil
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+    if(predicate(state)) Some(update(state))
+    else                 None
   }
-
-  loop
-}
 ```
 
 ---
 
-## Generalising `unfold`
+## Simplifying `predicate` and `update`
+
+```scala
+val `op`: String => Option[(Int, String)] =
+  state => {
+    if(predicate(state)) Some(update(state))
+    else                 None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: `String => Option[(Int, String)]` =
+  state => {
+    if(predicate(state)) Some(update(state))
+    else                 None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+    if(`predicate(state)`) Some(update(state))
+    else                 None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+    if(`state.nonEmpty`) Some(update(state))
+    else               None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+    if(state.nonEmpty) `Some(update(state))`
+    else               None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+    if(state.nonEmpty) Some(`update(state)`)
+    else               None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+    if(state.nonEmpty) Some(`(state.head.toInt, state.tail)`)
+    else               None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+    if(state.nonEmpty) Some((state.head.toInt, state.tail))
+    else               `None`
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => `Option[(Int, String)]` =
+  state => {
+    if(state.nonEmpty) Some((state.head.toInt, state.tail))
+    else               None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => `ListF[String]` =
+  state => {
+    if(state.nonEmpty) Some((state.head.toInt, state.tail))
+    else               None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => ListF[String] =
+  state => {
+    if(state.nonEmpty) Some((state.head.toInt, state.tail))
+    else               None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
 
 ```scala
 def unfold[A](
-  update: A => Option[(Int, A)],
-  embed : Option[(Int, List)] => List
+  `predicate: A => Boolean`,
+  `update   : A => (Int, A)`
 ): A => List = {
 
-  def loop(curr: A): List = embed(update(curr) match {
-    case Some((head, state)) => Some((head, loop(state)))
-    case None                => None
-  })
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
 
   loop
 }
@@ -6977,10 +8219,231 @@ def unfold[A](
 
 ---
 
-## Generalising `unfold`
+## Simplifying `predicate` and `update`
 
 ```scala
-val embedList: Option[(Int, List)] => List =
+def unfold[A](
+  `op: A => ListF[A]`
+): A => List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+*   if(predicate(state)) {
+*     val (head, nextState) = update(state)
+*     Cons(head, loop(nextState))
+*   }
+*   else Nil
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+*   op(state) match {
+*     case Some((head, state)) => Cons(head, loop(state))
+*     case None                => Nil
+*   }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    `op(state)` match {
+      case Some((head, state)) => Cons(head, loop(state))
+      case None                => Nil
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case `Some((head, state))` => Cons(head, loop(state))
+      case None                => Nil
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => `Cons(head, loop(state))`
+      case None                => Nil
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => Cons(head, loop(state))
+      case `None`                => Nil
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => Cons(head, loop(state))
+      case None                => `Nil`
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => Cons(head, loop(state))
+      case None                => Nil
+    }
+
+  loop
+}
+```
+
+```scala
+mkString(unfold(op)("foobar"))
+// res36: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+.center[![Linked List](img/ana-op-before.svg)]
+
+---
+
+## Simplifying `predicate` and `update`
+
+.center[![Linked List](img/ana-op-hl-1.svg)]
+
+---
+
+## Simplifying `predicate` and `update`
+
+.center[![Linked List](img/ana-op.svg)]
+
+---
+
+## Abstracting over structure
+
+.center[![Linked List](img/ana-embed-before.svg)]
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => `Cons(head, loop(state))`
+      case None                => `Nil`
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: Option[(Int, List)] => List =
   _ match {
     case Some((head, tail)) => Cons(head, tail)
     case None               => Nil
@@ -6989,29 +8452,10 @@ val embedList: Option[(Int, List)] => List =
 
 ---
 
-## Generalising `unfold`
+## Abstracting over structure
 
 ```scala
-def unfold[A](
-  update: A => ListF[A],
-  embed : ListF[List] => List
-): A => List = {
-
-  def loop(curr: A): List = embed(update(curr) match {
-    case Some((head, state)) => Some((head, loop(state)))
-    case None                => None
-  })
-
-  loop
-}
-```
-
----
-
-## Generalising `unfold`
-
-```scala
-val embedList: ListF[List] => List =
+val `embed`: Option[(Int, List)] => List =
   _ match {
     case Some((head, tail)) => Cons(head, tail)
     case None               => Nil
@@ -7020,16 +8464,135 @@ val embedList: ListF[List] => List =
 
 ---
 
-## Generalising `unfold`
+## Abstracting over structure
+
+```scala
+val embed: `Option[(Int, List)] => List` =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case None               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: Option[(Int, List)] => List =
+  _ match {
+    case `Some((head, tail))` => Cons(head, tail)
+    case None               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: Option[(Int, List)] => List =
+  _ match {
+    case Some((head, tail)) => `Cons(head, tail)`
+    case None               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: Option[(Int, List)] => List =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case `None`               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: Option[(Int, List)] => List =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case None               => `Nil`
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: `Option[(Int, List)]` => List =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case None               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: `ListF[List]` => List =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case None               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: ListF[List] => List =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case None               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
 
 ```scala
 def unfold[A](
-  update: A => ListF[A],
-  embed : ListF[List] => List
+  op   : A => ListF[A]
 ): A => List = {
 
-  def loop(curr: A): List =
-    embed(fmap(update(curr), loop))
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => Cons(head, loop(state))
+      case None                => Nil
+    }
+
+  loop
+}
+```
+
+
+---
+
+## Abstracting over structure
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  `embed: ListF[List] => List`
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => Cons(head, loop(state))
+      case None                => Nil
+    }
 
   loop
 }
@@ -7037,16 +8600,401 @@ def unfold[A](
 
 ---
 
-## Generalising `unfold`
+## Abstracting over structure
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+*   op(state) match {
+*     case Some((head, state)) => Cons(head, loop(state))
+*     case None                => Nil
+*   }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    `embed`(op(state) match {
+      case Some((head, state)) => Cons(head, loop(state))
+      case None                => Nil
+    })
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case Some((head, state)) => `Cons(head, loop(state))`
+      case None                => Nil
+    })
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case Some((head, state)) => `Some((head, loop(state)))`
+      case None                => Nil
+    })
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case Some((head, state)) => Some((head, loop(state)))
+      case None                => `Nil`
+    })
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case Some((head, state)) => Some((head, loop(state)))
+      case None                => `None`
+    })
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case Some((head, state)) => Some((head, loop(state)))
+      case None                => None
+    })
+
+  loop
+}
+```
+
+```scala
+mkString(unfold(op, embed)("foobar"))
+// res37: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Abstracting over structure
+
+.center[![Linked List](img/ana-embed-before.svg)]
+
+---
+
+## Abstracting over structure
+
+.center[![Linked List](img/ana-embed-hl-1.svg)]
+
+---
+
+## Abstracting over structure
+
+.center[![Linked List](img/ana-embed.svg)]
+
+---
+
+## Using Functor
+
+.center[![Linked List](img/ana-functor-before.svg)]
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+*   embed(op(state) match {
+*     case Some((head, state)) => Some((head, loop(state)))
+*     case None                => None
+*   })
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case `Some((head, state))` => Some((head, loop(state)))
+      case None                => None
+    })
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case Some((head, state)) => `Some((head, loop(state)))`
+      case None                => None
+    })
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case Some((head, state)) => Some((head, loop(state)))
+      case `None`                => None
+    })
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case Some((head, state)) => Some((head, loop(state)))
+      case None                => `None`
+    })
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(`fmap(op(state), loop)`)
+
+  loop
+}
+```
+
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(fmap(op(state), loop))
+
+  loop
+}
+```
+
+```scala
+mkString(unfold(op, embed)("foobar"))
+// res38: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Using Functor
+
+.center[![Linked List](img/ana-functor-before.svg)]
+
+---
+
+## Using Functor
+
+.center[![Linked List](img/ana-functor-hl-1.svg)]
+
+
+---
+
+## Using Functor
+
+.center[![Linked List](img/ana-functor.svg)]
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Linked List](img/ana-listf-before.svg)]
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def unfold[A](
+  op   : A => `ListF`[A],
+  embed: `ListF`[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(fmap(op(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(`fmap`(op(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def unfold[`F[_]: Functor`, A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(fmap(op(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `ListF`
 
 ```scala
 def unfold[F[_]: Functor, A](
-  update: A => F[A],
-  embed : F[List] => List
+  op   : A => `ListF`[A],
+  embed: `ListF`[List] => List
 ): A => List = {
 
-  def loop(curr: A): List =
-    embed(fmap(update(curr), loop))
+  def loop(state: A): List =
+    embed(fmap(op(state), loop))
 
   loop
 }
@@ -7054,16 +9002,114 @@ def unfold[F[_]: Functor, A](
 
 ---
 
-## Generalising `unfold`
+## Abstracting over `ListF`
+
+```scala
+def unfold[F[_]: Functor, A](
+  op   : A => `F`[A],
+  embed: `F`[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(fmap(op(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def unfold[F[_]: Functor, A](
+  op   : A => F[A],
+  embed: F[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(fmap(op(state), loop))
+
+  loop
+}
+```
+
+```scala
+mkString(unfold(op, embed).apply("foobar"))
+// res39: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Linked List](img/ana-listf-before.svg)]
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Linked List](img/ana-listf-hl-1.svg)]
+
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Linked List](img/ana-listf.svg)]
+
+---
+
+## Abstracting over `List`
+
+.center[![Linked List](img/ana-list-before.svg)]
+
+---
+
+## Abstracting over `List`
+
+```scala
+def unfold[F[_]: Functor, A](
+  op   : A => F[A],
+  embed: F[`List`] => `List`
+): A => `List` = {
+
+  def loop(state: A): `List` =
+    embed(fmap(op(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `List`
+
+```scala
+def unfold[F[_]: Functor, A, `B`](
+  op   : A => F[A],
+  embed: F[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(fmap(op(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `List`
 
 ```scala
 def unfold[F[_]: Functor, A, B](
-  update: A => F[A],
-  embed : F[B] => B
-): A => B = {
+  op   : A => F[A],
+  embed: F[`List`] => `List`
+): A => `List` = {
 
-  def loop(curr: A): B =
-    embed(fmap(update(curr), loop))
+  def loop(state: A): `List` =
+    embed(fmap(op(state), loop))
 
   loop
 }
@@ -7071,16 +9117,108 @@ def unfold[F[_]: Functor, A, B](
 
 ---
 
-## Anamorphism
+## Abstracting over `List`
+
+```scala
+def unfold[F[_]: Functor, A, B](
+  op   : A => F[A],
+  embed: F[`B`] => `B`
+): A => `B` = {
+
+  def loop(state: A): `B` =
+    embed(fmap(op(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `List`
+
+```scala
+def unfold[F[_]: Functor, A, B](
+  op   : A => F[A],
+  embed: F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(fmap(op(state), loop))
+
+  loop
+}
+```
+
+```scala
+mkString(unfold(op, embed).apply("foobar"))
+// res40: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Abstracting over `List`
+
+.center[![Linked List](img/ana-list-before.svg)]
+
+---
+
+## Abstracting over `List`
+
+.center[![Linked List](img/ana-list-hl-1.svg)]
+
+
+---
+
+## Abstracting over `List`
+
+.center[![Linked List](img/ana-list.svg)]
+
+---
+
+## Naming things
+
+```scala
+def `unfold`[F[_]: Functor, A, B](
+  op   : A => F[A],
+  embed: F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(fmap(op(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Naming things
+
+```scala
+def `ana`[F[_]: Functor, A, B](
+  op   : A => F[A],
+  embed: F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(fmap(op(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Naming things
 
 ```scala
 def ana[F[_]: Functor, A, B](
-  update: A => F[A],
-  embed : F[B] => B
+  `op`   : A => F[A],
+  embed: F[B] => B
 ): A => B = {
 
-  def loop(curr: A): B =
-    embed(fmap(update(curr), loop))
+  def loop(state: A): B =
+    embed(fmap(op(state), loop))
 
   loop
 }
@@ -7088,7 +9226,24 @@ def ana[F[_]: Functor, A, B](
 
 ---
 
-## Anamorphism
+## Naming things
+
+```scala
+def ana[F[_]: Functor, A, B](
+  `coAlgebra`: A => F[A],
+  embed    : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(fmap(coAlgebra(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Naming things
 
 ```scala
 def ana[F[_]: Functor, A, B](
@@ -7096,11 +9251,124 @@ def ana[F[_]: Functor, A, B](
   embed    : F[B] => B
 ): A => B = {
 
-  def loop(curr: A): B =
-    embed(fmap(coAlgebra(curr), loop))
+  def loop(state: A): B =
+    embed(fmap(coAlgebra(state), loop))
 
   loop
 }
+```
+
+```scala
+mkString(ana(op, embed).apply("foobar"))
+// res41: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Naming things
+
+.center[![Linked List](img/ana-list.svg)]
+
+---
+
+## Naming things
+
+.center[![Linked List](img/ana-coalgebra-before.svg)]
+
+---
+
+## Naming things
+
+.center[![Linked List](img/ana-coalgebra-hl-1.svg)]
+
+---
+
+## Naming things
+
+.center[![Linked List](img/ana-coalgebra.svg)]
+
+---
+
+## `range` as an ana
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      None
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
+```
+
+---
+
+## `range` as an ana
+
+```scala
+val `rangeCoAlgebra`: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      None
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
+```
+
+---
+
+## `range` as an ana
+
+```scala
+val rangeCoAlgebra: `Int => ListF[Int]` = i => {
+  if(i > 0) Some((i, i - 1))
+  else      None
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
+```
+
+---
+
+## `range` as an ana
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(`i > 0`) Some((i, i - 1))
+  else      None
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
+```
+
+---
+
+## `range` as an ana
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) `Some((i, i - 1))`
+  else      None
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
+```
+
+---
+
+## `range` as an ana
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      `None`
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
 ```
 
 ---
@@ -7113,13 +9381,199 @@ val rangeCoAlgebra: Int => ListF[Int] = i => {
   else      None
 }
 
-val range: Int => List = ana(rangeCoAlgebra, embedList)
+val range: Int => List =
+  `ana(rangeCoAlgebra, embed)`
+```
+
+---
+
+## `range` as an ana
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      None
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
 ```
 
 ```scala
 mkString(range(3))
-// res28: String = 3 :: 2 :: 1 :: nil
+// res42: String = 3 :: 2 :: 1 :: nil
 ```
+
+---
+
+## `charCodes` as an ana
+
+```scala
+val charCodesCoAlgebra: String => ListF[String] = s => {
+  if(s.nonEmpty) Some((s.head.toInt, s.tail))
+  else           None
+}
+
+val charCodes: String => List =
+  ana(charCodesCoAlgebra, embed)
+```
+
+---
+
+## `charCodes` as an ana
+
+```scala
+val `charCodesCoAlgebra`: String => ListF[String] = s => {
+  if(s.nonEmpty) Some((s.head.toInt, s.tail))
+  else           None
+}
+
+val charCodes: String => List =
+  ana(charCodesCoAlgebra, embed)
+```
+
+---
+
+## `charCodes` as an ana
+
+```scala
+val charCodesCoAlgebra: `String => ListF[String]` = s => {
+  if(s.nonEmpty) Some((s.head.toInt, s.tail))
+  else           None
+}
+
+val charCodes: String => List =
+  ana(charCodesCoAlgebra, embed)
+```
+
+---
+
+## `charCodes` as an ana
+
+```scala
+val charCodesCoAlgebra: String => ListF[String] = s => {
+  if(`s.nonEmpty`) Some((s.head.toInt, s.tail))
+  else           None
+}
+
+val charCodes: String => List =
+  ana(charCodesCoAlgebra, embed)
+```
+
+---
+
+## `charCodes` as an ana
+
+```scala
+val charCodesCoAlgebra: String => ListF[String] = s => {
+  if(s.nonEmpty) `Some((s.head.toInt, s.tail))`
+  else           None
+}
+
+val charCodes: String => List =
+  ana(charCodesCoAlgebra, embed)
+```
+
+---
+
+## `charCodes` as an ana
+
+```scala
+val charCodesCoAlgebra: String => ListF[String] = s => {
+  if(s.nonEmpty) Some((s.head.toInt, s.tail))
+  else           `None`
+}
+
+val charCodes: String => List =
+  ana(charCodesCoAlgebra, embed)
+```
+
+---
+
+## `charCodes` as an ana
+
+```scala
+val charCodesCoAlgebra: String => ListF[String] = s => {
+  if(s.nonEmpty) Some((s.head.toInt, s.tail))
+  else           None
+}
+
+val charCodes: String => List =
+  `ana(charCodesCoAlgebra, embed)`
+```
+
+---
+
+## `charCodes` as an ana
+
+```scala
+val charCodesCoAlgebra: String => ListF[String] = s => {
+  if(s.nonEmpty) Some((s.head.toInt, s.tail))
+  else           None
+}
+
+val charCodes: String => List =
+  ana(charCodesCoAlgebra, embed)
+```
+
+```scala
+mkString(charCodes("foobar"))
+// res43: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Key takeaways
+
+Anamorphisms are:
+--
+
+* generative recursion for types who can be embedded from a pattern functor.
+--
+
+* fare less complicated than their names make them out to be.
+--
+
+* suspiciously similar to catamorphisms...
+
+
+---
+
+class: center, middle
+
+# Generalised generalised folds!
+
+---
+
+```scala
+val factorial: Int => Int =
+  range andThen product
+```
+
+```scala
+factorial(3)
+// res44: Int = 6
+```
+
+---
+
+```scala
+val factorial: Int => Int =
+  cata(productAlgebra, rangeCoAlgebra)
+```
+
+```scala
+factorial(3)
+// res45: Int = 6
+```
+
+---
+
+class: center, middle
+
+# Questions?
+
+Nicolas Rinaudo • [@NicolasRinaudo] • [Besedo]
 
 ---
 
@@ -7146,8 +9600,8 @@ def ana[F[_]: Functor, A, B](
   embed    : F[B] => B
 ): A => B = {
 
-  def loop(curr: A): B =
-    embed(fmap(coAlgebra(curr), loop))
+  def loop(state: A): B =
+    embed(fmap(coAlgebra(state), loop))
 
   loop
 }
@@ -7163,8 +9617,8 @@ def anaFix[F[_]: Functor, A, B](
   embed    : F[B] => B
 ): A => B = {
 
-  def loop(curr: A): B =
-    embed(fmap(coAlgebra(curr), loop))
+  def loop(state: A): B =
+    embed(fmap(coAlgebra(state), loop))
 
   loop
 }
@@ -7180,8 +9634,8 @@ def anaFix[F[_]: Functor, A](
   embed    : F[Fix[F]] => Fix[F]
 ): A => Fix[F] = {
 
-  def loop(curr: A): Fix[F] =
-    embed(fmap(coAlgebra(curr), loop))
+  def loop(state: A): Fix[F] =
+    embed(fmap(coAlgebra(state), loop))
 
   loop
 }
@@ -7196,8 +9650,8 @@ def anaFix[F[_]: Functor, A](
   coAlgebra: A => F[A]
 ): A => Fix[F] = {
 
-  def loop(curr: A): Fix[F] =
-    Fix((fmap(coAlgebra(curr), loop)))
+  def loop(state: A): Fix[F] =
+    Fix((fmap(coAlgebra(state), loop)))
 
   loop
 }
@@ -7213,47 +9667,11 @@ val rangeFix: Int => FixedList =
 ```
 
 ```scala
-rangeFix(3)
-// res29: FixedList = Fix(Some((3,Fix(Some((2,Fix(Some((1,Fix(None))))))))))
+mkStringFix(rangeFix(3))
+// res46: String = 3 :: 2 :: 1 :: nil
 ```
 
----
 
-class: center, middle
-
-# Generalised generalised folds!
-
----
-
-```scala
-val factorial: Int => Int =
-  range andThen product
-```
-
-```scala
-factorial(3)
-// res30: Int = 6
-```
-
----
-
-```scala
-val factorial: Int => Int =
-  cata(productAlgebra, rangeCoAlgebra)
-```
-
-```scala
-factorial(3)
-// res31: Int = 6
-```
-
----
-
-class: center, middle
-
-# Questions?
-
-Nicolas Rinaudo • [@NicolasRinaudo] • [Besedo]
 
 [@NicolasRinaudo]:https://twitter.com/NicolasRinaudo
 [Besedo]:https://twitter.com/besedo_official

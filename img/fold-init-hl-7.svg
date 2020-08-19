@@ -46,16 +46,16 @@
 <!-- ListStruct2&#45;&gt;String -->
 <g id="edge5" class="edge">
 <title>ListStruct2:cons&#45;&gt;String</title>
-<path fill="none" stroke="#dddddd" d="M356,-35.5C356,-35.5 392.3451,-31.2656 421.8556,-27.8275"/>
-<polygon fill="#dddddd" stroke="#dddddd" points="422.4102,-31.2867 431.938,-26.6529 421.6001,-24.3337 422.4102,-31.2867"/>
-<text text-anchor="middle" x="394" y="-35.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#dddddd">+ &quot; :: &quot; +</text>
+<path fill="none" stroke="#2980b9" d="M356,-35.5C356,-35.5 392.3451,-31.2656 421.8556,-27.8275"/>
+<polygon fill="#2980b9" stroke="#2980b9" points="422.4102,-31.2867 431.938,-26.6529 421.6001,-24.3337 422.4102,-31.2867"/>
+<text text-anchor="middle" x="394" y="-35.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#000000">+ &quot; :: &quot; +</text>
 </g>
 <!-- ListStruct2&#45;&gt;String -->
 <g id="edge6" class="edge">
 <title>ListStruct2:nil&#45;&gt;String</title>
-<path fill="none" stroke="#dddddd" d="M356,-11.5C356,-11.5 392.3451,-15.7344 421.8556,-19.1725"/>
-<polygon fill="#dddddd" stroke="#dddddd" points="421.6001,-22.6663 431.938,-20.3471 422.4102,-15.7133 421.6001,-22.6663"/>
-<text text-anchor="middle" x="394" y="-15.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#dddddd">&quot;nil&quot;</text>
+<path fill="none" stroke="#2980b9" d="M356,-11.5C356,-11.5 392.3451,-15.7344 421.8556,-19.1725"/>
+<polygon fill="#2980b9" stroke="#2980b9" points="421.6001,-22.6663 431.938,-20.3471 422.4102,-15.7133 421.6001,-22.6663"/>
+<text text-anchor="middle" x="394" y="-15.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#000000">&quot;nil&quot;</text>
 </g>
 <!-- List -->
 <g id="node4" class="node">
