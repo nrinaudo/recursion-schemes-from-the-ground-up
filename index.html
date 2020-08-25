@@ -178,7 +178,7 @@ case object Nil extends List
 
 ```scala
 val ints: List =
-  Cons(1, Cons(2, Cons(3, Nil)))
+  Cons(3, Cons(2, Cons(1, Nil)))
 ```
 
 ---
@@ -187,7 +187,7 @@ val ints: List =
 
 ```scala
 val ints: List =
-  Cons(`1`, Cons(`2`, Cons(`3`, Nil)))
+  Cons(`3`, Cons(`2`, Cons(`1`, Nil)))
 ```
 
 ---
@@ -291,7 +291,7 @@ def product(
 ```
 
 ```scala
-product(ints) = `1` * ???
+product(ints) = `3` * ???
 ```
 
 .center[![List product: 1](img/list-product-1-head-hl.svg)]
@@ -311,7 +311,7 @@ def product(
 ```
 
 ```scala
-product(ints) = 1 `*` ???
+product(ints) = 3 `*` ???
 ```
 
 .center[![List product: 1](img/list-product-1-tail-hl.svg)]
@@ -331,7 +331,7 @@ def product(
 ```
 
 ```scala
-product(ints) = 1 * `???`
+product(ints) = 3 * `???`
 ```
 
 .center[![List product](img/list-product-1.svg)]
@@ -351,7 +351,7 @@ def product(
 ```
 
 ```scala
-product(ints) = 1 * ???
+product(ints) = 3 * ???
 ```
 
 .center[![List product](img/list-product-2-hl.svg)]
@@ -371,7 +371,7 @@ def product(
 ```
 
 ```scala
-product(ints) = 1 * `2` * ???
+product(ints) = 3 * `2` * ???
 ```
 
 .center[![List product](img/list-product-2-head-hl.svg)]
@@ -391,7 +391,7 @@ def product(
 ```
 
 ```scala
-product(ints) = 1 * 2 `*` ???
+product(ints) = 3 * 2 `*` ???
 ```
 
 .center[![List product](img/list-product-2-tail-hl.svg)]
@@ -411,7 +411,7 @@ def product(
 ```
 
 ```scala
-product(ints) = 1 * 2 * `???`
+product(ints) = 3 * 2 * `???`
 ```
 
 .center[![List product](img/list-product-2.svg)]
@@ -431,7 +431,7 @@ def product(
 ```
 
 ```scala
-product(ints) = 1 * 2 * ???
+product(ints) = 3 * 2 * ???
 ```
 
 .center[![List product](img/list-product-3-hl.svg)]
@@ -451,7 +451,7 @@ def product(
 ```
 
 ```scala
-product(ints) = 1 * 2 * `3` * ???
+product(ints) = 3 * 2 * `1` * ???
 ```
 
 .center[![List product](img/list-product-3-head-hl.svg)]
@@ -471,7 +471,7 @@ def product(
 ```
 
 ```scala
-product(ints) = 1 * 2 * 3 `*` ???
+product(ints) = 3 * 2 * 1 `*` ???
 ```
 
 .center[![List product](img/list-product-3-tail-hl.svg)]
@@ -491,7 +491,7 @@ def product(
 ```
 
 ```scala
-product(ints) = 1 * 2 * 3 * `???`
+product(ints) = 3 * 2 * 1 * `???`
 ```
 
 .center[![List product](img/list-product-3.svg)]
@@ -511,7 +511,7 @@ def product(
 ```
 
 ```scala
-product(ints) = 1 * 2 * 3 * ???
+product(ints) = 3 * 2 * 1 * ???
 ```
 
 .center[![List product](img/list-product-3.svg)]
@@ -531,7 +531,7 @@ def product(
 ```
 
 ```scala
-product(ints) = 1 * 2 * 3 * `1`
+product(ints) = 3 * 2 * 1 * `1`
 ```
 
 .center[![List product](img/list-product-3.svg)]
@@ -551,7 +551,7 @@ def product(
 ```
 
 ```scala
-product(ints) = `1 * 2 * 3 * 1`
+product(ints) = `3 * 2 * 1 * 1`
 ```
 
 .center[![List product](img/list-product-3.svg)]
@@ -789,7 +789,7 @@ def mkString(
 
 ```scala
 mkString(ints)
-// res1: String = 1 :: 2 :: 3 :: nil
+// res1: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -871,7 +871,7 @@ def recurse(
 
 ```scala
 recurse(ints)
-// res2: String = 1 :: 2 :: 3 :: nil
+// res2: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -904,20 +904,17 @@ recurse(ints)
 
 .center[![fold - overview](img/fold-init-hl-4.svg)]
 
-
 ---
 
 ## Generalising `mkString`
 
 .center[![fold - overview](img/fold-init-hl-5.svg)]
 
-
 ---
 
 ## Generalising `mkString`
 
 .center[![fold - overview](img/fold-init-hl-6.svg)]
-
 
 ---
 
@@ -1046,7 +1043,7 @@ def recurse(
 
 ```scala
 recurse(base, ints)
-// res3: String = 1 :: 2 :: 3 :: nil
+// res3: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -1060,7 +1057,6 @@ recurse(base, ints)
 ## Generalising the base case
 
 .center[![fold - base case](img/fold-base-after-hl-1.svg)]
-
 
 ---
 
@@ -1229,7 +1225,7 @@ def recurse(
 
 ```scala
 recurse(base, step, ints)
-// res4: String = 1 :: 2 :: 3 :: nil
+// res4: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -1249,7 +1245,6 @@ recurse(base, step, ints)
 ## Generalising the step
 
 .center[![fold - step case](img/fold-step-after.svg)]
-
 
 ---
 
@@ -1307,7 +1302,7 @@ def recurse[A](
 
 ```scala
 recurse(base, step, ints)
-// res5: String = 1 :: 2 :: 3 :: nil
+// res5: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -1343,7 +1338,6 @@ def recurse[A](
     case Nil              => base
   }
 ```
-
 
 ---
 
@@ -1676,7 +1670,7 @@ def recurse[A](
 
 ```scala
 recurse(base, step, ints)
-// res6: String = 1 :: 2 :: 3 :: nil
+// res6: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -1696,7 +1690,6 @@ recurse(base, step, ints)
 ## Simplifying the step
 
 .center[![fold - recurse to loop](img/fold-loop-hl-1.svg)]
-
 
 ---
 
@@ -1847,7 +1840,7 @@ def recurse[A](
 
 ```scala
 recurse(base, step)(ints)
-// res7: String = 1 :: 2 :: 3 :: nil
+// res7: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -1888,7 +1881,7 @@ val mkString: List => String =
 
 ```scala
 mkString(ints)
-// res8: String = 1 :: 2 :: 3 :: nil
+// res8: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -1953,7 +1946,7 @@ def fold[A](
 
 ```scala
 fold(base, step)(ints)
-// res9: String = 1 :: 2 :: 3 :: nil
+// res9: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -2083,7 +2076,7 @@ val mkString: List => String =
 
 ```scala
 mkString(ints)
-// res11: String = 1 :: 2 :: 3 :: nil
+// res11: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -2447,7 +2440,7 @@ def fold[A](
 
 ```scala
 fold(base, step, project)(ints)
-// res12: String = 1 :: 2 :: 3 :: nil
+// res12: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -2758,7 +2751,7 @@ def fold[A](
 
 ```scala
 fold(op, project)(ints)
-// res13: String = 1 :: 2 :: 3 :: nil
+// res13: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -2835,7 +2828,7 @@ def fold[A](
 
 ```scala
 fold(op, project)(ints)
-// res14: String = 1 :: 2 :: 3 :: nil
+// res14: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -2843,7 +2836,6 @@ fold(op, project)(ints)
 ## Moving `op`
 
 .center[![Cata step 3](img/cata-3-hl-1.svg)]
-
 
 ---
 
@@ -2969,7 +2961,7 @@ def fold[A](
 
 ```scala
 fold(op, project)(ints)
-// res15: String = 1 :: 2 :: 3 :: nil
+// res15: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -4045,7 +4037,7 @@ def fold[A](
 
 ```scala
 fold(op, project)(ints)
-// res16: String = 1 :: 2 :: 3 :: nil
+// res16: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -4176,7 +4168,7 @@ def fold[F[_]: Functor, A](
 
 ```scala
 fold(op, project).apply(ints)
-// res17: String = 1 :: 2 :: 3 :: nil
+// res17: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -4199,7 +4191,7 @@ fold(op, project).apply(ints)
 
 ---
 
-## Abstracting over `ListF`
+## Abstracting over `List`
 
 .center[![Cata step 7](img/cata-7-hl-2.svg)]
 
@@ -4290,7 +4282,7 @@ def fold[F[_]: Functor, A, B](
 
 ```scala
 fold(op, project).apply(ints)
-// res18: String = 1 :: 2 :: 3 :: nil
+// res18: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -4415,7 +4407,7 @@ def cata[F[_]: Functor, A, B](
 
 ```scala
 cata(op, project).apply(ints)
-// res19: String = 1 :: 2 :: 3 :: nil
+// res19: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -4612,7 +4604,6 @@ val mkString: List => String =
   cata(mkStringAlgebra, project)
 ```
 
-
 ---
 
 ## `mkString` as a cata
@@ -4720,7 +4711,7 @@ val mkString: List => String =
 
 ```scala
 mkString(ints)
-// res21: String = 1 :: 2 :: 3 :: nil
+// res21: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -5291,7 +5282,6 @@ case class NodeF[A](
 case object LeafF extends TreeF[Nothing]
 ```
 
-
 ---
 
 ## Pattern functor
@@ -5355,7 +5345,6 @@ def `projectTree`: Tree => TreeF[Tree] =
     case Leaf          => LeafF
   }
 ```
-
 
 ---
 
@@ -5748,7 +5737,6 @@ type `List2` = ListF[???]
 type List2 = `ListF[???]`
 ```
 
-
 ---
 
 ## `List` in terms of `ListF`
@@ -5799,7 +5787,6 @@ case class List2(`value: ListF[List2]`)
 ```scala
 case class List2(value: ListF[List2])
 ```
-
 
 ---
 
@@ -5897,7 +5884,6 @@ type FixedList = Fix[ListF]
 type `FixedList` = Fix[ListF]
 ```
 
-
 ---
 
 ## `List` in terms of `Fix`
@@ -5912,9 +5898,9 @@ type FixedList = `Fix[ListF]`
 
 ```scala
 val fixedInts: FixedList =
-  Fix[ListF](Some((1,
+  Fix[ListF](Some((3,
     Fix[ListF](Some((2,
-      Fix[ListF](Some((3,
+      Fix[ListF](Some((1,
         Fix[ListF](None)
       )))
     )))
@@ -5927,9 +5913,9 @@ val fixedInts: FixedList =
 
 ```scala
 val fixedInts: FixedList =
-  Fix[ListF](Some((`1`,
+  Fix[ListF](Some((`3`,
     Fix[ListF](Some((`2`,
-      Fix[ListF](Some((`3`,
+      Fix[ListF](Some((`1`,
         Fix[ListF](None)
       )))
     )))
@@ -5942,9 +5928,9 @@ val fixedInts: FixedList =
 
 ```scala
 val fixedInts: FixedList =
-  `Fix[ListF](Some((`1`,`
+  `Fix[ListF](Some((`3`,`
     `Fix[ListF](Some((`2`,`
-      `Fix[ListF](Some((`3`,`
+      `Fix[ListF](Some((`1`,`
         `Fix[ListF](None)`
       `)))`
     `)))`
@@ -6145,7 +6131,6 @@ def cataFix[F[_]: Functor, A](
 ## `cata` with `Fix`
 
 .center[![Linked List](img/catafix-init-hl-1.svg)]
-
 
 ---
 
@@ -6564,7 +6549,6 @@ def cataFix[F[_]: Functor, A](
 
 .center[![Linked List](img/catafix-project-hl-3.svg)]
 
-
 ---
 
 ## `product` in terms of `cataFix`
@@ -6582,7 +6566,6 @@ val productFix: FixedList => Int =
 val productFix: FixedList => Int =
   `cataFix(productAlgebra)`
 ```
-
 
 ---
 
@@ -6627,7 +6610,7 @@ val mkStringFix: FixedList => String =
 
 ```scala
 mkStringFix(fixedInts)
-// res24: String = 1 :: 2 :: 3 :: nil
+// res24: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -6656,7 +6639,6 @@ val heightFix: FixedTree => Int =
 val heightFix: FixedTree => Int =
   cataFix(heightAlgebra)
 ```
-
 
 ```scala
 heightFix(fixedIntTree)
@@ -6691,9 +6673,9 @@ def headOpt(list:      List): Option[Int] = list match {
 
 ```scala
 val list: FixedList =
-  Fix[ListF](Some((1,
+  Fix[ListF](Some((3,
     Fix[ListF](Some((2,
-      Fix[ListF](Some((3,
+      Fix[ListF](Some((1,
         Fix[ListF](None)
       )))
     )))
@@ -6706,9 +6688,9 @@ val list: FixedList =
 
 ```scala
 val list:      List =
-  Cons(            1,
+  Cons(            3,
     Cons(            2,
-      Cons(            3,
+      Cons(            1,
         Nil
       )
     )
@@ -7352,6 +7334,42 @@ def recurse(
 
 ```scala
 def recurse[`A`](
+  predicate: String => Boolean,
+  update   : String => (Int, String),
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, update, nextState))
+  }
+  else Nil
+}
+```
+
+---
+
+## Generalising the input type
+
+```scala
+def recurse[A](
+  predicate: `String` => Boolean,
+  update   : `String` => (Int, `String`),
+  from     : `String`
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, update, nextState))
+  }
+  else Nil
+}
+```
+
+---
+
+## Generalising the input type
+
+```scala
+def recurse[A](
   predicate: `A` => Boolean,
   update   : `A` => (Int, `A`),
   from     : `A`
@@ -7617,7 +7635,6 @@ def recurse[A](
 
 .center[![Linked List](img/unfold-loop-before-2.svg)]
 
-
 ---
 
 ## Simplifying the step
@@ -7677,28 +7694,7 @@ def recurse[A](
   update   : A => (Int, A)
 ): List = {
 
-  def loop(state: `A`): List =
-    if(predicate(state)) {
-      val (head, nextState) = update(state)
-      Cons(head, loop(nextState))
-    }
-    else Nil
-
-  loop
-}
-```
-
----
-
-## Dropping parameters
-
-```scala
-def recurse[A](
-  predicate: A => Boolean,
-  update   : A => (Int, A)
-): List = {
-
-  def loop(state: A): `List` =
+* def loop(state: A): List =
     if(predicate(state)) {
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
@@ -7893,7 +7889,6 @@ val range: Int => List =
   )
 ```
 
-
 ---
 
 ## `range` as an unfold
@@ -7922,7 +7917,6 @@ val charCodes: String => List =
     update    = s => (s.head.toInt, s.tail)
   )
 ```
-
 
 ---
 
@@ -8577,7 +8571,6 @@ def unfold[A](
 }
 ```
 
-
 ---
 
 ## Abstracting over structure
@@ -8884,7 +8877,6 @@ def unfold[A](
 }
 ```
 
-
 ---
 
 ## Using Functor
@@ -8918,7 +8910,6 @@ mkString(unfold(op, embed)("foobar"))
 ## Using Functor
 
 .center[![Linked List](img/ana-functor-hl-1.svg)]
-
 
 ---
 
@@ -9051,7 +9042,6 @@ mkString(unfold(op, embed).apply("foobar"))
 
 .center[![Linked List](img/ana-listf-hl-1.svg)]
 
-
 ---
 
 ## Abstracting over `ListF`
@@ -9165,7 +9155,6 @@ mkString(unfold(op, embed).apply("foobar"))
 ## Abstracting over `List`
 
 .center[![Linked List](img/ana-list-hl-1.svg)]
-
 
 ---
 
@@ -9536,7 +9525,6 @@ Anamorphisms are:
 
 * suspiciously similar to catamorphisms...
 
-
 ---
 
 class: center, middle
@@ -9670,8 +9658,6 @@ val rangeFix: Int => FixedList =
 mkStringFix(rangeFix(3))
 // res46: String = 3 :: 2 :: 1 :: nil
 ```
-
-
 
 [@NicolasRinaudo]:https://twitter.com/NicolasRinaudo
 [Besedo]:https://twitter.com/besedo_official
