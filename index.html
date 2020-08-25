@@ -6734,7 +6734,464 @@ def range(
 
 ```scala
 mkString(range(3))
-// res26: String = 3 :: 2 :: 1 :: nil
+```
+
+.center[![Linked List](img/range-init.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  `from: Int`
+): List = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-init.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): `List` = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-init.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(`from > 0`) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-init.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) `Cons(from, range(from - 1))`
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-3.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(`from`, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-3-head.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, `range(from - 1)`)
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-3-tail.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(`from > 0`) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-2.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) `Cons(from, range(from - 1))`
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-2.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(`from`, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-2-head.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, `range(from - 1)`)
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-2-tail.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(`from > 0`) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-1.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) `Cons(from, range(from - 1))`
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-1.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(`from`, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-1-head.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, `range(from - 1)`)
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-1-tail.svg)]
+
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(`from > 0`) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-0.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         `Nil`
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-nil.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-complete.svg)]
+
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+// res27: String = 3 :: 2 :: 1 :: nil
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  `from: String`
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): `List` = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(`from.nonEmpty`)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    `Cons(from.head.toInt, charCodes(from.tail))`
+  else Nil
+}
+```
+
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(`from.head.toInt`, charCodes(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, `charCodes(from.tail)`)
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else `Nil`
+}
 ```
 
 ---
@@ -6753,8 +7210,23 @@ def charCodes(
 
 ```scala
 mkString(charCodes("foobar"))
-// res27: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res28: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
+
+---
+
+## Key takeaways
+
+Generative recursion works by:
+--
+
+* evaluating the recursion state against a predicate.
+--
+
+* if `true`, extracting a head and next step, which we turn into a tail.
+--
+
+* if `false`, stopping.
 
 ---
 
@@ -6820,7 +7292,7 @@ def recurse(
 
 ```scala
 mkString(recurse("foobar"))
-// res28: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res29: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -7013,7 +7485,7 @@ def recurse(
 
 ```scala
 mkString(recurse(predicate, "foobar"))
-// res29: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res30: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -7283,7 +7755,7 @@ def recurse(
 
 ```scala
 mkString(recurse(predicate, update, "foobar"))
-// res30: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res31: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -7402,7 +7874,7 @@ def recurse[A](
 
 ```scala
 mkString(recurse(predicate, update, "foobar"))
-// res31: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res32: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -7770,7 +8242,7 @@ def recurse[A](
 
 ```scala
 mkString(recurse(predicate, update)("foobar"))
-// res32: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res33: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -7838,7 +8310,7 @@ def unfold[A](
 
 ```scala
 mkString(unfold(predicate, update)("foobar"))
-// res33: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res34: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -7903,7 +8375,7 @@ val range: Int => List =
 
 ```scala
 mkString(range(3))
-// res34: String = 3 :: 2 :: 1 :: nil
+// res35: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -7968,7 +8440,7 @@ val charCodes: String => List =
 
 ```scala
 mkString(charCodes("foobar"))
-// res35: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res36: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -8386,7 +8858,7 @@ def unfold[A](
 
 ```scala
 mkString(unfold(op)("foobar"))
-// res36: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res37: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -8733,7 +9205,7 @@ def unfold[A](
 
 ```scala
 mkString(unfold(op, embed)("foobar"))
-// res37: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res38: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -8896,7 +9368,7 @@ def unfold[A](
 
 ```scala
 mkString(unfold(op, embed)("foobar"))
-// res38: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res39: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -9027,7 +9499,7 @@ def unfold[F[_]: Functor, A](
 
 ```scala
 mkString(unfold(op, embed).apply("foobar"))
-// res39: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res40: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -9141,7 +9613,7 @@ def unfold[F[_]: Functor, A, B](
 
 ```scala
 mkString(unfold(op, embed).apply("foobar"))
-// res40: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res41: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -9249,7 +9721,7 @@ def ana[F[_]: Functor, A, B](
 
 ```scala
 mkString(ana(op, embed).apply("foobar"))
-// res41: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res42: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -9390,7 +9862,7 @@ val range: Int => List =
 
 ```scala
 mkString(range(3))
-// res42: String = 3 :: 2 :: 1 :: nil
+// res43: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -9507,7 +9979,7 @@ val charCodes: String => List =
 
 ```scala
 mkString(charCodes("foobar"))
-// res43: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+// res44: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
 ```
 
 ---
@@ -9540,7 +10012,7 @@ val factorial: Int => Int =
 
 ```scala
 factorial(3)
-// res44: Int = 6
+// res45: Int = 6
 ```
 
 ---
@@ -9552,7 +10024,7 @@ val factorial: Int => Int =
 
 ```scala
 factorial(3)
-// res45: Int = 6
+// res46: Int = 6
 ```
 
 ---
@@ -9656,7 +10128,7 @@ val rangeFix: Int => FixedList =
 
 ```scala
 mkStringFix(rangeFix(3))
-// res46: String = 3 :: 2 :: 1 :: nil
+// res47: String = 3 :: 2 :: 1 :: nil
 ```
 
 [@NicolasRinaudo]:https://twitter.com/NicolasRinaudo
