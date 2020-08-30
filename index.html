@@ -836,7 +836,7 @@ def `mkString`(
   values: List
 ): String =
   values match {
-    case Cons(head, tail) => head + " :: " + `mkString`(tail)
+    case Cons(head, tail) => head + " :: " + mkString(tail)
     case Nil              => "nil"
   }
 ```
@@ -845,15 +845,33 @@ def `mkString`(
 
 ## Generalising `mkString`
 
+.diff-rm[
 ```scala
-def `recurse`(
+*def `mkString`(
   values: List
 ): String =
   values match {
-    case Cons(head, tail) => head + " :: " + `recurse`(tail)
+*   case Cons(head, tail) => head + " :: " + `mkString`(tail)
     case Nil              => "nil"
   }
 ```
+]
+
+---
+
+## Generalising `mkString`
+
+.diff-add[
+```scala
+*def `recurse`(
+  values: List
+): String =
+  values match {
+*   case Cons(head, tail) => head + " :: " + `recurse`(tail)
+    case Nil              => "nil"
+  }
+```
+]
 
 ---
 
@@ -964,15 +982,37 @@ def recurse(
 
 ## Generalising the base case
 
+.diff-rm[
 ```scala
 def recurse(
   values: List
 ): String =
   values match {
     case Cons(head, tail) => head + " :: " + recurse(tail)
-    case Nil              => `"nil"`
+*   case Nil              => `"nil"`
   }
 ```
+]
+
+```scala
+val base: String = "nil"
+```
+
+---
+
+## Generalising the base case
+
+.diff-add[
+```scala
+def recurse(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + recurse(tail)
+*   case Nil              => `base`
+  }
+```
+]
 
 ```scala
 val base: String = "nil"
@@ -1000,31 +1040,35 @@ val base: String = "nil"
 
 ## Generalising the base case
 
+.diff-add[
 ```scala
 def recurse(
-  `base  : String`,
+* `base  : String`,
   values: List
 ): String =
   values match {
-    case Cons(head, tail) => head + " :: " + recurse(tail)
+*   case Cons(head, tail) => head + " :: " + recurse(base, tail)
     case Nil              => base
   }
 ```
+]
 
 ---
 
 ## Generalising the base case
 
+.diff-add[
 ```scala
 def recurse(
-  base  : String,
+* base  : String,
   values: List
 ): String =
   values match {
-    case Cons(head, tail) => head + " :: " + recurse(`base`, tail)
+*   case Cons(head, tail) => head + " :: " + recurse(`base`, tail)
     case Nil              => base
   }
 ```
+]
 
 ---
 
@@ -1139,16 +1183,40 @@ def recurse(
 
 ## Generalising the step
 
+.diff-rm[
 ```scala
 def recurse(
   base  : String,
   values: List
 ): String =
   values match {
-    case Cons(head, tail) => `head + " :: " + recurse(base, tail)`
+*   case Cons(head, tail) => `head + " :: " + recurse(base, tail)`
     case Nil              => base
   }
 ```
+]
+
+```scala
+def step(head: Int, tail: String): String =
+  head + " :: " + tail
+```
+
+---
+
+## Generalising the step
+
+.diff-add[
+```scala
+def recurse(
+  base  : String,
+  values: List
+): String =
+  values match {
+*   case Cons(head, tail) => `step(head, recurse(base, tail))`
+    case Nil              => base
+  }
+```
+]
 
 ```scala
 def step(head: Int, tail: String): String =
@@ -1165,7 +1233,7 @@ def recurse(
   values: List
 ): String =
   values match {
-    case Cons(head, tail) => `step(head, recurse(base, tail))`
+    case Cons(head, tail) => `step`(head, recurse(base, tail))
     case Nil              => base
   }
 ```
@@ -1179,33 +1247,37 @@ def step(head: Int, tail: String): String =
 
 ## Generalising the step
 
+.diff-add[
 ```scala
 def recurse(
   base  : String,
-  `step  : (Int, String) => String,`
+* `step  : (Int, String) => String,`
   values: List
 ): String =
   values match {
-    case Cons(head, tail) => step(head, recurse(base, tail))
+*   case Cons(head, tail) => step(head, recurse(base, step, tail))
     case Nil              => base
   }
 ```
+]
 
 ---
 
 ## Generalising the step
 
+.diff-add[
 ```scala
 def recurse(
   base  : String,
-  step  : (Int, String) => String,
+* step  : (Int, String) => String,
   values: List
 ): String =
   values match {
-    case Cons(head, tail) => step(head, recurse(base, `step`, tail))
+*   case Cons(head, tail) => step(head, recurse(base, `step,` tail))
     case Nil              => base
   }
 ```
+]
 
 ---
 
@@ -1272,17 +1344,55 @@ def recurse(
 
 ## Generalising the return type
 
+.diff-add[
 ```scala
-def recurse[`A`](
-  base  : `A`,
-  step  : (Int, `A`) => `A`,
+*def recurse[`A`](
+  base  : String,
+  step  : (Int, String) => String,
   values: List
-): `A` =
+): String =
   values match {
     case Cons(head, tail) => step(head, recurse(base, step, tail))
     case Nil              => base
   }
 ```
+]
+
+---
+
+## Generalising the return type
+
+.diff-rm[
+```scala
+def recurse[A](
+* base  : `String`,
+* step  : (Int, `String`) => `String`,
+  values: List
+*): `String` =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Nil              => base
+  }
+```
+]
+
+---
+
+## Generalising the return type
+
+.diff-add[
+```scala
+def recurse[A](
+* base  : `A`,
+* step  : (Int, `A`) => `A`,
+  values: List
+*): `A` =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Nil              => base
+  }
+```
+]
 
 ---
 
@@ -1391,22 +1501,48 @@ def recurse[A](
 
 ## Simplifying the step
 
+.diff-rm[
 ```scala
 def recurse[A](
   base  : A,
   step  : (Int, A) => A,
   values: List
 ): A =
-* values match {
-*   case Cons(head, tail) => step(head, recurse(base, step, tail))
-*   case Nil              => base
-* }
+* `values match {`
+* `  case Cons(head, tail) => step(head, recurse(base, step, tail))`
+* `  case Nil              => base`
+* `}`
 ```
+]
 
 ---
 
 ## Simplifying the step
 
+.diff-add[
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A,
+  values: List
+): A = {
+
+* `def loop(list: List): A =`
+* `  list match {`
+* `    case Cons(head, tail) => step(head, loop(tail))`
+* `    case Nil              => base`
+* `  }`
+*
+* loop(values)
+}
+```
+]
+
+---
+
+## Simplifying the step
+
+.diff-add[
 ```scala
 def recurse[A](
   base  : A,
@@ -1416,17 +1552,14 @@ def recurse[A](
 
 * def loop(list: List): A =
 *   list match {
-*     case Cons(head, tail) =>
-*       step(head, recurse(base, step, tail))
+*     case Cons(head, tail) => step(head, loop(tail))
 *     case Nil              => base
 *   }
-
-  values match {
-    case Cons(head, tail) => step(head, recurse(base, step, tail))
-    case Nil              => base
-  }
+*
+* `loop(values)`
 }
 ```
+]
 
 ---
 
@@ -1435,21 +1568,17 @@ def recurse[A](
 ```scala
 def recurse[A](
   base  : A,
-  step  : (Int, A) => A,
+  `step`  : (Int, A) => A,
   values: List
 ): A = {
 
-  def loop(`list: List`): A =
+  def loop(list: List): A =
     list match {
-      case Cons(head, tail) =>
-        step(head, recurse(base, step, tail))
+      case Cons(head, tail) => `step`(head, loop(tail))
       case Nil              => base
     }
 
-  values match {
-    case Cons(head, tail) => step(head, recurse(base, step, tail))
-    case Nil              => base
-  }
+  loop(values)
 }
 ```
 
@@ -1466,42 +1595,15 @@ def recurse[A](
 
   def loop(list: List): A =
     list match {
-      case Cons(head, tail) =>
-        step(head, recurse(base, step, tail))
+      case Cons(head, tail) => step(head, loop(tail))
       case Nil              => `base`
     }
 
-  values match {
-    case Cons(head, tail) => step(head, recurse(base, step, tail))
-    case Nil              => base
-  }
+  loop(values)
 }
 ```
 
----
 
-## Simplifying the step
-
-```scala
-def recurse[A](
-  base  : A,
-  `step`  : (Int, A) => A,
-  values: List
-): A = {
-
-  def loop(list: List): A =
-    list match {
-      case Cons(head, tail) =>
-        `step`(head, recurse(base, step, tail))
-      case Nil              => base
-    }
-
-  values match {
-    case Cons(head, tail) => step(head, recurse(base, step, tail))
-    case Nil              => base
-  }
-}
-```
 
 ---
 
@@ -1516,134 +1618,11 @@ def recurse[A](
 
   def loop(list: List): A =
     list match {
-      case Cons(head, tail) =>
-        step(head, `recurse(base, step, tail)`)
+      case Cons(head, tail) => step(head, `loop(tail)`)
       case Nil              => base
     }
 
-  values match {
-    case Cons(head, tail) => step(head, recurse(base, step, tail))
-    case Nil              => base
-  }
-}
-```
-
----
-
-## Simplifying the step
-
-```scala
-def recurse[A](
-  base  : A,
-  step  : (Int, A) => A,
-  values: List
-): A = {
-
-  def loop(list: List): A =
-    list match {
-      case Cons(head, tail) =>
-        step(head, `loop(tail)`)
-      case Nil              => base
-    }
-
-  values match {
-    case Cons(head, tail) => step(head, recurse(base, step, tail))
-    case Nil              => base
-  }
-}
-```
-
----
-
-## Simplifying the step
-
-```scala
-def recurse[A](
-  base  : A,
-  step  : (Int, A) => A,
-  values: List
-): A = {
-
-  def loop(list: List): A =
-    list match {
-      case Cons(head, tail) =>
-        `step(head, loop(tail))`
-      case Nil              => base
-    }
-
-  values match {
-    case Cons(head, tail) => step(head, recurse(base, step, tail))
-    case Nil              => base
-  }
-}
-```
-
----
-
-## Simplifying the step
-
-```scala
-def recurse[A](
-  base  : A,
-  step  : (Int, A) => A,
-  values: List
-): A = {
-
-  def loop(list: List): A =
-    list match {
-      case Cons(head, tail) => `step(head, loop(tail))`
-      case Nil              => base
-    }
-
-  values match {
-    case Cons(head, tail) => step(head, recurse(base, step, tail))
-    case Nil              => base
-  }
-}
-```
-
----
-
-## Simplifying the step
-
-```scala
-def recurse[A](
-  base  : A,
-  step  : (Int, A) => A,
-  values: List
-): A = {
-
-  def loop(list: List): A =
-    list match {
-      case Cons(head, tail) => step(head, loop(tail))
-      case Nil              => base
-    }
-
-* values match {
-*   case Cons(head, tail) => step(head, recurse(base, step, tail))
-*   case Nil              => base
-* }
-}
-```
-
----
-
-## Simplifying the step
-
-```scala
-def recurse[A](
-  base  : A,
-  step  : (Int, A) => A,
-  values: List
-): A = {
-
-  def loop(list: List): A =
-    list match {
-      case Cons(head, tail) => step(head, loop(tail))
-      case Nil              => base
-    }
-
-  `loop(values)`
+  loop(values)
 }
 ```
 
@@ -1722,11 +1701,13 @@ def recurse[A](
 
 ## Dropping parameters
 
+.diff-rm[
 ```scala
 def recurse[A](
   base  : A,
-  step  : (Int, A) => A
-): A = {
+  step  : (Int, A) => A,
+* `values: List`
+*): `A` = {
 
   def loop(list: List): A =
     list match {
@@ -1734,19 +1715,21 @@ def recurse[A](
       case Nil              => base
     }
 
-  loop
+* loop`(values)`
 }
 ```
+]
 
 ---
 
 ## Dropping parameters
 
+.diff-add[
 ```scala
 def recurse[A](
   base  : A,
   step  : (Int, A) => A
-): A = {
+*): `List => A` = {
 
   def loop(list: List): A =
     list match {
@@ -1754,69 +1737,10 @@ def recurse[A](
       case Nil              => base
     }
 
-  `loop`
+* loop
 }
 ```
-
----
-
-## Dropping parameters
-
-```scala
-def recurse[A](
-  base  : A,
-  step  : (Int, A) => A
-): A = {
-
-* def loop(list: List): A =
-    list match {
-      case Cons(head, tail) => step(head, loop(tail))
-      case Nil              => base
-    }
-
-  loop
-}
-```
-
----
-
-## Dropping parameters
-
-```scala
-def recurse[A](
-  base  : A,
-  step  : (Int, A) => A
-): `A` = {
-
-  def loop(list: List): A =
-    list match {
-      case Cons(head, tail) => step(head, loop(tail))
-      case Nil              => base
-    }
-
-  loop
-}
-```
-
----
-
-## Dropping parameters
-
-```scala
-def recurse[A](
-  base  : A,
-  step  : (Int, A) => A
-): `List => A` = {
-
-  def loop(list: List): A =
-    list match {
-      case Cons(head, tail) => step(head, loop(tail))
-      case Nil              => base
-    }
-
-  loop
-}
-```
+]
 
 ---
 
@@ -1908,8 +1832,9 @@ def `recurse`[A](
 
 ## Naming things
 
+.diff-rm[
 ```scala
-def `fold`[A](
+*def `recurse`[A](
   base  : A,
   step  : (Int, A) => A
 ): List => A = {
@@ -1923,6 +1848,29 @@ def `fold`[A](
   loop
 }
 ```
+]
+
+---
+
+## Naming things
+
+.diff-add[
+```scala
+*def `fold`[A](
+  base  : A,
+  step  : (Int, A) => A
+): List => A = {
+
+  def loop(list: List): A =
+    list match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+  loop
+}
+```
+]
 
 ---
 
@@ -4239,7 +4187,7 @@ def fold[F[_]: Functor, A, B](
   project: `List` => F[`List`]
 ): `List` => A = {
 
-  def loop(curr: `list`): A =
+  def loop(list: `List`): A =
     op(fmap(project(list), loop))
 
   loop
@@ -4273,8 +4221,42 @@ def fold[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(list: B): A =
-    op(fmap(project(list), loop))
+  def loop(`list`: B): A =
+    op(fmap(project(`list`), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `List`
+
+```scala
+def fold[F[_]: Functor, A, B](
+  op     : F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(`state`: B): A =
+    op(fmap(project(`state`), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `List`
+
+```scala
+def fold[F[_]: Functor, A, B](
+  op     : F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+    op(fmap(project(state), loop))
 
   loop
 }
@@ -4313,8 +4295,8 @@ def `fold`[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(list: B): A =
-    op(fmap(project(list), loop))
+  def loop(state: B): A =
+    op(fmap(project(state), loop))
 
   loop
 }
@@ -4330,8 +4312,8 @@ def `cata`[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(list: B): A =
-    op(fmap(project(list), loop))
+  def loop(state: B): A =
+    op(fmap(project(state), loop))
 
   loop
 }
@@ -4347,8 +4329,8 @@ def cata[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(list: B): A =
-    `op`(fmap(project(list), loop))
+  def loop(state: B): A =
+    `op`(fmap(project(state), loop))
 
   loop
 }
@@ -4364,8 +4346,8 @@ def cata[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(list: B): A =
-    `algebra`(fmap(project(list), loop))
+  def loop(state: B): A =
+    `algebra`(fmap(project(state), loop))
 
   loop
 }
@@ -4381,8 +4363,8 @@ def cata[`F[_]: Functor`, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(list: B): A =
-    algebra(fmap(project(list), loop))
+  def loop(state: B): A =
+    algebra(fmap(project(state), loop))
 
   loop
 }
@@ -4398,8 +4380,8 @@ def cata[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(list: B): A =
-    algebra(fmap(project(list), loop))
+  def loop(state: B): A =
+    algebra(fmap(project(state), loop))
 
   loop
 }
@@ -6005,8 +5987,8 @@ def cata[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(list: B): A =
-    algebra(fmap(project(list), loop))
+  def loop(state: B): A =
+    algebra(fmap(project(state), loop))
 
   loop
 }
@@ -6022,8 +6004,8 @@ def `cata`[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(list: B): A =
-    algebra(fmap(project(list), loop))
+  def loop(state: B): A =
+    algebra(fmap(project(state), loop))
 
   loop
 }
@@ -6039,8 +6021,8 @@ def `cataFix`[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(list: B): A =
-    algebra(fmap(project(list), loop))
+  def loop(state: B): A =
+    algebra(fmap(project(state), loop))
 
   loop
 }
@@ -6056,8 +6038,8 @@ def cataFix[F[_]: Functor, A, B](
   project: B => F[B]
 ): B => A = {
 
-  def loop(list: B): A =
-    algebra(fmap(project(list), loop))
+  def loop(state: B): A =
+    algebra(fmap(project(state), loop))
 
   loop
 }
@@ -9679,7 +9661,7 @@ def ana[F[_]: Functor, A, B](
 ): A => B = {
 
   def loop(state: A): B =
-    embed(fmap(op(state), loop))
+    embed(fmap(`op`(state), loop))
 
   loop
 }
@@ -9696,7 +9678,7 @@ def ana[F[_]: Functor, A, B](
 ): A => B = {
 
   def loop(state: A): B =
-    embed(fmap(coAlgebra(state), loop))
+    embed(fmap(`coAlgebra`(state), loop))
 
   loop
 }
@@ -10005,6 +9987,43 @@ class: center, middle
 
 ---
 
+## `cata` and `ana`
+
+.center[![Linked List](img/cata-ana.svg)]
+
+---
+
+## TODO
+
+hl cata (B through PF to A)
+hl ana (A through PF to B)
+
+---
+
+# TODO
+
+flip ana so that Bs and As are lined up
+hl without arrow names, to show we just flipped the arrows.
+
+---
+
+## Duality of `cata` and `ana`
+
+.center[![Linked List](img/cata-ana-dual.svg)]
+
+---
+
+## Duality of `cata` and `ana`
+
+```scala
+val composed: Int => Int =
+  range andThen product
+```
+
+---
+
+## Duality of `cata` and `ana`
+
 ```scala
 val factorial: Int => Int =
   range andThen product
@@ -10017,6 +10036,20 @@ factorial(3)
 
 ---
 
+## TODO
+
+Start from cata-ana, rename until we get the same thing and merge.
+
+---
+
+## Equivalence of `cata` and `ana`
+
+.center[![Linked List](img/cata-ana-equivalence.svg)]
+
+---
+
+## Equivalence of `cata` and `ana`
+
 ```scala
 val factorial: Int => Int =
   cata(productAlgebra, rangeCoAlgebra)
@@ -10025,6 +10058,23 @@ val factorial: Int => Int =
 ```scala
 factorial(3)
 // res46: Int = 6
+```
+
+---
+
+## Equivalence of `cata` and `ana`
+
+```scala
+def hylo[F[_]: Functor, A, B](
+  algebra  : F[A] => A,
+  coAlgebra: B => F[B]
+): B => A = {
+
+  def loop(curr: B): A =
+    algebra(fmap(coAlgebra(curr), loop))
+
+  loop
+}
 ```
 
 ---

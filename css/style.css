@@ -180,3 +180,21 @@ th .remark-inline-code {
 img {
     max-width: 100%;
 }
+
+.diff-rm .remark-code-span-highlighted, .highlight {
+    background-color: #fdb8c0;
+    border-radius: .2em;
+}
+
+.diff-rm .remark-code-line-highlighted {
+    background-color: #ffeef0;
+}
+
+.diff-add .remark-code-span-highlighted, .highlight {
+    background-color: #acf2bd;
+    border-radius: .2em;
+}
+
+.diff-add .remark-code-line-highlighted {
+    background-color: #e6ffed;
+}
