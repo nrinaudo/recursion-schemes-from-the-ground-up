@@ -1328,43 +1328,9 @@ recurse(base, step, ints)
 
 ## Generalising the return type
 
-```scala
-def recurse(
-  base  : `String`,
-  step  : (Int, `String`) => `String`,
-  values: List
-): `String` =
-  values match {
-    case Cons(head, tail) => step(head, recurse(base, step, tail))
-    case Nil              => base
-  }
-```
-
----
-
-## Generalising the return type
-
-.diff-add[
-```scala
-*def recurse[`A`](
-  base  : String,
-  step  : (Int, String) => String,
-  values: List
-): String =
-  values match {
-    case Cons(head, tail) => step(head, recurse(base, step, tail))
-    case Nil              => base
-  }
-```
-]
-
----
-
-## Generalising the return type
-
 .diff-rm[
 ```scala
-def recurse[A](
+def recurse(
 * base  : `String`,
 * step  : (Int, `String`) => `String`,
   values: List
@@ -1382,7 +1348,7 @@ def recurse[A](
 
 .diff-add[
 ```scala
-def recurse[A](
+*def recurse[`A`](
 * base  : `A`,
 * step  : (Int, `A`) => `A`,
   values: List
