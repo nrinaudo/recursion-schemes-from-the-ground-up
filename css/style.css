@@ -186,6 +186,11 @@ img {
     border-radius: .2em;
 }
 
+.diff-rm .remark-code-span-highlighted span, .highlight span{
+    color      : #24292e;
+    font-weight: normal;
+}
+
 .diff-rm .remark-code-line-highlighted {
     background-color: #ffeef0;
 }
@@ -193,6 +198,11 @@ img {
 .diff-add .remark-code-span-highlighted, .highlight {
     background-color: #acf2bd;
     border-radius: .2em;
+}
+
+.diff-add .remark-code-span-highlighted span, .highlight span {
+    color      : #24292e;
+    font-weight: normal;
 }
 
 .diff-add .remark-code-line-highlighted {
