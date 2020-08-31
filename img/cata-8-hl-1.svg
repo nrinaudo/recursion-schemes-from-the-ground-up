@@ -11,8 +11,8 @@
 <!-- ListFList -->
 <g id="node1" class="node">
 <title>ListFList</title>
-<path fill="#b2ebf2" stroke="#dddddd" d="M168,-36C168,-36 138,-36 138,-36 132,-36 126,-30 126,-24 126,-24 126,-12 126,-12 126,-6 132,0 138,0 138,0 168,0 168,0 174,0 180,-6 180,-12 180,-12 180,-24 180,-24 180,-30 174,-36 168,-36"/>
-<text text-anchor="middle" x="153" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">F[B]</text>
+<path fill="#b2ebf2" stroke="#2980b9" d="M168,-36C168,-36 138,-36 138,-36 132,-36 126,-30 126,-24 126,-24 126,-12 126,-12 126,-6 132,0 138,0 138,0 168,0 168,0 174,0 180,-6 180,-12 180,-12 180,-24 180,-24 180,-30 174,-36 168,-36"/>
+<text text-anchor="middle" x="153" y="-14.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">F[B]</text>
 </g>
 <!-- ListFA -->
 <g id="node2" class="node">

@@ -831,20 +831,6 @@ def mkString(
 
 ## Generalising `mkString`
 
-```scala
-def `mkString`(
-  values: List
-): String =
-  values match {
-    case Cons(head, tail) => head + " :: " + mkString(tail)
-    case Nil              => "nil"
-  }
-```
-
----
-
-## Generalising `mkString`
-
 .diff-rm[
 ```scala
 *def `mkString`(
@@ -1328,9 +1314,44 @@ recurse(base, step, ints)
 
 ## Generalising the return type
 
-.diff-rm[
 ```scala
 def recurse(
+  base  : `String`,
+  step  : (Int, `String`) => `String`,
+  values: List
+): `String` =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Nil              => base
+  }
+```
+
+---
+
+## Generalising the return type
+
+.diff-add[
+```scala
+*def recurse[`A`](
+  base  : String,
+  step  : (Int, String) => String,
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Nil              => base
+  }
+```
+]
+
+
+---
+
+## Generalising the return type
+
+.diff-rm[
+```scala
+def recurse[A](
 * base  : `String`,
 * step  : (Int, `String`) => `String`,
   values: List
@@ -1348,7 +1369,7 @@ def recurse(
 
 .diff-add[
 ```scala
-*def recurse[`A`](
+def recurse[A](
 * base  : `A`,
 * step  : (Int, `A`) => `A`,
   values: List
@@ -1493,8 +1514,8 @@ def recurse[A](
   values: List
 ): A = {
 
-* `def loop(list: List): A =`
-* `  list match {`
+* `def loop(state: List): A =`
+* `  state match {`
 * `    case Cons(head, tail) => step(head, loop(tail))`
 * `    case Nil              => base`
 * `  }`
@@ -1516,8 +1537,8 @@ def recurse[A](
   values: List
 ): A = {
 
-* def loop(list: List): A =
-*   list match {
+* def loop(state: List): A =
+*   state match {
 *     case Cons(head, tail) => step(head, loop(tail))
 *     case Nil              => base
 *   }
@@ -1538,8 +1559,8 @@ def recurse[A](
   values: List
 ): A = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case Cons(head, tail) => `step`(head, loop(tail))
       case Nil              => base
     }
@@ -1559,8 +1580,8 @@ def recurse[A](
   values: List
 ): A = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => `base`
     }
@@ -1582,8 +1603,8 @@ def recurse[A](
   values: List
 ): A = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case Cons(head, tail) => step(head, `loop(tail)`)
       case Nil              => base
     }
@@ -1603,8 +1624,8 @@ def recurse[A](
   values: List
 ): A = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1646,22 +1667,46 @@ recurse(base, step, ints)
 
 ## Dropping parameters
 
+.diff-rm[
 ```scala
 def recurse[A](
   base  : A,
   step  : (Int, A) => A,
-  `values: List`
+* `values: List`
 ): A = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
 
-  loop(`values`)
+* `loop(values)`
 }
 ```
+]
+
+---
+
+## Dropping parameters
+
+.diff-add[
+```scala
+def recurse[A](
+  base  : A,
+  step  : (Int, A) => A
+): A = {
+
+  def loop(state: List): A =
+    state match {
+      case Cons(head, tail) => step(head, loop(tail))
+      case Nil              => base
+    }
+
+* `loop`
+}
+```
+]
 
 ---
 
@@ -1671,17 +1716,16 @@ def recurse[A](
 ```scala
 def recurse[A](
   base  : A,
-  step  : (Int, A) => A,
-* `values: List`
+  step  : (Int, A) => A
 *): `A` = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
 
-* loop`(values)`
+  loop
 }
 ```
 ]
@@ -1697,13 +1741,13 @@ def recurse[A](
   step  : (Int, A) => A
 *): `List => A` = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
 
-* loop
+  loop
 }
 ```
 ]
@@ -1718,8 +1762,8 @@ def recurse[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1778,26 +1822,6 @@ mkString(ints)
 
 ## Naming things
 
-```scala
-def `recurse`[A](
-  base  : A,
-  step  : (Int, A) => A
-): List => A = {
-
-  def loop(list: List): A =
-    list match {
-      case Cons(head, tail) => step(head, loop(tail))
-      case Nil              => base
-    }
-
-  loop
-}
-```
-
----
-
-## Naming things
-
 .diff-rm[
 ```scala
 *def `recurse`[A](
@@ -1805,8 +1829,8 @@ def `recurse`[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1827,8 +1851,8 @@ def `recurse`[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -1848,8 +1872,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -2024,8 +2048,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -2056,8 +2080,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+    state match {
       case `Cons(head, tail)` => step(head, loop(tail))
       case `Nil`              => base
     }
@@ -2154,14 +2178,15 @@ val project: List => Option[(Int, List)] =
 
 ## Abstracting over structure
 
+.diff-rm[
 ```scala
 def fold[A](
   base  : A,
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    list match {
+  def loop(state: List): A =
+*   `state` match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -2169,19 +2194,21 @@ def fold[A](
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over structure
 
+.diff-add[
 ```scala
 def fold[A](
   base  : A,
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    `list` match {
+  def loop(state: List): A =
+*   `project(state)` match {
       case Cons(head, tail) => step(head, loop(tail))
       case Nil              => base
     }
@@ -2189,106 +2216,95 @@ def fold[A](
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over structure
 
+.diff-rm[
 ```scala
 def fold[A](
   base  : A,
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    `project(list)` match {
-      case Cons(head, tail) => step(head, loop(tail))
+  def loop(state: List): A =
+    project(state) match {
+*     case `Cons(head, tail)` => step(head, loop(tail))
       case Nil              => base
     }
 
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over structure
 
+.diff-add[
 ```scala
 def fold[A](
   base  : A,
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
-      case `Cons(head, tail)` => step(head, loop(tail))
-      case Nil              => base
-    }
-
-  loop
-}
-```
-
----
-
-## Abstracting over structure
-
-```scala
-def fold[A](
-  base  : A,
-  step  : (Int, A) => A
-): List => A = {
-
-  def loop(list: List): A =
-    project(list) match {
-      case `Some((head, tail))` => step(head, loop(tail))
+  def loop(state: List): A =
+    project(state) match {
+*     case `Some((head, tail))` => step(head, loop(tail))
       case Nil                => base
     }
 
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over structure
 
+.diff-rm[
 ```scala
 def fold[A](
   base  : A,
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
+  def loop(state: List): A =
+    project(state) match {
       case Some((head, tail)) => step(head, loop(tail))
-      case `Nil`                => base
+*     case `Nil`                => base
     }
 
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over structure
 
+.diff-rm[
 ```scala
 def fold[A](
   base  : A,
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
+  def loop(state: List): A =
+    project(state) match {
       case Some((head, tail)) => step(head, loop(tail))
-      case `None`               => base
+*     case `None`               => base
     }
 
   loop
 }
 ```
+]
 
 ---
 
@@ -2300,8 +2316,8 @@ def fold[A](
   step  : (Int, A) => A
 ): List => A = {
 
-  def loop(list: List): A =
-    `project`(list) match {
+  def loop(state: List): A =
+    `project`(state) match {
       case Some((head, tail)) => step(head, loop(tail))
       case None               => base
     }
@@ -2314,15 +2330,16 @@ def fold[A](
 
 ## Abstracting over structure
 
+.diff-add[
 ```scala
 def fold[A](
   base   : A,
   step   : (Int, A) => A,
-  `project: List => Option[(Int, List)]`
+* `project: List => Option[(Int, List)]`
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
+  def loop(state: List): A =
+    project(state) match {
       case Some((head, tail)) => step(head, loop(tail))
       case None               => base
     }
@@ -2330,6 +2347,7 @@ def fold[A](
   loop
 }
 ```
+]
 
 ---
 
@@ -2342,8 +2360,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
+  def loop(state: List): A =
+    project(state) match {
       case Some((head, tail)) => step(head, loop(tail))
       case None               => base
     }
@@ -2392,8 +2410,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
+  def loop(state: List): A =
+    project(state) match {
       case Some((head, tail)) => step(head, loop(tail))
       case None               => base
     }
@@ -2466,13 +2484,29 @@ val op: Option[(Int, String)] => String =
 
 ## Simplifying `base` and `step`
 
+.diff-rm[
 ```scala
 val op: Option[(Int, String)] => String =
   _ match {
-    case Some((head, tail)) => `head + " :: " + tail`
+*   case Some((head, tail)) => `step(head, tail)`
     case None               => base
   }
 ```
+]
+
+---
+
+## Simplifying `base` and `step`
+
+.diff-add[
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+*   case Some((head, tail)) => `head + " :: " + tail`
+    case None               => base
+  }
+```
+]
 
 ---
 
@@ -2502,13 +2536,29 @@ val op: Option[(Int, String)] => String =
 
 ## Simplifying `base` and `step`
 
+.diff-rm[
 ```scala
 val op: Option[(Int, String)] => String =
   _ match {
     case Some((head, tail)) => head + " :: " + tail
-    case None               => `"nil"`
+*   case None               => `base`
   }
 ```
+]
+
+---
+
+## Simplifying `base` and `step`
+
+.diff-add[
+```scala
+val op: Option[(Int, String)] => String =
+  _ match {
+    case Some((head, tail)) => head + " :: " + tail
+*   case None               => `"nil"`
+  }
+```
+]
 
 ---
 
@@ -2526,15 +2576,16 @@ val op: Option[(Int, String)] => String =
 
 ## Simplifying `base` and `step`
 
+.diff-rm[
 ```scala
 def fold[A](
-* base   : A,
-* step   : (Int, A) => A,
+* `base   : A,`
+* `step   : (Int, A) => A,`
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
+  def loop(state: List): A =
+    project(state) match {
       case Some((head, tail)) => step(head, loop(tail))
       case None               => base
     }
@@ -2542,19 +2593,21 @@ def fold[A](
   loop
 }
 ```
+]
 
 ---
 
 ## Simplifying `base` and `step`
 
+.diff-add[
 ```scala
 def fold[A](
-* op     : Option[(Int, A)] => A,
+* `op     : Option[(Int, A)] => A,`
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
+  def loop(state: List): A =
+    project(state) match {
       case Some((head, tail)) => step(head, loop(tail))
       case None               => base
     }
@@ -2562,86 +2615,95 @@ def fold[A](
   loop
 }
 ```
+]
 
 ---
 
 ## Simplifying `base` and `step`
 
+.diff-rm[
 ```scala
 def fold[A](
   op     : Option[(Int, A)] => A,
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
-      case Some((head, tail)) => `step(head, loop(tail))`
+  def loop(state: List): A =
+    project(state) match {
+*     case Some((head, tail)) => `step(head, loop(tail))`
       case None               => base
     }
 
   loop
 }
 ```
+]
 
 ---
 
 ## Simplifying `base` and `step`
 
+.diff-add[
 ```scala
 def fold[A](
   op     : Option[(Int, A)] => A,
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
-      case Some((head, tail)) => `op(Some((head, loop(tail))))`
+  def loop(state: List): A =
+    project(state) match {
+*     case Some((head, tail)) => `op(Some((head, loop(tail))))`
       case None               => base
     }
 
   loop
 }
 ```
+]
 
 ---
 
 ## Simplifying `base` and `step`
 
+.diff-rm[
 ```scala
 def fold[A](
   op     : Option[(Int, A)] => A,
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
+  def loop(state: List): A =
+    project(state) match {
       case Some((head, tail)) => op(Some((head, loop(tail))))
-      case None               => `base`
+*     case None               => `base`
     }
 
   loop
 }
 ```
+]
 
 ---
 
 ## Simplifying `base` and `step`
 
+.diff-add[
 ```scala
 def fold[A](
   op     : Option[(Int, A)] => A,
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
+  def loop(state: List): A =
+    project(state) match {
       case Some((head, tail)) => op(Some((head, loop(tail))))
-      case None               => `op(None)`
+*     case None               => `op(None)`
     }
 
   loop
 }
 ```
+]
 
 ---
 
@@ -2653,8 +2715,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
+  def loop(state: List): A =
+    project(state) match {
       case Some((head, tail)) => op(Some((head, loop(tail))))
       case None               => op(None)
     }
@@ -2684,34 +2746,37 @@ fold(op, project)(ints)
 
 ## Moving `op`
 
+.diff-rm[
 ```scala
 def fold[A](
   op     : Option[(Int, A)] => A,
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(list: List): A =
-    project(list) match {
-      case Some((head, tail)) => `op`(Some((head, loop(tail))))
-      case None               => `op`(None)
+  def loop(state: List): A =
+    project(state) match {
+*     case Some((head, tail)) => `op`(Some((head, loop(tail))))
+*     case None               => `op`(None)
     }
 
   loop
 }
 ```
+]
 
 ---
 
 ## Moving `op`
 
+.diff-add[
 ```scala
 def fold[A](
   op     : Option[(Int, A)] => A,
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(list: List): A =
-    `op`(project(list) match {
+  def loop(state: List): A =
+*   `op`(project(state) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     })
@@ -2719,6 +2784,7 @@ def fold[A](
   loop
 }
 ```
+]
 
 ---
 
@@ -2730,8 +2796,8 @@ def fold[A](
   project: List => Option[(Int, List)]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(project(list) match {
+  def loop(state: List): A =
+    op(project(state) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     })
@@ -2797,14 +2863,15 @@ type ListF[A] = `Option[(Int, A)]`
 
 ## Intermediate representation
 
+.diff-rm[
 ```scala
 def fold[A](
-  op     : Option[(Int, A)] => A,
-  project: List => Option[(Int, List)]
+* op     : `Option[(Int, A)]` => A,
+* project: List => `Option[(Int, List)]`
 ): List => A = {
 
-  def loop(list: List): A =
-    op(project(list) match {
+  def loop(state: List): A =
+    op(project(state) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     })
@@ -2812,19 +2879,21 @@ def fold[A](
   loop
 }
 ```
+]
 
 ---
 
 ## Intermediate representation
 
+.diff-add[
 ```scala
 def fold[A](
-  op     : `Option[(Int, A)]` => A,
-  project: List => `Option[(Int, List)]`
+* op     : `ListF[A]` => A,
+* project: List => `ListF[List]`
 ): List => A = {
 
-  def loop(list: List): A =
-    op(project(list) match {
+  def loop(state: List): A =
+    op(project(state) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     })
@@ -2832,26 +2901,7 @@ def fold[A](
   loop
 }
 ```
-
----
-
-## Intermediate representation
-
-```scala
-def fold[A](
-  op     : `ListF[A]` => A,
-  project: List => `ListF[List]`
-): List => A = {
-
-  def loop(list: List): A =
-    op(project(list) match {
-      case Some((head, tail)) => Some((head, loop(tail)))
-      case None               => None
-    })
-
-  loop
-}
-```
+]
 
 ---
 
@@ -2863,8 +2913,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(project(list) match {
+  def loop(state: List): A =
+    op(project(state) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     })
@@ -3002,8 +3052,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(project(list) match {
+  def loop(state: List): A =
+    op(project(state) match {
 *     case Some((head, tail)) => Some((head, loop(tail)))
 *     case None               => None
     })
@@ -3022,8 +3072,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(project(list) match {
+  def loop(state: List): A =
+    op(project(state) match {
       case `Some((head, tail))` => Some((head, loop(tail)))
       case None               => None
     })
@@ -3042,8 +3092,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(project(list) match {
+  def loop(state: List): A =
+    op(project(state) match {
       case Some((head, tail)) => `Some((head, loop(tail)))`
       case None               => None
     })
@@ -3062,8 +3112,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(project(list) match {
+  def loop(state: List): A =
+    op(project(state) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case `None`               => None
     })
@@ -3082,8 +3132,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(project(list) match {
+  def loop(state: List): A =
+    op(project(state) match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => `None`
     })
@@ -3096,40 +3146,65 @@ def fold[A](
 
 ## Generalising recursion
 
+.diff-rm[
 ```scala
 def fold[A](
   op     : ListF[A] => A,
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-*   op(project(list) match {
-*     case Some((head, tail)) => Some((head, loop(tail)))
-*     case None               => None
-*   })
+  def loop(state: List): A =
+* `  op(project(state) match {`
+* `    case Some((head, tail)) => Some((head, loop(tail)))`
+* `    case None               => None`
+* `  })`
 
   loop
 }
 ```
+]
 
 ---
 
 ## Generalising recursion
 
+.diff-add[
 ```scala
 def fold[A](
   op     : ListF[A] => A,
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(project(list) match {
-      case Some((head, tail)) => Some((head, loop(tail)))
-      case None               => None
-    })
+  def loop(state: List): A =
+*   op(recurse(project(state)))
 
-* def recurse(list: ListF[List]): ListF[A] =
-*   list match {
+* `def recurse(state: ListF[List]): ListF[A] =`
+* `  state match {`
+* `    case Some((head, tail)) => Some((head, loop(tail)))`
+* `    case None               => None`
+* `  }`
+
+  loop
+}
+```
+]
+
+---
+
+## Generalising recursion
+
+.diff-add[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+*   `op(recurse(project(state)))`
+
+* def recurse(state: ListF[List]): ListF[A] =
+*   state match {
 *     case Some((head, tail)) => Some((head, loop(tail)))
 *     case None               => None
 *   }
@@ -3137,6 +3212,7 @@ def fold[A](
   loop
 }
 ```
+]
 
 ---
 
@@ -3148,14 +3224,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-*   op(project(list) match {
-*     case Some((head, tail)) => Some((head, loop(tail)))
-*     case None               => None
-*   })
+  def loop(state: List): A =
+    op(recurse(project(state)))
 
-  def recurse(list: ListF[List]): ListF[A] =
-    list match {
+  def recurse(state: ListF[List]): ListF[A] =
+    state match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3174,11 +3247,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(`recurse`(project(list)))
+  def loop(state: List): A =
+    op(recurse(project(state)))
 
-  def recurse(list: ListF[List]): ListF[A] =
-    list match {
+  def recurse(state: `ListF[List]`): ListF[A] =
+    state match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3197,11 +3270,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(recurse(project(list)))
+  def loop(state: List): A =
+    op(recurse(project(state)))
 
-  def recurse(list: ListF[List]): ListF[A] =
-    list match {
+  def recurse(state: ListF[List]): `ListF[A]` =
+    state match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3220,57 +3293,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(recurse(project(list)))
+  def loop(state: List): A =
+    op(recurse(project(state)))
 
-  def recurse(list: `ListF[List]`): ListF[A] =
-    list match {
-      case Some((head, tail)) => Some((head, loop(tail)))
-      case None               => None
-    }
-
-  loop
-}
-```
-
----
-
-## Generalising recursion
-
-```scala
-def fold[A](
-  op     : ListF[A] => A,
-  project: List => ListF[List]
-): List => A = {
-
-  def loop(list: List): A =
-    op(recurse(project(list)))
-
-  def recurse(list: ListF[List]): `ListF[A]` =
-    list match {
-      case Some((head, tail)) => Some((head, loop(tail)))
-      case None               => None
-    }
-
-  loop
-}
-```
-
----
-
-## Generalising recursion
-
-```scala
-def fold[A](
-  op     : ListF[A] => A,
-  project: List => ListF[List]
-): List => A = {
-
-  def loop(list: List): A =
-    op(recurse(project(list)))
-
-  def recurse(list: ListF[List]): ListF[A] =
-    list match {
+  def recurse(state: ListF[List]): ListF[A] =
+    state match {
       case Some((head, tail)) => Some((head, `loop(tail)`))
       case None               => None
     }
@@ -3289,11 +3316,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: `List`): A =
-    op(recurse(project(list)))
+  def loop(state: `List`): A =
+    op(recurse(project(state)))
 
-  def recurse(list: ListF[List]): ListF[A] =
-    list match {
+  def recurse(state: ListF[List]): ListF[A] =
+    state match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3312,11 +3339,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): `A` =
-    op(recurse(project(list)))
+  def loop(state: List): `A` =
+    op(recurse(project(state)))
 
-  def recurse(list: ListF[List]): ListF[A] =
-    list match {
+  def recurse(state: ListF[List]): ListF[A] =
+    state match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3329,17 +3356,18 @@ def fold[A](
 
 ## Generalising recursion
 
+.diff-add[
 ```scala
 def fold[A](
   op     : ListF[A] => A,
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(recurse(project(list)))
+  def loop(state: List): A =
+    op(recurse(project(state)))
 
-  def recurse(list: ListF[List], `f: List => A`): ListF[A] =
-    list match {
+* def recurse(state: ListF[List], `f: List => A`): ListF[A] =
+    state match {
       case Some((head, tail)) => Some((head, loop(tail)))
       case None               => None
     }
@@ -3347,52 +3375,82 @@ def fold[A](
   loop
 }
 ```
+]
 
 ---
 
 ## Generalising recursion
 
+.diff-rm[
 ```scala
 def fold[A](
   op     : ListF[A] => A,
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(recurse(project(list)))
+  def loop(state: List): A =
+    op(recurse(project(state)))
 
-  def recurse(list: ListF[List], f: List => A): ListF[A] =
-    list match {
-      case Some((head, tail)) => Some((head, `loop`(tail)))
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+    state match {
+*     case Some((head, tail)) => Some((head, `loop`(tail)))
       case None               => None
     }
 
   loop
 }
 ```
+]
 
 ---
 
 ## Generalising recursion
 
+.diff-add[
 ```scala
 def fold[A](
   op     : ListF[A] => A,
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(recurse(project(list)))
+  def loop(state: List): A =
+    op(recurse(project(state)))
 
-  def recurse(list: ListF[List], f: List => A): ListF[A] =
-    list match {
-      case Some((head, tail)) => Some((head, `f`(tail)))
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+    state match {
+*     case Some((head, tail)) => Some((head, `f`(tail)))
       case None               => None
     }
 
   loop
 }
 ```
+]
+
+---
+
+## Generalising recursion
+
+.diff-add[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+*   op(recurse(project(state), `loop`))
+
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+    state match {
+      case Some((head, tail)) => Some((head, f(tail)))
+      case None               => None
+    }
+
+  loop
+}
+```
+]
 
 ---
 
@@ -3404,11 +3462,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(recurse(project(list), `loop`))
+  def loop(state: List): A =
+    op(recurse(project(state), loop))
 
-  def recurse(list: ListF[List], f: List => A): ListF[A] =
-    list match {
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+    state match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
@@ -3427,11 +3485,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(recurse(project(list), loop))
+  def loop(state: List): A =
+    op(recurse(project(state), loop))
 
-  def recurse(list: ListF[List], f: List => A): ListF[A] =
-    list match {
+  def recurse(state: `ListF[List]`, f: List => A): ListF[A] =
+    state match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
@@ -3450,11 +3508,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(recurse(project(list), loop))
+  def loop(state: List): A =
+    op(recurse(project(state), loop))
 
-  def recurse(list: `ListF[List]`, f: List => A): ListF[A] =
-    list match {
+  def recurse(state: ListF[List], f: `List => A`): ListF[A] =
+    state match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
@@ -3473,34 +3531,11 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(recurse(project(list), loop))
+  def loop(state: List): A =
+    op(recurse(project(state), loop))
 
-  def recurse(list: ListF[List], f: `List => A`): ListF[A] =
-    list match {
-      case Some((head, tail)) => Some((head, f(tail)))
-      case None               => None
-    }
-
-  loop
-}
-```
-
----
-
-## Generalising recursion
-
-```scala
-def fold[A](
-  op     : ListF[A] => A,
-  project: List => ListF[List]
-): List => A = {
-
-  def loop(list: List): A =
-    op(recurse(project(list), loop))
-
-  def recurse(list: ListF[List], f: List => A): `ListF[A]` =
-    list match {
+  def recurse(state: ListF[List], f: List => A): `ListF[A]` =
+    state match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
@@ -3793,20 +3828,127 @@ def fmap[F[_], A, B](
 
 ## Using Functor
 
+.diff-rm[
 ```scala
 def fold[A](
   op     : ListF[A] => A,
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(recurse(project(list), loop))
+  def loop(state: List): A =
+    op(recurse(project(state), loop))
 
-  def recurse(list: ListF[List], f: List => A): ListF[A] =
-    list match {
-      case Some((head, tail)) => Some((head, f(tail)))
-      case None               => None
-    }
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+* `  state match {`
+* `    case Some((head, tail)) => Some((head, f(tail)))`
+* `    case None               => None`
+* `  }`
+
+  loop
+}
+```
+]
+
+---
+
+## Using Functor
+
+.diff-add[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(recurse(project(state), loop))
+
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+*   `fmap(state, f)`
+
+  loop
+}
+```
+]
+
+---
+
+## Using Functor
+
+.diff-rm[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+*   op(`recurse`(project(state), loop))
+
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+    fmap(state, f)
+
+  loop
+}
+```
+]
+
+---
+
+## Using Functor
+
+.diff-add[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+*   op(`fmap`(project(state), loop))
+
+  def recurse(state: ListF[List], f: List => A): ListF[A] =
+    fmap(state, f)
+
+  loop
+}
+```
+]
+
+---
+
+## Using Functor
+
+.diff-rm[
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(fmap(project(state), loop))
+
+* `def recurse(state: ListF[List], f: List => A): ListF[A] =`
+* `  fmap(state, f)`
+
+  loop
+}
+```
+]
+
+---
+
+## Using Functor
+
+```scala
+def fold[A](
+  op     : ListF[A] => A,
+  project: List => ListF[List]
+): List => A = {
+
+  def loop(state: List): A =
+    op(fmap(project(state), loop))
 
   loop
 }
@@ -3822,128 +3964,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(recurse(project(list), loop))
-
-  def recurse(list: ListF[List], f: List => A): ListF[A] =
-*   list match {
-*     case Some((head, tail)) => Some((head, f(tail)))
-*     case None               => None
-*   }
-
-  loop
-}
-```
-
----
-
-## Using Functor
-
-```scala
-def fold[A](
-  op     : ListF[A] => A,
-  project: List => ListF[List]
-): List => A = {
-
-  def loop(list: List): A =
-    op(recurse(project(list), loop))
-
-  def recurse(list: ListF[List], f: List => A): ListF[A] =
-    `fmap(list, f)`
-
-  loop
-}
-```
-
----
-
-## Using Functor
-
-```scala
-def fold[A](
-  op     : ListF[A] => A,
-  project: List => ListF[List]
-): List => A = {
-
-  def loop(list: List): A =
-    op(`recurse`(project(list), loop))
-
-  def recurse(list: ListF[List], f: List => A): ListF[A] =
-    fmap(list, f)
-
-  loop
-}
-```
-
----
-
-## Using Functor
-
-```scala
-def fold[A](
-  op     : ListF[A] => A,
-  project: List => ListF[List]
-): List => A = {
-
-  def loop(list: List): A =
-    op(`fmap`(project(list), loop))
-
-  def recurse(list: ListF[List], f: List => A): ListF[A] =
-    fmap(list, f)
-
-  loop
-}
-```
-
----
-
-## Using Functor
-
-```scala
-def fold[A](
-  op     : ListF[A] => A,
-  project: List => ListF[List]
-): List => A = {
-
-  def loop(list: List): A =
-    op(fmap(project(list), loop))
-
-* def recurse(list: ListF[List], f: List => A): ListF[A] =
-*   fmap(list, f)
-
-  loop
-}
-```
-
----
-
-## Using Functor
-
-```scala
-def fold[A](
-  op     : ListF[A] => A,
-  project: List => ListF[List]
-): List => A = {
-
-  def loop(list: List): A =
-    op(fmap(project(list), loop))
-
-  loop
-}
-```
-
----
-
-## Using Functor
-
-```scala
-def fold[A](
-  op     : ListF[A] => A,
-  project: List => ListF[List]
-): List => A = {
-
-  def loop(list: List): A =
-    op(fmap(project(list), loop))
+  def loop(state: List): A =
+    op(fmap(project(state), loop))
 
   loop
 }
@@ -3988,8 +4010,8 @@ def fold[A](
   project: List => `ListF`[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(fmap(project(list), loop))
+  def loop(state: List): A =
+    op(fmap(project(state), loop))
 
   loop
 }
@@ -4005,8 +4027,8 @@ def fold[A](
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(`fmap`(project(list), loop))
+  def loop(state: List): A =
+    op(`fmap`(project(state), loop))
 
   loop
 }
@@ -4016,52 +4038,58 @@ def fold[A](
 
 ## Abstracting over `ListF`
 
+.diff-add[
 ```scala
-def fold[`F[_]: Functor`, A](
+*def fold[`F[_]: Functor`, A](
   op     : ListF[A] => A,
   project: List => ListF[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(fmap(project(list), loop))
+  def loop(state: List): A =
+    op(fmap(project(state), loop))
 
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over `ListF`
 
+.diff-rm[
 ```scala
 def fold[F[_]: Functor, A](
-  op     : `ListF`[A] => A,
-  project: List => `ListF`[List]
+* op     : `ListF`[A] => A,
+* project: List => `ListF`[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(fmap(project(list), loop))
+  def loop(state: List): A =
+    op(fmap(project(state), loop))
 
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over `ListF`
 
+.diff-add[
 ```scala
 def fold[F[_]: Functor, A](
-  op     : `F`[A] => A,
-  project: List => `F`[List]
+* op     : `F`[A] => A,
+* project: List => `F`[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(fmap(project(list), loop))
+  def loop(state: List): A =
+    op(fmap(project(state), loop))
 
   loop
 }
 ```
+]
 
 ---
 
@@ -4073,8 +4101,8 @@ def fold[F[_]: Functor, A](
   project: List => F[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(fmap(project(list), loop))
+  def loop(state: List): A =
+    op(fmap(project(state), loop))
 
   loop
 }
@@ -4119,8 +4147,8 @@ def fold[F[_]: Functor, A](
   project: `List` => F[`List`]
 ): `List` => A = {
 
-  def loop(list: `List`): A =
-    op(fmap(project(list), loop))
+  def loop(state: `List`): A =
+    op(fmap(project(state), loop))
 
   loop
 }
@@ -4130,86 +4158,58 @@ def fold[F[_]: Functor, A](
 
 ## Abstracting over `List`
 
+.diff-add[
 ```scala
-def fold[F[_]: Functor, A, `B`](
+*def fold[F[_]: Functor, A, `B`](
   op     : F[A] => A,
   project: List => F[List]
 ): List => A = {
 
-  def loop(list: List): A =
-    op(fmap(project(list), loop))
+  def loop(state: List): A =
+    op(fmap(project(state), loop))
 
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over `List`
 
+.diff-rm[
 ```scala
 def fold[F[_]: Functor, A, B](
   op     : F[A] => A,
-  project: `List` => F[`List`]
+* project: `List` => F[`List`]
 ): `List` => A = {
 
-  def loop(list: `List`): A =
-    op(fmap(project(list), loop))
+* def loop(stage: `List`): A =
+    op(fmap(project(state), loop))
 
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over `List`
 
+.diff-add[
 ```scala
 def fold[F[_]: Functor, A, B](
   op     : F[A] => A,
-  project: `B` => F[`B`]
+* project: `B` => F[`B`]
 ): `B` => A = {
 
-  def loop(list: `B`): A =
-    op(fmap(project(list), loop))
+* def loop(state: `B`): A =
+    op(fmap(project(state), loop))
 
   loop
 }
 ```
-
----
-
-## Abstracting over `List`
-
-```scala
-def fold[F[_]: Functor, A, B](
-  op     : F[A] => A,
-  project: B => F[B]
-): B => A = {
-
-  def loop(`list`: B): A =
-    op(fmap(project(`list`), loop))
-
-  loop
-}
-```
-
----
-
-## Abstracting over `List`
-
-```scala
-def fold[F[_]: Functor, A, B](
-  op     : F[A] => A,
-  project: B => F[B]
-): B => A = {
-
-  def loop(`state`: B): A =
-    op(fmap(project(`state`), loop))
-
-  loop
-}
-```
+]
 
 ---
 
@@ -4255,8 +4255,9 @@ fold(op, project).apply(ints)
 
 ## Naming things
 
+.diff-rm[
 ```scala
-def `fold`[F[_]: Functor, A, B](
+*def `fold`[F[_]: Functor, A, B](
   op     : F[A] => A,
   project: B => F[B]
 ): B => A = {
@@ -4267,13 +4268,15 @@ def `fold`[F[_]: Functor, A, B](
   loop
 }
 ```
+]
 
 ---
 
 ## Naming things
 
+.diff-add[
 ```scala
-def `cata`[F[_]: Functor, A, B](
+*def `cata`[F[_]: Functor, A, B](
   op     : F[A] => A,
   project: B => F[B]
 ): B => A = {
@@ -4284,40 +4287,45 @@ def `cata`[F[_]: Functor, A, B](
   loop
 }
 ```
+]
 
 ---
 
 ## Naming things
 
+.diff-rm[
 ```scala
 def cata[F[_]: Functor, A, B](
-  `op`     : F[A] => A,
+* `op`     : F[A] => A,
   project: B => F[B]
 ): B => A = {
 
   def loop(state: B): A =
-    `op`(fmap(project(state), loop))
+*   `op`(fmap(project(state), loop))
 
   loop
 }
 ```
+]
 
 ---
 
 ## Naming things
 
+.diff-add[
 ```scala
 def cata[F[_]: Functor, A, B](
-  `algebra`: F[A] => A,
+* `algebra`: F[A] => A,
   project: B => F[B]
 ): B => A = {
 
   def loop(state: B): A =
-    `algebra`(fmap(project(state), loop))
+*   `algebra`(fmap(project(state), loop))
 
   loop
 }
 ```
+]
 
 ---
 
@@ -4962,42 +4970,47 @@ case object Leaf extends Tree
 
 ## Pattern functor
 
+.diff-rm[
 ```scala
-sealed trait `Tree`
+*sealed trait `Tree`
 
 case class Node(
   left : Tree,
   value: Int,
   right: Tree
-) extends `Tree`
+*) extends `Tree`
 
-case object Leaf extends `Tree`
+*case object Leaf extends `Tree`
 ```
+]
 
 ---
 
 ## Pattern functor
 
+.diff-add[
 ```scala
-sealed trait `TreeF`
+*sealed trait `TreeF`
 
 case class Node(
   left : Tree,
   value: Int,
   right: Tree
-) extends `TreeF`
+*) extends `TreeF`
 
-case object Leaf extends `TreeF`
+*case object Leaf extends `TreeF`
 ```
+]
 
 ---
 
 ## Pattern functor
 
+.diff-rm[
 ```scala
 sealed trait TreeF
 
-case class `Node`(
+*case class `Node`(
   left : Tree,
   value: Int,
   right: Tree
@@ -5005,15 +5018,17 @@ case class `Node`(
 
 case object Leaf extends TreeF
 ```
+]
 
 ---
 
 ## Pattern functor
 
+.diff-add[
 ```scala
 sealed trait TreeF
 
-case class `NodeF`(
+*case class `NodeF`(
   left : Tree,
   value: Int,
   right: Tree
@@ -5021,11 +5036,13 @@ case class `NodeF`(
 
 case object Leaf extends TreeF
 ```
+]
 
 ---
 
 ## Pattern functor
 
+.diff-rm[
 ```scala
 sealed trait TreeF
 
@@ -5035,13 +5052,15 @@ case class NodeF(
   right: Tree
 ) extends TreeF
 
-case object `Leaf` extends TreeF
+*case object `Leaf` extends TreeF
 ```
+]
 
 ---
 
 ## Pattern functor
 
+.diff-add[
 ```scala
 sealed trait TreeF
 
@@ -5051,8 +5070,9 @@ case class NodeF(
   right: Tree
 ) extends TreeF
 
-case object `LeafF` extends TreeF
+*case object `LeafF` extends TreeF
 ```
+]
 
 ---
 
@@ -5074,8 +5094,9 @@ case object LeafF extends TreeF
 
 ## Pattern functor
 
+.diff-add[
 ```scala
-sealed trait TreeF`[A]`
+*sealed trait TreeF`[A]`
 
 case class NodeF(
   left : Tree,
@@ -5085,6 +5106,7 @@ case class NodeF(
 
 case object LeafF extends TreeF
 ```
+]
 
 ---
 
@@ -5106,49 +5128,55 @@ case object LeafF extends TreeF
 
 ## Pattern functor
 
+.diff-add[
 ```scala
 sealed trait TreeF[A]
 
-case class NodeF`[A]`(
+*case class NodeF`[A]`(
   left : Tree,
   value: Int,
   right: Tree
-) extends TreeF`[A]`
+*) extends TreeF`[A]`
 
 case object LeafF extends TreeF
 ```
+]
 
 ---
 
 ## Pattern functor
 
+.diff-rm[
 ```scala
 sealed trait TreeF[A]
 
 case class NodeF[A](
-  left : `Tree`,
+* left : `Tree`,
   value: Int,
-  right: `Tree`
+* right: `Tree`
 ) extends TreeF[A]
 
 case object LeafF extends TreeF
 ```
+]
 
 ---
 
 ## Pattern functor
 
+.diff-add[
 ```scala
 sealed trait TreeF[A]
 
 case class NodeF[A](
-  left : `A`,
+* left : `A`,
   value: Int,
-  right: `A`
+* right: `A`
 ) extends TreeF[A]
 
 case object LeafF extends TreeF
 ```
+]
 
 ---
 
@@ -5170,6 +5198,7 @@ case class NodeF[A](
 
 ## Pattern functor
 
+.diff-add[
 ```scala
 sealed trait TreeF[A]
 
@@ -5179,13 +5208,15 @@ case class NodeF[A](
   right: A
 ) extends TreeF[A]
 
-case object LeafF extends TreeF`[???]`
+*case object LeafF extends TreeF`[???]`
 ```
+]
 
 ---
 
 ## Pattern functor
 
+.diff-add[
 ```scala
 sealed trait TreeF[A]
 
@@ -5195,15 +5226,17 @@ case class NodeF[A](
   right: A
 ) extends TreeF[A]
 
-case object LeafF extends TreeF`[Nothing]`
+*case object LeafF extends TreeF`[Nothing]`
 ```
+]
 
 ---
 
 ## Pattern functor
 
+.diff-rm[
 ```scala
-sealed trait TreeF[`A`]
+*sealed trait TreeF[`A`]
 
 case class NodeF[A](
   left : A,
@@ -5213,13 +5246,15 @@ case class NodeF[A](
 
 case object LeafF extends TreeF[Nothing]
 ```
+]
 
 ---
 
 ## Pattern functor
 
+.diff-add[
 ```scala
-sealed trait TreeF[`+A`]
+*sealed trait TreeF[`+A`]
 
 case class NodeF[A](
   left : A,
@@ -5229,6 +5264,7 @@ case class NodeF[A](
 
 case object LeafF extends TreeF[Nothing]
 ```
+]
 
 ---
 
@@ -5689,17 +5725,21 @@ type List2 = `ListF[???]`
 
 ## `List` in terms of `ListF`
 
+.diff-rm[
 ```scala
-type List2 = ListF[`???`]
+*type List2 = ListF[`???`]
 ```
+]
 
 ---
 
 ## `List` in terms of `ListF`
 
+.diff-add[
 ```scala
-type List2 = ListF[`List2`]
+*type List2 = ListF[`List2`]
 ```
+]
 
 ---
 
@@ -5748,25 +5788,31 @@ case class List2(value: `ListF`[List2])
 
 ## Generalising `List2`
 
+.diff-add[
 ```scala
-case class List2[`F[_]`](value: ListF[List2])
+*case class List2[`F[_]`](value: ListF[List2])
 ```
+]
 
 ---
 
 ## Generalising `List2`
 
+.diff-rm[
 ```scala
-case class List2[F[_]](value: `ListF`[List2])
+*case class List2[F[_]](value: `ListF`[List2])
 ```
+]
 
 ---
 
 ## Generalising `List2`
 
+.diff-add[
 ```scala
-case class List2[F[_]](value: `F`[List2])
+*case class List2[F[_]](value: `F`[List2])
 ```
+]
 
 ---
 
@@ -5780,9 +5826,11 @@ case class List2[F[_]](value: F[`List2`])
 
 ## Generalising `List2`
 
+.diff-add[
 ```scala
-case class List2[F[_]](value: F[List2[`F`]])
+*case class List2[F[_]](value: F[List2[`F`]])
 ```
+]
 
 ---
 
@@ -5796,17 +5844,21 @@ case class List2[F[_]](value: F[List2[F]])
 
 ## Naming things
 
+.diff-rm[
 ```scala
-case class `List2`[F[_]](value: F[`List2`[F]])
+*case class `List2`[F[_]](value: F[`List2`[F]])
 ```
+]
 
 ---
 
 ## Naming things
 
+.diff-add[
 ```scala
-case class `Fix`[F[_]](value: F[`Fix`[F]])
+*case class `Fix`[F[_]](value: F[`Fix`[F]])
 ```
+]
 
 ---
 
@@ -5964,8 +6016,9 @@ def cata[F[_]: Functor, A, B](
 
 ## `cata` with `Fix`
 
+.diff-rm[
 ```scala
-def `cata`[F[_]: Functor, A, B](
+*def `cata`[F[_]: Functor, A, B](
   algebra: F[A] => A,
   project: B => F[B]
 ): B => A = {
@@ -5976,13 +6029,15 @@ def `cata`[F[_]: Functor, A, B](
   loop
 }
 ```
+]
 
 ---
 
 ## `cata` with `Fix`
 
+.diff-add[
 ```scala
-def `cataFix`[F[_]: Functor, A, B](
+*def `cataFix`[F[_]: Functor, A, B](
   algebra: F[A] => A,
   project: B => F[B]
 ): B => A = {
@@ -5993,6 +6048,7 @@ def `cataFix`[F[_]: Functor, A, B](
   loop
 }
 ```
+]
 
 ---
 
@@ -6025,37 +6081,41 @@ def cataFix[F[_]: Functor, A, B](
 
 ---
 
+.diff-rm[
 ## `cata` with `Fix`
 
 ```scala
-def cataFix[F[_]: Functor, A, `B`](
+*def cataFix[F[_]: Functor, A, `B`](
   algebra: F[A] => A,
-  project: `B` => F[`B`]
-): `B` => A = {
+* project: `B` => F[`B`]
+*): `B` => A = {
 
-  def loop(list: `B`): A =
+* def loop(list: `B`): A =
     algebra(fmap(project(list), loop))
 
   loop
 }
 ```
+]
 
 ---
 
 ## `cata` with `Fix`
 
+.diff-add[
 ```scala
 def cataFix[F[_]: Functor, A](
   algebra: F[A] => A,
-  project: `Fix[F]` => F[`Fix[F]`]
-): `Fix[F]` => A = {
+* project: `Fix[F]` => F[`Fix[F]`]
+*): `Fix[F]` => A = {
 
-  def loop(list: `Fix[F]`): A =
+* def loop(list: `Fix[F]`): A =
     algebra(fmap(project(list), loop))
 
   loop
 }
 ```
+]
 
 ---
 
@@ -6114,25 +6174,29 @@ val project: List => ListF[List] =
 
 ## Projecting `Fix`
 
+.diff-rm[
 ```scala
-val `project`: List => ListF[List] =
+*val `project`: List => ListF[List] =
   _ match {
     case Cons(head, tail) => Some((head, tail))
     case Nil              => None
   }
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-add[
 ```scala
-val `projectFix`: List => ListF[List] =
+*val `projectFix`: List => ListF[List] =
   _ match {
     case Cons(head, tail) => Some((head, tail))
     case Nil              => None
   }
 ```
+]
 
 ---
 
@@ -6150,73 +6214,85 @@ val projectFix: List => ListF[List] =
 
 ## Projecting `Fix`
 
+.diff-rm[
 ```scala
-val projectFix: `List` => ListF[`List`] =
+*val projectFix: `List` => ListF[`List`] =
   _ match {
     case Cons(head, tail) => Some((head, tail))
     case Nil              => None
   }
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-add[
 ```scala
-val projectFix: `FixedList` => ListF[`FixedList`] =
+*val projectFix: `FixedList` => ListF[`FixedList`] =
   _ match {
     case Cons(head, tail) => Some((head, tail))
     case Nil              => None
   }
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-rm[
 ```scala
 val projectFix: FixedList => ListF[FixedList] =
   _ match {
-    case `Cons(head, tail)` => Some((head, tail))
+*   case `Cons(head, tail)` => Some((head, tail))
     case Nil              => None
   }
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-add[
 ```scala
 val projectFix: FixedList => ListF[FixedList] =
   _ match {
-    case `Fix(Some((head, tail)))` => Some((head, tail))
+*   case `Fix(Some((head, tail)))` => Some((head, tail))
     case Nil                     => None
   }
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-rm[
 ```scala
 val projectFix: FixedList => ListF[FixedList] =
   _ match {
     case Fix(Some((head, tail))) => Some((head, tail))
-    case `Nil`                     => None
+*   case `Nil`                     => None
   }
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-add[
 ```scala
 val projectFix: FixedList => ListF[FixedList] =
   _ match {
     case Fix(Some((head, tail))) => Some((head, tail))
-    case `Fix(None)`               => None
+*   case `Fix(None)`               => None
   }
 ```
+]
 
 ---
 
@@ -6258,22 +6334,26 @@ val projectFix: FixedList => ListF[FixedList] =
 
 ## Projecting `Fix`
 
+.diff-rm[
 ```scala
 val projectFix: FixedList => ListF[FixedList] =
-* _ match {
-*   case Fix(Some((head, tail))) => Some((head, tail))
-*   case Fix(None)               => None
-* }
+* `_ match {`
+* `  case Fix(Some((head, tail))) => Some((head, tail))`
+* `  case Fix(None)               => None`
+* `}`
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-add[
 ```scala
 val projectFix: FixedList => ListF[FixedList] =
-* _.value
+* `_.value`
 ```
+]
 
 ---
 
@@ -6288,19 +6368,23 @@ val projectFix: FixedList => ListF[FixedList] =
 
 ## Projecting `Fix`
 
+.diff-rm[
 ```scala
-val projectFix: `FixedList` => ListF[`FixedList`] =
+*val projectFix: `FixedList` => ListF[`FixedList`] =
   _.value
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-add[
 ```scala
-val projectFix: `Fix[ListF]` => ListF[`Fix[ListF]`] =
+*val projectFix: `Fix[ListF]` => ListF[`Fix[ListF]`] =
   _.value
 ```
+]
 
 ---
 
@@ -6324,46 +6408,45 @@ val projectFix: Fix[`ListF`] => `ListF`[Fix[`ListF`]] =
 
 ## Projecting `Fix`
 
+.diff-rm[
 ```scala
-&#x200B;`val projectFix`: Fix[ListF] => ListF[Fix[ListF]] =
+*&#x200B;`val projectFix`: Fix[ListF] => ListF[Fix[ListF]] =
   _.value
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-add[
 ```scala
-&#x200B;`def` projectFix: Fix[ListF] => ListF[Fix[ListF]] =
+*&#x200B;`def projectFix[F[_]]`: Fix[ListF] => ListF[Fix[ListF]] =
   _.value
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-rm[
 ```scala
-def projectFix[`F[_]`]: Fix[ListF] => ListF[Fix[ListF]] =
+*def projectFix[F[_]]: Fix[`ListF`] => `ListF`[Fix[`ListF`]] =
   _.value
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-add[
 ```scala
-def projectFix[F[_]]: Fix[`ListF`] => `ListF`[Fix[`ListF`]] =
+*def projectFix[F[_]]: Fix[`F`] => `F`[Fix[`F`]] =
   _.value
 ```
-
----
-
-## Projecting `Fix`
-
-```scala
-def projectFix[F[_]]: Fix[`F`] => `F`[Fix[`F`]] =
-  _.value
-```
+]
 
 ---
 
@@ -6404,6 +6487,7 @@ def cataFix[F[_]: Functor, A](
 
 ## Projecting `Fix`
 
+.diff-rm[
 ```scala
 def cataFix[F[_]: Functor, A](
   algebra: F[A] => A,
@@ -6411,16 +6495,18 @@ def cataFix[F[_]: Functor, A](
 ): Fix[F] => A = {
 
   def loop(list: Fix[F]): A =
-    algebra(fmap(`project(list)`, loop))
+*   algebra(fmap(`project(list)`, loop))
 
   loop
 }
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-add[
 ```scala
 def cataFix[F[_]: Functor, A](
   algebra: F[A] => A,
@@ -6428,20 +6514,22 @@ def cataFix[F[_]: Functor, A](
 ): Fix[F] => A = {
 
   def loop(list: Fix[F]): A =
-    algebra(fmap(`list.value`, loop))
+*   algebra(fmap(`list.value`, loop))
 
   loop
 }
 ```
+]
 
 ---
 
 ## Projecting `Fix`
 
+.diff-rm[
 ```scala
 def cataFix[F[_]: Functor, A](
   algebra: F[A] => A,
-  `project: Fix[F] => F[Fix[F]]`
+* `project: Fix[F] => F[Fix[F]]`
 ): Fix[F] => A = {
 
   def loop(list: Fix[F]): A =
@@ -6450,6 +6538,7 @@ def cataFix[F[_]: Functor, A](
   loop
 }
 ```
+]
 
 ---
 
@@ -6578,7 +6667,7 @@ val heightFix: FixedTree => Int =
 val heightFix: FixedTree => Int =
   `cataFix(heightAlgebra)`
 ```
-3
+
 ---
 
 ## `height` in terms of `cataFix`
@@ -7200,29 +7289,33 @@ def charCodes(
 
 ## Generalising `charCodes`
 
+.diff-rm[
 ```scala
-def `charCodes`(
+*def `charCodes`(
   from: String
 ): List = {
   if(from.nonEmpty)
-    Cons(from.head.toInt, `charCodes`(from.tail))
+*   Cons(from.head.toInt, `charCodes`(from.tail))
   else Nil
 }
 ```
+]
 
 ---
 
 ## Generalising `charCodes`
 
+.diff-add[
 ```scala
-def `recurse`(
+*def `recurse`(
   from: String
 ): List = {
   if(from.nonEmpty)
-    Cons(from.head.toInt, `recurse`(from.tail))
+*   Cons(from.head.toInt, `recurse`(from.tail))
   else Nil
 }
 ```
+]
 
 ---
 
@@ -7352,15 +7445,38 @@ def recurse(
 
 ## Generalising the predicate
 
+.diff-rm[
 ```scala
 def recurse(
   from: String
 ): List = {
-  if(`from.nonEmpty`)
+* if(`from.nonEmpty`)
     Cons(from.head.toInt, recurse(from.tail))
   else Nil
 }
 ```
+]
+
+```scala
+def predicate(from: String): Boolean =
+  from.nonEmpty
+```
+
+---
+
+## Generalising the predicate
+
+.diff-add[
+```scala
+def recurse(
+  from: String
+): List = {
+* if(`predicate(from)`)
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+]
 
 ```scala
 def predicate(from: String): Boolean =
@@ -7375,7 +7491,7 @@ def predicate(from: String): Boolean =
 def recurse(
   from: String
 ): List = {
-  if(`predicate(from)`)
+  if(`predicate`(from))
     Cons(from.head.toInt, recurse(from.tail))
   else Nil
 }
@@ -7390,31 +7506,35 @@ def predicate(from: String): Boolean =
 
 ## Generalising the predicate
 
+.diff-add[
 ```scala
 def recurse(
-  `predicate: String => Boolean`,
+* `predicate: String => Boolean`,
   from     : String
 ): List = {
   if(predicate(from))
-    Cons(from.head.toInt, recurse(from.tail))
+*   Cons(from.head.toInt, recurse(predicate, from.tail))
   else Nil
 }
 ```
+]
 
 ---
 
 ## Generalising the predicate
 
+.diff-add[
 ```scala
 def recurse(
-  predicate: String => Boolean,
+* predicate: String => Boolean,
   from     : String
 ): List = {
   if(predicate(from))
-    Cons(from.head.toInt, recurse(`predicate`, from.tail))
+*   Cons(from.head.toInt, recurse(`predicate`, from.tail))
   else Nil
 }
 ```
+]
 
 ---
 
@@ -7499,16 +7619,18 @@ def recurse(
 
 ## Generalising the update
 
+.diff-rm[
 ```scala
 def recurse(
   predicate: String => Boolean,
   from     : String
 ): List = {
   if(predicate(from))
-    `Cons(from.head.toInt, recurse(predicate, from.tail))`
+*   `Cons(from.head.toInt, recurse(predicate, from.tail))`
   else Nil
 }
 ```
+]
 
 ```scala
 def update(from: String): (Int, String) =
@@ -7519,18 +7641,20 @@ def update(from: String): (Int, String) =
 
 ## Generalising the update
 
+.diff-add[
 ```scala
 def recurse(
   predicate: String => Boolean,
   from     : String
 ): List = {
   if(predicate(from)) {
-*   val (head, nextState) = update(from)
-*   Cons(head, recurse(predicate, nextState))
+*   `val (head, nextState) = update(from)`
+*   `Cons(head, recurse(predicate, nextState))`
   }
   else Nil
 }
 ```
+]
 
 ```scala
 def update(from: String): (Int, String) =
@@ -7651,37 +7775,41 @@ def update(from: String): (Int, String) =
 
 ## Generalising the update
 
+.diff-add[
 ```scala
 def recurse(
   predicate: String => Boolean,
-  `update   : String => (Int, String)`,
+* `update   : String => (Int, String)`,
   from     : String
 ): List = {
   if(predicate(from)) {
     val (head, nextState) = update(from)
-    Cons(head, recurse(predicate, nextState))
+*   Cons(head, recurse(predicate, update, nextState))
   }
   else Nil
 }
 ```
+]
 
 ---
 
 ## Generalising the update
 
+.diff-add[
 ```scala
 def recurse(
   predicate: String => Boolean,
-  update   : String => (Int, String),
+* update   : String => (Int, String),
   from     : String
 ): List = {
   if(predicate(from)) {
     val (head, nextState) = update(from)
-    Cons(head, recurse(predicate, `update`, nextState))
+*   Cons(head, recurse(predicate, `update`, nextState))
   }
   else Nil
 }
 ```
+]
 
 ---
 
@@ -7752,8 +7880,9 @@ def recurse(
 
 ## Generalising the input type
 
+.diff-add[
 ```scala
-def recurse[`A`](
+*def recurse[`A`](
   predicate: String => Boolean,
   update   : String => (Int, String),
   from     : String
@@ -7765,16 +7894,18 @@ def recurse[`A`](
   else Nil
 }
 ```
+]
 
 ---
 
 ## Generalising the input type
 
+.diff-rm[
 ```scala
 def recurse[A](
-  predicate: `String` => Boolean,
-  update   : `String` => (Int, `String`),
-  from     : `String`
+* predicate: `String` => Boolean,
+* update   : `String` => (Int, `String`),
+* from     : `String`
 ): List = {
   if(predicate(from)) {
     val (head, nextState) = update(from)
@@ -7783,16 +7914,18 @@ def recurse[A](
   else Nil
 }
 ```
+]
 
 ---
 
 ## Generalising the input type
 
+.diff-add[
 ```scala
 def recurse[A](
-  predicate: `A` => Boolean,
-  update   : `A` => (Int, `A`),
-  from     : `A`
+* predicate: `A` => Boolean,
+* update   : `A` => (Int, `A`),
+* from     : `A`
 ): List = {
   if(predicate(from)) {
     val (head, nextState) = update(from)
@@ -7801,6 +7934,7 @@ def recurse[A](
   else Nil
 }
 ```
+]
 
 ---
 
@@ -7849,6 +7983,25 @@ mkString(recurse(predicate, update, "foobar"))
 
 ```scala
 def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, `recurse(predicate, update, nextState)`)
+  }
+  else Nil
+}
+```
+
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
   `predicate`: A => Boolean,
   update   : A => (Int, A),
   from     : A
@@ -7883,24 +8036,51 @@ def recurse[A](
 
 ## Simplifying the step
 
+.diff-rm[
 ```scala
 def recurse[A](
   predicate: A => Boolean,
   update   : A => (Int, A),
   from     : A
 ): List = {
-* if(predicate(from)) {
-*   val (head, nextState) = update(from)
-*   Cons(head, recurse(predicate, update, nextState))
-* }
-* else Nil
+* `if(predicate(from)) {`
+* `  val (head, nextState) = update(from)`
+* `  Cons(head, recurse(predicate, update, nextState))`
+* `}`
+* `else Nil`
 }
 ```
+]
 
 ---
 
 ## Simplifying the step
 
+.diff-add[
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+
+* `def loop(state: A): List =`
+* `  if(predicate(state)) {`
+* `    val (head, nextState) = update(state)`
+* `    Cons(head, loop(nextState))`
+* `  }`
+* `  else Nil`
+
+* loop(from)
+}
+```
+]
+
+---
+
+## Simplifying the step
+
+.diff-add[
 ```scala
 def recurse[A](
   predicate: A => Boolean,
@@ -7911,109 +8091,14 @@ def recurse[A](
 * def loop(state: A): List =
 *   if(predicate(state)) {
 *     val (head, nextState) = update(state)
-*     Cons(head, recurse(predicate, update, nextState))
+*     Cons(head, loop(nextState))
 *   }
 *   else Nil
 
-  if(predicate(from)) {
-    val (head, nextState) = update(from)
-    Cons(head, recurse(`predicate`, update, nextState))
-  }
-  else Nil
+* `loop(from)`
 }
 ```
-
----
-
-## Simplifying the step
-
-```scala
-def recurse[A](
-  predicate: A => Boolean,
-  update   : A => (Int, A),
-  from     : A
-): List = {
-
-  def loop(state: A): List =
-    if(predicate(state)) {
-      val (head, nextState) = update(state)
-      Cons(head, recurse(predicate, update, nextState))
-    }
-    else Nil
-
-* if(predicate(from)) {
-*   val (head, nextState) = update(from)
-*   Cons(head, recurse(predicate, update, nextState))
-* }
-* else Nil
-}
-```
-
----
-
-## Simplifying the step
-
-```scala
-def recurse[A](
-  predicate: A => Boolean,
-  update   : A => (Int, A),
-  from     : A
-): List = {
-
-  def loop(state: A): List =
-    if(predicate(state)) {
-      val (head, nextState) = update(state)
-      Cons(head, recurse(predicate, update, nextState))
-    }
-    else Nil
-
-* loop(from)
-}
-```
-
----
-
-## Simplifying the step
-
-```scala
-def recurse[A](
-  predicate: A => Boolean,
-  update   : A => (Int, A),
-  from     : A
-): List = {
-
-  def loop(state: A): List =
-    if(predicate(state)) {
-      val (head, nextState) = update(state)
-      Cons(head, `recurse(predicate, update, nextState)`)
-    }
-    else Nil
-
-  loop(from)
-}
-```
-
----
-
-## Simplifying the step
-
-```scala
-def recurse[A](
-  predicate: A => Boolean,
-  update   : A => (Int, A),
-  from     : A
-): List = {
-
-  def loop(state: A): List =
-    if(predicate(state)) {
-      val (head, nextState) = update(state)
-      Cons(head, `loop(nextState)`)
-    }
-    else Nil
-
-  loop(from)
-}
-```
+]
 
 ---
 
@@ -8065,11 +8150,12 @@ def recurse[A](
 
 ## Dropping parameters
 
+.diff-rm[
 ```scala
 def recurse[A](
   predicate: A => Boolean,
   update   : A => (Int, A),
-  `from     : A`
+* `from     : A`
 ): List = {
 
   def loop(state: A): List =
@@ -8079,14 +8165,16 @@ def recurse[A](
     }
     else Nil
 
-  loop(`from`)
+* `loop(from)`
 }
 ```
+]
 
 ---
 
 ## Dropping parameters
 
+.diff-add[
 ```scala
 def recurse[A](
   predicate: A => Boolean,
@@ -8100,40 +8188,21 @@ def recurse[A](
     }
     else Nil
 
-  loop
+* `loop`
 }
 ```
+]
 
 ---
 
 ## Dropping parameters
 
+.diff-rm[
 ```scala
 def recurse[A](
   predicate: A => Boolean,
   update   : A => (Int, A)
-): List = {
-
-* def loop(state: A): List =
-    if(predicate(state)) {
-      val (head, nextState) = update(state)
-      Cons(head, loop(nextState))
-    }
-    else Nil
-
-  loop
-}
-```
-
----
-
-## Dropping parameters
-
-```scala
-def recurse[A](
-  predicate: A => Boolean,
-  update   : A => (Int, A)
-): `List` = {
+*): `List` = {
 
   def loop(state: A): List =
     if(predicate(state)) {
@@ -8145,16 +8214,18 @@ def recurse[A](
   loop
 }
 ```
+]
 
 ---
 
 ## Dropping parameters
 
+.diff-add[
 ```scala
 def recurse[A](
   predicate: A => Boolean,
   update   : A => (Int, A)
-): `A => List` = {
+*): `A => List` = {
 
   def loop(state: A): List =
     if(predicate(state)) {
@@ -8166,6 +8237,7 @@ def recurse[A](
   loop
 }
 ```
+]
 
 ---
 
@@ -8197,8 +8269,9 @@ mkString(recurse(predicate, update)("foobar"))
 
 ## Naming things
 
+.diff-rm[
 ```scala
-def `recurse`[A](
+*def `recurse`[A](
   predicate: A => Boolean,
   update   : A => (Int, A)
 ): A => List = {
@@ -8213,13 +8286,15 @@ def `recurse`[A](
   loop
 }
 ```
+]
 
 ---
 
 ## Naming things
 
+.diff-add[
 ```scala
-def `unfold`[A](
+*def `unfold`[A](
   predicate: A => Boolean,
   update   : A => (Int, A)
 ): A => List = {
@@ -8234,6 +8309,7 @@ def `unfold`[A](
   loop
 }
 ```
+]
 
 ---
 
