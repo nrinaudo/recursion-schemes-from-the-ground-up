@@ -8582,25 +8582,29 @@ val op: `String => Option[(Int, String)]` =
 
 ## Simplifying `predicate` and `update`
 
+.diff-rm[
 ```scala
 val op: String => Option[(Int, String)] =
   state => {
-    if(`predicate(state)`) Some(update(state))
+*   if(`predicate(state)`) Some(update(state))
     else                 None
   }
 ```
+]
 
 ---
 
 ## Simplifying `predicate` and `update`
 
+.diff-add[
 ```scala
 val op: String => Option[(Int, String)] =
   state => {
-    if(`state.nonEmpty`) Some(update(state))
+*   if(`state.nonEmpty`) Some(update(state))
     else               None
   }
 ```
+]
 
 ---
 
@@ -8618,25 +8622,29 @@ val op: String => Option[(Int, String)] =
 
 ## Simplifying `predicate` and `update`
 
+.diff-rm[
 ```scala
 val op: String => Option[(Int, String)] =
   state => {
-    if(state.nonEmpty) Some(`update(state)`)
+*   if(state.nonEmpty) Some(`update(state)`)
     else               None
   }
 ```
+]
 
 ---
 
 ## Simplifying `predicate` and `update`
 
+.diff-add[
 ```scala
 val op: String => Option[(Int, String)] =
   state => {
-    if(state.nonEmpty) Some(`(state.head.toInt, state.tail)`)
+*   if(state.nonEmpty) Some(`(state.head.toInt, state.tail)`)
     else               None
   }
 ```
+]
 
 ---
 
@@ -8654,25 +8662,29 @@ val op: String => Option[(Int, String)] =
 
 ## Simplifying `predicate` and `update`
 
+.diff-rm[
 ```scala
-val op: String => `Option[(Int, String)]` =
+*val op: String => `Option[(Int, String)]` =
   state => {
     if(state.nonEmpty) Some((state.head.toInt, state.tail))
     else               None
   }
 ```
+]
 
 ---
 
 ## Simplifying `predicate` and `update`
 
+.diff-add[
 ```scala
-val op: String => `ListF[String]` =
+*val op: String => `ListF[String]` =
   state => {
     if(state.nonEmpty) Some((state.head.toInt, state.tail))
     else               None
   }
 ```
+]
 
 ---
 
@@ -8690,10 +8702,11 @@ val op: String => ListF[String] =
 
 ## Simplifying `predicate` and `update`
 
+.diff-rm[
 ```scala
 def unfold[A](
-  `predicate: A => Boolean`,
-  `update   : A => (Int, A)`
+* `predicate: A => Boolean`,
+* `update   : A => (Int, A)`
 ): A => List = {
 
   def loop(state: A): List =
@@ -8706,14 +8719,16 @@ def unfold[A](
   loop
 }
 ```
+]
 
 ---
 
 ## Simplifying `predicate` and `update`
 
+.diff-add[
 ```scala
 def unfold[A](
-  `op: A => ListF[A]`
+* `op: A => ListF[A]`
 ): A => List = {
 
   def loop(state: A): List =
@@ -8726,45 +8741,50 @@ def unfold[A](
   loop
 }
 ```
+]
 
 ---
 
 ## Simplifying `predicate` and `update`
 
+.diff-rm[
 ```scala
 def unfold[A](
   op: A => ListF[A]
 ): A => List = {
 
   def loop(state: A): List =
-*   if(predicate(state)) {
-*     val (head, nextState) = update(state)
-*     Cons(head, loop(nextState))
-*   }
-*   else Nil
+*   `if(predicate(state)) {`
+*   `  val (head, nextState) = update(state)`
+*   `  Cons(head, loop(nextState))`
+*   `}`
+*   `else Nil`
 
   loop
 }
 ```
+]
 
 ---
 
 ## Simplifying `predicate` and `update`
 
+.diff-add[
 ```scala
 def unfold[A](
   op: A => ListF[A]
 ): A => List = {
 
   def loop(state: A): List =
-*   op(state) match {
-*     case Some((head, state)) => Cons(head, loop(state))
-*     case None                => Nil
-*   }
+*   `op(state) match {`
+*   `  case Some((head, state)) => Cons(head, loop(state))`
+*   `  case None                => Nil`
+*   `}`
 
   loop
 }
 ```
+]
 
 ---
 
@@ -8911,7 +8931,7 @@ mkString(unfold(op)("foobar"))
 
 ---
 
-## Simplifying `predicate` and `update`
+## Abstracting over structure
 
 ```scala
 def unfold[A](
@@ -9016,25 +9036,29 @@ val embed: Option[(Int, List)] => List =
 
 ## Abstracting over structure
 
+.diff-rm[
 ```scala
-val embed: `Option[(Int, List)]` => List =
+*val embed: `Option[(Int, List)]` => List =
   _ match {
     case Some((head, tail)) => Cons(head, tail)
     case None               => Nil
   }
 ```
+]
 
 ---
 
 ## Abstracting over structure
 
+.diff-add[
 ```scala
-val embed: `ListF[List]` => List =
+*val embed: `ListF[List]` => List =
   _ match {
     case Some((head, tail)) => Cons(head, tail)
     case None               => Nil
   }
 ```
+]
 
 ---
 
@@ -9071,10 +9095,11 @@ def unfold[A](
 
 ## Abstracting over structure
 
+.diff-add[
 ```scala
 def unfold[A](
   op   : A => ListF[A],
-  `embed: ListF[List] => List`
+* `embed: ListF[List] => List`
 ): A => List = {
 
   def loop(state: A): List =
@@ -9086,11 +9111,13 @@ def unfold[A](
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over structure
 
+.diff-add[
 ```scala
 def unfold[A](
   op   : A => ListF[A],
@@ -9098,27 +9125,7 @@ def unfold[A](
 ): A => List = {
 
   def loop(state: A): List =
-*   op(state) match {
-*     case Some((head, state)) => Cons(head, loop(state))
-*     case None                => Nil
-*   }
-
-  loop
-}
-```
-
----
-
-## Abstracting over structure
-
-```scala
-def unfold[A](
-  op   : A => ListF[A],
-  embed: ListF[List] => List
-): A => List = {
-
-  def loop(state: A): List =
-    `embed`(op(state) match {
+*   `embed`(op(state) match {
       case Some((head, state)) => Cons(head, loop(state))
       case None                => Nil
     })
@@ -9126,11 +9133,13 @@ def unfold[A](
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over structure
 
+.diff-rm[
 ```scala
 def unfold[A](
   op   : A => ListF[A],
@@ -9139,18 +9148,20 @@ def unfold[A](
 
   def loop(state: A): List =
     embed(op(state) match {
-      case Some((head, state)) => `Cons(head, loop(state))`
+*     case Some((head, state)) => `Cons(head, loop(state))`
       case None                => Nil
     })
 
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over structure
 
+.diff-add[
 ```scala
 def unfold[A](
   op   : A => ListF[A],
@@ -9159,18 +9170,20 @@ def unfold[A](
 
   def loop(state: A): List =
     embed(op(state) match {
-      case Some((head, state)) => `Some((head, loop(state)))`
+*     case Some((head, state)) => `Some((head, loop(state)))`
       case None                => Nil
     })
 
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over structure
 
+.diff-rm[
 ```scala
 def unfold[A](
   op   : A => ListF[A],
@@ -9180,17 +9193,19 @@ def unfold[A](
   def loop(state: A): List =
     embed(op(state) match {
       case Some((head, state)) => Some((head, loop(state)))
-      case None                => `Nil`
+*     case None                => `Nil`
     })
 
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over structure
 
+.diff-add[
 ```scala
 def unfold[A](
   op   : A => ListF[A],
@@ -9200,12 +9215,13 @@ def unfold[A](
   def loop(state: A): List =
     embed(op(state) match {
       case Some((head, state)) => Some((head, loop(state)))
-      case None                => `None`
+*     case None                => `None`
     })
 
   loop
 }
 ```
+]
 
 ---
 
@@ -9360,6 +9376,7 @@ def unfold[A](
 
 ## Using Functor
 
+.diff-rm[
 ```scala
 def unfold[A](
   op   : A => ListF[A],
@@ -9367,11 +9384,34 @@ def unfold[A](
 ): A => List = {
 
   def loop(state: A): List =
-    embed(`fmap(op(state), loop)`)
+*   `embed(op(state) match {`
+*   `  case Some((head, state)) => Some((head, loop(state)))`
+*   `  case None                => `None``
+*   `})`
 
   loop
 }
 ```
+]
+
+---
+
+## Using Functor
+
+.diff-add[
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+*   `embed(fmap(op(state), loop))`
+
+  loop
+}
+```
+]
 
 ---
 
@@ -9457,8 +9497,9 @@ def unfold[A](
 
 ## Abstracting over `ListF`
 
+.diff-add[
 ```scala
-def unfold[`F[_]: Functor`, A](
+*def unfold[`F[_]: Functor`, A](
   op   : A => ListF[A],
   embed: ListF[List] => List
 ): A => List = {
@@ -9469,15 +9510,17 @@ def unfold[`F[_]: Functor`, A](
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over `ListF`
 
+.diff-rm[
 ```scala
 def unfold[F[_]: Functor, A](
-  op   : A => `ListF`[A],
-  embed: `ListF`[List] => List
+* op   : A => `ListF`[A],
+* embed: `ListF`[List] => List
 ): A => List = {
 
   def loop(state: A): List =
@@ -9486,15 +9529,17 @@ def unfold[F[_]: Functor, A](
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over `ListF`
 
+.diff-add[
 ```scala
 def unfold[F[_]: Functor, A](
-  op   : A => `F`[A],
-  embed: `F`[List] => List
+* op   : A => `F`[A],
+* embed: `F`[List] => List
 ): A => List = {
 
   def loop(state: A): List =
@@ -9503,6 +9548,7 @@ def unfold[F[_]: Functor, A](
   loop
 }
 ```
+]
 
 ---
 
@@ -9571,8 +9617,9 @@ def unfold[F[_]: Functor, A](
 
 ## Abstracting over `List`
 
+.diff-add[
 ```scala
-def unfold[F[_]: Functor, A, `B`](
+*def unfold[F[_]: Functor, A, `B`](
   op   : A => F[A],
   embed: F[List] => List
 ): A => List = {
@@ -9583,33 +9630,37 @@ def unfold[F[_]: Functor, A, `B`](
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over `List`
 
+.diff-rm[
 ```scala
 def unfold[F[_]: Functor, A, B](
   op   : A => F[A],
-  embed: F[`List`] => `List`
-): A => `List` = {
+* embed: F[`List`] => `List`
+*): A => `List` = {
 
-  def loop(state: A): `List` =
+* def loop(state: A): `List` =
     embed(fmap(op(state), loop))
 
   loop
 }
 ```
+]
 
 ---
 
 ## Abstracting over `List`
 
+.diff-add[
 ```scala
 def unfold[F[_]: Functor, A, B](
   op   : A => F[A],
-  embed: F[`B`] => `B`
-): A => `B` = {
+* embed: F[`B`] => `B`
+*): A => `B` = {
 
   def loop(state: A): `B` =
     embed(fmap(op(state), loop))
@@ -9617,6 +9668,7 @@ def unfold[F[_]: Functor, A, B](
   loop
 }
 ```
+]
 
 ---
 
@@ -9662,8 +9714,9 @@ mkString(unfold(op, embed).apply("foobar"))
 
 ## Naming things
 
+.diff-rm[
 ```scala
-def `unfold`[F[_]: Functor, A, B](
+*def `unfold`[F[_]: Functor, A, B](
   op   : A => F[A],
   embed: F[B] => B
 ): A => B = {
@@ -9674,13 +9727,15 @@ def `unfold`[F[_]: Functor, A, B](
   loop
 }
 ```
+]
 
 ---
 
 ## Naming things
 
+.diff-add[
 ```scala
-def `ana`[F[_]: Functor, A, B](
+*def `ana`[F[_]: Functor, A, B](
   op   : A => F[A],
   embed: F[B] => B
 ): A => B = {
@@ -9691,40 +9746,45 @@ def `ana`[F[_]: Functor, A, B](
   loop
 }
 ```
+]
 
 ---
 
 ## Naming things
 
+.diff-rm[
 ```scala
 def ana[F[_]: Functor, A, B](
-  `op`   : A => F[A],
+* `op`   : A => F[A],
   embed: F[B] => B
 ): A => B = {
 
   def loop(state: A): B =
-    embed(fmap(`op`(state), loop))
+*   embed(fmap(`op`(state), loop))
 
   loop
 }
 ```
+]
 
 ---
 
 ## Naming things
 
+.diff-add[
 ```scala
 def ana[F[_]: Functor, A, B](
-  `coAlgebra`: A => F[A],
+* `coAlgebra`: A => F[A],
   embed    : F[B] => B
 ): A => B = {
 
   def loop(state: A): B =
-    embed(fmap(`coAlgebra`(state), loop))
+*   embed(fmap(`coAlgebra`(state), loop))
 
   loop
 }
 ```
+]
 
 ---
 
