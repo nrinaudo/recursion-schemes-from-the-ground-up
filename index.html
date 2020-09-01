@@ -961,7 +961,7 @@ def recurse(
 ```
 
 ```scala
-&#x200B;`val base: String = "nil"`
+&#x200B;`val base = "nil"`
 ```
 
 ---
@@ -981,7 +981,7 @@ def recurse(
 ]
 
 ```scala
-val base: String = "nil"
+val base = "nil"
 ```
 
 ---
@@ -1001,25 +1001,7 @@ def recurse(
 ]
 
 ```scala
-val base: String = "nil"
-```
-
----
-
-## Generalising the base case
-
-```scala
-def recurse(
-  values: List
-): String =
-  values match {
-    case Cons(head, tail) => head + " :: " + recurse(tail)
-    case Nil              => `base`
-  }
-```
-
-```scala
-val base: String = "nil"
+val base = "nil"
 ```
 
 ---
@@ -1033,7 +1015,7 @@ def recurse(
   values: List
 ): String =
   values match {
-*   case Cons(head, tail) => head + " :: " + recurse(base, tail)
+    case Cons(head, tail) => head + " :: " + recurse(tail)
     case Nil              => base
   }
 ```
@@ -1046,7 +1028,7 @@ def recurse(
 .diff-add[
 ```scala
 def recurse(
-* base  : String,
+  base  : String,
   values: List
 ): String =
   values match {
@@ -1161,8 +1143,8 @@ def recurse(
 ```
 
 ```scala
-*def step(head: Int, tail: String): String =
-* head + " :: " + tail
+*def step(head: Int, tailResult: String) =
+* head + " :: " + tailResult
 ```
 
 ---
@@ -1183,8 +1165,8 @@ def recurse(
 ]
 
 ```scala
-def step(head: Int, tail: String): String =
-  head + " :: " + tail
+def step(head: Int, tailResult: String) =
+  head + " :: " + tailResult
 ```
 
 ---
@@ -1205,28 +1187,8 @@ def recurse(
 ]
 
 ```scala
-def step(head: Int, tail: String): String =
-  head + " :: " + tail
-```
-
----
-
-## Generalising the step
-
-```scala
-def recurse(
-  base  : String,
-  values: List
-): String =
-  values match {
-    case Cons(head, tail) => `step`(head, recurse(base, tail))
-    case Nil              => base
-  }
-```
-
-```scala
-def step(head: Int, tail: String): String =
-  head + " :: " + tail
+def step(head: Int, tailResult: String) =
+  head + " :: " + tailResult
 ```
 
 ---
@@ -1241,7 +1203,7 @@ def recurse(
   values: List
 ): String =
   values match {
-*   case Cons(head, tail) => step(head, recurse(base, step, tail))
+    case Cons(head, tail) => step(head, recurse(base, tail))
     case Nil              => base
   }
 ```
@@ -1255,7 +1217,7 @@ def recurse(
 ```scala
 def recurse(
   base  : String,
-* step  : (Int, String) => String,
+  step  : (Int, String) => String,
   values: List
 ): String =
   values match {
@@ -1693,8 +1655,8 @@ def recurse[A](
 .diff-add[
 ```scala
 def recurse[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): A = {
 
   def loop(state: List): A =
@@ -1715,8 +1677,8 @@ def recurse[A](
 .diff-rm[
 ```scala
 def recurse[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 *): `A` = {
 
   def loop(state: List): A =
@@ -1737,8 +1699,8 @@ def recurse[A](
 .diff-add[
 ```scala
 def recurse[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 *): `List => A` = {
 
   def loop(state: List): A =
@@ -1758,8 +1720,8 @@ def recurse[A](
 
 ```scala
 def recurse[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -1825,8 +1787,8 @@ mkString(ints)
 .diff-rm[
 ```scala
 *def `recurse`[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -1847,8 +1809,8 @@ mkString(ints)
 .diff-add[
 ```scala
 *def `fold`[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -1868,8 +1830,8 @@ mkString(ints)
 
 ```scala
 def fold[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -2044,8 +2006,8 @@ class: center, middle
 
 ```scala
 def fold[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -2076,8 +2038,8 @@ def fold[A](
 
 ```scala
 def fold[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -2181,8 +2143,8 @@ val project: List => Option[(Int, List)] =
 .diff-rm[
 ```scala
 def fold[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -2203,8 +2165,8 @@ def fold[A](
 .diff-add[
 ```scala
 def fold[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -2225,8 +2187,8 @@ def fold[A](
 .diff-rm[
 ```scala
 def fold[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -2247,8 +2209,8 @@ def fold[A](
 .diff-add[
 ```scala
 def fold[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -2269,8 +2231,8 @@ def fold[A](
 .diff-rm[
 ```scala
 def fold[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -2291,8 +2253,8 @@ def fold[A](
 .diff-rm[
 ```scala
 def fold[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -2312,8 +2274,8 @@ def fold[A](
 
 ```scala
 def fold[A](
-  base  : A,
-  step  : (Int, A) => A
+  base: A,
+  step: (Int, A) => A
 ): List => A = {
 
   def loop(state: List): A =
@@ -2427,8 +2389,8 @@ def fold[A](
 ```scala
 val op: Option[(Int, String)] => String =
   _ match {
-    case Some((head, tail)) => step(head, tail)
-    case None               => base
+    case Some((head, tailResult)) => step(head, tailResult)
+    case None                     => base
   }
 ```
 
@@ -2439,8 +2401,8 @@ val op: Option[(Int, String)] => String =
 ```scala
 val `op`: Option[(Int, String)] => String =
   _ match {
-    case Some((head, tail)) => step(head, tail)
-    case None               => base
+    case Some((head, tailResult)) => step(head, tailResult)
+    case None                     => base
   }
 ```
 
@@ -2451,8 +2413,8 @@ val `op`: Option[(Int, String)] => String =
 ```scala
 val op: `Option[(Int, String)] => String` =
   _ match {
-    case Some((head, tail)) => step(head, tail)
-    case None               => base
+    case Some((head, tailResult)) => step(head, tailResult)
+    case None                     => base
   }
 ```
 
@@ -2463,20 +2425,8 @@ val op: `Option[(Int, String)] => String` =
 ```scala
 val op: Option[(Int, String)] => String =
   _ match {
-    case `Some((head, tail))` => step(head, tail)
-    case None               => base
-  }
-```
-
----
-
-## Simplifying `base` and `step`
-
-```scala
-val op: Option[(Int, String)] => String =
-  _ match {
-    case Some((head, tail)) => `step(head, tail)`
-    case None               => base
+    case `Some((head, tailResult))` => step(head, tailResult)
+    case None                     => base
   }
 ```
 
@@ -2488,8 +2438,8 @@ val op: Option[(Int, String)] => String =
 ```scala
 val op: Option[(Int, String)] => String =
   _ match {
-*   case Some((head, tail)) => `step(head, tail)`
-    case None               => base
+*   case Some((head, tailResult)) => `step(head, tailResult)`
+    case None                     => base
   }
 ```
 ]
@@ -2502,8 +2452,8 @@ val op: Option[(Int, String)] => String =
 ```scala
 val op: Option[(Int, String)] => String =
   _ match {
-*   case Some((head, tail)) => `head + " :: " + tail`
-    case None               => base
+*   case Some((head, tailResult)) => `head + " :: " + tailResult`
+    case None                     => base
   }
 ```
 ]
@@ -2515,20 +2465,8 @@ val op: Option[(Int, String)] => String =
 ```scala
 val op: Option[(Int, String)] => String =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-    case `None`               => base
-  }
-```
-
----
-
-## Simplifying `base` and `step`
-
-```scala
-val op: Option[(Int, String)] => String =
-  _ match {
-    case Some((head, tail)) => head + " :: " + tail
-    case None               => `base`
+    case Some((head, tailResult)) => head + " :: " + tailResult
+    case `None`                     => base
   }
 ```
 
@@ -2540,8 +2478,8 @@ val op: Option[(Int, String)] => String =
 ```scala
 val op: Option[(Int, String)] => String =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-*   case None               => `base`
+    case Some((head, tailResult)) => head + " :: " + tailResult
+*   case None                     => `base`
   }
 ```
 ]
@@ -2554,8 +2492,8 @@ val op: Option[(Int, String)] => String =
 ```scala
 val op: Option[(Int, String)] => String =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-*   case None               => `"nil"`
+    case Some((head, tailResult)) => head + " :: " + tailResult
+*   case None                     => `"nil"`
   }
 ```
 ]
@@ -2567,8 +2505,8 @@ val op: Option[(Int, String)] => String =
 ```scala
 val op: Option[(Int, String)] => String =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-    case None               => "nil"
+    case Some((head, tailResult)) => head + " :: " + tailResult
+    case None                     => "nil"
   }
 ```
 
@@ -2991,8 +2929,8 @@ type ListF[A] = Option[(Int, A)]
 ```scala
 val op: ListF[String] => String =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-    case None               => "nil"
+    case Some((head, tailResult)) => head + " :: " + tailResult
+    case None                     => "nil"
   }
 ```
 
@@ -3007,8 +2945,8 @@ type ListF[`A`] = Option[(Int, A)]
 ```scala
 val op: ListF[`String`] => String =
   _ match {
-    case Some((head, tail)) => head + " :: " + tail
-    case None               => "nil"
+    case Some((head, tailResult)) => head + " :: " + tailResult
+    case None                     => "nil"
   }
 ```
 
@@ -3179,10 +3117,10 @@ def fold[A](
 *   op(recurse(project(state)))
 
 * `def recurse(state: ListF[List]): ListF[A] =`
-* `  state match {`
-* `    case Some((head, tail)) => Some((head, loop(tail)))`
-* `    case None               => None`
-* `  }`
+*   `state match {`
+*   `  case Some((head, tail)) => Some((head, loop(tail)))`
+*   `  case None               => None`
+*   `}`
 
   loop
 }
@@ -5313,7 +5251,7 @@ case object LeafF extends TreeF[Nothing]
 ```scala
 def projectTree: Tree => TreeF[Tree] =
   _ match {
-    case Node(l, v ,r) => NodeF(l, v, r)
+    case Node(l, v, r) => NodeF(l, v, r)
     case Leaf          => LeafF
   }
 ```
@@ -5325,7 +5263,7 @@ def projectTree: Tree => TreeF[Tree] =
 ```scala
 def `projectTree`: Tree => TreeF[Tree] =
   _ match {
-    case Node(l, v ,r) => NodeF(l, v, r)
+    case Node(l, v, r) => NodeF(l, v, r)
     case Leaf          => LeafF
   }
 ```
@@ -5337,7 +5275,7 @@ def `projectTree`: Tree => TreeF[Tree] =
 ```scala
 def projectTree: `Tree => TreeF[Tree]` =
   _ match {
-    case Node(l, v ,r) => NodeF(l, v, r)
+    case Node(l, v, r) => NodeF(l, v, r)
     case Leaf          => LeafF
   }
 ```
@@ -5349,7 +5287,7 @@ def projectTree: `Tree => TreeF[Tree]` =
 ```scala
 def projectTree: Tree => TreeF[Tree] =
   _ match {
-    case `Node(l, v ,r)` => NodeF(l, v, r)
+    case `Node(l, v, r)` => NodeF(l, v, r)
     case Leaf          => LeafF
   }
 ```
@@ -5361,7 +5299,7 @@ def projectTree: Tree => TreeF[Tree] =
 ```scala
 def projectTree: Tree => TreeF[Tree] =
   _ match {
-    case Node(l, v ,r) => `NodeF(l, v, r)`
+    case Node(l, v, r) => `NodeF(l, v, r)`
     case Leaf          => LeafF
   }
 ```
@@ -5373,7 +5311,7 @@ def projectTree: Tree => TreeF[Tree] =
 ```scala
 def projectTree: Tree => TreeF[Tree] =
   _ match {
-    case Node(l, v ,r) => NodeF(l, v, r)
+    case Node(l, v, r) => NodeF(l, v, r)
     case `Leaf`          => LeafF
   }
 ```
@@ -5385,7 +5323,7 @@ def projectTree: Tree => TreeF[Tree] =
 ```scala
 def projectTree: Tree => TreeF[Tree] =
   _ match {
-    case Node(l, v ,r) => NodeF(l, v, r)
+    case Node(l, v, r) => NodeF(l, v, r)
     case Leaf          => `LeafF`
   }
 ```
@@ -10186,102 +10124,6 @@ class: center, middle
 # Questions?
 
 Nicolas Rinaudo • [@NicolasRinaudo] • [Besedo]
-
----
-
-class: center, middle
-
-# Reducing the boilerplate, again
-
----
-
-## Embedding `Fix`
-
-```scala
-def embedFix[F[_]](value: F[Fix[F]]): Fix[F] =
-  Fix(value)
-```
-
----
-
-## Specialised `ana` for `Fix`
-
-```scala
-def ana[F[_]: Functor, A, B](
-  coAlgebra: A => F[A],
-  embed    : F[B] => B
-): A => B = {
-
-  def loop(state: A): B =
-    embed(fmap(coAlgebra(state), loop))
-
-  loop
-}
-```
-
----
-
-## Specialised `ana` for `Fix`
-
-```scala
-def anaFix[F[_]: Functor, A, B](
-  coAlgebra: A => F[A],
-  embed    : F[B] => B
-): A => B = {
-
-  def loop(state: A): B =
-    embed(fmap(coAlgebra(state), loop))
-
-  loop
-}
-```
-
----
-
-## Specialised `ana` for `Fix`
-
-```scala
-def anaFix[F[_]: Functor, A](
-  coAlgebra: A => F[A],
-  embed    : F[Fix[F]] => Fix[F]
-): A => Fix[F] = {
-
-  def loop(state: A): Fix[F] =
-    embed(fmap(coAlgebra(state), loop))
-
-  loop
-}
-```
-
----
-
-## Specialised `ana` for `Fix`
-
-```scala
-def anaFix[F[_]: Functor, A](
-  coAlgebra: A => F[A]
-): A => Fix[F] = {
-
-  def loop(state: A): Fix[F] =
-    Fix((fmap(coAlgebra(state), loop)))
-
-  loop
-}
-```
-
----
-
-## Range in terms of `anaFix`
-
-```scala
-val rangeFix: Int => FixedList =
-  anaFix(rangeCoAlgebra)
-```
-
-```scala
-mkStringFix(rangeFix(3))
-// res47: String = 3 :: 2 :: 1 :: nil
-```
 
 [@NicolasRinaudo]:https://twitter.com/NicolasRinaudo
 [Besedo]:https://twitter.com/besedo_official
