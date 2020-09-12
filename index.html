@@ -1744,7 +1744,27 @@ recurse(base, step)(ints)
 ## Dropping parameters
 
 ```scala
-val mkString: List => String =
+def mkString(ints: List): String =
+  recurse(base, step)(ints)
+```
+
+---
+
+## Dropping parameters
+
+.diff-rm[
+```scala
+*def mkString(`ints: List`): String =
+* recurse(base, step)`(ints)`
+```
+]
+
+---
+
+## Dropping parameters
+
+```scala
+def mkString: String =
   recurse(base, step)
 ```
 
@@ -1752,19 +1772,45 @@ val mkString: List => String =
 
 ## Dropping parameters
 
+.diff-rm[
 ```scala
-val `mkString`: List => String =
+*def mkString: `String` =
   recurse(base, step)
 ```
+]
 
 ---
 
 ## Dropping parameters
 
+.diff-add[
 ```scala
-val mkString: List => String =
-  `recurse(base, step)`
+*def mkString: `List => String` =
+  recurse(base, step)
 ```
+]
+
+---
+
+## Dropping parameters
+
+.diff-rm[
+```scala
+*&#x200B;`def mkString`: List => String =
+  recurse(base, step)
+```
+]
+
+---
+
+## Dropping parameters
+
+.diff-add[
+```scala
+*&#x200B;`val mkString`: List => String =
+  recurse(base, step)
+```
+]
 
 ---
 
@@ -2769,7 +2815,7 @@ fold(op, project)(ints)
 
 ---
 
-## Moving `op`
+## Intermediate representation
 
 .center[![Cata step 4](img/cata-4-hl-2.svg)]
 
@@ -5708,6 +5754,385 @@ case class List2(`value: ListF[List2]`)
 
 ---
 
+## Building a `List2`
+
+.center[![List2 init](img/list2-init.svg)]
+
+```scala
+val ints2: List2 =
+  ???: List2
+```
+
+
+
+---
+
+## Building a `List2`
+
+.center[![List2 init](img/list2-init.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+* `???: List2`
+```
+]
+
+
+---
+
+## Building a `List2`
+
+.center[![List2](img/list2-3-wrapper.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+* `List2(???: ListF[List2])`
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2](img/list2-3-value.svg)]
+
+
+.diff-rm[
+```scala
+val ints2: List2 =
+* List2(`???: ListF[List2]`)
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2](img/list2-3.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+* List2(`Some((3`,
+*   ???: List2
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2](img/list2-2-init.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+* List2(Some((3,
+*   `???: List2`
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-2-init.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+*   `???: List2`
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-2-wrapper.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+*   `List2(???: ListF[List2])`
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-2-value.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+*   List2(`???: ListF[List2]`)
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-2.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+*   List2(`Some((2,`
+*     ???: List2
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-1-init.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+*   List2(Some((2,
+*     `???: List2`
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-1-init.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+*     `???: List2`
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-1-wrapper.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+*     `List2(???: ListF[List2])`
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-1-value.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+*     List2(`???: ListF[List2]`)
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-1.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+*     List2(`Some((1,`
+*       ???: List2
+      )))
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-nil-init.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+*     List2(Some((1,
+*       `???: List2`
+      )))
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-nil-init.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+      List2(Some((1,
+*       `???: List2`
+      )))
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-nil-wrapper.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+      List2(Some((1,
+*       `List2(???: ListF[List2])`
+      )))
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 step 1](img/list2-nil-value.svg)]
+
+.diff-rm[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+      List2(Some((1,
+*       List2(`???: ListF[List2]`)
+      )))
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 full](img/list2.svg)]
+
+.diff-add[
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+      List2(Some((1,
+*       List2(`None`)
+      )))
+    )))
+  )))
+```
+]
+
+---
+
+## Building a `List2`
+
+.center[![List2 full](img/list2.svg)]
+
+```scala
+val ints2: List2 =
+  List2(Some((3,
+    List2(Some((2,
+      List2(Some((1,
+        List2(None)
+      )))
+    )))
+  )))
+```
+
+---
+
+## Building a `List2`
+
+.center[![List2 full](img/list2-no-wrapper.svg)]
+
+```scala
+val ints2: List2 =
+  List2(`Some((3`,
+    List2(`Some((2`,
+      List2(`Some((1`,
+        List2(`None`)
+      )))
+    )))
+  )))
+```
+
+---
+
+## Building a `List2`
+
+.center[![List2 full](img/list2-only-wrapper.svg)]
+
+```scala
+val ints2: List2 =
+  `List2(`Some((3,
+    `List2(`Some((2,
+      `List2(`Some((1,
+        `List2(`None)
+      )))
+    )))
+  )))
+```
+
+---
+
 ## Generalising `List2`
 
 ```scala
@@ -5756,9 +6181,11 @@ case class List2(value: `ListF`[List2])
 
 ## Generalising `List2`
 
+.diff-rm[
 ```scala
-case class List2[F[_]](value: F[`List2`])
+*case class List2[F[_]](value: F[`List2`])
 ```
+]
 
 ---
 
@@ -5766,7 +6193,7 @@ case class List2[F[_]](value: F[`List2`])
 
 .diff-add[
 ```scala
-*case class List2[F[_]](value: F[List2[`F`]])
+*case class List2[F[_]](value: F[`List2[F]`])
 ```
 ]
 
@@ -6182,7 +6609,35 @@ val projectFix: List => ListF[List] =
 
 .diff-rm[
 ```scala
-val projectFix: FixedList => ListF[FixedList] =
+*val projectFix: `FixedList` => ListF[`FixedList`] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-add[
+```scala
+*val projectFix: `Fix[ListF]` => ListF[`Fix[ListF]`] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-rm[
+```scala
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
   _ match {
 *   case `Cons(head, tail)` => Some((head, tail))
     case Nil              => None
@@ -6196,7 +6651,7 @@ val projectFix: FixedList => ListF[FixedList] =
 
 .diff-add[
 ```scala
-val projectFix: FixedList => ListF[FixedList] =
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
   _ match {
 *   case `Fix(Some((head, tail)))` => Some((head, tail))
     case Nil                     => None
@@ -6210,7 +6665,7 @@ val projectFix: FixedList => ListF[FixedList] =
 
 .diff-rm[
 ```scala
-val projectFix: FixedList => ListF[FixedList] =
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
   _ match {
     case Fix(Some((head, tail))) => Some((head, tail))
 *   case `Nil`                     => None
@@ -6224,7 +6679,7 @@ val projectFix: FixedList => ListF[FixedList] =
 
 .diff-add[
 ```scala
-val projectFix: FixedList => ListF[FixedList] =
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
   _ match {
     case Fix(Some((head, tail))) => Some((head, tail))
 *   case `Fix(None)`               => None
@@ -6237,7 +6692,7 @@ val projectFix: FixedList => ListF[FixedList] =
 ## Projecting `Fix`
 
 ```scala
-val projectFix: FixedList => ListF[FixedList] =
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
   _ match {
     case Fix(Some((head, tail))) => Some((head, tail))
     case Fix(None)               => None
@@ -6249,7 +6704,7 @@ val projectFix: FixedList => ListF[FixedList] =
 ## Projecting `Fix`
 
 ```scala
-val projectFix: FixedList => ListF[FixedList] =
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
   _ match {
     case Fix(`Some((head, tail))`) => `Some((head, tail))`
     case Fix(None)               => None
@@ -6261,7 +6716,7 @@ val projectFix: FixedList => ListF[FixedList] =
 ## Projecting `Fix`
 
 ```scala
-val projectFix: FixedList => ListF[FixedList] =
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
   _ match {
     case Fix(Some((head, tail))) => Some((head, tail))
     case Fix(`None`)               => `None`
@@ -6274,7 +6729,7 @@ val projectFix: FixedList => ListF[FixedList] =
 
 .diff-rm[
 ```scala
-val projectFix: FixedList => ListF[FixedList] =
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
 * `_ match {`
 * `  case Fix(Some((head, tail))) => Some((head, tail))`
 * `  case Fix(None)               => None`
@@ -6288,39 +6743,8 @@ val projectFix: FixedList => ListF[FixedList] =
 
 .diff-add[
 ```scala
-val projectFix: FixedList => ListF[FixedList] =
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
 * `_.value`
-```
-]
-
----
-
-## Projecting `Fix`
-
-```scala
-val projectFix: FixedList => ListF[FixedList] =
-  _.value
-```
-
----
-
-## Projecting `Fix`
-
-.diff-rm[
-```scala
-*val projectFix: `FixedList` => ListF[`FixedList`] =
-  _.value
-```
-]
-
----
-
-## Projecting `Fix`
-
-.diff-add[
-```scala
-*val projectFix: `Fix[ListF]` => ListF[`Fix[ListF]`] =
-  _.value
 ```
 ]
 
@@ -6359,7 +6783,18 @@ val projectFix: Fix[`ListF`] => `ListF`[Fix[`ListF`]] =
 
 .diff-add[
 ```scala
-*&#x200B;`def projectFix[F[_]]`: Fix[ListF] => ListF[Fix[ListF]] =
+*&#x200B;`def projectFix`: Fix[ListF] => ListF[Fix[ListF]] =
+  _.value
+```
+]
+
+---
+
+## Projecting `Fix`
+
+.diff-add[
+```scala
+*&#x200B;def projectFix[`F[_]`]: Fix[ListF] => ListF[Fix[ListF]] =
   _.value
 ```
 ]
@@ -6538,6 +6973,15 @@ val productFix: FixedList => Int =
 ## `product` in terms of `cataFix`
 
 ```scala
+val productFix: `FixedList => Int` =
+  cataFix(productAlgebra)
+```
+
+---
+
+## `product` in terms of `cataFix`
+
+```scala
 val productFix: FixedList => Int =
   `cataFix(productAlgebra)`
 ```
@@ -6570,6 +7014,15 @@ val mkStringFix: FixedList => String =
 ## `mkString` in terms of `cataFix`
 
 ```scala
+val mkStringFix: `FixedList => String` =
+  cataFix(mkStringAlgebra)
+```
+
+---
+
+## `mkString` in terms of `cataFix`
+
+```scala
 val mkStringFix: FixedList => String =
   `cataFix(mkStringAlgebra)`
 ```
@@ -6594,6 +7047,15 @@ mkStringFix(fixedInts)
 
 ```scala
 val heightFix: FixedTree => Int =
+  cataFix(heightAlgebra)
+```
+
+---
+
+## `height` in terms of `cataFix`
+
+```scala
+val heightFix: `FixedTree => Int` =
   cataFix(heightAlgebra)
 ```
 
@@ -10040,7 +10502,7 @@ hl ana (A through PF to B)
 
 ---
 
-# TODO
+## TODO
 
 flip ana so that Bs and As are lined up
 hl without arrow names, to show we just flipped the arrows.
@@ -10127,7 +10589,6 @@ Nicolas Rinaudo • [@NicolasRinaudo] • [Besedo]
 
 [@NicolasRinaudo]:https://twitter.com/NicolasRinaudo
 [Besedo]:https://twitter.com/besedo_official
-
     </textarea>
     <script src="js/remark.js" type="text/javascript">
     </script>
