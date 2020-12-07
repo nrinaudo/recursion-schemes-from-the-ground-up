@@ -209,7 +209,7 @@ img {
 .diff-rm .remark-code-span-highlighted,
 .highlight {
   background-color: #fdb8c0;
-  /*border-radius: 0.2em;*/
+  padding: 0;
 }
 
 .diff-rm .remark-code-line-highlighted {
@@ -220,7 +220,7 @@ img {
 .diff-add .remark-code-span-highlighted,
 .highlight {
   background-color: #acf2bd;
-  /*border-radius: 0.2em;*/
+  padding: 0;
 }
 
 .diff-add .remark-code-line-highlighted {
