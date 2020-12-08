@@ -1953,71 +1953,6 @@ product(ints)
 
 ---
 
-## `mkString` as a fold
-
-```scala
-val mkString: List => String =
-  fold[String](
-    base = "nil",
-    step = (head, tailString) => head + " :: " + tailString
-  )
-```
-
----
-
-## `mkString` as a fold
-
-```scala
-val mkString: List => String =
-  `fold`[String](
-    base = "nil",
-    step = (head, tailString) => head + " :: " + tailString
-  )
-```
-
----
-
-## `mkString` as a fold
-
-```scala
-val mkString: List => String =
-  fold[String](
-    `base = "nil"`,
-    step = (head, tailString) => head + " :: " + tailString
-  )
-```
-
----
-
-## `mkString` as a fold
-
-```scala
-val mkString: List => String =
-  fold[String](
-    base = "nil",
-    `step = (head, tailString) => head + " :: " + tailString`
-  )
-```
-
----
-
-## `mkString` as a fold
-
-```scala
-val mkString: List => String =
-  fold[String](
-    base = "nil",
-    step = (head, tailString) => head + " :: " + tailString
-  )
-```
-
-```scala
-mkString(ints)
-// res11: String = 3 :: 2 :: 1 :: nil
-```
-
----
-
 ## Key takeaways
 
 Structural recursion is generalised by:
@@ -2371,7 +2306,7 @@ def fold[A](
 
 ```scala
 fold(base, step, project)(ints)
-// res12: String = 3 :: 2 :: 1 :: nil
+// res11: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -2702,7 +2637,7 @@ def fold[A](
 
 ```scala
 fold(op, project)(ints)
-// res13: String = 3 :: 2 :: 1 :: nil
+// res12: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -2783,7 +2718,7 @@ def fold[A](
 
 ```scala
 fold(op, project)(ints)
-// res14: String = 3 :: 2 :: 1 :: nil
+// res13: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -2832,6 +2767,70 @@ type `ListF[A]` = Option[(Int, A)]
 
 ```scala
 type ListF[A] = `Option[(Int, A)]`
+```
+
+---
+
+## Intermediate representation
+
+```scala
+type ListF[A] = Option[(Int, A)]
+```
+
+```scala
+val project: List => ListF[List] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+
+---
+
+## Intermediate representation
+
+```scala
+type ListF[`A`] = Option[(Int, A)]
+```
+
+```scala
+val project: List => ListF[`List`] =
+  _ match {
+    case Cons(head, tail) => Some((head, tail))
+    case Nil              => None
+  }
+```
+
+---
+
+## Intermediate representation
+
+```scala
+type ListF[A] = Option[(Int, A)]
+```
+
+```scala
+val op: ListF[String] => String =
+  _ match {
+    case Some((head, tailResult)) => head + " :: " + tailResult
+    case None                     => "nil"
+  }
+```
+
+---
+
+## Intermediate representation
+
+```scala
+type ListF[`A`] = Option[(Int, A)]
+```
+
+```scala
+val op: ListF[`String`] => String =
+  _ match {
+    case Some((head, tailResult)) => head + " :: " + tailResult
+    case None                     => "nil"
+  }
 ```
 
 ---
@@ -2900,7 +2899,7 @@ def fold[A](
 
 ```scala
 fold(op, project)(ints)
-// res15: String = 3 :: 2 :: 1 :: nil
+// res14: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -2914,78 +2913,6 @@ fold(op, project)(ints)
 ## Intermediate representation
 
 .center[![Cata step 5](img/cata-5-hl-1.svg)]
-
----
-
-## Intermediate representation
-
-.center[![Cata step 5](img/cata-5.svg)]
-
----
-
-## Intermediate representation
-
-```scala
-type ListF[A] = Option[(Int, A)]
-```
-
---
-
-```scala
-val project: List => ListF[List] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
-```
-
----
-
-## Intermediate representation
-
-```scala
-type ListF[`A`] = Option[(Int, A)]
-```
-
-```scala
-val project: List => ListF[`List`] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
-```
-
----
-
-## Intermediate representation
-
-```scala
-type ListF[A] = Option[(Int, A)]
-```
-
-```scala
-val op: ListF[String] => String =
-  _ match {
-    case Some((head, tailResult)) => head + " :: " + tailResult
-    case None                     => "nil"
-  }
-```
-
----
-
-## Intermediate representation
-
-```scala
-type ListF[`A`] = Option[(Int, A)]
-```
-
-```scala
-val op: ListF[`String`] => String =
-  _ match {
-    case Some((head, tailResult)) => head + " :: " + tailResult
-    case None                     => "nil"
-  }
-```
 
 ---
 
@@ -3948,7 +3875,7 @@ def fold[A](
 
 ```scala
 fold(op, project)(ints)
-// res16: String = 3 :: 2 :: 1 :: nil
+// res15: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -4085,7 +4012,7 @@ def fold[F[_]: Functor, A](
 
 ```scala
 fold(op, project).apply(ints)
-// res17: String = 3 :: 2 :: 1 :: nil
+// res16: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -4205,7 +4132,7 @@ def fold[F[_]: Functor, A, B](
 
 ```scala
 fold(op, project).apply(ints)
-// res18: String = 3 :: 2 :: 1 :: nil
+// res17: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -4338,7 +4265,7 @@ def cata[F[_]: Functor, A, B](
 
 ```scala
 cata(op, project).apply(ints)
-// res19: String = 3 :: 2 :: 1 :: nil
+// res18: String = 3 :: 2 :: 1 :: nil
 ```
 
 ---
@@ -4386,21 +4313,6 @@ val product: List => Int =
 
 ```scala
 val `productAlgebra`: ListF[Int] => Int =
-  _ match {
-    case Some((head, tailProduct)) => head * tailProduct
-    case None                      => 1
-  }
-
-val product: List => Int =
-  cata(productAlgebra, project)
-```
-
----
-
-## `product` as a cata
-
-```scala
-val productAlgebra: `ListF[Int] => Int` =
   _ match {
     case Some((head, tailProduct)) => head * tailProduct
     case None                      => 1
@@ -4502,147 +4414,7 @@ val product: List => Int =
 
 ```scala
 product(ints)
-// res20: Int = 6
-```
-
----
-
-## `mkString` as a cata
-
-```scala
-val mkStringAlgebra: ListF[String] => String =
-  _ match {
-    case Some((head, tailString)) => head + " :: " + tailString
-    case None                     => "nil"
-  }
-
-val mkString: List => String =
-  cata(mkStringAlgebra, project)
-```
-
----
-
-## `mkString` as a cata
-
-```scala
-val `mkStringAlgebra`: ListF[String] => String =
-  _ match {
-    case Some((head, tailString)) => head + " :: " + tailString
-    case None                     => "nil"
-  }
-
-val mkString: List => String =
-  cata(mkStringAlgebra, project)
-```
-
----
-
-## `mkString` as a cata
-
-```scala
-val mkStringAlgebra: `ListF[String] => String` =
-  _ match {
-    case Some((head, tailString)) => head + " :: " + tailString
-    case None                     => "nil"
-  }
-
-val mkString: List => String =
-  cata(mkStringAlgebra, project)
-```
-
----
-
-## `mkString` as a cata
-
-```scala
-val mkStringAlgebra: ListF[String] => String =
-  _ match {
-    case `Some((head, tailString))` => head + " :: " + tailString
-    case None                     => "nil"
-  }
-
-val mkString: List => String =
-  cata(mkStringAlgebra, project)
-```
-
----
-
-## `mkString` as a cata
-
-```scala
-val mkStringAlgebra: ListF[String] => String =
-  _ match {
-    case Some((head, tailString)) => `head + " :: " + tailString`
-    case None                     => "nil"
-  }
-
-val mkString: List => String =
-  cata(mkStringAlgebra, project)
-```
-
----
-
-## `mkString` as a cata
-
-```scala
-val mkStringAlgebra: ListF[String] => String =
-  _ match {
-    case Some((head, tailString)) => head + " :: " + tailString
-    case `None`                     => "nil"
-  }
-
-val mkString: List => String =
-  cata(mkStringAlgebra, project)
-```
-
----
-
-## `mkString` as a cata
-
-```scala
-val mkStringAlgebra: ListF[String] => String =
-  _ match {
-    case Some((head, tailString)) => head + " :: " + tailString
-    case None                     => `"nil"`
-  }
-
-val mkString: List => String =
-  cata(mkStringAlgebra, project)
-```
-
----
-
-## `mkString` as a cata
-
-```scala
-val mkStringAlgebra: ListF[String] => String =
-  _ match {
-    case Some((head, tailString)) => head + " :: " + tailString
-    case None                     => "nil"
-  }
-
-val mkString: List => String =
-  `cata(mkStringAlgebra, project)`
-```
-
----
-
-## `mkString` as a cata
-
-```scala
-val mkStringAlgebra: ListF[String] => String =
-  _ match {
-    case Some((head, tailString)) => head + " :: " + tailString
-    case None                     => "nil"
-  }
-
-val mkString: List => String =
-  cata(mkStringAlgebra, project)
-```
-
-```scala
-mkString(ints)
-// res21: String = 3 :: 2 :: 1 :: nil
+// res19: Int = 6
 ```
 
 ---
@@ -5310,18 +5082,6 @@ def `projectTree`: Tree => TreeF[Tree] =
 ## Projection
 
 ```scala
-def projectTree: `Tree => TreeF[Tree]` =
-  _ match {
-    case Node(l, v, r) => NodeF(l, v, r)
-    case Leaf          => LeafF
-  }
-```
-
----
-
-## Projection
-
-```scala
 def projectTree: Tree => TreeF[Tree] =
   _ match {
     case `Node(l, v, r)` => NodeF(l, v, r)
@@ -5528,18 +5288,6 @@ val `heightAlgebra`: TreeF[Int] => Int =
 ## F-Algebra
 
 ```scala
-val heightAlgebra: `TreeF[Int] => Int` =
-  _ match {
-    case NodeF(left, _, right) => 1 + math.max(left, right)
-    case LeafF                 => 0
-  }
-```
-
----
-
-## F-Algebra
-
-```scala
 val heightAlgebra: TreeF[Int] => Int =
   _ match {
     case `NodeF(left, _, right)` => 1 + math.max(left, right)
@@ -5648,7 +5396,7 @@ val height: Tree => Int =
 
 ```scala
 height(intTree)
-// res22: Int = 3
+// res20: Int = 3
 ```
 
 ---
@@ -6826,15 +6574,6 @@ def projectFix[F[_]]: Fix[F] => F[Fix[F]] =
 ## Projecting `Fix`
 
 ```scala
-def projectFix[F[_]]: Fix[F] => F[Fix[F]] =
-  `_.value`
-```
-
----
-
-## Projecting `Fix`
-
-```scala
 def cataFix[F[_]: Functor, A](
   algebra: F[A] => A,
   project: Fix[F] => F[Fix[F]]
@@ -6988,48 +6727,7 @@ val productFix: FixedList => Int =
 
 ```scala
 productFix(fixedInts)
-// res23: Int = 6
-```
-
----
-
-## `mkString` in terms of `cataFix`
-
-```scala
-val mkStringFix: FixedList => String =
-  cataFix(mkStringAlgebra)
-```
-
----
-
-## `mkString` in terms of `cataFix`
-
-```scala
-val mkStringFix: `FixedList => String` =
-  cataFix(mkStringAlgebra)
-```
-
----
-
-## `mkString` in terms of `cataFix`
-
-```scala
-val mkStringFix: FixedList => String =
-  `cataFix(mkStringAlgebra)`
-```
-
----
-
-## `mkString` in terms of `cataFix`
-
-```scala
-val mkStringFix: FixedList => String =
-  cataFix(mkStringAlgebra)
-```
-
-```scala
-mkStringFix(fixedInts)
-// res24: String = 3 :: 2 :: 1 :: nil
+// res21: Int = 6
 ```
 
 ---
@@ -7070,7 +6768,7 @@ val heightFix: FixedTree => Int =
 
 ```scala
 heightFix(fixedIntTree)
-// res25: Int = 3
+// res22: Int = 3
 ```
 
 ---
