@@ -19,23 +19,23 @@
 <!-- ListStruct2 -->
 <g id="node2" class="node">
 <title>ListStruct2</title>
-<path fill="#b2ebf2" stroke="#dddddd" d="M400,-0.5C400,-0.5 430,-0.5 430,-0.5 436,-0.5 442,-6.5 442,-12.5 442,-12.5 442,-34.5 442,-34.5 442,-40.5 436,-46.5 430,-46.5 430,-46.5 400,-46.5 400,-46.5 394,-46.5 388,-40.5 388,-34.5 388,-34.5 388,-12.5 388,-12.5 388,-6.5 394,-0.5 400,-0.5"/>
-<text text-anchor="middle" x="415" y="-31.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">Int, A</text>
-<polyline fill="none" stroke="#dddddd" points="388,-23.5 442,-23.5 "/>
-<text text-anchor="middle" x="415" y="-8.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">∅</text>
+<path fill="#b2ebf2" stroke="#2980b9" d="M400,-0.5C400,-0.5 430,-0.5 430,-0.5 436,-0.5 442,-6.5 442,-12.5 442,-12.5 442,-34.5 442,-34.5 442,-40.5 436,-46.5 430,-46.5 430,-46.5 400,-46.5 400,-46.5 394,-46.5 388,-40.5 388,-34.5 388,-34.5 388,-12.5 388,-12.5 388,-6.5 394,-0.5 400,-0.5"/>
+<text text-anchor="middle" x="415" y="-31.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">Int, A</text>
+<polyline fill="none" stroke="#2980b9" points="388,-23.5 442,-23.5 "/>
+<text text-anchor="middle" x="415" y="-8.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">∅</text>
 </g>
 <!-- ListStruct&#45;&gt;ListStruct2 -->
 <g id="edge4" class="edge">
 <title>ListStruct:cons&#45;&gt;ListStruct2:cons</title>
-<path fill="none" stroke="#dddddd" d="M330,-35.5C330,-35.5 361.28,-35.5 377.9,-35.5"/>
-<polygon fill="#dddddd" stroke="#dddddd" points="378,-39 388,-35.5 378,-32 378,-39"/>
-<text text-anchor="middle" x="359" y="-38.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#dddddd">loop</text>
+<path fill="none" stroke="#2980b9" d="M330,-35.5C330,-35.5 361.28,-35.5 377.9,-35.5"/>
+<polygon fill="#2980b9" stroke="#2980b9" points="378,-39 388,-35.5 378,-32 378,-39"/>
+<text text-anchor="middle" x="359" y="-38.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#000000">loop</text>
 </g>
 <!-- ListStruct&#45;&gt;ListStruct2 -->
 <g id="edge5" class="edge">
 <title>ListStruct:nil&#45;&gt;ListStruct2:nil</title>
-<path fill="none" stroke="#dddddd" d="M330,-11.5C330,-11.5 361.28,-11.5 377.9,-11.5"/>
-<polygon fill="#dddddd" stroke="#dddddd" points="378,-15 388,-11.5 378,-8 378,-15"/>
+<path fill="none" stroke="#2980b9" d="M330,-11.5C330,-11.5 361.28,-11.5 377.9,-11.5"/>
+<polygon fill="#2980b9" stroke="#2980b9" points="378,-15 388,-11.5 378,-8 378,-15"/>
 </g>
 <!-- ListFA -->
 <g id="node4" class="node">
@@ -46,22 +46,22 @@
 <!-- ListStruct2&#45;&gt;ListFA -->
 <g id="edge6" class="edge">
 <title>ListStruct2:cons&#45;&gt;ListFA</title>
-<path fill="none" stroke="#dddddd" stroke-dasharray="5,2" d="M442,-35.5C442,-35.5 470.68,-31.91 496.69,-28.66"/>
-<polygon fill="#dddddd" stroke="#dddddd" points="497.34,-32.11 506.83,-27.4 496.47,-25.16 497.34,-32.11"/>
-<text text-anchor="middle" x="474.5" y="-35.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#dddddd">Some</text>
+<path fill="none" stroke="#2980b9" stroke-dasharray="5,2" d="M442,-35.5C442,-35.5 470.68,-31.91 496.69,-28.66"/>
+<polygon fill="#2980b9" stroke="#2980b9" points="497.34,-32.11 506.83,-27.4 496.47,-25.16 497.34,-32.11"/>
+<text text-anchor="middle" x="474.5" y="-35.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#000000">Some</text>
 </g>
 <!-- ListStruct2&#45;&gt;ListFA -->
 <g id="edge7" class="edge">
 <title>ListStruct2:nil&#45;&gt;ListFA</title>
-<path fill="none" stroke="#dddddd" stroke-dasharray="5,2" d="M442,-11.5C442,-11.5 470.68,-15.09 496.69,-18.34"/>
-<polygon fill="#dddddd" stroke="#dddddd" points="496.47,-21.84 506.83,-19.6 497.34,-14.89 496.47,-21.84"/>
-<text text-anchor="middle" x="474.5" y="-16.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#dddddd">None</text>
+<path fill="none" stroke="#2980b9" stroke-dasharray="5,2" d="M442,-11.5C442,-11.5 470.68,-15.09 496.69,-18.34"/>
+<polygon fill="#2980b9" stroke="#2980b9" points="496.47,-21.84 506.83,-19.6 497.34,-14.89 496.47,-21.84"/>
+<text text-anchor="middle" x="474.5" y="-16.7" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="11.00" fill="#000000">None</text>
 </g>
 <!-- ListFList -->
 <g id="node3" class="node">
 <title>ListFList</title>
-<path fill="#b2ebf2" stroke="#2980b9" d="M191,-41.5C191,-41.5 137,-41.5 137,-41.5 131,-41.5 125,-35.5 125,-29.5 125,-29.5 125,-17.5 125,-17.5 125,-11.5 131,-5.5 137,-5.5 137,-5.5 191,-5.5 191,-5.5 197,-5.5 203,-11.5 203,-17.5 203,-17.5 203,-29.5 203,-29.5 203,-35.5 197,-41.5 191,-41.5"/>
-<text text-anchor="middle" x="164" y="-19.8" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">ListF[List]</text>
+<path fill="#b2ebf2" stroke="#dddddd" d="M191,-41.5C191,-41.5 137,-41.5 137,-41.5 131,-41.5 125,-35.5 125,-29.5 125,-29.5 125,-17.5 125,-17.5 125,-11.5 131,-5.5 137,-5.5 137,-5.5 191,-5.5 191,-5.5 197,-5.5 203,-11.5 203,-17.5 203,-17.5 203,-29.5 203,-29.5 203,-35.5 197,-41.5 191,-41.5"/>
+<text text-anchor="middle" x="164" y="-19.8" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">ListF[List]</text>
 </g>
 <!-- ListFList&#45;&gt;ListStruct -->
 <g id="edge2" class="edge">

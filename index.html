@@ -799,7 +799,7 @@ mkString(ints)
 Structural recursion works by:
 --
 
-* providing a solution to the smallest problem(s).
+* providing a solution to the smallest problem.
 --
 
 * for larger problems: relying on the solution to smaller problems.
@@ -2053,18 +2053,6 @@ val `project`: List => Option[(Int, List)] =
 ## List projection
 
 ```scala
-val project: `List => Option[(Int, List)]` =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
-```
-
----
-
-## List projection
-
-```scala
 val project: List => Option[(Int, List)] =
   _ match {
     case `Cons(head, tail)` => Some((head, tail))
@@ -2372,18 +2360,6 @@ val op: Option[(Int, String)] => String =
 
 ```scala
 val `op`: Option[(Int, String)] => String =
-  _ match {
-    case Some((head, tailResult)) => step(head, tailResult)
-    case None                     => base
-  }
-```
-
----
-
-## Simplifying `base` and `step`
-
-```scala
-val op: `Option[(Int, String)] => String` =
   _ match {
     case Some((head, tailResult)) => step(head, tailResult)
     case None                     => base
@@ -2930,6 +2906,12 @@ fold(op, project)(ints)
 
 ## Generalising recursion
 
+.center[![Cata step 5](img/cata-5-hl-1.svg)]
+
+---
+
+## Generalising recursion
+
 .center[![Cata step 5](img/cata-5-hl-3.svg)]
 
 ---
@@ -2937,12 +2919,6 @@ fold(op, project)(ints)
 ## Generalising recursion
 
 .center[![Cata step 5](img/cata-5-hl-4.svg)]
-
----
-
-## Generalising recursion
-
-.center[![Cata step 5](img/cata-5-hl-5.svg)]
 
 ---
 
@@ -3549,20 +3525,6 @@ implicit val listFFunctor = new `Functor[ListF]` {
 ## Functor
 
 ```scala
-&#x200B;`implicit` val listFFunctor = new Functor[ListF] {
-  override def map[A, B](list: ListF[A], f: A => B) =
-    list match {
-      case Some((head, tail)) => Some((head, f(tail)))
-      case None               => None
-    }
-}
-```
-
----
-
-## Functor
-
-```scala
 implicit val listFFunctor = new Functor[ListF] {
   override def map[A, B](list: ListF[A], f: A => B) =
 *   list match {
@@ -3694,20 +3656,6 @@ def map[F[_], A, B](
   f      : A => B
 )(implicit
   `functor: Functor[F]`
-): F[B] =
-  functor.map(fa, f)
-```
-
----
-
-## Functor
-
-```scala
-def map[F[_], A, B](
-  fa     : F[A],
-  f      : A => B
-)(`implicit`
-  functor: Functor[F]
 ): F[B] =
   functor.map(fa, f)
 ```
@@ -4427,7 +4375,7 @@ Catamorphisms are:
 * structural recursion for types that can be projected into pattern functors.
 --
 
-* fare less complicated than their names make them out to be.
+* far less complicated than their names make them out to be.
 --
 
 * a simple refactoring away from the familiar `fold`.
