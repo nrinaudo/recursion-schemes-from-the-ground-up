@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Recursion schemes from the ground up</title>
+        <title>An introduction to recursion schemes</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <link rel="stylesheet" type="text/css" href="css/style.css"/>
     </head>
@@ -9,7 +9,7 @@
         <textarea id="source">
 class: center, middle
 
-# Recursion schemes from the ground up
+# An introduction to recursion schemes
 
 Nicolas Rinaudo • [@NicolasRinaudo] • [Besedo]
 
@@ -1072,12 +1072,6 @@ recurse(base, ints)
 
 ---
 
-## Generalising the base case
-
-.center[![fold - base case](img/fold-base-after.svg)]
-
----
-
 ## Generalising the step
 
 .center[![fold - step case](img/fold-step.svg)]
@@ -1259,12 +1253,6 @@ recurse(base, step, ints)
 ## Generalising the step
 
 .center[![fold - step case](img/fold-step-after-hl-1.svg)]
-
----
-
-## Generalising the step
-
-.center[![fold - step case](img/fold-step-after.svg)]
 
 ---
 
@@ -1600,12 +1588,6 @@ def recurse[A](
 recurse(base, step, ints)
 // res6: String = 3 :: 2 :: 1 :: nil
 ```
-
----
-
-## Simplifying the step
-
-.center[![fold - recurse to loop](img/fold-return-after.svg)]
 
 ---
 
@@ -2317,13 +2299,13 @@ fold(base, step, project)(ints)
 
 ---
 
-## Abstracting over structure
+## Simplifying `base` and `step`
 
 .center[![Cata step 2](img/cata-2-hl-2.svg)]
 
 ---
 
-## Abstracting over structure
+## Simplifying `base` and `step`
 
 ```scala
 def fold[A](
@@ -2630,7 +2612,7 @@ fold(op, project)(ints)
 
 ---
 
-## Moving `op`
+## Simplifying `base` and `step`
 
 .diff-rm[
 ```scala
@@ -2652,7 +2634,7 @@ def fold[A](
 
 ---
 
-## Moving `op`
+## Simplifying `base` and `step`
 
 .diff-add[
 ```scala
@@ -2674,7 +2656,7 @@ def fold[A](
 
 ---
 
-## Moving `op`
+## Simplifying `base` and `step`
 
 ```scala
 def fold[A](
@@ -2699,19 +2681,19 @@ fold(op, project)(ints)
 
 ---
 
-## Moving `op`
+## Simplifying `base` and `step`
 
 .center[![Cata step 3](img/cata-3-hl-1.svg)]
 
 ---
 
-## Moving `op`
+## Simplifying `base` and `step`
 
 .center[![Cata step 4](img/cata-4-hl-1.svg)]
 
 ---
 
-## Moving `op`
+## Simplifying `base` and `step`
 
 .center[![Cata step 4](img/cata-4.svg)]
 
@@ -2889,12 +2871,6 @@ fold(op, project)(ints)
 ## Intermediate representation
 
 .center[![Cata step 5](img/cata-5-hl-1.svg)]
-
----
-
-## Intermediate representation
-
-.center[![Cata step 5](img/cata-5.svg)]
 
 ---
 
@@ -3840,12 +3816,6 @@ fold(op, project)(ints)
 
 ---
 
-## Using Functor
-
-.center[![Cata step 6](img/cata-6.svg)]
-
----
-
 ## Abstracting over `ListF`
 
 .center[![Cata step 6](img/cata-6-hl-2.svg)]
@@ -3974,12 +3944,6 @@ fold(op, project).apply(ints)
 ## Abstracting over `ListF`
 
 .center[![Cata step 7](img/cata-7-hl-1.svg)]
-
----
-
-## Abstracting over `ListF`
-
-.center[![Cata step 7](img/cata-7.svg)]
 
 ---
 
@@ -4215,12 +4179,6 @@ def cata[F[_]: Functor, A, B](
 cata(op, project).apply(ints)
 // res18: String = 3 :: 2 :: 1 :: nil
 ```
-
----
-
-## Naming things
-
-.center[![Cata step 8](img/cata-8.svg)]
 
 ---
 
@@ -4635,13 +4593,7 @@ val intTree =
 
 ---
 
-## Tree Height
-
-.center[![Tree catamorphism](img/cata-tree-3.svg)]
-
----
-
-## Tree Height
+## Pattern functor
 
 .center[![Tree catamorphism](img/cata-tree-4.svg)]
 
@@ -4991,13 +4943,7 @@ case object LeafF extends TreeF[Nothing]
 
 ---
 
-## Pattern functor
-
-.center[![Tree catamorphism](img/cata-tree-10.svg)]
-
----
-
-## Pattern functor
+## Projection
 
 .center[![Tree catamorphism](img/cata-tree-11.svg)]
 
@@ -5087,13 +5033,7 @@ def projectTree: Tree => TreeF[Tree] =
 
 ---
 
-## Projection
-
-.center[![Tree catamorphism](img/cata-tree-13.svg)]
-
----
-
-## Projection
+## Functor instance
 
 .center[![Tree catamorphism](img/cata-tree-14.svg)]
 
@@ -5199,11 +5139,11 @@ implicit val treeFFunctor = new Functor[TreeF] {
 
 ## Functor instance
 
-.center[![Tree catamorphism](img/cata-tree-13.svg)]
+.center[![Tree catamorphism](img/cata-tree-14.svg)]
 
 ---
 
-## Functor instance
+## F-Algebra
 
 .center[![Tree catamorphism](img/cata-tree-15.svg)]
 
@@ -5290,24 +5230,6 @@ val heightAlgebra: TreeF[Int] => Int =
 ## F-Algebra
 
 .center[![Tree catamorphism](img/cata-tree-16.svg)]
-
----
-
-## F-Algebra
-
-.center[![Tree catamorphism](img/cata-tree-17.svg)]
-
----
-
-## F-Algebra
-
-.center[![Tree catamorphism](img/cata-tree-18.svg)]
-
----
-
-## F-Algebra
-
-.center[![Tree catamorphism](img/cata-tree-19.svg)]
 
 ---
 
@@ -6200,13 +6122,7 @@ def cataFix[F[_]: Functor, A](
 
 ---
 
-## `cata` with `Fix`
-
-.center[![Linked List](img/catafix-no-b.svg)]
-
----
-
-## `cata` with `Fix`
+## Projecting `Fix`
 
 .center[![Linked List](img/catafix-no-b-hl-2.svg)]
 
@@ -6621,19 +6537,13 @@ def cataFix[F[_]: Functor, A](
 
 ---
 
-## Projecting `Fix`
-
-.center[![Linked List](img/catafix-project.svg)]
-
----
-
-## Projecting `Fix`
+## Functor instance
 
 .center[![Linked List](img/catafix-project-hl-2.svg)]
 
 ---
 
-## Projecting `Fix`
+## F-Algebra
 
 .center[![Linked List](img/catafix-project-hl-3.svg)]
 
@@ -6799,7 +6709,7 @@ class: center, middle
 
 --
 
-* Recursion schemes are just common recursive patterns generalised _ad absurdum_.
+* Catamorphisms are just a common recursive patterns generalised _ad absurdum_.
 --
 
 * They could certainly do with a general UX overhaul.
