@@ -39,10 +39,10 @@
 <!-- ListStruct2 -->
 <g id="node2" class="node">
 <title>ListStruct2</title>
-<path fill="#b2ebf2" stroke="#2980b9" d="M290,-0.5C290,-0.5 341,-0.5 341,-0.5 347,-0.5 353,-6.5 353,-12.5 353,-12.5 353,-34.5 353,-34.5 353,-40.5 347,-46.5 341,-46.5 341,-46.5 290,-46.5 290,-46.5 284,-46.5 278,-40.5 278,-34.5 278,-34.5 278,-12.5 278,-12.5 278,-6.5 284,-0.5 290,-0.5"/>
-<text text-anchor="middle" x="315.5" y="-31.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">Int, String</text>
-<polyline fill="none" stroke="#2980b9" points="278,-23.5 353,-23.5 "/>
-<text text-anchor="middle" x="315.5" y="-8.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">∅</text>
+<path fill="#b2ebf2" stroke="#dddddd" d="M290,-0.5C290,-0.5 341,-0.5 341,-0.5 347,-0.5 353,-6.5 353,-12.5 353,-12.5 353,-34.5 353,-34.5 353,-40.5 347,-46.5 341,-46.5 341,-46.5 290,-46.5 290,-46.5 284,-46.5 278,-40.5 278,-34.5 278,-34.5 278,-12.5 278,-12.5 278,-6.5 284,-0.5 290,-0.5"/>
+<text text-anchor="middle" x="315.5" y="-31.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">Int, String</text>
+<polyline fill="none" stroke="#dddddd" points="278,-23.5 353,-23.5 "/>
+<text text-anchor="middle" x="315.5" y="-8.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">∅</text>
 </g>
 <!-- ListStruct2&#45;&gt;ListStruct -->
 <g id="edge4" class="edge">
@@ -60,10 +60,10 @@
 <!-- choice -->
 <g id="node3" class="node">
 <title>choice</title>
-<path fill="none" stroke="#2980b9" stroke-dasharray="5,2" d="M149,-0.5C149,-0.5 179,-0.5 179,-0.5 185,-0.5 191,-6.5 191,-12.5 191,-12.5 191,-34.5 191,-34.5 191,-40.5 185,-46.5 179,-46.5 179,-46.5 149,-46.5 149,-46.5 143,-46.5 137,-40.5 137,-34.5 137,-34.5 137,-12.5 137,-12.5 137,-6.5 143,-0.5 149,-0.5"/>
-<text text-anchor="middle" x="164" y="-31.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">true</text>
-<polyline fill="none" stroke="#2980b9" stroke-dasharray="5,2" points="137,-23.5 191,-23.5 "/>
-<text text-anchor="middle" x="164" y="-8.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">false</text>
+<path fill="none" stroke="#dddddd" stroke-dasharray="5,2" d="M149,-0.5C149,-0.5 179,-0.5 179,-0.5 185,-0.5 191,-6.5 191,-12.5 191,-12.5 191,-34.5 191,-34.5 191,-40.5 185,-46.5 179,-46.5 179,-46.5 149,-46.5 149,-46.5 143,-46.5 137,-40.5 137,-34.5 137,-34.5 137,-12.5 137,-12.5 137,-6.5 143,-0.5 149,-0.5"/>
+<text text-anchor="middle" x="164" y="-31.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">true</text>
+<polyline fill="none" stroke="#dddddd" stroke-dasharray="5,2" points="137,-23.5 191,-23.5 "/>
+<text text-anchor="middle" x="164" y="-8.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">false</text>
 </g>
 <!-- choice&#45;&gt;ListStruct2 -->
 <g id="edge2" class="edge">

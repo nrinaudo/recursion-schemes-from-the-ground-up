@@ -60,10 +60,10 @@
 <!-- choice -->
 <g id="node3" class="node">
 <title>choice</title>
-<path fill="none" stroke="#2980b9" stroke-dasharray="5,2" d="M151,-0.5C151,-0.5 181,-0.5 181,-0.5 187,-0.5 193,-6.5 193,-12.5 193,-12.5 193,-34.5 193,-34.5 193,-40.5 187,-46.5 181,-46.5 181,-46.5 151,-46.5 151,-46.5 145,-46.5 139,-40.5 139,-34.5 139,-34.5 139,-12.5 139,-12.5 139,-6.5 145,-0.5 151,-0.5"/>
-<text text-anchor="middle" x="166" y="-31.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">true</text>
-<polyline fill="none" stroke="#2980b9" stroke-dasharray="5,2" points="139,-23.5 193,-23.5 "/>
-<text text-anchor="middle" x="166" y="-8.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">false</text>
+<path fill="none" stroke="#dddddd" stroke-dasharray="5,2" d="M151,-0.5C151,-0.5 181,-0.5 181,-0.5 187,-0.5 193,-6.5 193,-12.5 193,-12.5 193,-34.5 193,-34.5 193,-40.5 187,-46.5 181,-46.5 181,-46.5 151,-46.5 151,-46.5 145,-46.5 139,-40.5 139,-34.5 139,-34.5 139,-12.5 139,-12.5 139,-6.5 145,-0.5 151,-0.5"/>
+<text text-anchor="middle" x="166" y="-31.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">true</text>
+<polyline fill="none" stroke="#dddddd" stroke-dasharray="5,2" points="139,-23.5 193,-23.5 "/>
+<text text-anchor="middle" x="166" y="-8.3" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">false</text>
 </g>
 <!-- choice&#45;&gt;ListStruct2 -->
 <g id="edge2" class="edge">
@@ -81,8 +81,8 @@
 <!-- String -->
 <g id="node4" class="node">
 <title>String</title>
-<path fill="#b2ebf2" stroke="#2980b9" d="M42,-41.5C42,-41.5 12,-41.5 12,-41.5 6,-41.5 0,-35.5 0,-29.5 0,-29.5 0,-17.5 0,-17.5 0,-11.5 6,-5.5 12,-5.5 12,-5.5 42,-5.5 42,-5.5 48,-5.5 54,-11.5 54,-17.5 54,-17.5 54,-29.5 54,-29.5 54,-35.5 48,-41.5 42,-41.5"/>
-<text text-anchor="middle" x="27" y="-19.8" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#000000">String</text>
+<path fill="#b2ebf2" stroke="#dddddd" d="M42,-41.5C42,-41.5 12,-41.5 12,-41.5 6,-41.5 0,-35.5 0,-29.5 0,-29.5 0,-17.5 0,-17.5 0,-11.5 6,-5.5 12,-5.5 12,-5.5 42,-5.5 42,-5.5 48,-5.5 54,-11.5 54,-17.5 54,-17.5 54,-29.5 54,-29.5 54,-35.5 48,-41.5 42,-41.5"/>
+<text text-anchor="middle" x="27" y="-19.8" font-family="Segoe UI,Roboto,Helvetica,Arial,sans-serif" font-size="14.00" fill="#dddddd">String</text>
 </g>
 <!-- String&#45;&gt;choice -->
 <g id="edge1" class="edge">

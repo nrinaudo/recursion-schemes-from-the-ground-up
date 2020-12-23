@@ -1937,13 +1937,15 @@ product(ints)
 
 ## Key takeaways
 
+
+
 Structural recursion is generalised by:
 --
 
-* parameterising the base case.
+* parameterising the _base case_.
 --
 
-* parameterising the step case.
+* parameterising the _step_.
 --
 
 * ... knowing the structure of your type.
@@ -5288,6 +5290,35 @@ height(intTree)
 
 class: center, middle
 
+# In closing
+
+---
+
+## If you only remember 1 slide...
+
+--
+
+* Recursion schemes are Design Patterns for recursion.
+--
+
+* Once you known about pattern functors, the rest is refactoring.
+--
+
+* You can now study the really wild bits - duality and composition.
+
+---
+
+## What now?
+
+- [Questions](#questions)
+- [Reducing the boilerplate](#fix)
+- [Generative recursion](#unfold)
+
+---
+
+class: center, middle
+name: fix
+
 # Reducing the boilerplate
 
 ---
@@ -6699,27 +6730,3302 @@ Using `Fix` makes:
 
 ---
 
-class: center, middle
+## What now?
 
-# In closing
-
----
-
-## If you only remember 1 slide...
-
---
-
-* Catamorphisms are just a common recursive patterns generalised _ad absurdum_.
---
-
-* They could certainly do with a general UX overhaul.
---
-
-* They involve a lot of useful concepts that you'll encounter all over the place.
+- [Questions](#questions)
+- [Generative recursion](#unfold)
 
 ---
 
 class: center, middle
+name: unfold
+
+# Generative Recursion
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-init.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  `from: Int`
+): List = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-init.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): `List` = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-init.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(`from > 0`) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-init.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) `Cons(from, range(from - 1))`
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-3.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(`from`, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-3-head.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, `range(from - 1)`)
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-3-tail.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(`from > 0`) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-2.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) `Cons(from, range(from - 1))`
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-2.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(`from`, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-2-head.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, `range(from - 1)`)
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-2-tail.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(`from > 0`) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-1.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) `Cons(from, range(from - 1))`
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-1.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(`from`, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-1-head.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, `range(from - 1)`)
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-cons-1-tail.svg)]
+
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(`from > 0`) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-0.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         `Nil`
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-nil.svg)]
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+.center[![Linked List](img/range-complete.svg)]
+
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+// res24: String = 3 :: 2 :: 1 :: nil
+```
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(`from > 0`) Cons(from, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) `Cons(from, range(from - 1))`
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, range(from - 1))
+  else         `Nil`
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  `from: String`
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): `List` = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(`from.nonEmpty`)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    `Cons(from.head.toInt, charCodes(from.tail))`
+  else Nil
+}
+```
+
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(`from.head.toInt`, charCodes(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, `charCodes(from.tail)`)
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else `Nil`
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else Nil
+}
+```
+
+```scala
+mkString(charCodes("foobar"))
+// res25: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Key takeaways
+
+Generative recursion works by:
+--
+
+* evaluating the recursion state against a predicate.
+--
+
+* if `true`, extracting a head and next step, which we turn into a tail.
+--
+
+* if `false`, stopping.
+
+---
+
+class: center, middle
+
+# Generalised generative recursion
+
+---
+
+## Generalising `charCodes`
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Generalising `charCodes`
+
+.diff-rm[
+```scala
+*def `charCodes`(
+  from: String
+): List = {
+  if(from.nonEmpty)
+*   Cons(from.head.toInt, `charCodes`(from.tail))
+  else Nil
+}
+```
+]
+
+---
+
+## Generalising `charCodes`
+
+.diff-add[
+```scala
+*def `recurse`(
+  from: String
+): List = {
+  if(from.nonEmpty)
+*   Cons(from.head.toInt, `recurse`(from.tail))
+  else Nil
+}
+```
+]
+
+---
+
+## Generalising `charCodes`
+
+```scala
+def recurse(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+
+```scala
+mkString(recurse("foobar"))
+// res26: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-1.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-2.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-3.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-4.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-5.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-6.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-7.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-8.svg)]
+
+---
+
+## Generalising `charCodes`
+
+.center[![Linked List](img/unfold-init-hl-9.svg)]
+
+---
+
+## Generalising the predicate
+
+.center[![Linked List](img/unfold-predicate-before.svg)]
+
+---
+
+## Generalising the predicate
+
+```scala
+def recurse(
+  from: String
+): List = {
+  if(`from.nonEmpty`)
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+
+---
+
+## Generalising the predicate
+
+```scala
+def recurse(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+
+```scala
+*def predicate(from: String): Boolean =
+* from.nonEmpty
+```
+
+---
+
+## Generalising the predicate
+
+.diff-rm[
+```scala
+def recurse(
+  from: String
+): List = {
+* if(`from.nonEmpty`)
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+]
+
+```scala
+def predicate(from: String): Boolean =
+  from.nonEmpty
+```
+
+---
+
+## Generalising the predicate
+
+.diff-add[
+```scala
+def recurse(
+  from: String
+): List = {
+* if(`predicate(from)`)
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+]
+
+```scala
+def predicate(from: String): Boolean =
+  from.nonEmpty
+```
+
+---
+
+## Generalising the predicate
+
+.diff-add[
+```scala
+def recurse(
+* `predicate: String => Boolean`,
+  from     : String
+): List = {
+  if(predicate(from))
+    Cons(from.head.toInt, recurse(from.tail))
+  else Nil
+}
+```
+]
+
+---
+
+## Generalising the predicate
+
+.diff-add[
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from))
+*   Cons(from.head.toInt, recurse(`predicate`, from.tail))
+  else Nil
+}
+```
+]
+
+---
+
+## Generalising the predicate
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from))
+    Cons(from.head.toInt, recurse(predicate, from.tail))
+  else Nil
+}
+```
+
+```scala
+mkString(recurse(predicate, "foobar"))
+// res27: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Generalising the predicate
+
+.center[![Linked List](img/unfold-predicate-before.svg)]
+
+---
+
+## Generalising the predicate
+
+.center[![Linked List](img/unfold-predicate-before-2.svg)]
+
+---
+
+## Generalising the update
+
+.center[![Linked List](img/unfold-update-before.svg)]
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from))
+    Cons(`from.head.toInt`, recurse(predicate, `from.tail`))
+  else Nil
+}
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from))
+    Cons(from.head.toInt, recurse(predicate, from.tail))
+  else Nil
+}
+```
+
+```scala
+*def update(from: String): (Int, String) =
+* (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+.diff-rm[
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from))
+*   `Cons(from.head.toInt, recurse(predicate, from.tail))`
+  else Nil
+}
+```
+]
+
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+.diff-add[
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from)) {
+*   `val (head, nextState) = update(from)`
+*   `Cons(head, recurse(predicate, nextState))`
+  }
+  else Nil
+}
+```
+]
+
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = `update(from)`
+    Cons(head, recurse(predicate, nextState))
+  }
+  else Nil
+}
+```
+
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val `(head, nextState)` = update(from)
+    Cons(head, recurse(predicate, nextState))
+  }
+  else Nil
+}
+```
+
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(`head`, recurse(predicate, nextState))
+  }
+  else Nil
+}
+```
+
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, `nextState`))
+  }
+  else Nil
+}
+```
+
+```scala
+def update(from: String): (Int, String) =
+  (from.head.toInt, from.tail)
+```
+
+---
+
+## Generalising the update
+
+.diff-add[
+```scala
+def recurse(
+  predicate: String => Boolean,
+* `update   : String => (Int, String)`,
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, nextState))
+  }
+  else Nil
+}
+```
+]
+
+---
+
+## Generalising the update
+
+.diff-add[
+```scala
+def recurse(
+  predicate: String => Boolean,
+  update   : String => (Int, String),
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+*   Cons(head, recurse(predicate, `update`, nextState))
+  }
+  else Nil
+}
+```
+]
+
+---
+
+## Generalising the update
+
+```scala
+def recurse(
+  predicate: String => Boolean,
+  update   : String => (Int, String),
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, update, nextState))
+  }
+  else Nil
+}
+```
+
+```scala
+mkString(recurse(predicate, update, "foobar"))
+// res28: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Generalising the update
+
+.center[![Linked List](img/unfold-update-before.svg)]
+
+---
+
+## Generalising the update
+
+.center[![Linked List](img/unfold-update-before-2.svg)]
+
+---
+
+## Generalising the input type
+
+.center[![Linked List](img/unfold-input-before.svg)]
+
+---
+
+## Generalising the input type
+
+```scala
+def recurse(
+  predicate: `String` => Boolean,
+  update   : `String` => (Int, `String`),
+  from     : `String`
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, update, nextState))
+  }
+  else Nil
+}
+```
+
+---
+
+## Generalising the input type
+
+.diff-add[
+```scala
+*def recurse[`A`](
+  predicate: String => Boolean,
+  update   : String => (Int, String),
+  from     : String
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, update, nextState))
+  }
+  else Nil
+}
+```
+]
+
+---
+
+## Generalising the input type
+
+.diff-rm[
+```scala
+def recurse[A](
+* predicate: `String` => Boolean,
+* update   : `String` => (Int, `String`),
+* from     : `String`
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, update, nextState))
+  }
+  else Nil
+}
+```
+]
+
+---
+
+## Generalising the input type
+
+.diff-add[
+```scala
+def recurse[A](
+* predicate: `A` => Boolean,
+* update   : `A` => (Int, `A`),
+* from     : `A`
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, update, nextState))
+  }
+  else Nil
+}
+```
+]
+
+---
+
+## Generalising the input type
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, update, nextState))
+  }
+  else Nil
+}
+```
+
+```scala
+mkString(recurse(predicate, update, "foobar"))
+// res29: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Generalising the input type
+
+.center[![Linked List](img/unfold-input-before.svg)]
+
+---
+
+## Generalising the input type
+
+.center[![Linked List](img/unfold-input-before-2.svg)]
+
+---
+
+## Generalising the input type
+
+.center[![Linked List](img/unfold-input.svg)]
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, `recurse(predicate, update, nextState)`)
+  }
+  else Nil
+}
+```
+
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  `predicate`: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(`predicate`, update, nextState))
+  }
+  else Nil
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  `update`   : A => (Int, A),
+  from     : A
+): List = {
+  if(predicate(from)) {
+    val (head, nextState) = update(from)
+    Cons(head, recurse(predicate, `update`, nextState))
+  }
+  else Nil
+}
+```
+
+---
+
+## Simplifying the step
+
+.diff-rm[
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+* `if(predicate(from)) {`
+* `  val (head, nextState) = update(from)`
+* `  Cons(head, recurse(predicate, update, nextState))`
+* `}`
+* `else Nil`
+}
+```
+]
+
+---
+
+## Simplifying the step
+
+.diff-add[
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+
+* `def loop(state: A): List =`
+* `  if(predicate(state)) {`
+* `    val (head, nextState) = update(state)`
+* `    Cons(head, loop(nextState))`
+* `  }`
+* `  else Nil`
+*
+* loop(from)
+}
+```
+]
+
+---
+
+## Simplifying the step
+
+.diff-add[
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+
+* def loop(state: A): List =
+*   if(predicate(state)) {
+*     val (head, nextState) = update(state)
+*     Cons(head, loop(nextState))
+*   }
+*   else Nil
+*
+* `loop(from)`
+}
+```
+]
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  `predicate`: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+
+  def loop(state: A): List =
+    if(`predicate`(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop(from)
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  `update`   : A => (Int, A),
+  from     : A
+): List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = `update`(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop(from)
+}
+```
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, `loop(nextState)`)
+    }
+    else Nil
+
+  loop(from)
+}
+```
+
+
+---
+
+## Simplifying the step
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+  from     : A
+): List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop(from)
+}
+```
+
+---
+
+## Simplifying the step
+
+.center[![Linked List](img/unfold-loop-before-hl-1.svg)]
+
+---
+
+## Simplifying the step
+
+.center[![Linked List](img/unfold-loop-before-2.svg)]
+
+---
+
+## Simplifying the step
+
+.center[![Linked List](img/unfold-loop.svg)]
+
+---
+
+## Dropping parameters
+
+.diff-rm[
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A),
+* `from     : A`
+): List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+* `loop(from)`
+}
+```
+]
+
+---
+
+## Dropping parameters
+
+.diff-add[
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+* `loop`
+}
+```
+]
+
+---
+
+## Dropping parameters
+
+.diff-rm[
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+*): `List` = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+]
+
+---
+
+## Dropping parameters
+
+.diff-add[
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+*): `A => List` = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+]
+
+---
+
+## Dropping parameters
+
+```scala
+def recurse[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): A => List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+```scala
+mkString(recurse(predicate, update)("foobar"))
+// res30: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Naming things
+
+.diff-rm[
+```scala
+*def `recurse`[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): A => List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+.diff-add[
+```scala
+*def `unfold`[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): A => List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+```scala
+def unfold[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): A => List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+```scala
+mkString(unfold(predicate, update)("foobar"))
+// res31: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## `range` as an unfold
+
+```scala
+val range: Int => List =
+  unfold[Int](
+    predicate = state => state > 0,
+    update    = state => (state, state - 1)
+  )
+```
+
+---
+
+## `range` as an unfold
+
+```scala
+val range: Int => List =
+  `unfold`[Int](
+    predicate = state => state > 0,
+    update    = state => (state, state - 1)
+  )
+```
+
+---
+
+## `range` as an unfold
+
+```scala
+val range: Int => List =
+  unfold[Int](
+    `predicate = state => state > 0`,
+    update    = state => (state, state - 1)
+  )
+```
+
+---
+
+## `range` as an unfold
+
+```scala
+val range: Int => List =
+  unfold[Int](
+    predicate = state => state > 0,
+    `update    = state => (state, state - 1)`
+  )
+```
+
+---
+
+## `range` as an unfold
+
+```scala
+val range: Int => List =
+  unfold[Int](
+    predicate = state => state > 0,
+    update    = state => (state, state - 1)
+  )
+```
+
+```scala
+mkString(range(3))
+// res32: String = 3 :: 2 :: 1 :: nil
+```
+
+---
+
+## Key takeaways
+
+Generative recursion is generalised by:
+--
+
+* parameterising the predicate.
+--
+
+* parameterising the state update.
+--
+
+* ... knowing the structure of your type.
+
+---
+
+class: center, middle
+
+# Generalised unfolds
+
+---
+
+## Generalised unfolds
+
+```scala
+def unfold[A](
+  predicate: A => Boolean,
+  update   : A => (Int, A)
+): A => List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+---
+
+## Generalised unfolds
+
+.center[![Linked List](img/ana-init.svg)]
+
+---
+
+## Simplifying `predicate` and `update`
+
+.center[![Linked List](img/ana-op-before.svg)]
+
+---
+
+## Simplifying `predicate` and `update`
+
+.center[![Linked List](img/ana-op-before-hl-1.svg)]
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  `predicate: A => Boolean`,
+  `update   : A => (Int, A)`
+): A => List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+    if(predicate(state)) Some(update(state))
+    else                 None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val `op`: String => Option[(Int, String)] =
+  state => {
+    if(predicate(state)) Some(update(state))
+    else                 None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+.diff-rm[
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+*   if(`predicate(state)`) Some(update(state))
+    else                 None
+  }
+```
+]
+
+---
+
+## Simplifying `predicate` and `update`
+
+.diff-add[
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+*   if(`state.nonEmpty`) Some(update(state))
+    else               None
+  }
+```
+]
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+    if(state.nonEmpty) `Some(update(state))`
+    else               None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+.diff-rm[
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+*   if(state.nonEmpty) Some(`update(state)`)
+    else               None
+  }
+```
+]
+
+---
+
+## Simplifying `predicate` and `update`
+
+.diff-add[
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+*   if(state.nonEmpty) Some(`(state.head.toInt, state.tail)`)
+    else               None
+  }
+```
+]
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => Option[(Int, String)] =
+  state => {
+    if(state.nonEmpty) Some((state.head.toInt, state.tail))
+    else               `None`
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+.diff-rm[
+```scala
+*val op: String => `Option[(Int, String)]` =
+  state => {
+    if(state.nonEmpty) Some((state.head.toInt, state.tail))
+    else               None
+  }
+```
+]
+
+---
+
+## Simplifying `predicate` and `update`
+
+.diff-add[
+```scala
+*val op: String => `ListF[String]` =
+  state => {
+    if(state.nonEmpty) Some((state.head.toInt, state.tail))
+    else               None
+  }
+```
+]
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+val op: String => ListF[String] =
+  state => {
+    if(state.nonEmpty) Some((state.head.toInt, state.tail))
+    else               None
+  }
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+.diff-rm[
+```scala
+def unfold[A](
+* `predicate: A => Boolean`,
+* `update   : A => (Int, A)`
+): A => List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+]
+
+---
+
+## Simplifying `predicate` and `update`
+
+.diff-add[
+```scala
+def unfold[A](
+* `op: A => ListF[A]`
+): A => List = {
+
+  def loop(state: A): List =
+    if(predicate(state)) {
+      val (head, nextState) = update(state)
+      Cons(head, loop(nextState))
+    }
+    else Nil
+
+  loop
+}
+```
+]
+
+---
+
+## Simplifying `predicate` and `update`
+
+.diff-rm[
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+*   `if(predicate(state)) {`
+*   `  val (head, nextState) = update(state)`
+*   `  Cons(head, loop(nextState))`
+*   `}`
+*   `else Nil`
+
+  loop
+}
+```
+]
+
+---
+
+## Simplifying `predicate` and `update`
+
+.diff-add[
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+*   `op(state) match {`
+*   `  case Some((head, nextState)) => Cons(head, loop(nextState))`
+*   `  case None                    => Nil`
+*   `}`
+
+  loop
+}
+```
+]
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    `op(state)` match {
+      case Some((head, nextState)) => Cons(head, loop(nextState))
+      case None                    => Nil
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case `Some((head, nextState))` => Cons(head, loop(nextState))
+      case None                    => Nil
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, nextState)) => `Cons(head, loop(nextState))`
+      case None                    => Nil
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, nextState)) => Cons(head, loop(nextState))
+      case `None`                    => Nil
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, nextState)) => Cons(head, loop(nextState))
+      case None                    => `Nil`
+    }
+
+  loop
+}
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, nextState)) => Cons(head, loop(nextState))
+      case None                    => Nil
+    }
+
+  loop
+}
+```
+
+```scala
+mkString(unfold(op)("foobar"))
+// res33: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Simplifying `predicate` and `update`
+
+.center[![Linked List](img/ana-op-before.svg)]
+
+---
+
+## Simplifying `predicate` and `update`
+
+.center[![Linked List](img/ana-op-hl-1.svg)]
+
+---
+
+## Abstracting over structure
+
+.center[![Linked List](img/ana-embed-before.svg)]
+
+---
+
+## Abstracting over structure
+
+```scala
+def unfold[A](
+  op: A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => `Cons(head, loop(state))`
+      case None                => `Nil`
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: Option[(Int, List)] => List =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case None               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val `embed`: Option[(Int, List)] => List =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case None               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: Option[(Int, List)] => List =
+  _ match {
+    case `Some((head, tail))` => Cons(head, tail)
+    case None               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: Option[(Int, List)] => List =
+  _ match {
+    case Some((head, tail)) => `Cons(head, tail)`
+    case None               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: Option[(Int, List)] => List =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case `None`               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: Option[(Int, List)] => List =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case None               => `Nil`
+  }
+```
+
+---
+
+## Abstracting over structure
+
+.diff-rm[
+```scala
+*val embed: `Option[(Int, List)]` => List =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case None               => Nil
+  }
+```
+]
+
+---
+
+## Abstracting over structure
+
+.diff-add[
+```scala
+*val embed: `ListF[List]` => List =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case None               => Nil
+  }
+```
+]
+
+---
+
+## Abstracting over structure
+
+```scala
+val embed: ListF[List] => List =
+  _ match {
+    case Some((head, tail)) => Cons(head, tail)
+    case None               => Nil
+  }
+```
+
+---
+
+## Abstracting over structure
+
+```scala
+def unfold[A](
+  op   : A => ListF[A]
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => Cons(head, loop(state))
+      case None                => Nil
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+.diff-add[
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+* `embed: ListF[List] => List`
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => Cons(head, loop(state))
+      case None                => Nil
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+.diff-rm[
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+*     case Some((head, state)) => `Cons(head, loop(state))`
+      case None                => Nil
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+.diff-add[
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+*     case Some((head, state)) => `embed(Some((head, loop(state))))`
+      case None                => Nil
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+.diff-rm[
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => embed(Some((head, loop(state))))
+*     case None                => `Nil`
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+.diff-add[
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => embed(Some((head, loop(state))))
+*     case None                => `embed(None)`
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+      case Some((head, state)) => `embed`(Some((head, loop(state))))
+      case None                => `embed`(None)
+    }
+
+  loop
+}
+```
+
+---
+
+## Abstracting over structure
+
+.diff-rm[
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    op(state) match {
+*     case Some((head, state)) => `embed`(Some((head, loop(state))))
+*     case None                => `embed`(None)
+    }
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+.diff-add[
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+*   `embed`(op(state) match {
+      case Some((head, state)) => Some((head, loop(state)))
+      case None                => None
+    })
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over structure
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case Some((head, state)) => Some((head, loop(state)))
+      case None                => None
+    })
+
+  loop
+}
+```
+
+```scala
+mkString(unfold(op, embed)("foobar"))
+// res34: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Abstracting over structure
+
+.center[![Linked List](img/ana-embed-before.svg)]
+
+---
+
+## Abstracting over structure
+
+.center[![Linked List](img/ana-embed-hl-1.svg)]
+
+---
+
+## Using Functor
+
+.center[![Linked List](img/ana-functor-before.svg)]
+
+---
+
+## Using Functor
+
+.center[![Linked List](img/ana-functor-before-hl-1.svg)]
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+*   embed(op(state) match {
+*     case Some((head, state)) => Some((head, loop(state)))
+*     case None                => None
+*   })
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case `Some((head, state))` => Some((head, loop(state)))
+      case None                => None
+    })
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case Some((head, state)) => `Some((head, loop(state)))`
+      case None                => None
+    })
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case Some((head, state)) => Some((head, loop(state)))
+      case `None`                => None
+    })
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(op(state) match {
+      case Some((head, state)) => Some((head, loop(state)))
+      case None                => `None`
+    })
+
+  loop
+}
+```
+
+---
+
+## Using Functor
+
+.diff-rm[
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+*   `embed(op(state) match {`
+*   `  case Some((head, state)) => Some((head, loop(state)))`
+*   `  case None                => None`
+*   `})`
+
+  loop
+}
+```
+]
+
+---
+
+## Using Functor
+
+.diff-add[
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+*   `embed(map(op(state), loop))`
+
+  loop
+}
+```
+]
+
+---
+
+## Using Functor
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+
+```scala
+mkString(unfold(op, embed)("foobar"))
+// res35: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Using Functor
+
+.center[![Linked List](img/ana-functor-before.svg)]
+
+---
+
+## Using Functor
+
+.center[![Linked List](img/ana-functor-hl-1.svg)]
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Linked List](img/ana-listf-before.svg)]
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def unfold[A](
+  op   : A => `ListF`[A],
+  embed: `ListF`[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def unfold[A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(`map`(op(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `ListF`
+
+.diff-add[
+```scala
+*def unfold[`F[_]: Functor`, A](
+  op   : A => ListF[A],
+  embed: ListF[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over `ListF`
+
+.diff-rm[
+```scala
+def unfold[F[_]: Functor, A](
+* op   : A => `ListF`[A],
+* embed: `ListF`[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over `ListF`
+
+.diff-add[
+```scala
+def unfold[F[_]: Functor, A](
+* op   : A => `F`[A],
+* embed: `F`[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over `ListF`
+
+```scala
+def unfold[F[_]: Functor, A](
+  op   : A => F[A],
+  embed: F[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+
+```scala
+mkString(unfold(op, embed).apply("foobar"))
+// res36: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Linked List](img/ana-listf-before.svg)]
+
+---
+
+## Abstracting over `ListF`
+
+.center[![Linked List](img/ana-listf-hl-1.svg)]
+
+---
+
+## Abstracting over `List`
+
+.center[![Linked List](img/ana-list-before.svg)]
+
+---
+
+## Abstracting over `List`
+
+```scala
+def unfold[F[_]: Functor, A](
+  op   : A => F[A],
+  embed: F[`List`] => `List`
+): A => `List` = {
+
+  def loop(state: A): `List` =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+
+---
+
+## Abstracting over `List`
+
+.diff-add[
+```scala
+*def unfold[F[_]: Functor, A, `B`](
+  op   : A => F[A],
+  embed: F[List] => List
+): A => List = {
+
+  def loop(state: A): List =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over `List`
+
+.diff-rm[
+```scala
+def unfold[F[_]: Functor, A, B](
+  op   : A => F[A],
+* embed: F[`List`] => `List`
+*): A => `List` = {
+
+* def loop(state: A): `List` =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over `List`
+
+.diff-add[
+```scala
+def unfold[F[_]: Functor, A, B](
+  op   : A => F[A],
+* embed: F[`B`] => `B`
+*): A => `B` = {
+
+  def loop(state: A): `B` =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Abstracting over `List`
+
+```scala
+def unfold[F[_]: Functor, A, B](
+  op   : A => F[A],
+  embed: F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+
+```scala
+mkString(unfold(op, embed).apply("foobar"))
+// res37: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Abstracting over `List`
+
+.center[![Linked List](img/ana-list-before.svg)]
+
+---
+
+## Abstracting over `List`
+
+.center[![Linked List](img/ana-list-hl-1.svg)]
+
+---
+
+## Abstracting over `List`
+
+.center[![Linked List](img/ana-list.svg)]
+
+---
+
+## Naming things
+
+.diff-rm[
+```scala
+*def `unfold`[F[_]: Functor, A, B](
+  op   : A => F[A],
+  embed: F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+.diff-add[
+```scala
+*def `ana`[F[_]: Functor, A, B](
+  op   : A => F[A],
+  embed: F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(map(op(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+.diff-rm[
+```scala
+def ana[F[_]: Functor, A, B](
+* `op`   : A => F[A],
+  embed: F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+*   embed(map(`op`(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+.diff-add[
+```scala
+def ana[F[_]: Functor, A, B](
+* `coAlgebra`: A => F[A],
+  embed    : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+*   embed(map(`coAlgebra`(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+```scala
+def ana[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+  embed    : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+
+```scala
+mkString(ana(op, embed).apply("foobar"))
+// res38: String = 102 :: 111 :: 111 :: 98 :: 97 :: 114 :: nil
+```
+
+---
+
+## Naming things
+
+.center[![Linked List](img/ana-coalgebra-before.svg)]
+
+---
+
+## Naming things
+
+.center[![Linked List](img/ana-coalgebra-hl-1.svg)]
+
+---
+
+## Naming things
+
+.center[![Linked List](img/ana-coalgebra.svg)]
+
+---
+
+## `range` as an ana
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      None
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
+```
+
+---
+
+## `range` as an ana
+
+```scala
+val `rangeCoAlgebra`: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      None
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
+```
+
+---
+
+## `range` as an ana
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(`i > 0`) Some((i, i - 1))
+  else      None
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
+```
+
+---
+
+## `range` as an ana
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) `Some((i, i - 1))`
+  else      None
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
+```
+
+---
+
+## `range` as an ana
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      `None`
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
+```
+
+---
+
+## `range` as an ana
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      None
+}
+
+val range: Int => List =
+  `ana(rangeCoAlgebra, embed)`
+```
+
+---
+
+## `range` as an ana
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      None
+}
+
+val range: Int => List =
+  ana(rangeCoAlgebra, embed)
+```
+
+```scala
+mkString(range(3))
+// res39: String = 3 :: 2 :: 1 :: nil
+```
+
+---
+
+## Key takeaways
+
+Anamorphisms are:
+--
+
+* generative recursion for types who can be embedded from a pattern functor.
+--
+
+* fare less complicated than their names make them out to be.
+--
+
+* suspiciously similar to catamorphisms...
+
+---
+
+class: center, middle
+
+# Generalised generalised folds!
+
+---
+
+## `cata` and `ana`
+
+.center[![Linked List](img/cata-ana.svg)]
+
+---
+
+## TODO
+
+hl cata (B through PF to A)
+hl ana (A through PF to B)
+
+---
+
+## TODO
+
+flip ana so that Bs and As are lined up
+hl without arrow names, to show we just flipped the arrows.
+
+---
+
+## Duality of `cata` and `ana`
+
+.center[![Linked List](img/cata-ana-dual.svg)]
+
+---
+
+## Duality of `cata` and `ana`
+
+```scala
+val composed: Int => Int =
+  range andThen product
+```
+
+---
+
+## Duality of `cata` and `ana`
+
+```scala
+val factorial: Int => Int =
+  range andThen product
+```
+
+```scala
+factorial(3)
+// res40: Int = 6
+```
+
+---
+
+## TODO
+
+Start from cata-ana, rename until we get the same thing and merge.
+
+---
+
+## Equivalence of `cata` and `ana`
+
+.center[![Linked List](img/cata-ana-equivalence.svg)]
+
+---
+
+## Equivalence of `cata` and `ana`
+
+```scala
+val factorial: Int => Int =
+  cata(productAlgebra, rangeCoAlgebra)
+```
+
+```scala
+factorial(3)
+// res41: Int = 6
+```
+
+---
+
+## Equivalence of `cata` and `ana`
+
+```scala
+def hylo[F[_]: Functor, A, B](
+  algebra  : F[A] => A,
+  coAlgebra: B => F[B]
+): B => A = {
+
+  def loop(curr: B): A =
+    algebra(map(coAlgebra(curr), loop))
+
+  loop
+}
+```
+
+---
+
+class: center, middle
+name: questions
 
 # Questions?
 
