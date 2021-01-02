@@ -1294,7 +1294,6 @@ def recurse(
 ```
 ]
 
-
 ---
 
 ## Generalising the return type
@@ -1539,8 +1538,6 @@ def recurse[A](
   loop(values)
 }
 ```
-
-
 
 ---
 
@@ -1937,8 +1934,6 @@ product(ints)
 
 ## Key takeaways
 
-
-
 Structural recursion is generalised by:
 --
 
@@ -2013,11 +2008,10 @@ def fold[A](
 ## List projection
 
 ```scala
-val project: List => Option[(Int, List)] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
+val project: List => Option[(Int, List)] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
 ```
 
 ---
@@ -2025,11 +2019,10 @@ val project: List => Option[(Int, List)] =
 ## List projection
 
 ```scala
-val `project`: List => Option[(Int, List)] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
+val `project`: List => Option[(Int, List)] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
 ```
 
 ---
@@ -2037,11 +2030,10 @@ val `project`: List => Option[(Int, List)] =
 ## List projection
 
 ```scala
-val project: List => Option[(Int, List)] =
-  _ match {
-    case `Cons(head, tail)` => Some((head, tail))
-    case Nil              => None
-  }
+val project: List => Option[(Int, List)] = {
+  case `Cons(head, tail)` => Some((head, tail))
+  case Nil              => None
+}
 ```
 
 ---
@@ -2049,11 +2041,10 @@ val project: List => Option[(Int, List)] =
 ## List projection
 
 ```scala
-val project: List => Option[(Int, List)] =
-  _ match {
-    case Cons(head, tail) => `Some((head, tail))`
-    case Nil              => None
-  }
+val project: List => Option[(Int, List)] = {
+  case Cons(head, tail) => `Some((head, tail))`
+  case Nil              => None
+}
 ```
 
 ---
@@ -2061,11 +2052,10 @@ val project: List => Option[(Int, List)] =
 ## List projection
 
 ```scala
-val project: List => Option[(Int, List)] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case `Nil`              => None
-  }
+val project: List => Option[(Int, List)] = {
+  case Cons(head, tail) => Some((head, tail))
+  case `Nil`              => None
+}
 ```
 
 ---
@@ -2073,11 +2063,10 @@ val project: List => Option[(Int, List)] =
 ## List projection
 
 ```scala
-val project: List => Option[(Int, List)] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => `None`
-  }
+val project: List => Option[(Int, List)] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => `None`
+}
 ```
 
 ---
@@ -2331,11 +2320,10 @@ def fold[A](
 ## Simplifying `base` and `step`
 
 ```scala
-val op: Option[(Int, String)] => String =
-  _ match {
-    case Some((head, tailResult)) => step(head, tailResult)
-    case None                     => base
-  }
+val op: Option[(Int, String)] => String = {
+  case Some((head, tailResult)) => step(head, tailResult)
+  case None                     => base
+}
 ```
 
 ---
@@ -2343,11 +2331,10 @@ val op: Option[(Int, String)] => String =
 ## Simplifying `base` and `step`
 
 ```scala
-val `op`: Option[(Int, String)] => String =
-  _ match {
-    case Some((head, tailResult)) => step(head, tailResult)
-    case None                     => base
-  }
+val `op`: Option[(Int, String)] => String = {
+  case Some((head, tailResult)) => step(head, tailResult)
+  case None                     => base
+}
 ```
 
 ---
@@ -2355,11 +2342,10 @@ val `op`: Option[(Int, String)] => String =
 ## Simplifying `base` and `step`
 
 ```scala
-val op: Option[(Int, String)] => String =
-  _ match {
-    case `Some((head, tailResult))` => step(head, tailResult)
-    case None                     => base
-  }
+val op: Option[(Int, String)] => String = {
+  case `Some((head, tailResult))` => step(head, tailResult)
+  case None                     => base
+}
 ```
 
 ---
@@ -2368,11 +2354,10 @@ val op: Option[(Int, String)] => String =
 
 .diff-rm[
 ```scala
-val op: Option[(Int, String)] => String =
-  _ match {
-*   case Some((head, tailResult)) => `step(head, tailResult)`
-    case None                     => base
-  }
+val op: Option[(Int, String)] => String = {
+* case Some((head, tailResult)) => `step(head, tailResult)`
+  case None                     => base
+}
 ```
 ]
 
@@ -2382,11 +2367,10 @@ val op: Option[(Int, String)] => String =
 
 .diff-add[
 ```scala
-val op: Option[(Int, String)] => String =
-  _ match {
-*   case Some((head, tailResult)) => `head + " :: " + tailResult`
-    case None                     => base
-  }
+val op: Option[(Int, String)] => String = {
+* case Some((head, tailResult)) => `head + " :: " + tailResult`
+  case None                     => base
+}
 ```
 ]
 
@@ -2395,11 +2379,10 @@ val op: Option[(Int, String)] => String =
 ## Simplifying `base` and `step`
 
 ```scala
-val op: Option[(Int, String)] => String =
-  _ match {
-    case Some((head, tailResult)) => head + " :: " + tailResult
-    case `None`                     => base
-  }
+val op: Option[(Int, String)] => String = {
+  case Some((head, tailResult)) => head + " :: " + tailResult
+  case `None`                     => base
+}
 ```
 
 ---
@@ -2408,11 +2391,10 @@ val op: Option[(Int, String)] => String =
 
 .diff-rm[
 ```scala
-val op: Option[(Int, String)] => String =
-  _ match {
-    case Some((head, tailResult)) => head + " :: " + tailResult
-*   case None                     => `base`
-  }
+val op: Option[(Int, String)] => String = {
+  case Some((head, tailResult)) => head + " :: " + tailResult
+* case None                     => `base`
+}
 ```
 ]
 
@@ -2422,11 +2404,10 @@ val op: Option[(Int, String)] => String =
 
 .diff-add[
 ```scala
-val op: Option[(Int, String)] => String =
-  _ match {
-    case Some((head, tailResult)) => head + " :: " + tailResult
-*   case None                     => `"nil"`
-  }
+val op: Option[(Int, String)] => String = {
+  case Some((head, tailResult)) => head + " :: " + tailResult
+* case None                     => `"nil"`
+}
 ```
 ]
 
@@ -2435,11 +2416,10 @@ val op: Option[(Int, String)] => String =
 ## Simplifying `base` and `step`
 
 ```scala
-val op: Option[(Int, String)] => String =
-  _ match {
-    case Some((head, tailResult)) => head + " :: " + tailResult
-    case None                     => "nil"
-  }
+val op: Option[(Int, String)] => String = {
+  case Some((head, tailResult)) => head + " :: " + tailResult
+  case None                     => "nil"
+}
 ```
 
 ---
@@ -2738,11 +2718,10 @@ type ListF[A] = Option[(Int, A)]
 ```
 
 ```scala
-val project: List => ListF[List] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
+val project: List => ListF[List] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
 ```
 
 ---
@@ -2754,11 +2733,10 @@ type ListF[`A`] = Option[(Int, A)]
 ```
 
 ```scala
-val project: List => ListF[`List`] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
+val project: List => ListF[`List`] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
 ```
 
 ---
@@ -2770,11 +2748,10 @@ type ListF[A] = Option[(Int, A)]
 ```
 
 ```scala
-val op: ListF[String] => String =
-  _ match {
-    case Some((head, tailResult)) => head + " :: " + tailResult
-    case None                     => "nil"
-  }
+val op: ListF[String] => String = {
+  case Some((head, tailResult)) => head + " :: " + tailResult
+  case None                     => "nil"
+}
 ```
 
 ---
@@ -2786,11 +2763,10 @@ type ListF[`A`] = Option[(Int, A)]
 ```
 
 ```scala
-val op: ListF[`String`] => String =
-  _ match {
-    case Some((head, tailResult)) => head + " :: " + tailResult
-    case None                     => "nil"
-  }
+val op: ListF[`String`] => String = {
+  case Some((head, tailResult)) => head + " :: " + tailResult
+  case None                     => "nil"
+}
 ```
 
 ---
@@ -4205,11 +4181,10 @@ cata(op, project).apply(ints)
 ## `product` as a cata
 
 ```scala
-val productAlgebra: ListF[Int] => Int =
-  _ match {
-    case Some((head, tailProduct)) => head * tailProduct
-    case None                      => 1
-  }
+val productAlgebra: ListF[Int] => Int = {
+  case Some((head, tailProduct)) => head * tailProduct
+  case None                      => 1
+}
 
 val product: List => Int =
   cata(productAlgebra, project)
@@ -4220,11 +4195,10 @@ val product: List => Int =
 ## `product` as a cata
 
 ```scala
-val `productAlgebra`: ListF[Int] => Int =
-  _ match {
-    case Some((head, tailProduct)) => head * tailProduct
-    case None                      => 1
-  }
+val `productAlgebra`: ListF[Int] => Int = {
+  case Some((head, tailProduct)) => head * tailProduct
+  case None                      => 1
+}
 
 val product: List => Int =
   cata(productAlgebra, project)
@@ -4235,11 +4209,10 @@ val product: List => Int =
 ## `product` as a cata
 
 ```scala
-val productAlgebra: ListF[Int] => Int =
-  _ match {
-    case `Some((head, tailProduct))` => head * tailProduct
-    case None                      => 1
-  }
+val productAlgebra: ListF[Int] => Int = {
+  case `Some((head, tailProduct))` => head * tailProduct
+  case None                      => 1
+}
 
 val product: List => Int =
   cata(productAlgebra, project)
@@ -4250,11 +4223,10 @@ val product: List => Int =
 ## `product` as a cata
 
 ```scala
-val productAlgebra: ListF[Int] => Int =
-  _ match {
-    case Some((head, tailProduct)) => `head * tailProduct`
-    case None                      => 1
-  }
+val productAlgebra: ListF[Int] => Int = {
+  case Some((head, tailProduct)) => `head * tailProduct`
+  case None                      => 1
+}
 
 val product: List => Int =
   cata(productAlgebra, project)
@@ -4265,11 +4237,10 @@ val product: List => Int =
 ## `product` as a cata
 
 ```scala
-val productAlgebra: ListF[Int] => Int =
-  _ match {
-    case Some((head, tailProduct)) => head * tailProduct
-    case `None`                      => 1
-  }
+val productAlgebra: ListF[Int] => Int = {
+  case Some((head, tailProduct)) => head * tailProduct
+  case `None`                      => 1
+}
 
 val product: List => Int =
   cata(productAlgebra, project)
@@ -4280,11 +4251,10 @@ val product: List => Int =
 ## `product` as a cata
 
 ```scala
-val productAlgebra: ListF[Int] => Int =
-  _ match {
-    case Some((head, tailProduct)) => head * tailProduct
-    case None                      => `1`
-  }
+val productAlgebra: ListF[Int] => Int = {
+  case Some((head, tailProduct)) => head * tailProduct
+  case None                      => `1`
+}
 
 val product: List => Int =
   cata(productAlgebra, project)
@@ -4295,11 +4265,10 @@ val product: List => Int =
 ## `product` as a cata
 
 ```scala
-val productAlgebra: ListF[Int] => Int =
-  _ match {
-    case Some((head, tailProduct)) => head * tailProduct
-    case None                      => 1
-  }
+val productAlgebra: ListF[Int] => Int = {
+  case Some((head, tailProduct)) => head * tailProduct
+  case None                      => 1
+}
 
 val product: List => Int =
   `cata(productAlgebra, project)`
@@ -4310,11 +4279,10 @@ val product: List => Int =
 ## `product` as a cata
 
 ```scala
-val productAlgebra: ListF[Int] => Int =
-  _ match {
-    case Some((head, tailProduct)) => head * tailProduct
-    case None                      => 1
-  }
+val productAlgebra: ListF[Int] => Int = {
+  case Some((head, tailProduct)) => head * tailProduct
+  case None                      => 1
+}
 
 val product: List => Int =
   cata(productAlgebra, project)
@@ -4954,11 +4922,10 @@ case object LeafF extends TreeF[Nothing]
 ## Projection
 
 ```scala
-def projectTree: Tree => TreeF[Tree] =
-  _ match {
-    case Node(l, v, r) => NodeF(l, v, r)
-    case Leaf          => LeafF
-  }
+def projectTree: Tree => TreeF[Tree] = {
+  case Node(l, v, r) => NodeF(l, v, r)
+  case Leaf          => LeafF
+}
 ```
 
 ---
@@ -4966,11 +4933,10 @@ def projectTree: Tree => TreeF[Tree] =
 ## Projection
 
 ```scala
-def `projectTree`: Tree => TreeF[Tree] =
-  _ match {
-    case Node(l, v, r) => NodeF(l, v, r)
-    case Leaf          => LeafF
-  }
+def `projectTree`: Tree => TreeF[Tree] = {
+  case Node(l, v, r) => NodeF(l, v, r)
+  case Leaf          => LeafF
+}
 ```
 
 ---
@@ -4978,11 +4944,10 @@ def `projectTree`: Tree => TreeF[Tree] =
 ## Projection
 
 ```scala
-def projectTree: Tree => TreeF[Tree] =
-  _ match {
-    case `Node(l, v, r)` => NodeF(l, v, r)
-    case Leaf          => LeafF
-  }
+def projectTree: Tree => TreeF[Tree] = {
+  case `Node(l, v, r)` => NodeF(l, v, r)
+  case Leaf          => LeafF
+}
 ```
 
 ---
@@ -4990,11 +4955,10 @@ def projectTree: Tree => TreeF[Tree] =
 ## Projection
 
 ```scala
-def projectTree: Tree => TreeF[Tree] =
-  _ match {
-    case Node(l, v, r) => `NodeF(l, v, r)`
-    case Leaf          => LeafF
-  }
+def projectTree: Tree => TreeF[Tree] = {
+  case Node(l, v, r) => `NodeF(l, v, r)`
+  case Leaf          => LeafF
+}
 ```
 
 ---
@@ -5002,11 +4966,10 @@ def projectTree: Tree => TreeF[Tree] =
 ## Projection
 
 ```scala
-def projectTree: Tree => TreeF[Tree] =
-  _ match {
-    case Node(l, v, r) => NodeF(l, v, r)
-    case `Leaf`          => LeafF
-  }
+def projectTree: Tree => TreeF[Tree] = {
+  case Node(l, v, r) => NodeF(l, v, r)
+  case `Leaf`          => LeafF
+}
 ```
 
 ---
@@ -5014,11 +4977,10 @@ def projectTree: Tree => TreeF[Tree] =
 ## Projection
 
 ```scala
-def projectTree: Tree => TreeF[Tree] =
-  _ match {
-    case Node(l, v, r) => NodeF(l, v, r)
-    case Leaf          => `LeafF`
-  }
+def projectTree: Tree => TreeF[Tree] = {
+  case Node(l, v, r) => NodeF(l, v, r)
+  case Leaf          => `LeafF`
+}
 ```
 
 ---
@@ -5154,11 +5116,10 @@ implicit val treeFFunctor = new Functor[TreeF] {
 ## F-Algebra
 
 ```scala
-val heightAlgebra: TreeF[Int] => Int =
-  _ match {
-    case NodeF(left, _, right) => 1 + math.max(left, right)
-    case LeafF                 => 0
-  }
+val heightAlgebra: TreeF[Int] => Int = {
+  case NodeF(left, _, right) => 1 + math.max(left, right)
+  case LeafF                 => 0
+}
 ```
 
 ---
@@ -5166,11 +5127,10 @@ val heightAlgebra: TreeF[Int] => Int =
 ## F-Algebra
 
 ```scala
-val `heightAlgebra`: TreeF[Int] => Int =
-  _ match {
-    case NodeF(left, _, right) => 1 + math.max(left, right)
-    case LeafF                 => 0
-  }
+val `heightAlgebra`: TreeF[Int] => Int = {
+  case NodeF(left, _, right) => 1 + math.max(left, right)
+  case LeafF                 => 0
+}
 ```
 
 ---
@@ -5178,11 +5138,10 @@ val `heightAlgebra`: TreeF[Int] => Int =
 ## F-Algebra
 
 ```scala
-val heightAlgebra: TreeF[Int] => Int =
-  _ match {
-    case `NodeF(left, _, right)` => 1 + math.max(left, right)
-    case LeafF                 => 0
-  }
+val heightAlgebra: TreeF[Int] => Int = {
+  case `NodeF(left, _, right)` => 1 + math.max(left, right)
+  case LeafF                 => 0
+}
 ```
 
 ---
@@ -5190,11 +5149,10 @@ val heightAlgebra: TreeF[Int] => Int =
 ## F-Algebra
 
 ```scala
-val heightAlgebra: TreeF[Int] => Int =
-  _ match {
-    case NodeF(left, _, right) => `1 + math.max(left, right)`
-    case LeafF                 => 0
-  }
+val heightAlgebra: TreeF[Int] => Int = {
+  case NodeF(left, _, right) => `1 + math.max(left, right)`
+  case LeafF                 => 0
+}
 ```
 
 ---
@@ -5202,11 +5160,10 @@ val heightAlgebra: TreeF[Int] => Int =
 ## F-Algebra
 
 ```scala
-val heightAlgebra: TreeF[Int] => Int =
-  _ match {
-    case NodeF(left, _, right) => 1 + math.max(left, right)
-    case `LeafF`                 => 0
-  }
+val heightAlgebra: TreeF[Int] => Int = {
+  case NodeF(left, _, right) => 1 + math.max(left, right)
+  case `LeafF`                 => 0
+}
 ```
 
 ---
@@ -5214,11 +5171,10 @@ val heightAlgebra: TreeF[Int] => Int =
 ## F-Algebra
 
 ```scala
-val heightAlgebra: TreeF[Int] => Int =
-  _ match {
-    case NodeF(left, _, right) => 1 + math.max(left, right)
-    case LeafF                 => `0`
-  }
+val heightAlgebra: TreeF[Int] => Int = {
+  case NodeF(left, _, right) => 1 + math.max(left, right)
+  case LeafF                 => `0`
+}
 ```
 
 ---
@@ -5403,8 +5359,6 @@ val ints2: List2 =
   ???: List2
 ```
 
-
-
 ---
 
 ## Building a `List2`
@@ -5417,7 +5371,6 @@ val ints2: List2 =
 * `???: List2`
 ```
 ]
-
 
 ---
 
@@ -5437,7 +5390,6 @@ val ints2: List2 =
 ## Building a `List2`
 
 .center[![List2](img/list2-3-value.svg)]
-
 
 .diff-rm[
 ```scala
@@ -6162,11 +6114,10 @@ def cataFix[F[_]: Functor, A](
 ## Projecting `Fix`
 
 ```scala
-val project: List => ListF[List] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
+val project: List => ListF[List] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
 ```
 
 ---
@@ -6175,11 +6126,10 @@ val project: List => ListF[List] =
 
 .diff-rm[
 ```scala
-*val `project`: List => ListF[List] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
+*val `project`: List => ListF[List] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
 ```
 ]
 
@@ -6189,11 +6139,10 @@ val project: List => ListF[List] =
 
 .diff-add[
 ```scala
-*val `projectFix`: List => ListF[List] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
+*val `projectFix`: List => ListF[List] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
 ```
 ]
 
@@ -6202,11 +6151,10 @@ val project: List => ListF[List] =
 ## Projecting `Fix`
 
 ```scala
-val projectFix: List => ListF[List] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
+val projectFix: List => ListF[List] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
 ```
 
 ---
@@ -6215,11 +6163,10 @@ val projectFix: List => ListF[List] =
 
 .diff-rm[
 ```scala
-*val projectFix: `List` => ListF[`List`] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
+*val projectFix: `List` => ListF[`List`] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
 ```
 ]
 
@@ -6229,11 +6176,10 @@ val projectFix: List => ListF[List] =
 
 .diff-add[
 ```scala
-*val projectFix: `FixedList` => ListF[`FixedList`] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
+*val projectFix: `FixedList` => ListF[`FixedList`] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
 ```
 ]
 
@@ -6243,11 +6189,10 @@ val projectFix: List => ListF[List] =
 
 .diff-rm[
 ```scala
-*val projectFix: `FixedList` => ListF[`FixedList`] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
+*val projectFix: `FixedList` => ListF[`FixedList`] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
 ```
 ]
 
@@ -6257,11 +6202,10 @@ val projectFix: List => ListF[List] =
 
 .diff-add[
 ```scala
-*val projectFix: `Fix[ListF]` => ListF[`Fix[ListF]`] =
-  _ match {
-    case Cons(head, tail) => Some((head, tail))
-    case Nil              => None
-  }
+*val projectFix: `Fix[ListF]` => ListF[`Fix[ListF]`] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
 ```
 ]
 
@@ -6271,11 +6215,10 @@ val projectFix: List => ListF[List] =
 
 .diff-rm[
 ```scala
-val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
-  _ match {
-*   case `Cons(head, tail)` => Some((head, tail))
-    case Nil              => None
-  }
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] = {
+* case `Cons(head, tail)` => Some((head, tail))
+  case Nil              => None
+}
 ```
 ]
 
@@ -6285,11 +6228,10 @@ val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
 
 .diff-add[
 ```scala
-val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
-  _ match {
-*   case `Fix(Some((head, tail)))` => Some((head, tail))
-    case Nil                     => None
-  }
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] = {
+* case `Fix(Some((head, tail)))` => Some((head, tail))
+  case Nil                     => None
+}
 ```
 ]
 
@@ -6299,11 +6241,10 @@ val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
 
 .diff-rm[
 ```scala
-val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
-  _ match {
-    case Fix(Some((head, tail))) => Some((head, tail))
-*   case `Nil`                     => None
-  }
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] = {
+  case Fix(Some((head, tail))) => Some((head, tail))
+* case `Nil`                     => None
+}
 ```
 ]
 
@@ -6313,11 +6254,10 @@ val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
 
 .diff-add[
 ```scala
-val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
-  _ match {
-    case Fix(Some((head, tail))) => Some((head, tail))
-*   case `Fix(None)`               => None
-  }
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] = {
+  case Fix(Some((head, tail))) => Some((head, tail))
+* case `Fix(None)`               => None
+}
 ```
 ]
 
@@ -6326,11 +6266,10 @@ val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
 ## Projecting `Fix`
 
 ```scala
-val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
-  _ match {
-    case Fix(Some((head, tail))) => Some((head, tail))
-    case Fix(None)               => None
-  }
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] = {
+  case Fix(Some((head, tail))) => Some((head, tail))
+  case Fix(None)               => None
+}
 ```
 
 ---
@@ -6338,11 +6277,10 @@ val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
 ## Projecting `Fix`
 
 ```scala
-val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
-  _ match {
-    case Fix(`Some((head, tail))`) => `Some((head, tail))`
-    case Fix(None)               => None
-  }
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] = {
+  case Fix(`Some((head, tail))`) => `Some((head, tail))`
+  case Fix(None)               => None
+}
 ```
 
 ---
@@ -6350,11 +6288,10 @@ val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
 ## Projecting `Fix`
 
 ```scala
-val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
-  _ match {
-    case Fix(Some((head, tail))) => Some((head, tail))
-    case Fix(`None`)               => `None`
-  }
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] = {
+  case Fix(Some((head, tail))) => Some((head, tail))
+  case Fix(`None`)               => `None`
+}
 ```
 
 ---
@@ -6363,11 +6300,10 @@ val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
 
 .diff-rm[
 ```scala
-val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
-* `_ match {`
-* `  case Fix(Some((head, tail))) => Some((head, tail))`
-* `  case Fix(None)               => None`
-* `}`
+val projectFix: Fix[ListF] => ListF[Fix[ListF]] = {
+* `case Fix(Some((head, tail))) => Some((head, tail))`
+* `case Fix(None)               => None`
+*`}`
 ```
 ]
 
@@ -7027,7 +6963,6 @@ mkString(range(3))
 
 .center[![Linked List](img/range-cons-1-tail.svg)]
 
-
 ---
 
 ## Creating ranges
@@ -7084,7 +7019,6 @@ mkString(range(3))
 ```
 
 .center[![Linked List](img/range-complete.svg)]
-
 
 ---
 
@@ -7224,7 +7158,6 @@ def charCodes(
   else Nil
 }
 ```
-
 
 ---
 
@@ -7973,7 +7906,6 @@ def recurse[A](
 }
 ```
 
-
 ---
 
 ## Simplifying the step
@@ -8143,7 +8075,6 @@ def recurse[A](
   loop(from)
 }
 ```
-
 
 ---
 
@@ -8915,11 +8846,10 @@ def unfold[A](
 ## Abstracting over structure
 
 ```scala
-val embed: Option[(Int, List)] => List =
-  _ match {
-    case Some((head, tail)) => Cons(head, tail)
-    case None               => Nil
-  }
+val embed: Option[(Int, List)] => List = {
+  case Some((head, tail)) => Cons(head, tail)
+  case None               => Nil
+}
 ```
 
 ---
@@ -8927,11 +8857,10 @@ val embed: Option[(Int, List)] => List =
 ## Abstracting over structure
 
 ```scala
-val `embed`: Option[(Int, List)] => List =
-  _ match {
-    case Some((head, tail)) => Cons(head, tail)
-    case None               => Nil
-  }
+val `embed`: Option[(Int, List)] => List = {
+  case Some((head, tail)) => Cons(head, tail)
+  case None               => Nil
+}
 ```
 
 ---
@@ -8939,11 +8868,10 @@ val `embed`: Option[(Int, List)] => List =
 ## Abstracting over structure
 
 ```scala
-val embed: Option[(Int, List)] => List =
-  _ match {
-    case `Some((head, tail))` => Cons(head, tail)
-    case None               => Nil
-  }
+val embed: Option[(Int, List)] => List = {
+  case `Some((head, tail))` => Cons(head, tail)
+  case None               => Nil
+}
 ```
 
 ---
@@ -8951,11 +8879,10 @@ val embed: Option[(Int, List)] => List =
 ## Abstracting over structure
 
 ```scala
-val embed: Option[(Int, List)] => List =
-  _ match {
-    case Some((head, tail)) => `Cons(head, tail)`
-    case None               => Nil
-  }
+val embed: Option[(Int, List)] => List = {
+  case Some((head, tail)) => `Cons(head, tail)`
+  case None               => Nil
+}
 ```
 
 ---
@@ -8963,11 +8890,10 @@ val embed: Option[(Int, List)] => List =
 ## Abstracting over structure
 
 ```scala
-val embed: Option[(Int, List)] => List =
-  _ match {
-    case Some((head, tail)) => Cons(head, tail)
-    case `None`               => Nil
-  }
+val embed: Option[(Int, List)] => List = {
+  case Some((head, tail)) => Cons(head, tail)
+  case `None`               => Nil
+}
 ```
 
 ---
@@ -8975,11 +8901,10 @@ val embed: Option[(Int, List)] => List =
 ## Abstracting over structure
 
 ```scala
-val embed: Option[(Int, List)] => List =
-  _ match {
-    case Some((head, tail)) => Cons(head, tail)
-    case None               => `Nil`
-  }
+val embed: Option[(Int, List)] => List = {
+  case Some((head, tail)) => Cons(head, tail)
+  case None               => `Nil`
+}
 ```
 
 ---
@@ -8988,11 +8913,10 @@ val embed: Option[(Int, List)] => List =
 
 .diff-rm[
 ```scala
-*val embed: `Option[(Int, List)]` => List =
-  _ match {
-    case Some((head, tail)) => Cons(head, tail)
-    case None               => Nil
-  }
+*val embed: `Option[(Int, List)]` => List = {
+  case Some((head, tail)) => Cons(head, tail)
+  case None               => Nil
+}
 ```
 ]
 
@@ -9002,11 +8926,10 @@ val embed: Option[(Int, List)] => List =
 
 .diff-add[
 ```scala
-*val embed: `ListF[List]` => List =
-  _ match {
-    case Some((head, tail)) => Cons(head, tail)
-    case None               => Nil
-  }
+*val embed: `ListF[List]` => List = {
+  case Some((head, tail)) => Cons(head, tail)
+  case None               => Nil
+}
 ```
 ]
 
@@ -9015,11 +8938,10 @@ val embed: Option[(Int, List)] => List =
 ## Abstracting over structure
 
 ```scala
-val embed: ListF[List] => List =
-  _ match {
-    case Some((head, tail)) => Cons(head, tail)
-    case None               => Nil
-  }
+val embed: ListF[List] => List = {
+  case Some((head, tail)) => Cons(head, tail)
+  case None               => Nil
+}
 ```
 
 ---
@@ -9954,7 +9876,6 @@ class: center, middle
 
 .center[![Linked List](img/cata-ana-dual-hl-1.svg)]
 
-
 ---
 
 ## Duality of `cata` and `ana`
@@ -9981,7 +9902,61 @@ class: center, middle
 
 ---
 
-## Equivalence of `cata` and `ana`
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/cata-ana-composition-before.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/cata-ana-composition-hl-1.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/cata-ana-composition.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+```scala
+val factorial: Int => Int =
+  range andThen product
+```
+
+---
+
+## Composing `cata` and `ana`
+
+```scala
+val `factorial`: Int => Int =
+  range andThen product
+```
+
+---
+
+## Composing `cata` and `ana`
+
+```scala
+val factorial: Int => Int =
+  `range` andThen product
+```
+
+---
+
+## Composing `cata` and `ana`
+
+```scala
+val factorial: Int => Int =
+  range andThen `product`
+```
+
+---
+
+## Composing `cata` and `ana`
 
 ```scala
 val factorial: Int => Int =
@@ -9995,59 +9970,1095 @@ factorial(3)
 
 ---
 
-## TODO
-
-Diagram that shows the steps:
+## Composing `cata` and `ana`
 
 ```scala
-Some(3, Some(2, Some(1, None))) // rangeCoAlgebra
-Cons(3, Cons(2, Cons(1, Nil)))  // embed
-Some(3, Some(2, Some(1, None))) // project
-mult(3, mult(2, mult(1, 1)))    // productAlgebra
-```
-
-We don't really need these two middle steps though, do we?
-
----
-
-## TODO
-
-Refactor `ana` to get to the thing that takes a coAlgebra and an algebra
-
-That's... `ana`, with parameter names changed.
-
----
-
-## TODO
-
-
-
----
-
-## Equivalence of `cata` and `ana`
-
-```scala
-val factorial: Int => Int =
-  cata(productAlgebra, rangeCoAlgebra)
-```
-
-```scala
-factorial(3)
-// res41: Int = 6
+val showRange: Int => String =
+  range andThen mkString
 ```
 
 ---
 
-## Equivalence of `cata` and `ana`
+## Composing `cata` and `ana`
+
+```scala
+val `showRange`: Int => String =
+  range andThen mkString
+```
+
+---
+
+## Composing `cata` and `ana`
+
+```scala
+val showRange: Int => String =
+  `range` andThen mkString
+```
+
+---
+
+## Composing `cata` and `ana`
+
+```scala
+val showRange: Int => String =
+  range andThen `mkString`
+```
+
+---
+
+## Composing `cata` and `ana`
+
+```scala
+val showRange: Int => String =
+  range andThen mkString
+```
+
+```scala
+showRange(3)
+// res41: String = 3 :: 2 :: 1 :: nil
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-before-1.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-before-2.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-before-3.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-before-4.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-before-5.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-before-6.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-before-7.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-before-8.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-before-9.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-before-10.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-before-11.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-before-12.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-hl-1.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-step-by-step-1.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-init.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-step-by-step-2.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra-before.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra-before.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(`i > 0`) Some((i, i - 1))
+  else      None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra-before.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) `Some`((i, i - 1))
+  else      None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra-before.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, `i - 1`))
+  else      None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra-before.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(`i > 0`) Some((i, i - 1))
+  else      None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra-before.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) `Some`((i, i - 1))
+  else      None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra-before.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, `i - 1`))
+  else      None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra-before.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(`i > 0`) Some((i, i - 1))
+  else      None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra-before.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) `Some`((i, i - 1))
+  else      None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra-before.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, `i - 1`))
+  else      None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra-before.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(`i > 0`) Some((i, i - 1))
+  else      None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra-before.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      `None`
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-coalgebra.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-step-by-step-3.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-embed-before.svg)]
+
+```scala
+val embed: ListF[List] => List = {
+  case Some((head, tail)) => Cons(head, tail)
+  case None               => Nil
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-embed-before.svg)]
+
+```scala
+val embed: ListF[List] => List = {
+  case `Some`((head, tail)) => Cons(head, tail)
+  case None               => Nil
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-embed-before.svg)]
+
+```scala
+val embed: ListF[List] => List = {
+  case Some((head, tail)) => `Cons`(head, tail)
+  case None               => Nil
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-embed-before.svg)]
+
+```scala
+val embed: ListF[List] => List = {
+  case Some((head, tail)) => Cons(head, tail)
+  case `None`               => Nil
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-embed-before.svg)]
+
+```scala
+val embed: ListF[List] => List = {
+  case Some((head, tail)) => Cons(head, tail)
+  case None               => `Nil`
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-embed-before.svg)]
+
+```scala
+val embed: ListF[List] => List = {
+  case Some((`head`, tail)) => Cons(head, tail)
+  case None               => Nil
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-embed-before.svg)]
+
+```scala
+val embed: ListF[List] => List = {
+  case Some((head, tail)) => Cons(`head`, tail)
+  case None               => Nil
+}
+```
+
+
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-embed.svg)]
+
+```scala
+val embed: ListF[List] => List = {
+  case Some((head, tail)) => Cons(head, tail)
+  case None               => Nil
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-step-by-step-4.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-project-before.svg)]
+
+```scala
+val project: List => ListF[List] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-project-before.svg)]
+
+```scala
+val project: List => ListF[List] = {
+  case `Cons`(head, tail) => Some((head, tail))
+  case Nil              => None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-project-before.svg)]
+
+```scala
+val project: List => ListF[List] = {
+  case Cons(head, tail) => `Some`((head, tail))
+  case Nil              => None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-project-before.svg)]
+
+```scala
+val project: List => ListF[List] = {
+  case Cons(head, tail) => Some((head, tail))
+  case `Nil`              => None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-project-before.svg)]
+
+```scala
+val project: List => ListF[List] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => `None`
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-project-before.svg)]
+
+```scala
+val project: List => ListF[List] = {
+  case Cons(`head`, tail) => Some((head, tail))
+  case Nil              => None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-project-before.svg)]
+
+```scala
+val project: List => ListF[List] = {
+  case Cons(head, tail) => Some((`head`, tail))
+  case Nil              => None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-project.svg)]
+
+```scala
+val project: List => ListF[List] = {
+  case Cons(head, tail) => Some((head, tail))
+  case Nil              => None
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-step-by-step-5.svg)]
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-algebra-before.svg)]
+
+```scala
+val mkStringAlgebra: ListF[String] => String = {
+  case Some((head, tailResult)) => head + " :: " + tailResult
+  case None                     => "nil"
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-algebra-before.svg)]
+
+```scala
+val mkStringAlgebra: ListF[String] => String = {
+  case `Some`((head, tailResult)) => head + " :: " + tailResult
+  case None                     => "nil"
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-algebra-before.svg)]
+
+```scala
+val mkStringAlgebra: ListF[String] => String = {
+  case Some((head, tailResult)) => head + `" :: "` + tailResult
+  case None                     => "nil"
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-algebra-before.svg)]
+
+```scala
+val mkStringAlgebra: ListF[String] => String = {
+  case Some((head, tailResult)) => head + " :: " + tailResult
+  case `None`                     => "nil"
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-algebra-before.svg)]
+
+```scala
+val mkStringAlgebra: ListF[String] => String = {
+  case Some((head, tailResult)) => head + " :: " + tailResult
+  case None                     => `"nil"`
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-algebra-before.svg)]
+
+```scala
+val mkStringAlgebra: ListF[String] => String = {
+  case Some((`head`, tailResult)) => head + " :: " + tailResult
+  case None                     => "nil"
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-algebra-before.svg)]
+
+```scala
+val mkStringAlgebra: ListF[String] => String = {
+  case Some((head, tailResult)) => `head` + " :: " + tailResult
+  case None                     => "nil"
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-algebra.svg)]
+
+```scala
+val mkStringAlgebra: ListF[String] => String = {
+  case Some((head, tailResult)) => head + " :: " + tailResult
+  case None                     => "nil"
+}
+```
+
+---
+
+## Composing `cata` and `ana`
+
+.center[![Linked List](img/show-range-simplified.svg)]
+
+```scala
+val rangeCoAlgebra: Int => ListF[Int] = i => {
+  if(i > 0) Some((i, i - 1))
+  else      None
+}
+
+val mkStringAlgebra: ListF[String] => String = {
+  case Some((head, tailResult)) => head + " :: " + tailResult
+  case None                     => "nil"
+}
+```
+
+Only one function per HLed slide.
+
+---
+
+## TODO
+
+```scala
+def ana[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+  embed    : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+
+---
+
+## TODO
+
+.diff-rm[
+```scala
+*def `ana`[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+  embed    : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## TODO
+
+.diff-add[
+```scala
+*def `recurse`[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+  embed    : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## TODO
+
+```scala
+def recurse[F[_]: Functor, A, B](
+* coAlgebra: A => F[A],
+  embed    : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+
+---
+
+## TODO
+
+```scala
+def recurse[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+* embed    : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    embed(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+
+---
+
+## TODO
+
+```scala
+def recurse[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+  embed    : `F[B] => B`
+): A => B = {
+
+  def loop(state: A): B =
+    embed(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+
+---
+
+## TODO
+
+.diff-rm[
+```scala
+def recurse[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+* `embed`    : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+*   `embed`(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## TODO
+
+.diff-add[
+```scala
+def recurse[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+* `algebra`  : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+*   `algebra`(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## TODO
+
+```scala
+def recurse[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+  algebra  : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    algebra(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+
+---
+
+## TODO
+
+```scala
+def showRange: Int => String =
+  recurse(rangeCoAlgebra, mkStringAlgebra)
+```
+
+---
+
+## TODO
+
+```scala
+def `showRange`: Int => String =
+  recurse(rangeCoAlgebra, mkStringAlgebra)
+```
+
+---
+
+## TODO
+
+```scala
+def showRange: Int => String =
+  `recurse`(rangeCoAlgebra, mkStringAlgebra)
+```
+
+---
+
+## TODO
+
+```scala
+def showRange: Int => String =
+  recurse(`rangeCoAlgebra`, mkStringAlgebra)
+```
+
+---
+
+## TODO
+
+```scala
+def showRange: Int => String =
+  recurse(rangeCoAlgebra, `mkStringAlgebra`)
+```
+
+---
+
+## TODO
+
+```scala
+def showRange: Int => String =
+  recurse(rangeCoAlgebra, mkStringAlgebra)
+```
+
+```scala
+showRange(3)
+// res42: String = 3 :: 2 :: 1 :: nil
+```
+
+---
+
+## Naming things
+
+.diff-rm[
+```scala
+*def `recurse`[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+  algebra  : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    algebra(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
+
+.diff-add[
+```scala
+*def `hylo`[F[_]: Functor, A, B](
+  coAlgebra: A => F[A],
+  algebra  : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    algebra(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## Naming things
 
 ```scala
 def hylo[F[_]: Functor, A, B](
-  algebra  : F[A] => A,
-  coAlgebra: B => F[B]
+  coAlgebra: A => F[A],
+  algebra  : F[B] => B
+): A => B = {
+
+  def loop(state: A): B =
+    algebra(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+
+---
+
+## A magic trick
+
+.diff-rm[
+```scala
+def hylo[F[_]: Functor, A, B](
+* coAlgebra: `A` => F[`A`],
+* algebra  : F[`B`] => `B`
+*): `A` => `B` = {
+
+* def loop(state: `A`): `B` =
+    algebra(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## A magic trick
+
+.diff-add[
+```scala
+def hylo[F[_]: Functor, A, B](
+* coAlgebra: `B` => F[`B`],
+* algebra  : F[`A`] => `A`
+*): `B` => `A` = {
+
+* def loop(state: `B`): `A` =
+    algebra(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## A magic trick
+
+.diff-rm[
+```scala
+def hylo[F[_]: Functor, A, B](
+* `coAlgebra: B => F[B]`,
+* `algebra  : F[A] => A`
 ): B => A = {
 
-  def loop(curr: B): A =
-    algebra(map(coAlgebra(curr), loop))
+  def loop(state: B): A =
+    algebra(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## A magic trick
+
+.diff-rm[
+```scala
+def hylo[F[_]: Functor, A, B](
+* `algebra  : F[A] => A`,
+* `coAlgebra: B => F[B]`
+): B => A = {
+
+  def loop(state: B): A =
+    algebra(map(coAlgebra(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## A magic trick
+
+.diff-rm[
+```scala
+def hylo[F[_]: Functor, A, B](
+  algebra  : F[A] => A,
+* `coAlgebra`: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+*   algebra(map(`coAlgebra`(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## A magic trick
+
+.diff-add[
+```scala
+def hylo[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+* `project`: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+*   algebra(map(`project`(state), loop))
+
+  loop
+}
+```
+]
+
+---
+
+## A magic trick
+
+```scala
+def hylo[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+    algebra(map(project(state), loop))
+
+  loop
+}
+```
+
+---
+
+## A magic trick
+
+```scala
+def cata[F[_]: Functor, A, B](
+  algebra: F[A] => A,
+  project: B => F[B]
+): B => A = {
+
+  def loop(state: B): A =
+    algebra(map(project(state), loop))
 
   loop
 }
