@@ -153,12 +153,6 @@ th .remark-inline-code {
     padding-bottom: 0;
 }
 
-.remark-code-span-highlighted .hljs-comment, .remark-code-line-highlighted .hljs-comment,
-.hljs-comment .remark-code-span-highlighted, .hljs-comment .remark-code-line-highlighted {
-    color      : #000;
-    font-weight: bold;
-}
-
 .annotated img {
     float   : right;
     position: absolute;
