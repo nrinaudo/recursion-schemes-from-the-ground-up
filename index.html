@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!Doctype html>
 <html>
     <head>
         <title>An introduction to recursion schemes</title>
@@ -584,42 +584,6 @@ def product(
   values: List
 ): Int =
   values match {
-    `case Cons(head, tail)` => head * product(tail)
-    case Nil              => 1
-  }
-```
-
-```scala
-product(ints)
-```
-
----
-
-## Product
-
-```scala
-def product(
-  values: List
-): Int =
-  values match {
-    case Cons(head, tail) => `head * product(tail)`
-    case Nil              => 1
-  }
-```
-
-```scala
-product(ints)
-```
-
----
-
-## Product
-
-```scala
-def product(
-  values: List
-): Int =
-  values match {
     case Cons(head, tail) => head * product(tail)
     `case Nil`              => 1
   }
@@ -640,6 +604,42 @@ def product(
   values match {
     case Cons(head, tail) => head * product(tail)
     case Nil              => `1`
+  }
+```
+
+```scala
+product(ints)
+```
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    `case Cons(head, tail)` => head * product(tail)
+    case Nil              => 1
+  }
+```
+
+```scala
+product(ints)
+```
+
+---
+
+## Product
+
+```scala
+def product(
+  values: List
+): Int =
+  values match {
+    case Cons(head, tail) => `head * product(tail)`
+    case Nil              => 1
   }
 ```
 
@@ -698,6 +698,34 @@ def mkString(
   values: List
 ): String =
   values match {
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+    `case Nil`              => "nil"
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
+    case Cons(head, tail) => head + " :: " + mkString(tail)
+    case Nil              => `"nil"`
+  }
+```
+
+---
+
+## String representation
+
+```scala
+def mkString(
+  values: List
+): String =
+  values match {
     `case Cons(head, tail)` => head + " :: " + mkString(tail)
     case Nil              => "nil"
   }
@@ -742,34 +770,6 @@ def mkString(
   values match {
     case Cons(head, tail) => head + " :: " + `mkString(tail)`
     case Nil              => "nil"
-  }
-```
-
----
-
-## String representation
-
-```scala
-def mkString(
-  values: List
-): String =
-  values match {
-    case Cons(head, tail) => head + " :: " + mkString(tail)
-    `case Nil`              => "nil"
-  }
-```
-
----
-
-## String representation
-
-```scala
-def mkString(
-  values: List
-): String =
-  values match {
-    case Cons(head, tail) => head + " :: " + mkString(tail)
-    case Nil              => `"nil"`
   }
 ```
 
