@@ -5728,6 +5728,38 @@ val ints2: List2 =
 ## Generalising `List2`
 
 ```scala
+case class Tree2(value: TreeF[Tree2])
+```
+
+---
+
+## Generalising `List2`
+
+```scala
+case class `Tree2`(value: TreeF[Tree2])
+```
+
+---
+
+## Generalising `List2`
+
+```scala
+case class Tree2(value: `TreeF`[Tree2])
+```
+
+---
+
+## Generalising `List2`
+
+```scala
+case class Tree2(value: TreeF[`Tree2`])
+```
+
+---
+
+## Generalising `List2`
+
+```scala
 case class List2(value: ListF[List2])
 ```
 
@@ -5824,6 +5856,236 @@ case class List2[F[_]](value: F[List2[F]])
 ```scala
 case class Fix[F[_]](value: F[Fix[F]])
 ```
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+```scala
+f(x)   = x
+```
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+```scala
+f(x)   = x
+fix(f) = x
+```
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+```scala
+f(x)   = x
+fix(f) = x
+fix(f) = x
+```
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+```scala
+f(x)   = `x`
+fix(f) = x
+fix(f) = `x`
+```
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+```scala
+&#x200B;`f(x)`   = x
+fix(f) = x
+fix(f) = `x`
+```
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+.diff-rm[
+```scala
+f(x)   = x
+fix(f) = x
+*fix(f) = `x`
+```
+]
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+.diff-add[
+```scala
+f(x)   = x
+fix(f) = x
+*fix(f) = `f(x)`
+```
+]
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+```scala
+f(x)   = x
+fix(f) = `x`
+fix(f) = f(`x`)
+```
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+```scala
+f(x)   = x
+&#x200B;`fix(f)` = x
+fix(f) = f(`x`)
+```
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+.diff-rm[
+```scala
+f(x)   = x
+fix(f) = x
+*fix(f) = f(`x`)
+```
+]
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+.diff-add[
+```scala
+f(x)   = x
+fix(f) = x
+*fix(f) = f(`fix(f)`)
+```
+]
+
+---
+
+## Naming things
+
+```scala
+case class `Fix`[F[_]](value: F[Fix[F]])
+```
+
+```scala
+f(x)   = x
+fix(f) = x
+&#x200B;`fix`(f) = f(fix(f))
+```
+
+---
+
+## Naming things
+
+```scala
+case class Fix[`F`[_]](value: F[Fix[F]])
+```
+
+```scala
+f(x)   = x
+fix(f) = x
+fix(`f`) = f(fix(f))
+```
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: `F`[Fix[F]])
+```
+
+```scala
+f(x)   = x
+fix(f) = x
+fix(f) = `f`(fix(f))
+```
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[`Fix`[F]])
+```
+
+```scala
+f(x)   = x
+fix(f) = x
+fix(f) = f(`fix`(f))
+```
+
+---
+
+## Naming things
+
+```scala
+case class Fix[F[_]](value: F[Fix[`F`]])
+```
+
+```scala
+f(x)   = x
+fix(f) = x
+fix(f) = f(fix(`f`))
+```
+
 
 ---
 
@@ -6303,7 +6565,7 @@ val projectFix: Fix[ListF] => ListF[Fix[ListF]] = {
 val projectFix: Fix[ListF] => ListF[Fix[ListF]] = {
 * `case Fix(Some((head, tail))) => Some((head, tail))`
 * `case Fix(None)               => None`
-*`}`
+}
 ```
 ]
 
