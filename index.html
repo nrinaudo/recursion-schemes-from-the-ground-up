@@ -7325,6 +7325,57 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
+  if(from > 0) Cons(`from`, range(from - 1))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, range(`from - 1`))
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if(from > 0) Cons(from, `range(from - 1)`)
+  else         Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
   if(from > 0) `Cons(from, range(from - 1))`
   else         Nil
 }
@@ -7416,20 +7467,6 @@ def charCodes(
   from: String
 ): List = {
   if(from.nonEmpty)
-    `Cons(from.head.toInt, charCodes(from.tail))`
-  else Nil
-}
-```
-
----
-
-## Extracting character codes
-
-```scala
-def charCodes(
-  from: String
-): List = {
-  if(from.nonEmpty)
     Cons(`from.head.toInt`, charCodes(from.tail))
   else Nil
 }
@@ -7444,7 +7481,35 @@ def charCodes(
   from: String
 ): List = {
   if(from.nonEmpty)
+    Cons(from.head.toInt, charCodes(`from.tail`))
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
     Cons(from.head.toInt, `charCodes(from.tail)`)
+  else Nil
+}
+```
+
+---
+
+## Extracting character codes
+
+```scala
+def charCodes(
+  from: String
+): List = {
+  if(from.nonEmpty)
+    `Cons(from.head.toInt, charCodes(from.tail))`
   else Nil
 }
 ```
@@ -7486,16 +7551,16 @@ mkString(charCodes("cata"))
 
 ## Key takeaways
 
-Generative recursion works by:
+Generative recursion is composed of:
 --
 
-* evaluating the recursion state against a predicate.
+* a predicate that tells us whether to keep recursing.
 --
 
-* if `true`, extracting a head and next step, which we turn into a tail.
+* a way of extracting a value and a new state from a given state.
 --
 
-* if `false`, stopping.
+* some recursive structure around these elements.
 
 ---
 
@@ -11116,6 +11181,12 @@ step( 3, step( 2, step( 1, base)))   // mkStringAlgebra
 ## Simplifying `ana andThen cata`
 
 .center[![Linked List](img/show-range-shortcut.svg)]
+
+---
+
+## Simplifying `ana andThen cata`
+
+.center[![Linked List](img/show-range-shortcut-hl-1.svg)]
 
 ---
 
