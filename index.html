@@ -4815,7 +4815,7 @@ case class NodeF[A](
 
 ## Pattern functor
 
-.diff-add[
+.diff-rm[
 ```scala
 sealed trait TreeF[A]
 
@@ -5805,9 +5805,19 @@ case class List2(value: `ListF`[List2])
 
 ## Generalising `List2`
 
+.diff-add[
+```scala
+*case class List2[F[_]](value: F[List2`[???]`])
+```
+]
+
+---
+
+## Generalising `List2`
+
 .diff-rm[
 ```scala
-*case class List2[F[_]](value: F[`List2`])
+*case class List2[F[_]](value: F[List2[`???`]])
 ```
 ]
 
@@ -5817,7 +5827,7 @@ case class List2(value: `ListF`[List2])
 
 .diff-add[
 ```scala
-*case class List2[F[_]](value: F[`List2[F]`])
+*case class List2[F[_]](value: F[List2[`F`]])
 ```
 ]
 
