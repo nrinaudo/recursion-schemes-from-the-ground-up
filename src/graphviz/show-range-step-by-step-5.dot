@@ -1,0 +1,36 @@
+digraph {
+    bgcolor=transparent
+    splines=false
+    rankdir=LR
+    rank=same
+
+    // Default theme: disabled
+    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
+    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
+
+    List
+
+    subgraph FB_graph {
+        anaFB[label="ListF[List]"]
+        cataFB[label="ListF[List]"]
+    }
+
+    subgraph FA_graph {
+        anaFA[label="ListF[Int]"]
+        cataFA[label="ListF[String]"]
+    }
+
+    subgraph A_graph {
+        anaA[label=Int]
+        cataA[label=String]
+    }
+
+    List   -> cataFB[label=project]
+    cataFB -> cataFA[label="map(_, loop)"]
+    cataFA -> cataA[label=mkStringAlgebra color="#2980B9" fontcolor="#000000"]
+
+    anaA  -> anaFA[label=rangeCoAlgebra]
+    anaFA -> anaFB[label="map(_, loop)"]
+    anaFB -> List[label=embed]
+
+}

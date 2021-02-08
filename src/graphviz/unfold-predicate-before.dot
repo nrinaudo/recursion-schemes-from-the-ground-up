@@ -1,0 +1,21 @@
+digraph {
+    bgcolor=transparent
+    splines=false
+    rankdir=LR
+
+    // Default theme: disabled
+    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
+    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
+
+    ListStruct[shape=record label="<cons> Int, List| <nil> ∅"]
+    ListStruct2[shape=record label="<cons> Int, String| <nil> ∅"]
+    choice[shape=record label="<true> true|<false> false" style="dashed,rounded"]
+
+    String           -> choice[label=nonEmpty color="#2980B9" fontcolor="#000000"]
+    choice:true      -> ListStruct2:cons[label="head / tail"]
+    choice:false     -> ListStruct2:nil
+    ListStruct2:cons -> ListStruct:cons [label=recurse]
+    ListStruct2:nil  -> ListStruct:nil
+    ListStruct:cons  -> List [style=dashed label="Cons"]
+    ListStruct:nil   -> List [style=dashed label="Nil"]
+}

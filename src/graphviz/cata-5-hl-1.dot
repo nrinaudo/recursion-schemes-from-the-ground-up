@@ -1,0 +1,23 @@
+digraph {
+    bgcolor=transparent
+    splines=false
+    rankdir=LR
+
+    // Default theme: disabled
+    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
+    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
+
+    ListStruct[shape=record label="<cons> Int, List| <nil> ∅"]
+    ListStruct2[shape=record label="<cons> Int, A| <nil> ∅"]
+    ListFList[label="ListF[List]" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+    ListFA[label="ListF[A]" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+
+    List             -> ListFList [label=project]
+    ListFList        -> ListStruct:cons [style=dashed label=Some]
+    ListFList        -> ListStruct:nil [style=dashed label=None]
+    ListStruct:cons  -> ListStruct2:cons [label=loop]
+    ListStruct:nil   -> ListStruct2:nil
+    ListStruct2:cons -> ListFA [style=dashed label=Some]
+    ListStruct2:nil  -> ListFA [style=dashed label=None]
+    ListFA           -> A [label=op]
+}

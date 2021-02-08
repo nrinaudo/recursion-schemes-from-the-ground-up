@@ -1,0 +1,18 @@
+digraph {
+    bgcolor=transparent
+    splines=false
+    rankdir=LR
+
+    // Default theme: disabled
+    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
+    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
+
+    ListFList[label="TreeF[Tree]"]
+    ListFA[label="TreeF[Int]" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+    B[label=Tree]
+    A[label=Int color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
+
+    B         -> ListFList [label=projectTree]
+    ListFList -> ListFA[label="map(_, loop)"]
+    ListFA    -> A [label=heightAlgebra]
+}
