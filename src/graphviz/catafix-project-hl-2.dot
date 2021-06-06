@@ -1,17 +1,10 @@
 digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
+    B[label="Fix[F]" class="disabled"]
+    ListFList[label="F[Fix[F]]"]
+    ListFA[label="F[A]"]
+    A[class="disabled"]
 
-    // Default theme: disabled
-    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
-
-    ListFList[label="F[Fix[F]]" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
-    ListFA[label="F[A]" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
-    B[label="Fix[F]"]
-
-    B         -> ListFList [label="_.value"]
-    ListFList -> ListFA[label="map(_, loop)" color="#2980B9" fontcolor="#000000"]
-    ListFA    -> A [label=algebra]
+    B         -> ListFList [label=project label="_.value" class="disabled"]
+    ListFList -> ListFA[label="map(_, loop)"]
+    ListFA    -> A [label=algebra class="disabled"]
 }

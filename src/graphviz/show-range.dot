@@ -1,14 +1,7 @@
 digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
-    rank=same
+    class="dual"
 
-    // Default theme: enabled
-    node[shape="rectangle" style="rounded,filled" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#2980B9" fontcolor="#000000" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
-
-    List
+    B[label="List"]
 
     subgraph FB_graph {
         anaFB[label="ListF[List]"]
@@ -25,12 +18,11 @@ digraph {
         cataA[label=String]
     }
 
-    List   -> cataFB[label=project]
+    B      -> cataFB[label=project]
     cataFB -> cataFA[label="map(_, loop)"]
     cataFA -> cataA[label=mkStringAlgebra]
 
     anaA  -> anaFA[label=rangeCoAlgebra]
     anaFA -> anaFB[label="map(_, loop)"]
-    anaFB -> List[label=embed]
-
+    anaFB -> B[label=embed]
 }

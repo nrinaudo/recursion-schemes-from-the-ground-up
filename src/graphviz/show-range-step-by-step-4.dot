@@ -1,36 +1,28 @@
 digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
-    rank=same
+    class="dual"
 
-    // Default theme: disabled
-    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
-
-    List
+    B[label="List" class="disabled"]
 
     subgraph FB_graph {
-        anaFB[label="ListF[List]"]
-        cataFB[label="ListF[List]"]
+        anaFB[label="ListF[List]" class="disabled"]
+        cataFB[label="ListF[List]" class="disabled"]
     }
 
     subgraph FA_graph {
-        anaFA[label="ListF[Int]"]
-        cataFA[label="ListF[String]"]
+        anaFA[label="ListF[Int]" class="disabled"]
+        cataFA[label="ListF[String]" class="disabled"]
     }
 
     subgraph A_graph {
-        anaA[label=Int]
-        cataA[label=String]
+        anaA[label=Int class="disabled"]
+        cataA[label=String class="disabled"]
     }
 
-    List   -> cataFB[label=project color="#2980B9" fontcolor="#000000"]
-    cataFB -> cataFA[label="map(_, loop)"]
-    cataFA -> cataA[label=mkStringAlgebra]
+    B      -> cataFB[label=project]
+    cataFB -> cataFA[label="map(_, loop)" class="disabled"]
+    cataFA -> cataA[label=mkStringAlgebra class="disabled"]
 
-    anaA  -> anaFA[label=rangeCoAlgebra]
-    anaFA -> anaFB[label="map(_, loop)"]
-    anaFB -> List[label=embed]
-
+    anaA  -> anaFA[label=rangeCoAlgebra class="disabled"]
+    anaFA -> anaFB[label="map(_, loop)" class="disabled"]
+    anaFB -> B[label=embed class="disabled"]
 }
