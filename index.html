@@ -800,9 +800,11 @@ Structural recursion works by:
 --
 
 * providing a solution to the smallest problem.
+
 --
 
 * for larger problems: relying on the solution to smaller problems.
+
 --
 
 * if this makes you think of proof by induction, well done.
@@ -1938,9 +1940,11 @@ Structural recursion is generalised by:
 --
 
 * parameterising the _base case_.
+
 --
 
 * parameterising the _step_.
+
 --
 
 * ... knowing the structure of your type.
@@ -4301,9 +4305,11 @@ Catamorphisms are:
 --
 
 * structural recursion for types that can be projected into pattern functors.
+
 --
 
 * far less complicated than their names make them out to be.
+
 --
 
 * a simple refactoring away from the familiar `fold`.
@@ -5238,6 +5244,7 @@ height(intTree)
 ## Key takeaways
 
 * `cata` works just fine with `Tree`.
+
 --
 
 * it involves a lot of busywork though...
@@ -5246,9 +5253,11 @@ height(intTree)
 
 ## What now?
 
-- [Conclusion](#closing)
-- [Reducing the boilerplate](#fix)
-- [Generative recursion](#unfold)
+* [Conclusion](#closing)
+
+* [Reducing the boilerplate](#fix)
+
+* [Generative recursion](#unfold)
 
 ---
 
@@ -6909,9 +6918,11 @@ Using `Fix` makes:
 --
 
 * the hard case easier.
+
 --
 
 * the easy case harder.
+
 --
 
 * little sense.
@@ -7545,9 +7556,11 @@ Generative recursion is composed of:
 --
 
 * a predicate that tells us whether to keep recursing.
+
 --
 
 * a way of extracting a value and a new state from a given state.
+
 --
 
 * some recursive structure around these elements.
@@ -8697,9 +8710,11 @@ Generative recursion is generalised by:
 --
 
 * parameterising the predicate.
+
 --
 
 * parameterising the state update.
+
 --
 
 * ... knowing the structure of your type.
@@ -10156,9 +10171,11 @@ Anamorphisms are:
 --
 
 * generative recursion for types that can be embedded from a pattern functor.
+
 --
 
 * fare less complicated than their names make them out to be.
+
 --
 
 * suspiciously similar to catamorphisms...
@@ -11590,9 +11607,11 @@ def cata[F[_]: Functor, A, B](
 
 
 * catamorphisms and anamorphisms are duals of each other.
+
 --
 
 * they're also the same thing.
+
 --
 
 * yes, this gives me a headache too.
