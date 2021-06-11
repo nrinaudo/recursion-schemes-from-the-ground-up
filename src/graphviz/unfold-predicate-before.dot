@@ -1,21 +1,17 @@
 digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
+    String[class="disabled"]
+    ListStruct[shape=record label="<cons> Int, List| <nil> ∅" class="disabled"]
+    ListStruct2[shape=record label="<cons> Int, String| <nil> ∅" class="disabled"]
+    choice[shape=record label="<true> true|<false> false" class="predicate,disabled"]
+    List[class="disabled"]
 
-    // Default theme: disabled
-    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
+    String -> choice[label=nonEmpty]
 
-    ListStruct[shape=record label="<cons> Int, List| <nil> ∅"]
-    ListStruct2[shape=record label="<cons> Int, String| <nil> ∅"]
-    choice[shape=record label="<true> true|<false> false" style="dashed,rounded"]
+    choice:true -> ListStruct2:cons[label="head / tail" class="disabled"]
+    choice:false -> ListStruct2:nil[class="disabled"]
 
-    String           -> choice[label=nonEmpty color="#2980B9" fontcolor="#000000"]
-    choice:true      -> ListStruct2:cons[label="head / tail"]
-    choice:false     -> ListStruct2:nil
-    ListStruct2:cons -> ListStruct:cons [label=recurse]
-    ListStruct2:nil  -> ListStruct:nil
-    ListStruct:cons  -> List [style=dashed label="Cons"]
-    ListStruct:nil   -> List [style=dashed label="Nil"]
+    ListStruct2:cons -> ListStruct:cons [label=recurse class="disabled"]
+    ListStruct2:nil  -> ListStruct:nil[class="disabled"]
+    ListStruct:cons  -> List [label="Cons" class="pattern,disabled"]
+    ListStruct:nil   -> List [label="Nil" class="pattern,disabled"]
 }

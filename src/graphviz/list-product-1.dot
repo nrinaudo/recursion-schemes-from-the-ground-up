@@ -1,18 +1,10 @@
 digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
+    p1[label=3 class="cell,disabled"]
+    p2[label=2 class="cell"]
+    p3[label=1 class="cell"]
+    nil[class="nil"]
 
-    // Default theme: enabled
-    node[shape="circle" style="filled" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#2980B9" fontcolor="#000000" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
-
-    p1[label=3 color="#dddddd" fontcolor="#dddddd"]
-    p2[label=2]
-    p3[label=1]
-    nil[shape=circle label="∅" fillcolor="#ffffff"]
-
-    p1 -> p2[color="#dddddd" fontcolor="#dddddd" label=tail]
+    p1 -> p2[label=tail class="disabled"]
     p2 -> p3[label=tail]
     p3 -> nil[label=tail]
 }

@@ -1,16 +1,10 @@
 digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
+    A[class="disabled"]
+    ListFA[label="F[A]" class="disabled"]
+    ListFList[label="F[B]" class="disabled"]
+    List[label=B class="disabled"]
 
-    // Default theme: disabled
-    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
-
-    ListFA[label="F[A]"]
-    ListFList[label="F[B]"]
-
-    A         -> ListFA[label=coAlgebra color="#2980B9" fontcolor="#000000"]
-    ListFA    -> ListFList[label="map(_, loop)"]
-    ListFList -> B[label=embed]
+    A         -> ListFA[label=coAlgebra]
+    ListFA    -> ListFList[label="map(_, loop)" class="disabled"]
+    ListFList -> List[label=embed class="disabled"]
 }

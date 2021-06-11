@@ -1,40 +1,32 @@
 digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
-    rank=same
-
-    // Default theme: disabled
-    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
-
+    class=dual
 
     subgraph B_graph {
-        anaB[label=B]
-        cataB[label=B]
+        anaB[label=B class="disabled"]
+        cataB[label=B class="disabled"]
     }
 
     subgraph FB_graph {
-        anaFB[label="F[B]"]
-        cataFB[label="F[B]"]
+        anaFB[label="F[B]" class="disabled"]
+        cataFB[label="F[B]" class="disabled"]
     }
 
     subgraph FA_graph {
-        anaFA[label="F[A]"]
-        cataFA[label="F[A]"]
+        anaFA[label="F[A]" class="disabled"]
+        cataFA[label="F[A]" class="disabled"]
     }
 
     subgraph A_graph {
-        anaA[label=A]
-        cataA[label=A]
+        anaA[label=A class="disabled"]
+        cataA[label=A class="disabled"]
     }
 
-    cataB  -> cataFB[label=project color="#2980B9" fontcolor="#000000"]
-    cataFB -> cataFA[label="map(_, loop)" color="#2980B9" fontcolor="#000000"]
-    cataFA -> cataA[label=algebra color="#2980B9" fontcolor="#000000"]
+    cataB  -> cataFB[label=project]
+    cataFB -> cataFA[label="map(_, loop)"]
+    cataFA -> cataA[label=algebra]
 
-    anaA  -> anaFA[label=coAlgebra color="#2980B9" fontcolor="#000000"]
-    anaFA -> anaFB[label="map(_, loop)" color="#2980B9" fontcolor="#000000"]
-    anaFB -> anaB[label=embed color="#2980B9" fontcolor="#000000"]
+    anaA  -> anaFA[label=coAlgebra]
+    anaFA -> anaFB[label="map(_, loop)"]
+    anaFB -> anaB[label=embed]
 
 }

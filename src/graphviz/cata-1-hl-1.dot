@@ -1,20 +1,13 @@
 digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
+    List
+    ListStruct[shape=record label="<cons> Int, List| <nil> ∅"]
+    ListStruct2[shape=record label="<cons> Int, A| <nil> ∅" class="disabled"]
+    String[label="A" class="disabled"]
 
-    // Default theme: disabled
-    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
-
-    ListStruct[shape=record label="<cons> Int, List| <nil> ∅" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
-    ListStruct2[shape=record label="<cons> Int, A| <nil> ∅"]
-    List[color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
-
-    List             -> ListStruct:cons [style=dashed label=Cons color="#2980B9" fontcolor="#000000"]
-    List             -> ListStruct:nil [style=dashed label=Nil color="#2980B9" fontcolor="#000000"]
-    ListStruct:cons  -> ListStruct2:cons [label=loop]
-    ListStruct:nil   -> ListStruct2:nil
-    ListStruct2:cons -> A[label=step]
-    ListStruct2:nil  -> A[label=base]
+    List             -> ListStruct:cons [class="pattern" label=Cons]
+    List             -> ListStruct:nil [class="pattern" label=Nil]
+    ListStruct:cons  -> ListStruct2:cons [label=loop class="disabled"]
+    ListStruct:nil   -> ListStruct2:nil[class="disabled"]
+    ListStruct2:cons -> String[label="step" class="disabled"]
+    ListStruct2:nil  -> String[label="base" class="disabled"]
 }

@@ -1,29 +1,24 @@
 digraph {
-    bgcolor=transparent
-    splines=false
+    class="tree"
 
-    // Default theme: disabled
-    node[shape="circle" style="filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
+    n1[label=4 class="cell"]
+    n2[label=2 class="cell"]
+    n3[label=1 class="cell"]
+    n4[label=3 class="cell,disabled"]
 
-    n1[label=4 color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
-    n2[label=2 color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
-    n3[label=1 color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
-    n4[label=3]
-
-    l1[shape=circle label="∅" fillcolor="#ffffff"]
-    l2[shape=circle label="∅" fillcolor="#ffffff"]
-    l3[shape=circle label="∅" fillcolor="#ffffff"]
-    l4[shape=circle label="∅" fillcolor="#ffffff"]
-    l5[shape=circle label="∅" fillcolor="#ffffff"]
+    l1[class="nil,disabled"]
+    l2[class="nil,disabled"]
+    l3[class="nil,disabled"]
+    l4[class="nil,disabled"]
+    l5[class="nil,disabled"]
 
 
-    n1 -> n2[label=left color="#2980B9" fontcolor="#000000"]
-    n1 -> l1[label=right]
-    n2 -> n3[label=left color="#2980B9" fontcolor="#000000"]
-    n2 -> n4[label=right]
-    n3 -> l2[label=left]
-    n3 -> l3[label=right]
-    n4 -> l4[label=left]
-    n4 -> l5[label=right]
+    n1 -> n2[label=left]
+    n1 -> l1[label=right class="disabled"]
+    n2 -> n3[label=left]
+    n2 -> n4[label=right class="disabled"]
+    n3 -> l2[label=left class="disabled"]
+    n3 -> l3[label=right class="disabled"]
+    n4 -> l4[label=left class="disabled"]
+    n4 -> l5[label=right class="disabled"]
 }

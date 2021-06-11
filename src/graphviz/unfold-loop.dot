@@ -1,23 +1,17 @@
 digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
-
-    // Default theme: enabled
-    node[shape="rectangle" style="rounded,filled" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#2980B9" fontcolor="#000000" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11 fontsize=11]
-
+    String[label=A]
     ListStruct[shape=record label="<cons> Int, List| <nil> ∅"]
     ListStruct2[shape=record label="<cons> Int, A| <nil> ∅"]
-    choice[shape=record label="<true> true|<false> false" style="dashed,rounded"]
+    choice[shape=record label="<true> true|<false> false" class="predicate"]
+    List
 
-    A -> choice[label=predicate]
+    String -> choice[label=predicate]
 
-    choice:true -> ListStruct2:cons[label=update]
+    choice:true -> ListStruct2:cons[label="update"]
     choice:false -> ListStruct2:nil
 
     ListStruct2:cons -> ListStruct:cons [label=loop]
     ListStruct2:nil  -> ListStruct:nil
-    ListStruct:cons  -> List [style=dashed label="Cons"]
-    ListStruct:nil   -> List [style=dashed label="Nil"]
+    ListStruct:cons  -> List [label="Cons" class="pattern"]
+    ListStruct:nil   -> List [label="Nil" class="pattern"]
 }

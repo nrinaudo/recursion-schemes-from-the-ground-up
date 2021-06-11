@@ -1,22 +1,12 @@
 digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
-    rank=same
+    anaFA[label="ListF[Int]" class="disabled"]
+    cataFA[label="ListF[String]" class="disabled"]
 
-    // Default theme: disabled
-    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
-
-    anaFA[label="ListF[Int]"]
-    cataFA[label="ListF[String]"]
-
-    anaA[label=Int]
-    cataA[label=String]
+    anaA[label=Int class="disabled"]
+    cataA[label=String class="disabled"]
 
 
-    anaA  -> anaFA[label=rangeCoAlgebra color="#2980B9" fontcolor="#000000"]
-    anaFA -> cataFA[label="map(_, loop)"]
-    cataFA -> cataA[label=mkStringAlgebra color="#2980B9" fontcolor="#000000"]
-
+    anaA  -> anaFA[label=rangeCoAlgebra]
+    anaFA -> cataFA[label="map(_, loop)" class="disabled"]
+    cataFA -> cataA[label=mkStringAlgebra]
 }

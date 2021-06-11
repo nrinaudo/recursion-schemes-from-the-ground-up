@@ -1,20 +1,12 @@
 digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
-
-    // Default theme: enabled
-    node[shape="circle" style="filled" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#2980B9" fontcolor="#000000" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
-
-    l1[shape=diamond label="" fillcolor="#ffffff"]
-    l2[shape=diamond label="" fillcolor="#ffffff"]
-    l3[shape=diamond label="" fillcolor="#ffffff"]
-    l4[shape=diamond label="" fillcolor="#ffffff" style=invis]
-    p1[label=3]
-    p2[label=2]
-    p3[label=1 style=invis]
-    nil[shape=circle label="∅" fillcolor="#ffffff" style=invis]
+    l1[class="fix"]
+    l2[class="fix"]
+    l3[class="fix"]
+    l4[class="fix" style=invis]
+    p1[label=3 class="cell"]
+    p2[label=2 class="cell"]
+    p3[label=1 class="cell" style=invis]
+    nil[class="nil" style=invis]
 
     l1 -> p1[label=value]
     p1 -> l2[label=tail]

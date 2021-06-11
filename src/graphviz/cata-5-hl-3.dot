@@ -1,23 +1,17 @@
 digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
+    ListStruct[shape=record label="<cons> Int, List| <nil> ∅"]
+    ListStruct2[shape=record label="<cons> Int, A| <nil> ∅"]
+    ListFList[label="ListF[List]" class="disabled"]
+    ListFA[label="ListF[A]" class="disabled"]
+    List[class="disabled"]
+    A[class="disabled"]
 
-    // Default theme: disabled
-    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
-
-    ListStruct[shape=record label="<cons> Int, List| <nil> ∅" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
-    ListStruct2[shape=record label="<cons> Int, A| <nil> ∅" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
-    ListFList[label="ListF[List]"]
-    ListFA[label="ListF[A]"]
-
-    List             -> ListFList [label=project]
-    ListFList        -> ListStruct:cons [style=dashed label=Some color="#2980B9" fontcolor="#000000"]
-    ListFList        -> ListStruct:nil [style=dashed label=None color="#2980B9" fontcolor="#000000"]
-    ListStruct:cons  -> ListStruct2:cons [label=loop color="#2980B9" fontcolor="#000000"]
-    ListStruct:nil   -> ListStruct2:nil [color="#2980B9" fontcolor="#000000"]
-    ListStruct2:cons -> ListFA [style=dashed label=Some color="#2980B9" fontcolor="#000000"]
-    ListStruct2:nil  -> ListFA [style=dashed label=None color="#2980B9" fontcolor="#000000"]
-    ListFA           -> A [label=op]
+    List             -> ListFList[label=project class="disabled"]
+    ListFList        -> ListStruct:cons [label=Some class="pattern"]
+    ListFList        -> ListStruct:nil [label=None class="pattern"]
+    ListStruct:cons  -> ListStruct2:cons [label=loop ]
+    ListStruct:nil   -> ListStruct2:nil
+    ListStruct2:cons -> ListFA[label=Some class="pattern"]
+    ListStruct2:nil  -> ListFA[label=None class="pattern"]
+    ListFA           -> A[label=op class="disabled"]
 }

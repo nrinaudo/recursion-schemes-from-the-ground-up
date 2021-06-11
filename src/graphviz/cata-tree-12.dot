@@ -1,17 +1,10 @@
-digraph {
-    bgcolor=transparent
-    splines=false
-    rankdir=LR
+ digraph {
+    B[label=Tree]
+    ListFList[label="TreeF[Tree]"]
+    ListFA[label="TreeF[A]" class="disabled"]
+    A[class="disabled"]
 
-    // Default theme: disabled
-    node[shape="rectangle" style="rounded,filled" color="#dddddd" fillcolor="#b2ebf2" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif"]
-    edge [color="#dddddd" fontcolor="#dddddd" fontname="Segoe UI,Roboto,Helvetica,Arial,sans-serif" fontsize=11]
-
-    ListFList[label="TreeF[Tree]" color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
-    ListFA[label="TreeF[A]"]
-    B[label=Tree color="#2980B9" fillcolor="#b2ebf2" fontcolor="#000000"]
-
-    B         -> ListFList [label=projectTree color="#2980B9" fontcolor="#000000"]
-    ListFList -> ListFA[label="map(_, loop)"]
-    ListFA    -> A [label=algebra]
+    B         -> ListFList [label=projectTree]
+    ListFList -> ListFA[label="map(_, loop)" class="disabled"]
+    ListFA    -> A [label=algebra class="disabled"]
 }
