@@ -71,7 +71,7 @@ class: center, middle
 
 ## Linked list
 
-```tut:silent
+```scala repl:silent
 sealed trait List
 
 case class Cons(
@@ -176,7 +176,7 @@ case object Nil extends List
 
 ## Linked list
 
-```tut:silent
+```scala repl:silent
 val ints: List =
   Cons(3, Cons(2, Cons(1, Nil)))
 ```
@@ -200,7 +200,7 @@ class: center, middle
 
 ## Product
 
-```tut:silent
+```scala repl:silent
 def product(
   values: List
 ): Int =
@@ -570,7 +570,7 @@ def product(
   }
 ```
 
-```tut:book
+```scala repl
 product(ints)
 ```
 
@@ -650,7 +650,7 @@ product(ints)
 
 ## String representation
 
-```tut:silent
+```scala repl:silent
 def mkString(
   values: List
 ): String =
@@ -776,7 +776,7 @@ def mkString(
 
 ## String representation
 
-```tut:silent
+```scala repl:silent
 def mkString(
   values: List
 ): String =
@@ -786,7 +786,7 @@ def mkString(
   }
 ```
 
-```tut:book
+```scala repl
 mkString(ints)
 ```
 
@@ -817,7 +817,7 @@ class: center, middle
 
 ## Generalising `mkString`
 
-```tut:silent
+```scala repl:silent
 def mkString(
   values: List
 ): String =
@@ -863,7 +863,7 @@ def mkString(
 
 ## Generalising `mkString`
 
-```tut:silent
+```scala repl:silent
 def recurse(
   values: List
 ): String =
@@ -873,7 +873,7 @@ def recurse(
   }
 ```
 
-```tut:book
+```scala repl
 recurse(ints)
 ```
 
@@ -979,7 +979,7 @@ def recurse(
 ```
 ]
 
-```tut:silent
+```scala repl:silent
 val base = "nil"
 ```
 
@@ -999,7 +999,7 @@ def recurse(
 ```
 ]
 
-```tut:silent
+```scala repl:silent
 val base = "nil"
 ```
 
@@ -1041,7 +1041,7 @@ def recurse(
 
 ## Generalising the base case
 
-```tut:silent
+```scala repl:silent
 def recurse(
   base  : String,
   values: List
@@ -1052,7 +1052,7 @@ def recurse(
   }
 ```
 
-```tut:book
+```scala repl
 recurse(base, ints)
 ```
 
@@ -1156,7 +1156,7 @@ def recurse(
 ```
 ]
 
-```tut:silent
+```scala repl:silent
 def step(head: Int, tailResult: String) =
   head + " :: " + tailResult
 ```
@@ -1178,7 +1178,7 @@ def recurse(
 ```
 ]
 
-```tut:silent
+```scala repl:silent
 def step(head: Int, tailResult: String) =
   head + " :: " + tailResult
 ```
@@ -1223,7 +1223,7 @@ def recurse(
 
 ## Generalising the step
 
-```tut:silent
+```scala repl:silent
 def recurse(
   base  : String,
   step  : (Int, String) => String,
@@ -1235,7 +1235,7 @@ def recurse(
   }
 ```
 
-```tut:book
+```scala repl
 recurse(base, step, ints)
 ```
 
@@ -1331,7 +1331,7 @@ def recurse[A](
 
 ## Generalising the return type
 
-```tut:silent
+```scala repl:silent
 def recurse[A](
   base  : A,
   step  : (Int, A) => A,
@@ -1343,7 +1343,7 @@ def recurse[A](
   }
 ```
 
-```tut:book
+```scala repl
 recurse(base, step, ints)
 ```
 
@@ -1369,7 +1369,7 @@ recurse(base, step, ints)
 
 ## Simplifying the step
 
-```tut:silent
+```scala repl:silent
 def recurse[A](
   base  : A,
   step  : (Int, A) => A,
@@ -1560,7 +1560,7 @@ def recurse[A](
 
 ## Simplifying the step
 
-```tut:silent
+```scala repl:silent
 def recurse[A](
   base  : A,
   step  : (Int, A) => A,
@@ -1577,7 +1577,7 @@ def recurse[A](
 }
 ```
 
-```tut:book
+```scala repl
 recurse(base, step, ints)
 ```
 
@@ -1692,7 +1692,7 @@ def recurse[A](
 
 ## Dropping parameters
 
-```tut:silent
+```scala repl:silent
 def recurse[A](
   base: A,
   step: (Int, A) => A
@@ -1708,7 +1708,7 @@ def recurse[A](
 }
 ```
 
-```tut:book
+```scala repl
 recurse(base, step)(ints)
 ```
 
@@ -1716,7 +1716,7 @@ recurse(base, step)(ints)
 
 ## Dropping parameters
 
-```tut:silent
+```scala repl:silent
 def mkString(ints: List): String =
   recurse(base, step)(ints)
 ```
@@ -1780,12 +1780,12 @@ def mkString(ints: List): String =
 
 ## Dropping parameters
 
-```tut:silent
+```scala repl:silent
 val mkString: List => String =
   recurse(base, step)
 ```
 
-```tut:book
+```scala repl
 mkString(ints)
 ```
 
@@ -1837,7 +1837,7 @@ mkString(ints)
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 def fold[A](
   base: A,
   step: (Int, A) => A
@@ -1853,7 +1853,7 @@ def fold[A](
 }
 ```
 
-```tut:book
+```scala repl
 fold(base, step)(ints)
 ```
 
@@ -1861,7 +1861,7 @@ fold(base, step)(ints)
 
 ## `product` as a fold
 
-```tut:silent
+```scala repl:silent
 val product: List => Int =
   fold[Int](
     base = 1,
@@ -1909,7 +1909,7 @@ val product: List => Int =
 
 ## `product` as a fold
 
-```tut:silent
+```scala repl:silent
 val product: List => Int =
   fold[Int](
     base = 1,
@@ -1917,7 +1917,7 @@ val product: List => Int =
   )
 ```
 
-```tut:book
+```scala repl
 product(ints)
 ```
 
@@ -1948,7 +1948,7 @@ class: center, middle
 
 ## Generalised folds
 
-```tut:silent
+```scala repl:silent
 def fold[A](
   base: A,
   step: (Int, A) => A
@@ -2000,7 +2000,7 @@ def fold[A](
 
 ## List projection
 
-```tut:silent
+```scala repl:silent
 val project: List => Option[(Int, List)] = {
   case Cons(head, tail) => Some((head, tail))
   case Nil              => None
@@ -2241,7 +2241,7 @@ def fold[A](
 
 ## Abstracting over structure
 
-```tut:silent
+```scala repl:silent
 def fold[A](
   base   : A,
   step   : (Int, A) => A,
@@ -2258,7 +2258,7 @@ def fold[A](
 }
 ```
 
-```tut:book
+```scala repl
 fold(base, step, project)(ints)
 ```
 
@@ -2311,7 +2311,7 @@ def fold[A](
 
 ## Simplifying `base` and `step`
 
-```tut:silent
+```scala repl:silent
 val op: Option[(Int, String)] => String = {
   case Some((head, tailResult)) => step(head, tailResult)
   case None                     => base
@@ -2407,7 +2407,7 @@ val op: Option[(Int, String)] => String = {
 
 ## Simplifying `base` and `step`
 
-```tut:silent
+```scala repl:silent
 val op: Option[(Int, String)] => String = {
   case Some((head, tailResult)) => head + " :: " + tailResult
   case None                     => "nil"
@@ -2551,7 +2551,7 @@ def fold[A](
 
 ## Simplifying `base` and `step`
 
-```tut:silent
+```scala repl:silent
 def fold[A](
   op     : Option[(Int, A)] => A,
   project: List => Option[(Int, List)]
@@ -2567,7 +2567,7 @@ def fold[A](
 }
 ```
 
-```tut:book
+```scala repl
 fold(op, project)(ints)
 ```
 
@@ -2631,7 +2631,7 @@ def fold[A](
 
 ## Simplifying `base` and `step`
 
-```tut:silent
+```scala repl:silent
 def fold[A](
   op     : Option[(Int, A)] => A,
   project: List => Option[(Int, List)]
@@ -2647,7 +2647,7 @@ def fold[A](
 }
 ```
 
-```tut:book
+```scala repl
 fold(op, project)(ints)
 ```
 
@@ -2679,7 +2679,7 @@ fold(op, project)(ints)
 
 ## Intermediate representation
 
-```tut:silent
+```scala repl:silent
 type ListF[A] = Option[(Int, A)]
 ```
 
@@ -2707,7 +2707,7 @@ type ListF[A] = `Option[(Int, A)]`
 type ListF[A] = Option[(Int, A)]
 ```
 
-```tut:silent
+```scala repl:silent
 val project: List => ListF[List] = {
   case Cons(head, tail) => Some((head, tail))
   case Nil              => None
@@ -2737,7 +2737,7 @@ val project: List => ListF[`List`] = {
 type ListF[A] = Option[(Int, A)]
 ```
 
-```tut:silent
+```scala repl:silent
 val op: ListF[String] => String = {
   case Some((head, tailResult)) => head + " :: " + tailResult
   case None                     => "nil"
@@ -2807,7 +2807,7 @@ def fold[A](
 
 ## Intermediate representation
 
-```tut:silent
+```scala repl:silent
 def fold[A](
   op     : ListF[A] => A,
   project: List => ListF[List]
@@ -2823,7 +2823,7 @@ def fold[A](
 }
 ```
 
-```tut:book
+```scala repl
 fold(op, project)(ints)
 ```
 
@@ -3039,7 +3039,7 @@ def fold[A](
 
 ## Generalising recursion
 
-```tut:silent
+```scala repl:silent
 def fold[A](
   op     : ListF[A] => A,
   project: List => ListF[List]
@@ -3277,7 +3277,7 @@ def fold[A](
 
 ## Generalising recursion
 
-```tut:silent
+```scala repl:silent
 def fold[A](
   op     : ListF[A] => A,
   project: List => ListF[List]
@@ -3369,10 +3369,9 @@ def fold[A](
 
 ## Functor
 
-```tut:silent
-trait Functor[F[_]] {
+```scala repl:silent
+trait Functor[F[_]]:
   def map[A, B](fa: F[A], f: A => B): F[B]
-}
 ```
 
 ---
@@ -3380,9 +3379,8 @@ trait Functor[F[_]] {
 ## Functor
 
 ```scala
-trait `Functor`[F[_]] {
+trait `Functor`[F[_]]:
   def map[A, B](fa: F[A], f: A => B): F[B]
-}
 ```
 
 ---
@@ -3390,9 +3388,8 @@ trait `Functor`[F[_]] {
 ## Functor
 
 ```scala
-trait Functor[`F[_]`] {
+trait Functor[`F[_]`]:
   def map[A, B](fa: F[A], f: A => B): F[B]
-}
 ```
 
 ---
@@ -3400,9 +3397,8 @@ trait Functor[`F[_]`] {
 ## Functor
 
 ```scala
-trait Functor[F[_]] {
+trait Functor[F[_]]:
   def `map`[A, B](fa: F[A], f: A => B): F[B]
-}
 ```
 
 ---
@@ -3410,9 +3406,8 @@ trait Functor[F[_]] {
 ## Functor
 
 ```scala
-trait Functor[F[_]] {
+trait Functor[F[_]]:
   def map[A, B](`fa: F[A]`, f: A => B): F[B]
-}
 ```
 
 ---
@@ -3420,9 +3415,8 @@ trait Functor[F[_]] {
 ## Functor
 
 ```scala
-trait Functor[F[_]] {
+trait Functor[F[_]]:
   def map[A, B](fa: F[A], `f: A => B`): F[B]
-}
 ```
 
 ---
@@ -3430,23 +3424,21 @@ trait Functor[F[_]] {
 ## Functor
 
 ```scala
-trait Functor[F[_]] {
+trait Functor[F[_]]:
   def map[A, B](fa: F[A], f: A => B): `F[B]`
-}
 ```
 
 ---
 
 ## Functor
 
-```tut:silent
-implicit val listFFunctor = new Functor[ListF] {
-  override def map[A, B](list: ListF[A], f: A => B) =
+```scala repl:silent
+given Functor[ListF] with
+  def map[A, B](list: ListF[A], f: A => B) =
     list match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
-}
 ```
 
 ---
@@ -3454,13 +3446,12 @@ implicit val listFFunctor = new Functor[ListF] {
 ## Functor
 
 ```scala
-implicit val listFFunctor = new `Functor[ListF]` {
-  override def map[A, B](list: ListF[A], f: A => B) =
+given `Functor[ListF]` with
+  def map[A, B](list: ListF[A], f: A => B) =
     list match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => None
     }
-}
 ```
 
 ---
@@ -3468,13 +3459,12 @@ implicit val listFFunctor = new `Functor[ListF]` {
 ## Functor
 
 ```scala
-implicit val listFFunctor = new Functor[ListF] {
-  override def map[A, B](list: ListF[A], f: A => B) =
+given Functor[ListF] with
+  def map[A, B](list: ListF[A], f: A => B) =
 *   list match {
 *     case Some((head, tail)) => Some((head, f(tail)))
 *     case None               => None
 *   }
-}
 ```
 
 ---
@@ -3482,13 +3472,12 @@ implicit val listFFunctor = new Functor[ListF] {
 ## Functor
 
 ```scala
-implicit val listFFunctor = new Functor[ListF] {
-  override def map[A, B](list: ListF[A], f: A => B) =
+given Functor[ListF] with
+  def map[A, B](list: ListF[A], f: A => B) =
     list match {
       case `Some((head, tail))` => Some((head, f(tail)))
       case None               => None
     }
-}
 ```
 
 ---
@@ -3496,13 +3485,12 @@ implicit val listFFunctor = new Functor[ListF] {
 ## Functor
 
 ```scala
-implicit val listFFunctor = new Functor[ListF] {
-  override def map[A, B](list: ListF[A], f: A => B) =
+given Functor[ListF] with
+  def map[A, B](list: ListF[A], f: A => B) =
     list match {
       case Some((head, tail)) => Some((head, `f(tail)`))
       case None               => None
     }
-}
 ```
 
 ---
@@ -3510,13 +3498,12 @@ implicit val listFFunctor = new Functor[ListF] {
 ## Functor
 
 ```scala
-implicit val listFFunctor = new Functor[ListF] {
-  override def map[A, B](list: ListF[A], f: A => B) =
+given Functor[ListF] with
+  def map[A, B](list: ListF[A], f: A => B) =
     list match {
       case Some((head, tail)) => Some((head, f(tail)))
       case `None`               => None
     }
-}
 ```
 
 ---
@@ -3524,24 +3511,23 @@ implicit val listFFunctor = new Functor[ListF] {
 ## Functor
 
 ```scala
-implicit val listFFunctor = new Functor[ListF] {
-  override def map[A, B](list: ListF[A], f: A => B) =
+given Functor[ListF] with
+  def map[A, B](list: ListF[A], f: A => B) =
     list match {
       case Some((head, tail)) => Some((head, f(tail)))
       case None               => `None`
     }
-}
 ```
 
 ---
 
 ## Functor
 
-```tut:silent
+```scala repl:silent
 def map[F[_], A, B](
   fa     : F[A],
   f      : A => B
-)(implicit
+)(using
   functor: Functor[F]
 ): F[B] =
   functor.map(fa, f)
@@ -3555,7 +3541,7 @@ def map[F[_], A, B](
 def `map`[F[_], A, B](
   fa     : F[A],
   f      : A => B
-)(implicit
+)(using
   functor: Functor[F]
 ): F[B] =
   functor.map(fa, f)
@@ -3569,7 +3555,7 @@ def `map`[F[_], A, B](
 def map[F[_], A, B](
   `fa     : F[A]`,
   f      : A => B
-)(implicit
+)(using
   functor: Functor[F]
 ): F[B] =
   functor.map(fa, f)
@@ -3583,7 +3569,7 @@ def map[F[_], A, B](
 def map[F[_], A, B](
   fa     : F[A],
   `f      : A => B`
-)(implicit
+)(using
   functor: Functor[F]
 ): F[B] =
   functor.map(fa, f)
@@ -3597,7 +3583,7 @@ def map[F[_], A, B](
 def map[F[_], A, B](
   fa     : F[A],
   f      : A => B
-)(implicit
+)(using
   `functor: Functor[F]`
 ): F[B] =
   functor.map(fa, f)
@@ -3611,7 +3597,7 @@ def map[F[_], A, B](
 def map[F[_], A, B](
   fa     : F[A],
   f      : A => B
-)(implicit
+)(using
   functor: Functor[F]
 ): F[B] =
   `functor.map(fa, f)`
@@ -3751,7 +3737,7 @@ def fold[A](
 
 ## Using Functor
 
-```tut:silent
+```scala repl:silent
 def fold[A](
   op     : ListF[A] => A,
   project: List => ListF[List]
@@ -3764,7 +3750,7 @@ def fold[A](
 }
 ```
 
-```tut:book
+```scala repl
 fold(op, project)(ints)
 ```
 
@@ -3881,7 +3867,7 @@ def fold[F[_]: Functor, A](
 
 ## Abstracting over `ListF`
 
-```tut:silent
+```scala repl:silent
 def fold[F[_]: Functor, A](
   op     : F[A] => A,
   project: List => F[List]
@@ -3894,7 +3880,7 @@ def fold[F[_]: Functor, A](
 }
 ```
 
-```tut:book
+```scala repl
 fold(op, project).apply(ints)
 ```
 
@@ -3994,7 +3980,7 @@ def fold[F[_]: Functor, A, B](
 
 ## Abstracting over `List`
 
-```tut:silent
+```scala repl:silent
 def fold[F[_]: Functor, A, B](
   op     : F[A] => A,
   project: B => F[B]
@@ -4007,7 +3993,7 @@ def fold[F[_]: Functor, A, B](
 }
 ```
 
-```tut:book
+```scala repl
 fold(op, project).apply(ints)
 ```
 
@@ -4126,7 +4112,7 @@ def cata[`F[_]: Functor`, A, B](
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 def cata[F[_]: Functor, A, B](
   algebra: F[A] => A,
   project: B => F[B]
@@ -4139,7 +4125,7 @@ def cata[F[_]: Functor, A, B](
 }
 ```
 
-```tut:book
+```scala repl
 cata(op, project).apply(ints)
 ```
 
@@ -4165,7 +4151,7 @@ cata(op, project).apply(ints)
 
 ## `product` as a cata
 
-```tut:silent
+```scala repl:silent
 val productAlgebra: ListF[Int] => Int = {
   case Some((head, tailProduct)) => head * tailProduct
   case None                      => 1
@@ -4263,7 +4249,7 @@ val product: List => Int =
 
 ## `product` as a cata
 
-```tut:silent
+```scala repl:silent
 val productAlgebra: ListF[Int] => Int = {
   case Some((head, tailProduct)) => head * tailProduct
   case None                      => 1
@@ -4273,7 +4259,7 @@ val product: List => Int =
   cata(productAlgebra, project)
 ```
 
-```tut:book
+```scala repl
 product(ints)
 ```
 
@@ -4358,7 +4344,7 @@ class: center, middle
 
 ## Binary Tree
 
-```tut:silent
+```scala repl:silent
 sealed trait Tree
 
 case class Node(
@@ -4486,7 +4472,7 @@ case object Leaf extends Tree
 
 ## Binary Tree
 
-```tut:book
+```scala repl
 val intTree =
   Node(
     Node(
@@ -4680,7 +4666,7 @@ case class NodeF(
 
 ## Pattern functor
 
-```tut:silent
+```scala repl:silent
 sealed trait TreeF
 
 case class NodeF(
@@ -4872,7 +4858,7 @@ case object LeafF extends TreeF[Nothing]
 
 ## Pattern functor
 
-```tut:silent
+```scala repl:silent
 sealed trait TreeF[+A]
 
 case class NodeF[A](
@@ -4906,7 +4892,7 @@ case object LeafF extends TreeF[Nothing]
 
 ## Projection
 
-```tut:silent
+```scala repl:silent
 def projectTree: Tree => TreeF[Tree] = {
   case Node(l, v, r) => NodeF(l, v, r)
   case Leaf          => LeafF
@@ -4990,14 +4976,13 @@ def projectTree: Tree => TreeF[Tree] = {
 
 ## Functor instance
 
-```tut:silent
-implicit val treeFFunctor = new Functor[TreeF] {
-  override def map[A, B](tree: TreeF[A], f: A => B) =
+```scala repl:silent
+given Functor[TreeF] with
+  def map[A, B](tree: TreeF[A], f: A => B) =
     tree match {
       case NodeF(left, i, right) => NodeF(f(left), i, f(right))
       case LeafF                 => LeafF
     }
-}
 ```
 
 ---
@@ -5005,13 +4990,12 @@ implicit val treeFFunctor = new Functor[TreeF] {
 ## Functor instance
 
 ```scala
-implicit val treeFFunctor = new `Functor[TreeF]` {
-  override def map[A, B](tree: TreeF[A], f: A => B) =
+given `Functor[TreeF]` with
+  def map[A, B](tree: TreeF[A], f: A => B) =
     tree match {
       case NodeF(left, i, right) => NodeF(f(left), i, f(right))
       case LeafF                 => LeafF
     }
-}
 ```
 
 ---
@@ -5019,13 +5003,12 @@ implicit val treeFFunctor = new `Functor[TreeF]` {
 ## Functor instance
 
 ```scala
-implicit val treeFFunctor = new Functor[TreeF] {
-  override def map[A, B](tree: TreeF[A], f: A => B) =
+given Functor[TreeF] with
+  def map[A, B](tree: TreeF[A], f: A => B) =
 *   tree match {
 *     case NodeF(left, i, right) => NodeF(f(left), i, f(right))
 *     case LeafF                 => LeafF
 *   }
-}
 ```
 
 ---
@@ -5033,13 +5016,12 @@ implicit val treeFFunctor = new Functor[TreeF] {
 ## Functor instance
 
 ```scala
-implicit val treeFFunctor = new Functor[TreeF] {
-  override def map[A, B](tree: TreeF[A], f: A => B) =
+given Functor[TreeF] with
+  def map[A, B](tree: TreeF[A], f: A => B) =
     tree match {
       case `NodeF(left, i, right)` => NodeF(f(left), i, f(right))
       case LeafF                 => LeafF
     }
-}
 ```
 
 ---
@@ -5047,13 +5029,12 @@ implicit val treeFFunctor = new Functor[TreeF] {
 ## Functor instance
 
 ```scala
-implicit val treeFFunctor = new Functor[TreeF] {
-  override def map[A, B](tree: TreeF[A], f: A => B) =
+given Functor[TreeF] with
+  def map[A, B](tree: TreeF[A], f: A => B) =
     tree match {
       case NodeF(left, i, right) => NodeF(`f(left)`, i, `f(right)`)
       case LeafF                 => LeafF
     }
-}
 ```
 
 ---
@@ -5061,13 +5042,12 @@ implicit val treeFFunctor = new Functor[TreeF] {
 ## Functor instance
 
 ```scala
-implicit val treeFFunctor = new Functor[TreeF] {
-  override def map[A, B](tree: TreeF[A], f: A => B) =
+given Functor[TreeF] with
+  def map[A, B](tree: TreeF[A], f: A => B) =
     tree match {
       case NodeF(left, i, right) => NodeF(f(left), i, f(right))
       case `LeafF`                 => LeafF
     }
-}
 ```
 
 ---
@@ -5075,13 +5055,12 @@ implicit val treeFFunctor = new Functor[TreeF] {
 ## Functor instance
 
 ```scala
-implicit val treeFFunctor = new Functor[TreeF] {
-  override def map[A, B](tree: TreeF[A], f: A => B) =
+given Functor[TreeF] with
+  def map[A, B](tree: TreeF[A], f: A => B) =
     tree match {
       case NodeF(left, i, right) => NodeF(f(left), i, f(right))
       case LeafF                 => `LeafF`
     }
-}
 ```
 
 ---
@@ -5100,7 +5079,7 @@ implicit val treeFFunctor = new Functor[TreeF] {
 
 ## F-Algebra
 
-```tut:silent
+```scala repl:silent
 val heightAlgebra: TreeF[Int] => Int = {
   case NodeF(left, _, right) => 1 + math.max(left, right)
   case LeafF                 => 0
@@ -5184,7 +5163,7 @@ val heightAlgebra: TreeF[Int] => Int = {
 
 ## Tree height
 
-```tut:silent
+```scala repl:silent
 val height: Tree => Int =
   cata(heightAlgebra, projectTree)
 ```
@@ -5202,12 +5181,12 @@ val height: Tree => Int =
 
 ## Tree height
 
-```tut:silent
+```scala repl:silent
 val height: Tree => Int =
   cata(heightAlgebra, projectTree)
 ```
 
-```tut:book
+```scala repl
 height(intTree)
 ```
 
@@ -5292,7 +5271,7 @@ type List2 = `ListF[???]`
 
 ## `List` in terms of `ListF`
 
-```tut:book:fail
+```scala repl:fail
 type List2 = ListF[List2]
 ```
 
@@ -5300,7 +5279,7 @@ type List2 = ListF[List2]
 
 ## `List` in terms of `ListF`
 
-```tut:silent
+```scala repl:silent
 case class List2(value: ListF[List2])
 ```
 
@@ -5642,7 +5621,7 @@ val ints2: List2 =
 
 .center[![List2 full](img/list2.svg)]
 
-```tut:silent
+```scala repl:silent
 val ints2: List2 =
   List2(Some((3,
     List2(Some((2,
@@ -5691,7 +5670,7 @@ val ints2: List2 =
 
 ## Generalising `List2`
 
-```tut:silent
+```scala repl:silent
 case class Tree2(value: TreeF[Tree2])
 ```
 
@@ -5723,7 +5702,7 @@ case class Tree2(value: TreeF[`Tree2`])
 
 ## Generalising `List2`
 
-```tut:silent
+```scala repl:silent
 case class List2(value: ListF[List2])
 ```
 
@@ -5799,7 +5778,7 @@ case class List2(value: `ListF`[List2])
 
 ## Generalising `List2`
 
-```tut:silent
+```scala repl:silent
 case class List2[F[_]](value: F[List2[F]])
 ```
 
@@ -5827,7 +5806,7 @@ case class List2[F[_]](value: F[List2[F]])
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 case class Fix[F[_]](value: F[Fix[F]])
 ```
 
@@ -5835,7 +5814,7 @@ case class Fix[F[_]](value: F[Fix[F]])
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 case class Fix[F[_]](value: F[Fix[F]])
 ```
 
@@ -5847,12 +5826,26 @@ f(x)   = x
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 case class Fix[F[_]](value: F[Fix[F]])
 ```
 
 ```scala
 f(x)   = x
+fix(f) = x
+```
+
+---
+
+## Naming things
+
+```scala repl:silent
+case class Fix[F[_]](value: F[Fix[F]])
+```
+
+```scala
+f(x)   = x
+fix(f) = x
 fix(f) = x
 ```
 
@@ -5860,21 +5853,7 @@ fix(f) = x
 
 ## Naming things
 
-```tut:silent
-case class Fix[F[_]](value: F[Fix[F]])
-```
-
-```scala
-f(x)   = x
-fix(f) = x
-fix(f) = x
-```
-
----
-
-## Naming things
-
-```tut:silent
+```scala repl:silent
 case class Fix[F[_]](value: F[Fix[F]])
 ```
 
@@ -5888,7 +5867,7 @@ fix(f) = `x`
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 case class Fix[F[_]](value: F[Fix[F]])
 ```
 
@@ -5902,7 +5881,7 @@ fix(f) = `x`
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 case class Fix[F[_]](value: F[Fix[F]])
 ```
 
@@ -5918,7 +5897,7 @@ fix(f) = x
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 case class Fix[F[_]](value: F[Fix[F]])
 ```
 
@@ -5934,7 +5913,7 @@ fix(f) = x
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 case class Fix[F[_]](value: F[Fix[F]])
 ```
 
@@ -5948,7 +5927,7 @@ fix(f) = f(`x`)
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 case class Fix[F[_]](value: F[Fix[F]])
 ```
 
@@ -5962,7 +5941,7 @@ fix(f) = f(`x`)
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 case class Fix[F[_]](value: F[Fix[F]])
 ```
 
@@ -5978,7 +5957,7 @@ fix(f) = x
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 case class Fix[F[_]](value: F[Fix[F]])
 ```
 
@@ -6065,7 +6044,7 @@ fix(f) = f(fix(`f`))
 
 ## `List` in terms of `Fix`
 
-```tut:silent
+```scala repl:silent
 type FixedList = Fix[ListF]
 ```
 
@@ -6089,7 +6068,7 @@ type FixedList = `Fix[ListF]`
 
 ## `List` in terms of `Fix`
 
-```tut:silent
+```scala repl:silent
 val fixedInts: FixedList =
   Fix[ListF](Some((3,
     Fix[ListF](Some((2,
@@ -6134,7 +6113,7 @@ val fixedInts: FixedList =
 
 ## `Tree` in terms of `TreeF`
 
-```tut:silent
+```scala repl:silent
 type FixedTree = Fix[TreeF]
 ```
 
@@ -6158,7 +6137,7 @@ type FixedTree = `Fix[TreeF]`
 
 ## `Tree` in terms of `TreeF`
 
-```tut:silent
+```scala repl:silent
 val fixedIntTree: FixedTree =
   Fix[TreeF](NodeF(
     Fix[TreeF](NodeF(
@@ -6192,7 +6171,7 @@ val fixedIntTree: FixedTree =
 
 ## `cata` with `Fix`
 
-```tut:silent
+```scala repl:silent
 def cata[F[_]: Functor, A, B](
   algebra: F[A] => A,
   project: B => F[B]
@@ -6247,7 +6226,7 @@ def cata[F[_]: Functor, A, B](
 
 ## `cata` with `Fix`
 
-```tut:silent
+```scala repl:silent
 def cataFix[F[_]: Functor, A, B](
   algebra: F[A] => A,
   project: B => F[B]
@@ -6314,7 +6293,7 @@ def cataFix[F[_]: Functor, A](
 
 ## `cata` with `Fix`
 
-```tut:silent
+```scala repl:silent
 def cataFix[F[_]: Functor, A](
   algebra: F[A] => A,
   project: Fix[F] => F[Fix[F]]
@@ -6349,7 +6328,7 @@ def cataFix[F[_]: Functor, A](
 
 ## Projecting `Fix`
 
-```tut:silent
+```scala repl:silent
 val project: List => ListF[List] = {
   case Cons(head, tail) => Some((head, tail))
   case Nil              => None
@@ -6386,7 +6365,7 @@ val project: List => ListF[List] = {
 
 ## Projecting `Fix`
 
-```tut:silent
+```scala repl:silent
 val projectFix: List => ListF[List] = {
   case Cons(head, tail) => Some((head, tail))
   case Nil              => None
@@ -6501,7 +6480,7 @@ val projectFix: Fix[ListF] => ListF[Fix[ListF]] = {
 
 ## Projecting `Fix`
 
-```tut:silent
+```scala repl:silent
 val projectFix: Fix[ListF] => ListF[Fix[ListF]] = {
   case Fix(Some((head, tail))) => Some((head, tail))
   case Fix(None)               => None
@@ -6558,7 +6537,7 @@ val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
 
 ## Projecting `Fix`
 
-```tut:silent
+```scala repl:silent
 val projectFix: Fix[ListF] => ListF[Fix[ListF]] =
   _.value
 ```
@@ -6631,7 +6610,7 @@ val projectFix: Fix[`ListF`] => `ListF`[Fix[`ListF`]] =
 
 ## Projecting `Fix`
 
-```tut:silent
+```scala repl:silent
 def projectFix[F[_]]: Fix[F] => F[Fix[F]] =
   _.value
 ```
@@ -6640,7 +6619,7 @@ def projectFix[F[_]]: Fix[F] => F[Fix[F]] =
 
 ## Projecting `Fix`
 
-```tut:silent
+```scala repl:silent
 def cataFix[F[_]: Functor, A](
   algebra: F[A] => A,
   project: Fix[F] => F[Fix[F]]
@@ -6714,7 +6693,7 @@ def cataFix[F[_]: Functor, A](
 
 ## Projecting `Fix`
 
-```tut:silent
+```scala repl:silent
 def cataFix[F[_]: Functor, A](
   algebra: F[A] => A
 ): Fix[F] => A = {
@@ -6754,7 +6733,7 @@ def cataFix[F[_]: Functor, A](
 
 ## `product` in terms of `cataFix`
 
-```tut:silent
+```scala repl:silent
 val productFix: FixedList => Int =
   cataFix(productAlgebra)
 ```
@@ -6781,12 +6760,12 @@ val productFix: FixedList => Int =
 
 ## `product` in terms of `cataFix`
 
-```tut:silent
+```scala repl:silent
 val productFix: FixedList => Int =
   cataFix(productAlgebra)
 ```
 
-```tut:book
+```scala repl
 productFix(fixedInts)
 ```
 
@@ -6794,7 +6773,7 @@ productFix(fixedInts)
 
 ## `height` in terms of `cataFix`
 
-```tut:silent
+```scala repl:silent
 val heightFix: FixedTree => Int =
   cataFix(heightAlgebra)
 ```
@@ -6821,12 +6800,12 @@ val heightFix: FixedTree => Int =
 
 ## `height` in terms of `cataFix`
 
-```tut:silent
+```scala repl:silent
 val heightFix: FixedTree => Int =
   cataFix(heightAlgebra)
 ```
 
-```tut:book
+```scala repl
 heightFix(fixedIntTree)
 ```
 
@@ -6834,7 +6813,7 @@ heightFix(fixedIntTree)
 
 ## Cost of `Fix`
 
-```tut:silent
+```scala repl:silent
 def headOpt(list: FixedList): Option[Int] = list match {
   case Fix(Some((head, _))) => Some(head)
   case Fix(None)            => None
@@ -6845,7 +6824,7 @@ def headOpt(list: FixedList): Option[Int] = list match {
 
 ## Cost of `Fix`
 
-```tut:silent
+```scala repl:silent
 def headOpt(list:      List): Option[Int] = list match {
   case Cons(     head, _)   => Some(head)
   case Nil                  => None
@@ -6856,7 +6835,7 @@ def headOpt(list:      List): Option[Int] = list match {
 
 ## Cost of `Fix`
 
-```tut:silent
+```scala repl:silent
 val list: FixedList =
   Fix[ListF](Some((3,
     Fix[ListF](Some((2,
@@ -6871,7 +6850,7 @@ val list: FixedList =
 
 ## Cost of `Fix`
 
-```tut:silent
+```scala repl:silent
 val list:      List =
   Cons(            3,
     Cons(            2,
@@ -6918,16 +6897,16 @@ name: unfold
 
 ## Creating ranges
 
-```tut:silent
+```scala repl:silent
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(from, range(from - 1))
-  else         Nil
+  if from > 0 then Cons(from, range(from - 1))
+  else             Nil
 }
 ```
 
-```tut:silent
+```scala repl:silent
 mkString(range(3))
 ```
 
@@ -6941,8 +6920,8 @@ mkString(range(3))
 def range(
   `from: Int`
 ): List = {
-  if(from > 0) Cons(from, range(from - 1))
-  else         Nil
+  if from > 0 then Cons(from, range(from - 1))
+  else             Nil
 }
 ```
 
@@ -6960,8 +6939,8 @@ mkString(range(3))
 def range(
   from: Int
 ): `List` = {
-  if(from > 0) Cons(from, range(from - 1))
-  else         Nil
+  if from > 0 then Cons(from, range(from - 1))
+  else             Nil
 }
 ```
 
@@ -6979,8 +6958,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(`from > 0`) Cons(from, range(from - 1))
-  else         Nil
+  if `from > 0` then Cons(from, range(from - 1))
+  else             Nil
 }
 ```
 
@@ -6998,8 +6977,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) `Cons(from, range(from - 1))`
-  else         Nil
+  if from > 0 then `Cons(from, range(from - 1))`
+  else             Nil
 }
 ```
 
@@ -7017,8 +6996,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(`from`, range(from - 1))
-  else         Nil
+  if from > 0 then Cons(`from`, range(from - 1))
+  else             Nil
 }
 ```
 
@@ -7036,8 +7015,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(from, `range(from - 1)`)
-  else         Nil
+  if from > 0 then Cons(from, `range(from - 1)`)
+  else             Nil
 }
 ```
 
@@ -7055,8 +7034,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(`from > 0`) Cons(from, range(from - 1))
-  else         Nil
+  if `from > 0` then Cons(from, range(from - 1))
+  else             Nil
 }
 ```
 
@@ -7074,8 +7053,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) `Cons(from, range(from - 1))`
-  else         Nil
+  if from > 0 then `Cons(from, range(from - 1))`
+  else             Nil
 }
 ```
 
@@ -7093,8 +7072,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(`from`, range(from - 1))
-  else         Nil
+  if from > 0 then Cons(`from`, range(from - 1))
+  else             Nil
 }
 ```
 
@@ -7112,8 +7091,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(from, `range(from - 1)`)
-  else         Nil
+  if from > 0 then Cons(from, `range(from - 1)`)
+  else             Nil
 }
 ```
 
@@ -7131,8 +7110,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(`from > 0`) Cons(from, range(from - 1))
-  else         Nil
+  if `from > 0` then Cons(from, range(from - 1))
+  else             Nil
 }
 ```
 
@@ -7150,8 +7129,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) `Cons(from, range(from - 1))`
-  else         Nil
+  if from > 0 then `Cons(from, range(from - 1))`
+  else             Nil
 }
 ```
 
@@ -7169,8 +7148,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(`from`, range(from - 1))
-  else         Nil
+  if from > 0 then Cons(`from`, range(from - 1))
+  else             Nil
 }
 ```
 
@@ -7188,8 +7167,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(from, `range(from - 1)`)
-  else         Nil
+  if from > 0 then Cons(from, `range(from - 1)`)
+  else             Nil
 }
 ```
 
@@ -7207,8 +7186,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(`from > 0`) Cons(from, range(from - 1))
-  else         Nil
+  if `from > 0` then Cons(from, range(from - 1))
+  else             Nil
 }
 ```
 
@@ -7222,12 +7201,12 @@ mkString(range(3))
 
 ## Creating ranges
 
-```tut:silent
+```scala repl:silent
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(from, range(from - 1))
-  else         `Nil`
+  if from > 0 then Cons(from, range(from - 1))
+  else             `Nil`
 }
 ```
 
@@ -7245,8 +7224,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(from, range(from - 1))
-  else         Nil
+  if from > 0 then Cons(from, range(from - 1))
+  else             Nil
 }
 ```
 
@@ -7260,16 +7239,16 @@ mkString(range(3))
 
 ## Creating ranges
 
-```tut:silent
+```scala repl:silent
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(from, range(from - 1))
-  else         Nil
+  if from > 0 then Cons(from, range(from - 1))
+  else             Nil
 }
 ```
 
-```tut:book
+```scala repl
 mkString(range(3))
 ```
 
@@ -7281,25 +7260,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(`from > 0`) Cons(from, range(from - 1))
-  else         Nil
-}
-```
-
-```scala
-mkString(range(3))
-```
-
----
-
-## Creating ranges
-
-```scala
-def range(
-  from: Int
-): List = {
-  if(from > 0) Cons(`from`, range(from - 1))
-  else         Nil
+  if `from > 0` then Cons(from, range(from - 1))
+  else             Nil
 }
 ```
 
@@ -7315,8 +7277,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(from, range(`from - 1`))
-  else         Nil
+  if from > 0 then Cons(`from`, range(from - 1))
+  else             Nil
 }
 ```
 
@@ -7332,8 +7294,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(from, `range(from - 1)`)
-  else         Nil
+  if from > 0 then Cons(from, range(`from - 1`))
+  else             Nil
 }
 ```
 
@@ -7349,8 +7311,8 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) `Cons(from, range(from - 1))`
-  else         Nil
+  if from > 0 then Cons(from, `range(from - 1)`)
+  else             Nil
 }
 ```
 
@@ -7366,8 +7328,25 @@ mkString(range(3))
 def range(
   from: Int
 ): List = {
-  if(from > 0) Cons(from, range(from - 1))
-  else         `Nil`
+  if from > 0 then `Cons(from, range(from - 1))`
+  else             Nil
+}
+```
+
+```scala
+mkString(range(3))
+```
+
+---
+
+## Creating ranges
+
+```scala
+def range(
+  from: Int
+): List = {
+  if from > 0 then Cons(from, range(from - 1))
+  else             `Nil`
 }
 ```
 
@@ -7379,11 +7358,11 @@ mkString(range(3))
 
 ## Extracting character codes
 
-```tut:silent
+```scala repl:silent
 def charCodes(
   from: String
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
     Cons(from.head.toInt, charCodes(from.tail))
   else Nil
 }
@@ -7397,7 +7376,7 @@ def charCodes(
 def charCodes(
   `from: String`
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
     Cons(from.head.toInt, charCodes(from.tail))
   else Nil
 }
@@ -7411,7 +7390,7 @@ def charCodes(
 def charCodes(
   from: String
 ): `List` = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
     Cons(from.head.toInt, charCodes(from.tail))
   else Nil
 }
@@ -7425,7 +7404,7 @@ def charCodes(
 def charCodes(
   from: String
 ): List = {
-  if(`from.nonEmpty`)
+  if `from.nonEmpty` then
     Cons(from.head.toInt, charCodes(from.tail))
   else Nil
 }
@@ -7439,7 +7418,7 @@ def charCodes(
 def charCodes(
   from: String
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
     Cons(`from.head.toInt`, charCodes(from.tail))
   else Nil
 }
@@ -7453,7 +7432,7 @@ def charCodes(
 def charCodes(
   from: String
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
     Cons(from.head.toInt, charCodes(`from.tail`))
   else Nil
 }
@@ -7467,7 +7446,7 @@ def charCodes(
 def charCodes(
   from: String
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
     Cons(from.head.toInt, `charCodes(from.tail)`)
   else Nil
 }
@@ -7481,7 +7460,7 @@ def charCodes(
 def charCodes(
   from: String
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
     `Cons(from.head.toInt, charCodes(from.tail))`
   else Nil
 }
@@ -7495,7 +7474,7 @@ def charCodes(
 def charCodes(
   from: String
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
     Cons(from.head.toInt, charCodes(from.tail))
   else `Nil`
 }
@@ -7505,17 +7484,17 @@ def charCodes(
 
 ## Extracting character codes
 
-```tut:silent
+```scala repl:silent
 def charCodes(
   from: String
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
     Cons(from.head.toInt, charCodes(from.tail))
   else Nil
 }
 ```
 
-```tut:book
+```scala repl
 mkString(charCodes("cata"))
 ```
 
@@ -7546,11 +7525,11 @@ class: center, middle
 
 ## Generalising `charCodes`
 
-```tut:silent
+```scala repl:silent
 def charCodes(
   from: String
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
     Cons(from.head.toInt, charCodes(from.tail))
   else Nil
 }
@@ -7565,7 +7544,7 @@ def charCodes(
 *def `charCodes`(
   from: String
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
 *   Cons(from.head.toInt, `charCodes`(from.tail))
   else Nil
 }
@@ -7581,7 +7560,7 @@ def charCodes(
 *def `recurse`(
   from: String
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
 *   Cons(from.head.toInt, `recurse`(from.tail))
   else Nil
 }
@@ -7592,17 +7571,17 @@ def charCodes(
 
 ## Generalising `charCodes`
 
-```tut:silent
+```scala repl:silent
 def recurse(
   from: String
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
     Cons(from.head.toInt, recurse(from.tail))
   else Nil
 }
 ```
 
-```tut:book
+```scala repl
 mkString(recurse("cata"))
 ```
 
@@ -7680,7 +7659,7 @@ mkString(recurse("cata"))
 def recurse(
   from: String
 ): List = {
-  if(`from.nonEmpty`)
+  if `from.nonEmpty` then
     Cons(from.head.toInt, recurse(from.tail))
   else Nil
 }
@@ -7694,7 +7673,7 @@ def recurse(
 def recurse(
   from: String
 ): List = {
-  if(from.nonEmpty)
+  if from.nonEmpty then
     Cons(from.head.toInt, recurse(from.tail))
   else Nil
 }
@@ -7714,14 +7693,14 @@ def recurse(
 def recurse(
   from: String
 ): List = {
-* if(`from.nonEmpty`)
+* if `from.nonEmpty` then
     Cons(from.head.toInt, recurse(from.tail))
   else Nil
 }
 ```
 ]
 
-```tut:silent
+```scala repl:silent
 def predicate(from: String): Boolean =
   from.nonEmpty
 ```
@@ -7735,14 +7714,14 @@ def predicate(from: String): Boolean =
 def recurse(
   from: String
 ): List = {
-* if(`predicate(from)`)
+* if `predicate(from)` then
     Cons(from.head.toInt, recurse(from.tail))
   else Nil
 }
 ```
 ]
 
-```tut:silent
+```scala repl:silent
 def predicate(from: String): Boolean =
   from.nonEmpty
 ```
@@ -7757,7 +7736,7 @@ def recurse(
 * `predicate: String => Boolean`,
   from     : String
 ): List = {
-  if(predicate(from))
+  if predicate(from) then
     Cons(from.head.toInt, recurse(from.tail))
   else Nil
 }
@@ -7774,7 +7753,7 @@ def recurse(
   predicate: String => Boolean,
   from     : String
 ): List = {
-  if(predicate(from))
+  if predicate(from) then
 *   Cons(from.head.toInt, recurse(`predicate`, from.tail))
   else Nil
 }
@@ -7785,18 +7764,18 @@ def recurse(
 
 ## Generalising the predicate
 
-```tut:silent
+```scala repl:silent
 def recurse(
   predicate: String => Boolean,
   from     : String
 ): List = {
-  if(predicate(from))
+  if predicate(from) then
     Cons(from.head.toInt, recurse(predicate, from.tail))
   else Nil
 }
 ```
 
-```tut:book
+```scala repl
 mkString(recurse(predicate, "cata"))
 ```
 
@@ -7827,7 +7806,7 @@ def recurse(
   predicate: String => Boolean,
   from     : String
 ): List = {
-  if(predicate(from))
+  if predicate(from) then
     Cons(`from.head.toInt`, recurse(predicate, `from.tail`))
   else Nil
 }
@@ -7842,7 +7821,7 @@ def recurse(
   predicate: String => Boolean,
   from     : String
 ): List = {
-  if(predicate(from))
+  if predicate(from) then
     Cons(from.head.toInt, recurse(predicate, from.tail))
   else Nil
 }
@@ -7863,14 +7842,14 @@ def recurse(
   predicate: String => Boolean,
   from     : String
 ): List = {
-  if(predicate(from))
+  if predicate(from) then
 *   `Cons(from.head.toInt, recurse(predicate, from.tail))`
   else Nil
 }
 ```
 ]
 
-```tut:silent
+```scala repl:silent
 def update(from: String): (Int, String) =
   (from.head.toInt, from.tail)
 ```
@@ -7885,16 +7864,15 @@ def recurse(
   predicate: String => Boolean,
   from     : String
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
 *   `val (head, nextState) = update(from)`
 *   `Cons(head, recurse(predicate, nextState))`
-  }
   else Nil
 }
 ```
 ]
 
-```tut:silent
+```scala repl:silent
 def update(from: String): (Int, String) =
   (from.head.toInt, from.tail)
 ```
@@ -7908,15 +7886,14 @@ def recurse(
   predicate: String => Boolean,
   from     : String
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = `update(from)`
     Cons(head, recurse(predicate, nextState))
-  }
   else Nil
 }
 ```
 
-```tut:silent
+```scala repl:silent
 def update(from: String): (Int, String) =
   (from.head.toInt, from.tail)
 ```
@@ -7930,15 +7907,14 @@ def recurse(
   predicate: String => Boolean,
   from     : String
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val `(head, nextState)` = update(from)
     Cons(head, recurse(predicate, nextState))
-  }
   else Nil
 }
 ```
 
-```tut:silent
+```scala repl:silent
 def update(from: String): (Int, String) =
   (from.head.toInt, from.tail)
 ```
@@ -7952,15 +7928,14 @@ def recurse(
   predicate: String => Boolean,
   from     : String
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
     Cons(`head`, recurse(predicate, nextState))
-  }
   else Nil
 }
 ```
 
-```tut:silent
+```scala repl:silent
 def update(from: String): (Int, String) =
   (from.head.toInt, from.tail)
 ```
@@ -7974,15 +7949,14 @@ def recurse(
   predicate: String => Boolean,
   from     : String
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
     Cons(head, recurse(predicate, `nextState`))
-  }
   else Nil
 }
 ```
 
-```tut:silent
+```scala repl:silent
 def update(from: String): (Int, String) =
   (from.head.toInt, from.tail)
 ```
@@ -7998,10 +7972,9 @@ def recurse(
 * `update   : String => (Int, String)`,
   from     : String
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
     Cons(head, recurse(predicate, nextState))
-  }
   else Nil
 }
 ```
@@ -8018,10 +7991,9 @@ def recurse(
   update   : String => (Int, String),
   from     : String
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
 *   Cons(head, recurse(predicate, `update`, nextState))
-  }
   else Nil
 }
 ```
@@ -8031,21 +8003,20 @@ def recurse(
 
 ## Generalising the update
 
-```tut:silent
+```scala repl:silent
 def recurse(
   predicate: String => Boolean,
   update   : String => (Int, String),
   from     : String
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
     Cons(head, recurse(predicate, update, nextState))
-  }
   else Nil
 }
 ```
 
-```tut:book
+```scala repl
 mkString(recurse(predicate, update, "cata"))
 ```
 
@@ -8077,10 +8048,9 @@ def recurse(
   update   : `String` => (Int, `String`),
   from     : `String`
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
     Cons(head, recurse(predicate, update, nextState))
-  }
   else Nil
 }
 ```
@@ -8096,10 +8066,9 @@ def recurse(
   update   : String => (Int, String),
   from     : String
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
     Cons(head, recurse(predicate, update, nextState))
-  }
   else Nil
 }
 ```
@@ -8116,10 +8085,9 @@ def recurse[A](
 * update   : `String` => (Int, `String`),
 * from     : `String`
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
     Cons(head, recurse(predicate, update, nextState))
-  }
   else Nil
 }
 ```
@@ -8136,10 +8104,9 @@ def recurse[A](
 * update   : `A` => (Int, `A`),
 * from     : `A`
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
     Cons(head, recurse(predicate, update, nextState))
-  }
   else Nil
 }
 ```
@@ -8149,21 +8116,20 @@ def recurse[A](
 
 ## Generalising the input type
 
-```tut:silent
+```scala repl:silent
 def recurse[A](
   predicate: A => Boolean,
   update   : A => (Int, A),
   from     : A
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
     Cons(head, recurse(predicate, update, nextState))
-  }
   else Nil
 }
 ```
 
-```tut:book
+```scala repl
 mkString(recurse(predicate, update, "cata"))
 ```
 
@@ -8195,10 +8161,9 @@ def recurse[A](
   update   : A => (Int, A),
   from     : A
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
     Cons(head, `recurse(predicate, update, nextState)`)
-  }
   else Nil
 }
 ```
@@ -8213,10 +8178,9 @@ def recurse[A](
   update   : A => (Int, A),
   from     : A
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
     Cons(head, recurse(`predicate`, update, nextState))
-  }
   else Nil
 }
 ```
@@ -8231,10 +8195,9 @@ def recurse[A](
   `update`   : A => (Int, A),
   from     : A
 ): List = {
-  if(predicate(from)) {
+  if predicate(from) then
     val (head, nextState) = update(from)
     Cons(head, recurse(predicate, `update`, nextState))
-  }
   else Nil
 }
 ```
@@ -8250,10 +8213,9 @@ def recurse[A](
   update   : A => (Int, A),
   from     : A
 ): List = {
-* `if(predicate(from)) {`
+* `if predicate(from) then`
 * `  val (head, nextState) = update(from)`
 * `  Cons(head, recurse(predicate, update, nextState))`
-* `}`
 * `else Nil`
 }
 ```
@@ -8272,10 +8234,9 @@ def recurse[A](
 ): List = {
 
 * `def loop(state: A): List =`
-* `  if(predicate(state)) {`
+* `  if predicate(state) then`
 * `    val (head, nextState) = update(state)`
 * `    Cons(head, loop(nextState))`
-* `  }`
 * `  else Nil`
 *
 * loop(from)
@@ -8296,10 +8257,9 @@ def recurse[A](
 ): List = {
 
 * def loop(state: A): List =
-*   if(predicate(state)) {
+*   if predicate(state) then
 *     val (head, nextState) = update(state)
 *     Cons(head, loop(nextState))
-*   }
 *   else Nil
 *
 * `loop(from)`
@@ -8319,10 +8279,9 @@ def recurse[A](
 ): List = {
 
   def loop(state: A): List =
-    if(`predicate`(state)) {
+    if `predicate`(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop(from)
@@ -8341,10 +8300,9 @@ def recurse[A](
 ): List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = `update`(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop(from)
@@ -8363,10 +8321,9 @@ def recurse[A](
 ): List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, `loop(nextState)`)
-    }
     else Nil
 
   loop(from)
@@ -8377,7 +8334,7 @@ def recurse[A](
 
 ## Simplifying the step
 
-```tut:silent
+```scala repl:silent
 def recurse[A](
   predicate: A => Boolean,
   update   : A => (Int, A),
@@ -8385,10 +8342,9 @@ def recurse[A](
 ): List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop(from)
@@ -8426,10 +8382,9 @@ def recurse[A](
 ): List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
 * `loop(from)`
@@ -8449,10 +8404,9 @@ def recurse[A](
 ): List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
 * `loop`
@@ -8472,10 +8426,9 @@ def recurse[A](
 *): `List` = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop
@@ -8495,10 +8448,9 @@ def recurse[A](
 *): `A => List` = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop
@@ -8510,24 +8462,23 @@ def recurse[A](
 
 ## Dropping parameters
 
-```tut:silent
+```scala repl:silent
 def recurse[A](
   predicate: A => Boolean,
   update   : A => (Int, A)
 ): A => List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop
 }
 ```
 
-```tut:book
+```scala repl
 mkString(recurse(predicate, update)("cata"))
 ```
 
@@ -8543,10 +8494,9 @@ mkString(recurse(predicate, update)("cata"))
 ): A => List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop
@@ -8566,10 +8516,9 @@ mkString(recurse(predicate, update)("cata"))
 ): A => List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop
@@ -8581,24 +8530,23 @@ mkString(recurse(predicate, update)("cata"))
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 def unfold[A](
   predicate: A => Boolean,
   update   : A => (Int, A)
 ): A => List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop
 }
 ```
 
-```tut:book
+```scala repl
 mkString(unfold(predicate, update)("cata"))
 ```
 
@@ -8606,7 +8554,7 @@ mkString(unfold(predicate, update)("cata"))
 
 ## `range` as an unfold
 
-```tut:silent
+```scala repl:silent
 val range: Int => List =
   unfold[Int](
     predicate = state => state > 0,
@@ -8654,7 +8602,7 @@ val range: Int => List =
 
 ## `range` as an unfold
 
-```tut:silent
+```scala repl:silent
 val range: Int => List =
   unfold[Int](
     predicate = state => state > 0,
@@ -8662,7 +8610,7 @@ val range: Int => List =
   )
 ```
 
-```tut:book
+```scala repl
 mkString(range(3))
 ```
 
@@ -8693,17 +8641,16 @@ class: center, middle
 
 ## Generalised unfolds
 
-```tut:silent
+```scala repl:silent
 def unfold[A](
   predicate: A => Boolean,
   update   : A => (Int, A)
 ): A => List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop
@@ -8739,10 +8686,9 @@ def unfold[A](
 ): A => List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop
@@ -8753,11 +8699,11 @@ def unfold[A](
 
 ## Simplifying `predicate` and `update`
 
-```tut:silent
+```scala repl:silent
 val op: String => Option[(Int, String)] =
   state => {
-    if(predicate(state)) Some(update(state))
-    else                 None
+    if predicate(state) then Some(update(state))
+    else                     None
   }
 ```
 
@@ -8768,8 +8714,8 @@ val op: String => Option[(Int, String)] =
 ```scala
 val `op`: String => Option[(Int, String)] =
   state => {
-    if(predicate(state)) Some(update(state))
-    else                 None
+    if predicate(state) then Some(update(state))
+    else                     None
   }
 ```
 
@@ -8781,8 +8727,8 @@ val `op`: String => Option[(Int, String)] =
 ```scala
 val op: String => Option[(Int, String)] =
   state => {
-*   if(`predicate(state)`) Some(update(state))
-    else                 None
+*   if `predicate(state)` then Some(update(state))
+    else                     None
   }
 ```
 ]
@@ -8795,8 +8741,8 @@ val op: String => Option[(Int, String)] =
 ```scala
 val op: String => Option[(Int, String)] =
   state => {
-*   if(`state.nonEmpty`) Some(update(state))
-    else               None
+*   if `state.nonEmpty` then Some(update(state))
+    else                   None
   }
 ```
 ]
@@ -8808,8 +8754,8 @@ val op: String => Option[(Int, String)] =
 ```scala
 val op: String => Option[(Int, String)] =
   state => {
-    if(state.nonEmpty) `Some(update(state))`
-    else               None
+    if state.nonEmpty then `Some(update(state))`
+    else                   None
   }
 ```
 
@@ -8821,8 +8767,8 @@ val op: String => Option[(Int, String)] =
 ```scala
 val op: String => Option[(Int, String)] =
   state => {
-*   if(state.nonEmpty) Some(`update(state)`)
-    else               None
+*   if state.nonEmpty then Some(`update(state)`)
+    else                   None
   }
 ```
 ]
@@ -8835,8 +8781,8 @@ val op: String => Option[(Int, String)] =
 ```scala
 val op: String => Option[(Int, String)] =
   state => {
-*   if(state.nonEmpty) Some(`(state.head.toInt, state.tail)`)
-    else               None
+*   if state.nonEmpty then Some(`(state.head.toInt, state.tail)`)
+    else                   None
   }
 ```
 ]
@@ -8848,8 +8794,8 @@ val op: String => Option[(Int, String)] =
 ```scala
 val op: String => Option[(Int, String)] =
   state => {
-    if(state.nonEmpty) Some((state.head.toInt, state.tail))
-    else               `None`
+    if state.nonEmpty then Some((state.head.toInt, state.tail))
+    else                   `None`
   }
 ```
 
@@ -8861,8 +8807,8 @@ val op: String => Option[(Int, String)] =
 ```scala
 *val op: String => `Option[(Int, String)]` =
   state => {
-    if(state.nonEmpty) Some((state.head.toInt, state.tail))
-    else               None
+    if state.nonEmpty then Some((state.head.toInt, state.tail))
+    else                   None
   }
 ```
 ]
@@ -8875,8 +8821,8 @@ val op: String => Option[(Int, String)] =
 ```scala
 *val op: String => `ListF[String]` =
   state => {
-    if(state.nonEmpty) Some((state.head.toInt, state.tail))
-    else               None
+    if state.nonEmpty then Some((state.head.toInt, state.tail))
+    else                   None
   }
 ```
 ]
@@ -8885,11 +8831,11 @@ val op: String => Option[(Int, String)] =
 
 ## Simplifying `predicate` and `update`
 
-```tut:silent
+```scala repl:silent
 val op: String => ListF[String] =
   state => {
-    if(state.nonEmpty) Some((state.head.toInt, state.tail))
-    else               None
+    if state.nonEmpty then Some((state.head.toInt, state.tail))
+    else                   None
   }
 ```
 
@@ -8905,10 +8851,9 @@ def unfold[A](
 ): A => List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop
@@ -8927,10 +8872,9 @@ def unfold[A](
 ): A => List = {
 
   def loop(state: A): List =
-    if(predicate(state)) {
+    if predicate(state) then
       val (head, nextState) = update(state)
       Cons(head, loop(nextState))
-    }
     else Nil
 
   loop
@@ -8949,10 +8893,9 @@ def unfold[A](
 ): A => List = {
 
   def loop(state: A): List =
-*   `if(predicate(state)) {`
+*   `if predicate(state) then`
 *   `  val (head, nextState) = update(state)`
 *   `  Cons(head, loop(nextState))`
-*   `}`
 *   `else Nil`
 
   loop
@@ -9080,7 +9023,7 @@ def unfold[A](
 
 ## Simplifying `predicate` and `update`
 
-```tut:silent
+```scala repl:silent
 def unfold[A](
   op: A => ListF[A]
 ): A => List = {
@@ -9095,7 +9038,7 @@ def unfold[A](
 }
 ```
 
-```tut:book
+```scala repl
 mkString(unfold(op)("cata"))
 ```
 
@@ -9140,7 +9083,7 @@ def unfold[A](
 
 ## Abstracting over structure
 
-```tut:silent
+```scala repl:silent
 val embed: Option[(Int, List)] => List = {
   case Some((head, tail)) => Cons(head, tail)
   case None               => Nil
@@ -9232,7 +9175,7 @@ val embed: Option[(Int, List)] => List = {
 
 ## Abstracting over structure
 
-```tut:silent
+```scala repl:silent
 val embed: ListF[List] => List = {
   case Some((head, tail)) => Cons(head, tail)
   case None               => Nil
@@ -9243,7 +9186,7 @@ val embed: ListF[List] => List = {
 
 ## Abstracting over structure
 
-```tut:silent
+```scala repl:silent
 def unfold[A](
   op   : A => ListF[A]
 ): A => List = {
@@ -9436,7 +9379,7 @@ def unfold[A](
 
 ## Abstracting over structure
 
-```tut:silent
+```scala repl:silent
 def unfold[A](
   op   : A => ListF[A],
   embed: ListF[List] => List
@@ -9452,7 +9395,7 @@ def unfold[A](
 }
 ```
 
-```tut:book
+```scala repl
 mkString(unfold(op, embed)("cata"))
 ```
 
@@ -9625,7 +9568,7 @@ def unfold[A](
 
 ## Using Functor
 
-```tut:silent
+```scala repl:silent
 def unfold[A](
   op   : A => ListF[A],
   embed: ListF[List] => List
@@ -9638,7 +9581,7 @@ def unfold[A](
 }
 ```
 
-```tut:book
+```scala repl
 mkString(unfold(op, embed)("cata"))
 ```
 
@@ -9755,7 +9698,7 @@ def unfold[F[_]: Functor, A](
 
 ## Abstracting over `ListF`
 
-```tut:silent
+```scala repl:silent
 def unfold[F[_]: Functor, A](
   op   : A => F[A],
   embed: F[List] => List
@@ -9768,7 +9711,7 @@ def unfold[F[_]: Functor, A](
 }
 ```
 
-```tut:book
+```scala repl
 mkString(unfold(op, embed).apply("cata"))
 ```
 
@@ -9868,7 +9811,7 @@ def unfold[F[_]: Functor, A, B](
 
 ## Abstracting over `List`
 
-```tut:silent
+```scala repl:silent
 def unfold[F[_]: Functor, A, B](
   op   : A => F[A],
   embed: F[B] => B
@@ -9881,7 +9824,7 @@ def unfold[F[_]: Functor, A, B](
 }
 ```
 
-```tut:book
+```scala repl
 mkString(unfold(op, embed).apply("cata"))
 ```
 
@@ -9983,7 +9926,7 @@ def ana[F[_]: Functor, A, B](
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 def ana[F[_]: Functor, A, B](
   coAlgebra: A => F[A],
   embed    : F[B] => B
@@ -9996,7 +9939,7 @@ def ana[F[_]: Functor, A, B](
 }
 ```
 
-```tut:book
+```scala repl
 mkString(ana(op, embed).apply("cata"))
 ```
 
@@ -10022,10 +9965,10 @@ mkString(ana(op, embed).apply("cata"))
 
 ## `range` as an ana
 
-```tut:silent
+```scala repl:silent
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((i, i - 1))
-  else      None
+  if i > 0 then Some((i, i - 1))
+  else          None
 }
 
 val range: Int => List =
@@ -10038,8 +9981,8 @@ val range: Int => List =
 
 ```scala
 val `rangeCoAlgebra`: Int => ListF[Int] = i => {
-  if(i > 0) Some((i, i - 1))
-  else      None
+  if i > 0 then Some((i, i - 1))
+  else          None
 }
 
 val range: Int => List =
@@ -10052,8 +9995,8 @@ val range: Int => List =
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(`i > 0`) Some((i, i - 1))
-  else      None
+  if `i > 0` then Some((i, i - 1))
+  else          None
 }
 
 val range: Int => List =
@@ -10066,8 +10009,8 @@ val range: Int => List =
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) `Some((i, i - 1))`
-  else      None
+  if i > 0 then `Some((i, i - 1))`
+  else          None
 }
 
 val range: Int => List =
@@ -10080,8 +10023,8 @@ val range: Int => List =
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((i, i - 1))
-  else      `None`
+  if i > 0 then Some((i, i - 1))
+  else          `None`
 }
 
 val range: Int => List =
@@ -10094,8 +10037,8 @@ val range: Int => List =
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((i, i - 1))
-  else      None
+  if i > 0 then Some((i, i - 1))
+  else          None
 }
 
 val range: Int => List =
@@ -10106,17 +10049,17 @@ val range: Int => List =
 
 ## `range` as an ana
 
-```tut:silent
+```scala repl:silent
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((i, i - 1))
-  else      None
+  if i > 0 then Some((i, i - 1))
+  else          None
 }
 
 val range: Int => List =
   ana(rangeCoAlgebra, embed)
 ```
 
-```tut:book
+```scala repl
 mkString(range(3))
 ```
 
@@ -10213,7 +10156,7 @@ class: center, middle
 
 ## Composing `cata` and `ana`
 
-```tut:silent
+```scala repl:silent
 val factorial: Int => Int =
   range andThen product
 ```
@@ -10249,12 +10192,12 @@ val factorial: Int => Int =
 
 ## Composing `cata` and `ana`
 
-```tut:silent
+```scala repl:silent
 val factorial: Int => Int =
   range andThen product
 ```
 
-```tut:book
+```scala repl
 factorial(3)
 ```
 
@@ -10262,7 +10205,7 @@ factorial(3)
 
 ## Composing `cata` and `ana`
 
-```tut:silent
+```scala repl:silent
 val showRange: Int => String =
   range andThen mkString
 ```
@@ -10298,12 +10241,12 @@ val showRange: Int => String =
 
 ## Composing `cata` and `ana`
 
-```tut:silent
+```scala repl:silent
 val showRange: Int => String =
   range andThen mkString
 ```
 
-```tut:book
+```scala repl
 showRange(3)
 ```
 
@@ -10419,10 +10362,10 @@ showRange(3)
 3                                    // rangeCoAlgebra
 ```
 
-```tut:silent
+```scala repl:silent
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((i, i - 1))
-  else      None
+  if i > 0 then Some((i, i - 1))
+  else          None
 }
 ```
 
@@ -10436,8 +10379,8 @@ val rangeCoAlgebra: Int => ListF[Int] = i => {
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(`i > 0`) Some((i, i - 1))
-  else      None
+  if `i > 0` then Some((i, i - 1))
+  else          None
 }
 ```
 
@@ -10451,8 +10394,8 @@ val rangeCoAlgebra: Int => ListF[Int] = i => {
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) `Some`((i, i - 1))
-  else      None
+  if i > 0 then `Some`((i, i - 1))
+  else          None
 }
 ```
 
@@ -10466,8 +10409,8 @@ Some((`3`, 2))                         // rangeCoAlgebra
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((`i`, i - 1))
-  else      None
+  if i > 0 then Some((`i`, i - 1))
+  else          None
 }
 ```
 
@@ -10481,8 +10424,8 @@ Some((3, `2`))                         // rangeCoAlgebra
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((i, `i - 1`))
-  else      None
+  if i > 0 then Some((i, `i - 1`))
+  else          None
 }
 ```
 
@@ -10496,8 +10439,8 @@ Some((3, `2`))                         // rangeCoAlgebra
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(`i > 0`) Some((i, i - 1))
-  else      None
+  if `i > 0` then Some((i, i - 1))
+  else          None
 }
 ```
 
@@ -10511,8 +10454,8 @@ Some((3, `Some`((2, 1)))               // rangeCoAlgebra
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) `Some`((i, i - 1))
-  else      None
+  if i > 0 then `Some`((i, i - 1))
+  else          None
 }
 ```
 
@@ -10526,8 +10469,8 @@ Some((3, Some((`2`, 1)))               // rangeCoAlgebra
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((`i`, i - 1))
-  else      None
+  if i > 0 then Some((`i`, i - 1))
+  else          None
 }
 ```
 
@@ -10541,8 +10484,8 @@ Some((3, Some((2, `1`)))               // rangeCoAlgebra
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((i, `i - 1`))
-  else      None
+  if i > 0 then Some((i, `i - 1`))
+  else          None
 }
 ```
 
@@ -10556,8 +10499,8 @@ Some((3, Some((2, `1`)))               // rangeCoAlgebra
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(`i > 0`) Some((i, i - 1))
-  else      None
+  if `i > 0` then Some((i, i - 1))
+  else          None
 }
 ```
 
@@ -10571,8 +10514,8 @@ Some((3, Some((2, `Some`((1, 0)))))    // rangeCoAlgebra
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) `Some`((i, i - 1))
-  else      None
+  if i > 0 then `Some`((i, i - 1))
+  else          None
 }
 ```
 
@@ -10586,8 +10529,8 @@ Some((3, Some((2, Some((`1`, 0)))))    // rangeCoAlgebra
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((`i`, i - 1))
-  else      None
+  if i > 0 then Some((`i`, i - 1))
+  else          None
 }
 ```
 
@@ -10601,8 +10544,8 @@ Some((3, Some((2, Some((1, `0`)))))    // rangeCoAlgebra
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((i, `i - 1`))
-  else      None
+  if i > 0 then Some((i, `i - 1`))
+  else          None
 }
 ```
 
@@ -10616,8 +10559,8 @@ Some((3, Some((2, Some((1, `0`)))))    // rangeCoAlgebra
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(`i > 0`) Some((i, i - 1))
-  else      None
+  if `i > 0` then Some((i, i - 1))
+  else          None
 }
 ```
 
@@ -10631,8 +10574,8 @@ Some((3, Some((2, Some((1, `None`))))) // rangeCoAlgebra
 
 ```scala
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((i, i - 1))
-  else      `None`
+  if i > 0 then Some((i, i - 1))
+  else          `None`
 }
 ```
 
@@ -10644,10 +10587,10 @@ val rangeCoAlgebra: Int => ListF[Int] = i => {
 Some((3, Some((2, Some((1, None))))) // rangeCoAlgebra
 ```
 
-```tut:silent
+```scala repl:silent
 val rangeCoAlgebra: Int => ListF[Int] = i => {
-  if(i > 0) Some((i, i - 1))
-  else      None
+  if i > 0 then Some((i, i - 1))
+  else          None
 }
 ```
 
@@ -10673,7 +10616,7 @@ Some((3, Some((2, Some((1, None))))) // rangeCoAlgebra
 &#x200B;                                     // embed
 ```
 
-```tut:silent
+```scala repl:silent
 val embed: ListF[List] => List = {
   case Some((head, tail)) => Cons(head, tail)
   case None               => Nil
@@ -10785,7 +10728,7 @@ Some((3, Some((2, Some((1, None))))) // rangeCoAlgebra
 Cons( 3, Cons( 2, Cons( 1, Nil )))   // embed
 ```
 
-```tut:silent
+```scala repl:silent
 val embed: ListF[List] => List = {
   case Some((head, tail)) => Cons(head, tail)
   case None               => Nil
@@ -10808,7 +10751,7 @@ Cons( 3, Cons( 2, Cons( 1, Nil )))   // embed
                                      // project
 ```
 
-```tut:silent
+```scala repl:silent
 val project: List => ListF[List] = {
   case Cons(head, tail) => Some((head, tail))
   case Nil              => None
@@ -10927,7 +10870,7 @@ Cons( 3, Cons( 2, Cons( 1, Nil )))   // embed
 Some((3, Some((2, Some((1, None))))) // project
 ```
 
-```tut:silent
+```scala repl:silent
 val project: List => ListF[List] = {
   case Cons(head, tail) => Some((head, tail))
   case Nil              => None
@@ -10957,7 +10900,7 @@ Some((3, Some((2, Some((1, None))))) // project
                                      // mkStringAlgebra
 ```
 
-```tut:silent
+```scala repl:silent
 val mkStringAlgebra: ListF[String] => String = {
   case Some((head, tailResult)) => step(head, tailResult)
   case None                     => base
@@ -11226,7 +11169,7 @@ step( 3, step( 2, step( 1, base)))   // mkStringAlgebra
 
 ## Simplifying `ana andThen cata`
 
-```tut:silent
+```scala repl:silent
 def ana[F[_]: Functor, A, B](
   coAlgebra: A => F[A],
   embed    : F[B] => B
@@ -11281,7 +11224,7 @@ def ana[F[_]: Functor, A, B](
 
 ## Simplifying `ana andThen cata`
 
-```tut:silent
+```scala repl:silent
 def ana[F[_]: Functor, A, B](
   coAlgebra: A => F[A],
   algebra  : F[B] => B
@@ -11298,7 +11241,7 @@ def ana[F[_]: Functor, A, B](
 
 ## Simplifying `ana andThen cata`
 
-```tut:silent
+```scala repl:silent
 def showRange: Int => String =
   ana(rangeCoAlgebra, mkStringAlgebra)
 ```
@@ -11343,12 +11286,12 @@ def showRange: Int => String =
 
 ## Simplifying `ana andThen cata`
 
-```tut:silent
+```scala repl:silent
 def showRange: Int => String =
   ana(rangeCoAlgebra, mkStringAlgebra)
 ```
 
-```tut:book
+```scala repl
 showRange(3)
 ```
 
@@ -11394,7 +11337,7 @@ showRange(3)
 
 ## Naming things
 
-```tut:silent
+```scala repl:silent
 def hylo[F[_]: Functor, A, B](
   coAlgebra: A => F[A],
   algebra  : F[B] => B
@@ -11525,7 +11468,7 @@ def hylo[F[_]: Functor, A, B](
 
 ## A magic trick
 
-```tut:silent
+```scala repl:silent
 def hylo[F[_]: Functor, A, B](
   algebra: F[A] => A,
   project: B => F[B]
@@ -11542,7 +11485,7 @@ def hylo[F[_]: Functor, A, B](
 
 ## A magic trick
 
-```tut:silent
+```scala repl:silent
 def cata[F[_]: Functor, A, B](
   algebra: F[A] => A,
   project: B => F[B]
